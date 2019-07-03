@@ -1,0 +1,2590 @@
+"ui";
+
+const thiscommon=require("./mycommon.js");
+const thisswipe=require("./myswipe.js");
+
+
+var color = "#4C484C";
+var frameColor = "#7E787F";
+var textColor = "#CCCCCC";
+var img_scriptIconColor = "#007E787F";
+var img_refreshIconColor = "#FFFFFF";
+
+
+//indexOf的替代函数 contains();
+const contains = (() =>
+Array.prototype.includes
+? (arr, value) => arr.includes(value)
+: (arr, value) => arr.some(el => el === value)
+)();
+
+//保存脚本文件列表的数组
+var scriptInfo = [];
+
+ui.statusBarColor("#4C484C");
+ui.layout(
+    <drawer id="drawer">
+        <vertical>
+            <appbar background="{{color}}">
+                <linear>
+                    <toolbar id="toolbar" title="海趣助手"/>
+                    <vertical w="*" h="*" padding="13 13">
+                        {/* 右上角刷新按钮 */}
+                        <img id="refresh" 
+                            src="@drawable/ic_autorenew_black_48dp" 
+                            tint="{{img_refreshIconColor}}"
+                            w="33"
+                            h="33"
+                            layout_gravity="right" />
+                    </vertical>
+                </linear>
+                <tabs id="tabs"/>
+            </appbar>
+            <viewpager id="viewpager" background="{{frameColor}}">
+           
+                <frame> {/** 第一屏布局*/}
+                    <vertical>
+                    <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="运行方式" textSize="12sp" textColor="{{textColor}}" />
+                           
+                        </linear>
+                    <linear h="40" paddingTop="1" >
+                                <radiogroup id='runstate' orientation="horizontal">
+                                    <radio id="bindwechat" text='微信绑定' color="{{textColor}}" checked="true"></radio>
+                                    <radio id="autoread" text='自动阅读' color="{{textColor}}" ></radio>
+                                    <radio id="trainwechat"  text='微信养号' color="{{textColor}}"></radio>
+                                    {/* <radio text='刷支付宝提' color="{{textColor}}"></radio>      */}
+                                </radiogroup>
+                    </linear>
+                    <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="手机类型" textSize="12sp" textColor="{{textColor}}" />
+                           
+                        </linear>
+                    <linear h="40" paddingTop="1" >
+                                <radiogroup id='r' orientation="horizontal">
+                                    <radio id="xiaomi2s" text='小米2s' color="{{textColor}}"></radio>
+                                    <radio id="xiaomi4s" text='小米4s' color="{{textColor}}" checked="true"></radio>
+                                    <radio id="xiaomi4"  text='小米4' color="{{textColor}}"></radio>
+                                    {/* <radio text='刷支付宝提' color="{{textColor}}"></radio>      */}
+                                </radiogroup>
+                    </linear>
+                    <linear  layout_weight="1" gravity="center" >
+                            <button id="qidong" text="启动" w="260" h="40" />
+                    </linear>
+                        {/* <android.support.v4.widget.SwipeRefreshLayout> */}
+                        {/* 启动时网络不好等待加载的动画效果 */}
+                        {/* <vertical id="waitForDownload" gravity="center" w="*" h="50">
+                            <linear w="auto">
+                                <img id="img_waitForDownload"
+                                    src="@drawable/ic_rotate_right_black_48dp"
+                                    w="20" h="20" />
+                                <linear gravity="center" h="*">
+                                <text id="str_whaitForDownload"
+                                    text="正在拉取数据..."
+                                    textSize="11sp"
+                                    textColor="{{textColor}}" />
+                                </linear>
+                            </linear>
+                        </vertical>
+                        <vertical id="noData" gravity="center" w="*" h="50" >
+                            <linear w="auto">
+                                <text id="str_noData"
+                                    text="暂无数据,请刷新..."
+                                    textSize="13sp"
+                                    textColor="{{textColor}}" />
+                            </linear>
+                        </vertical> */}
+                        <list id="files" layout_weight="1" >
+                            <vertical w="*">
+                                <linear id="script_list" bg="?selectableItemBackground" h="50">
+                                    {/* 脚本Icon */}
+                                    <img src="@drawable/ic_cloud_done_black_48dp" 
+                                        tint="white"
+                                        bg ="{{img_scriptIconColor}}"
+                                        w="35"
+                                        h="35"
+                                        margin="10" />
+
+                                    <vertical h="*">
+                                        {/* 脚本名称 */}
+                                        <text id="name"
+                                            textSize="14sp"
+                                            textColor="{{textColor}}"
+                                            text="{{this.desc}}777"
+                                            marginTop="4"
+                                            maxLines="1"
+                                            ellipsize="end"/>
+                                        {/* 脚本版本号 */}
+                                        <text id="version"
+                                            textSize="12sp"
+                                            textColor="{{textColor}}"
+                                            text="版本号:{{this.serverVersion}}"
+                                            marginTop="4"
+                                            maxLines="1"
+                                            ellipsize="end"/>
+                                    </vertical>
+
+                                    <vertical w="*" h="*">
+                                        {/* 开始按钮图标 */}
+                                        <img id="item_start"
+                                            src="@drawable/ic_play_arrow_black_48dp"
+                                            tint="#CCCCCC"
+                                            bg="{{img_scriptIconColor}}"
+                                            w="25"
+                                            h="25"
+                                            margin="13"
+                                            layout_gravity="right"/>
+                                    </vertical>
+                                </linear>
+                                {/* 分割线填充 */}
+                                <vertical id="fill_line" w="*" h="1" bg="{{color}}"></vertical>
+                            </vertical>
+                        </list>
+                       
+                        {/* </android.support.v4.widget.SwipeRefreshLayout> */}
+                    </vertical>
+                </frame>
+              {/* 上下滑动控件 */}
+                <scroll layout_gravity="center">
+                <frame> {/** 第二屏布局*/}
+                    <vertical h="*">
+                        {/* text label */}
+                        <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="基础设置" textSize="12sp" textColor="{{textColor}}" />
+                            <text autoLink="all" text="恢复默认" marginLeft="10sp" />
+                        </linear>
+
+                        {/* 空行 */}
+                        
+                         {/* 勾选框 */}
+                            <linear h="40" paddingTop="1" >
+                                <radiogroup id='fbName' orientation="horizontal">
+                                    <radio text='全刷' color="{{textColor}}"></radio>
+                                    <radio text='推荐' color="{{textColor}}" checked="true"></radio>
+                                    <radio text='刷微信提' color="{{textColor}}"></radio>
+                                    <radio text='刷支付宝提' color="{{textColor}}"></radio>     
+                                </radiogroup>
+                            </linear>
+
+                       {/* 微信号设置区域 */}
+                        <linear h="40" paddingTop="10">   
+                        <linear w="*" margin="0 20 0 20" layout_gravity="center" >
+                            {/* 微信号 Text控件 */}
+                            <linear layout_weight="1" gravity="center" h="*">
+                                <text text="微信号:"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                            </linear>
+
+                            {/* 微信号输入框控件 */}
+                            <linear layout_weight="3" h="*">
+                                <input id="wechaNum"
+                                    inputType="textVisiblePassword"
+                                    padding="0 5 0 5"
+                                    singleLine="true"
+                                    h="30"
+                                    w="*"
+                                    textColor="#E1E4E5"
+                                    textSize="14sp"
+                                    textCursorDrawable="@null"
+                                    hint="为空则不发送"
+                                    bg="#f1bbbbbb"
+                                    layout_gravity="left|center" />
+                            </linear>
+
+                            {/* 执行次数 Text控件 */}
+                            <linear layout_weight="1" gravity="center" h="*">
+                                <text text="次数:"
+                                    marginLeft="1"
+                                    marginRight="1"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                            </linear>
+
+                            {/* 执行次数输入框控件 */}
+                            <linear layout_weight="2" h="*">
+                                <input id="Loops"
+                                    inputType="number"
+                                    padding="0 5 0 5"
+                                    singleLine="true"
+                                    h="30"
+                                    w="*"
+                                    textColor="#E1E4E5"
+                                    textSize="14sp"
+                                    textCursorDrawable="@null"
+                                    hint="1"
+                                    bg="#f1bbbbbb"
+                                    layout_gravity="left|center" />
+                            </linear>
+                        </linear>
+                        </linear>
+
+                        {/* 微信号设置区域结束 */}
+                        <vertical>
+                            <linear w="*" h="40" margin="0 20 0 20" >
+                                <linear layout_weight="1" h="30" layout_gravity="left|center" >
+                                    {/* 脚本速度 Text控件 */}
+                                    <linear gravity="right|center" w="80" h="*">
+                                        <text text="当前速度: "
+                                            textColor="{{textColor}}"
+                                            marginBottom="1"
+                                            textSize="16sp" />
+                                    </linear>
+
+                                    {/* 当前速度值 Text控件 */}
+                                    <linear gravity="center" w="30" h="*">
+                                    <text id="speedtext"
+                                        text=""
+                                        textColor="{{textColor}}"
+                                        textSize="14sp"
+                                        textStyle="bold" />
+                                    </linear>
+                                </linear>
+                            </linear>
+
+                            <linear w="*" h="24" margin="0 20 0 20" gravity="center" >
+                                {/** 慢 Text控件 */}
+                                <linear layout_weight="1" gravity="right" >
+                                <text text="慢"
+                                    textColor="{{textColor}}"
+                                    textSize="14sp" />
+                                </linear>
+
+                                {/** 进度条控件 */}
+                                <linear layout_weight="8" >
+                                <seekbar id="speed"
+                                    max="99"
+                                    progress="79"
+                                    bg="#00bbbbbb"
+                                    w="*" />
+                                </linear>
+
+                                {/** 快 Text控件 */}
+                                <linear layout_weight="1" gravity="left" >
+                                <text text="快"
+                                    textColor="{{textColor}}"
+                                    textSize="14sp" />
+                                </linear>
+                            </linear>
+                        </vertical>
+
+                        {/* 分割线填充 */}
+                        <vertical w="*" h="1" bg="{{color}}" ></vertical>
+
+                        {/* 其他功能区域相关配置 */}
+                        <linear w="*" h="*" paddingLeft="8" gravity="left|center" >
+                            <text text="附加功能" textSize="12sp" textColor="{{textColor}}" />
+                        </linear>
+                        <vertical margin="0 20 0 20" id="applist">
+                            {/* <linear layout_weight="1" >
+                                <checkbox id="str" text="脚本运行前开启录屏(功能未开发)" color="{{textColor}}" />
+                            </linear> */}
+                            {/* 支持的app列表开始 */}
+                            <linear layout_weight="1" >
+                                <checkbox id="sendMsgOption" text="109.今日头条" color="{{textColor}}" />
+                                <text text="次数:"
+                                    marginLeft="10"
+                                    marginRight="1"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                                 <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>
+                                
+                               
+                                <linear layout_weight="1" gravity="right" >
+                                    <button id="open" text="打开" w="60" h="40" />
+                                </linear>
+                            </linear>
+
+                            <linear layout_weight="1" >
+                                <checkbox id="sendMsgOption" text="109.今日头条" color="{{textColor}}" />
+                                <text text="次数:"
+                                    marginLeft="10"
+                                    marginRight="1"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                                <input id="Loops"
+                                    inputType="number"
+                                    marginTop="-5"
+                                    padding="0 0 0 0"
+                                    singleLine="true"
+                                    h="15"
+                                    w="20"
+                                    textColor="#E1E4E5"
+                                    textSize="14sp"
+                                    textCursorDrawable="@null"
+                                    hint="1"
+                                    bg="#f1bbbbbb"
+                                    layout_gravity="left|center" />
+                                <linear layout_weight="1" gravity="right" >
+                                    <button id="open" text="打开" w="60" h="40" />
+                                </linear>
+
+                                
+                            </linear>
+                            <linear layout_weight="1" >
+                                <checkbox id="sendMsgOption" text="109.今日头条" color="{{textColor}}" />
+                                <text text="次数:"
+                                    marginLeft="10"
+                                    marginRight="1"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                               <input id="Loops"
+                                    inputType="number"
+                                    marginTop="-5"
+                                    padding="0 0 0 0"
+                                    singleLine="true"
+                                    h="15"
+                                    w="20"
+                                    textColor="#E1E4E5"
+                                    textSize="14sp"
+                                    textCursorDrawable="@null"
+                                    hint="1"
+                                    bg="#f1bbbbbb"
+                                    layout_gravity="left|center" />
+                                <linear layout_weight="1" gravity="right" >
+                                    <button id="open" text="打开" w="60" h="40" />
+                                </linear>
+
+                                
+                            </linear>
+                            <linear layout_weight="1" >
+                                <checkbox id="sendMsgOption" text="109.今日头条" color="{{textColor}}" />
+                                <text text="次数:"
+                                    marginLeft="10"
+                                    marginRight="1"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                                <input id="Loops"
+                                    inputType="number"
+                                    marginTop="-5"
+                                    padding="0 0 0 0"
+                                    singleLine="true"
+                                    h="15"
+                                    w="20"
+                                    textColor="#E1E4E5"
+                                    textSize="14sp"
+                                    textCursorDrawable="@null"
+                                    hint="1"
+                                    bg="#f1bbbbbb"
+                                    layout_gravity="left|center" />
+                                <linear layout_weight="1" gravity="right" >
+                                    <button id="open" text="打开" w="60" h="40" />
+                                </linear>
+
+                                
+                            </linear>
+                            <linear layout_weight="1" >
+                                <checkbox id="sendMsgOption" text="109.今日头条" color="{{textColor}}" />
+                                <text text="次数:"
+                                    marginLeft="10"
+                                    marginRight="1"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                                <input id="Loops"
+                                    inputType="number"
+                                    marginTop="-5"
+                                    padding="0 0 0 0"
+                                    singleLine="true"
+                                    h="15"
+                                    w="20"
+                                    textColor="#E1E4E5"
+                                    textSize="14sp"
+                                    textCursorDrawable="@null"
+                                    hint="1"
+                                    bg="#f1bbbbbb"
+                                    layout_gravity="left|center" />
+                                <linear layout_weight="1" gravity="right" >
+                                    <button id="open" text="打开" w="60" h="40" />
+                                </linear>
+
+                                
+                            </linear>
+                            <linear layout_weight="1" >
+                                <checkbox id="sendMsgOption" text="109.今日头条" color="{{textColor}}" />
+                                <text text="次数:"
+                                    marginLeft="10"
+                                    marginRight="1"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                                <input id="Loops"
+                                    inputType="number"
+                                    marginTop="-5"
+                                    padding="0 0 0 0"
+                                    singleLine="true"
+                                    h="15"
+                                    w="20"
+                                    textColor="#E1E4E5"
+                                    textSize="14sp"
+                                    textCursorDrawable="@null"
+                                    hint="1"
+                                    bg="#f1bbbbbb"
+                                    layout_gravity="left|center" />
+                                <linear layout_weight="1" gravity="right" >
+                                    <button id="open" text="打开" w="60" h="40" />
+                                </linear>
+
+                                
+                            </linear>
+                            <linear layout_weight="1" >
+                                <checkbox id="" text="109.今日头条" color="{{textColor}}" />
+                                <text text="次数:"
+                                    marginLeft="10"
+                                    marginRight="1"
+                                    color="{{textColor}}"
+                                    size="16sp"
+                                     />
+                                <input id="Loops"
+                                    inputType="number"
+                                    marginTop="-5"
+                                    padding="0 0 0 0"
+                                    singleLine="true"
+                                    h="15"
+                                    w="20"
+                                    textColor="#E1E4E5"
+                                    textSize="14sp"
+                                    textCursorDrawable="@null"
+                                    hint="1"
+                                    bg="#f1bbbbbb"
+                                    layout_gravity="left|center" />
+                                <linear layout_weight="1" gravity="right" >
+                                    <button id="open" text="打开" w="60" h="40" />
+                                </linear>
+
+                                
+                            </linear>
+                           
+                            {/* 支持的app列表结束 */}
+                        </vertical>
+
+                        {/* 分割线填充 */}
+                        <vertical w="*" h="1" bg="{{color}}" ></vertical>
+
+                        {/* 垃圾清理区域相关配置 */}
+                        <linear w="*" h="24" paddingLeft="8" gravity="left|center" >
+                            <text text="清理相关" textSize="12sp" textColor="{{textColor}}" />
+                        </linear>
+                        <vertical>
+                            <linear w="*" h="50" margin="0 20 0 20" gravity="center" >
+                                <linear layout_weight="1" >
+                                    <checkbox id="clear_log" text="日志" color="{{textColor}}" />
+                                </linear>
+                                <linear layout_weight="1" >
+                                    <checkbox id="clear_namelist" text="已聊名单" color="{{textColor}}" />
+                                </linear>
+                                <linear layout_weight="1" >
+                                    <checkbox id="clear_config" text="配置文件" color="{{textColor}}" />
+                                </linear>
+                                <linear layout_weight="1" gravity="right" >
+                                    <button id="clear_Btn" text="删除" w="60" h="40" />
+                                </linear>
+                            </linear>
+
+                        </vertical>
+
+                        {/* 分割线填充 */}
+                        <vertical w="*" h="1" bg="{{color}}" ></vertical>
+                        
+
+
+
+
+
+
+
+                        {/* 测试开始 */}
+                        
+                        {/* 测试结束 */}
+                        {/* <linear gravity="center" margin="0 0 0 0">
+                            <button id="reset" w="85" h="40" style="Widget.AppCompat.Button.Colored" bg="#E1E4E5" textSize="16sp" textStyle="bold" textColor="#000000" text="清除缓存" margin="12"></button>
+                            <button id="start" w="85" h="40" style="Widget.AppCompat.Button.Colored" bg="#3CCA3C" textSize="16sp" textStyle="bold" textColor="#FFFFFF" text="开  始" margin="12"></button>
+                        </linear> */}
+                    </vertical>
+                </frame>
+                </scroll>
+                <frame></frame>
+                <frame></frame>
+                {/* 测试页面 */}
+                <frame>
+                <vertical>
+                <linear layout_weight="1" >
+                    <linear layout_weight="1" gravity="left" >
+                    <button id="autoread_jinri" text="今日头条阅读" w="160" h="40" />
+                    </linear>
+                </linear>
+                
+                {/* <linear layout_weight="1" >
+                    <linear layout_weight="1" gravity="left" >
+                        <button id="open" text="打开" w="60" h="40" />
+                    </linear>
+                </linear>
+                <linear layout_weight="1" >
+                    <linear layout_weight="1" gravity="left" >
+                        <button id="open" text="打开" w="60" h="40" />
+                    </linear>
+                    <linear layout_weight="1" gravity="left" >
+                        <button id="open" text="打开" w="60" h="40" />
+                    </linear>
+                </linear> */}
+                <linear layout_weight="1" gravity="left" id="testlinear" >
+                     <button id="whileopen" text="循环打开app测试" w="160" h="40" />
+                     <button id="uiinflate" text="ui.inflate" w="160" h="40" />
+                     
+                </linear>
+
+                </vertical>
+                </frame>
+                
+            </viewpager>
+        </vertical>
+    </drawer>
+);
+//启动后权限申请以及相关设置
+importPackage(java.io);
+importPackage(java.lang);
+importClass(android.view.View);
+importClass(java.text.SimpleDateFormat);
+importClass(android.widget.TextView);
+importClass(android.widget.CheckBox);
+importClass(android.widget.EditText);
+importClass(android.widget.Button);
+
+// events.on("exit", function(){
+//     if (device.sdkInt < 24) {
+//         ra.exit();
+//     }
+// });
+if (device.sdkInt < 24) {
+    try {
+        var ra = new RootAutomator();
+    } catch (e) {
+        log("设备没有root");
+    } 
+}
+// var beforeStartUp_Thread = threads.start(function() {
+//     sleep(1000);
+//     if (!requestScreenCapture()) {
+//         toast('若无截图权限,部分脚本可能无法运行!');
+//     }
+//     setScreenMetrics(1080,1920);
+//     auto.waitFor();
+// })
+//ui.noData.setVisibility(View.GONE);
+//设置滑动页面的标题
+ui.viewpager.setTitles(["全局设置","首页", "自动阅读", "养号","测试"]);
+//让滑动页面和标签栏联动
+ui.tabs.setupWithViewPager(ui.viewpager);
+
+// ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐藏
+//     onPageScrolled: function(position, positionOffset, positionOffsetPixels) {
+//         // log('position: ' + position + "\npositionOffsetPixels: " + positionOffsetPixels );
+//         if (position != 0) {
+//             ui.refresh.setVisibility(View.INVISIBLE);
+//         } else {
+//             ui.refresh.setVisibility(View.VISIBLE);
+//         }
+//     }
+// });
+
+
+/**
+ * 第一屏相关函数/方法
+ */
+Grunstate="";
+Gdevicetype="";
+//sysupdate();
+ui.qidong.click(()=>{
+    //alert("click");
+    if(ui.bindwechat.isChecked()){
+       // alert("绑定微信");
+       Grunstate="bindwechat";// bindwechat autoread trainwechat finditem
+    }else if(ui.autoread.isChecked()){
+      //  alert("自动阅读");
+       Grunstate="autoread";// bindwechat autoread trainwechat finditem
+    }else if(ui.trainwechat.isChecked()){
+       // alert("微信养号");
+       Grunstate="trainwechat";// bindwechat autoread trainwechat finditem
+    }
+
+    //机型判断
+    if(ui.xiaomi2s.isChecked()){
+    Gdevicetype="xiaomi2s";
+    }else if(ui.xiaomi4s.isChecked()){
+    Gdevicetype="xiaomi4s";
+    }else if(ui.xiaomi4.isChecked()){
+    Gdevicetype="xiaomi4";
+    }
+ //   alert(Gdevicetype);
+    //语音广播初始化模式
+
+});
+Gapps=[
+    {"appname":"悦头条","enable":"true"},
+{"appname":"北京知天下","enable":"true"},
+{"appname":"2345浏","enable":"true"},
+{"appname":"三言","enable":"true"},
+{"appname":"东方头条","enable":"true"},
+ {"appname":"中青看点","enable":"true"},
+ {"appname":"乐趣头条","enable":"true"},
+ {"appname":"二头条","enable":"true"},
+ {"appname":"今日头条极","enable":"true"},
+ {"appname":"今日热闻","enable":"true"},
+ {"appname":"优看点","enable":"true"},
+ {"appname":"光影新闻","enable":"true"},
+ {"appname":"全民头条","enable":"true"},
+ {"appname":"全民头条6","enable":"true"},
+ {"appname":"刷宝短视频","enable":"true"},
+ {"appname":"博学方财","enable":"true"},
+ {"appname":"唔哩头条","enable":"true"},
+ {"appname":"大众头条","enable":"true"},
+ {"appname":"大众看点","enable":"true"},
+ {"appname":"天天快报","enable":"true"},
+ {"appname":"天天趣闻","enable":"true"},
+ {"appname":"头条多多","enable":"true"},
+ {"appname":"头条精选","enable":"true"},
+ {"appname":"引力资讯","enable":"true"},
+ {"appname":"微头条","enable":"true"},
+ {"appname":"微鲤看看","enable":"true"},
+{"appname":"快狗视频","enable":"true"},
+{"appname":"快看点","enable":"true"},
+{"appname":"快马小报","enable":"true"},
+ {"appname":"惠头条","enable":"true"},
+ {"appname":"惠视频","enable":"true"},
+ {"appname":"掌上消息","enable":"true"},
+ {"appname":"掌上热点","enable":"true"},
+ {"appname":"搜狐资讯","enable":"true"},
+ {"appname":"新闻赚","enable":"true"},
+ {"appname":"有料看看","enable":"true"},
+{"appname":"有看头","enable":"true"},
+{"appname":"有看头热","enable":"true"},
+{"appname":"有米头条","enable":"true"},
+{"appname":"本地看点","enable":"true"},
+{"appname":"橙子快报","enable":"true"},
+{"appname":"氪资讯","enable":"true"},
+{"appname":"波波视频","enable":"true"},
+{"appname":"海草公社","enable":"true"},
+{"appname":"淘头条","enable":"true"},
+{"appname":"淘新闻","enable":"true"},
+{"appname":"淘最热点","enable":"true"},
+{"appname":"淘看点","enable":"true"},
+{"appname":"淘集集","enable":"true"},
+{"appname":"点点新闻","enable":"true"},
+{"appname":"热点资讯","enable":"true"},
+{"appname":"爱头条","enable":"true"},
+{"appname":"牛牛资讯","enable":"true"},
+{"appname":"百万看点","enable":"true"},
+{"appname":"百姓头条","enable":"true"},
+{"appname":"盈贝头条","enable":"true"},
+{"appname":"种子视频","enable":"true"},
+{"appname":"米闻快报","enable":"true"},
+{"appname":"精彩看点","enable":"true"},
+{"appname":"红包新闻","enable":"true"},
+{"appname":"红包视频","enable":"true"},
+{"appname":"网易新闻极","enable":"true"},
+{"appname":"翻翻头条","enable":"true"},
+{"appname":"聚看点","enable":"true"},
+{"appname":"菠萝小组","enable":"true"},
+{"appname":"萝卜看点","enable":"true"},
+{"appname":"薪头条","enable":"true"},
+{"appname":"蚂蚁头条","enable":"true"},
+{"appname":"蚂蚁看点","enable":"true"},
+{"appname":"蜜蜂看看","enable":"true"},
+{"appname":"趣头条","enable":"true"},
+{"appname":"趣故事","enable":"true"},
+{"appname":"趣新闻","enable":"true"},
+{"appname":"趣看天下","enable":"true"},
+{"appname":"趣看点","enable":"true"},
+{"appname":"趣闻看看","enable":"true"},
+{"appname":"闪电盒子","enable":"true"},
+{"appname":"阅看阅赚","enable":"true"},
+{"appname":"集好视频","enable":"true"},
+{"appname":"韭菜资讯","enable":"true"},
+{"appname":"韭黄","enable":"true"},
+{"appname":"魔方看点","enable":"true"}
+];
+ 
+loadappjson();
+testthread=threads.start(function(){
+    setInterval(function(){
+        if(Grunstate!=""){
+            voice_runstate();
+            voice_devicetype();
+       //  toast("开始启动");  
+      
+        run();
+        
+       // alert(applist[0]['appname']);
+            //testthread.interrupt();
+        }
+       // toast("Grunstate is:"+Grunstate);
+    },1000)
+});
+
+
+
+
+Gworkthread="";
+// Grunstate="autoread";// bindwechat autoread trainwechat finditem
+Gfirstrun=true;
+Gwechatnumber="duyuanbowy";
+Gwechatpass="dyb";
+wechatfriends=[
+    {"username":"未来不是梦998"},
+    {"username":"未来不是梦99"},
+];
+
+
+//run();
+/*************************以下是主线程循环 *******************************************************************/ 
+function run(){
+
+//if start
+if(Grunstate=="trainwechat"){
+//lanuchApp("微信");
+// whthumbup();
+openwechat();
+//whchat();
+}else{
+    for(var i=0;i<applist.length;i++){
+    
+        var enable=applist[i]['enable'];
+         appname=applist[i]['appname'] 
+        var packagename=applist[i]['packagename']
+        var activityname=applist[i]['activityname'];
+        var open_obj=applist[i]["open"];
+        var bindwechat_obj=applist[i]['bindwechat']; 
+        var autoread_obj=applist[i]["autoread"];
+         abnormal_obj=applist[i]["abnormal"]
+        var voice=applist[i]["voice"];
+        var durl=applist[i]["durl"];
+        var interval=applist[i]["interval"];
+        // if("false"==enable){
+        //     toast("下一个");
+        //     continue;
+        // }
+        toast('开始'+applist[i]['appname']);
+        
+    //开启打开线程--通用
+//     var ele=id("clearAnimView").findOne(1000); 
+// ele.click();
+// home();
+// sleep(1500);
+// recents();//最近任务
+// sleep(1500);
+//         thiscommon.touchreal_once(519,1733);
+//    thiscommon.clean("xiaomi4");
+ 
+
+  thiscommon.clean(Gdevicetype);
+    //exit();
+
+    //    while_closewindow("xiaomi4");
+    
+    
+    //如果不是第一次运行需要关闭该线程再启动
+    if(!Gfirstrun){
+    thread_abnormal.interrupt();
+    }
+    //异常处理弹窗线程
+    //while_abnormal(abnormal_obj)
+    demon_abnormal(abnormal_obj);
+    
+    //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
+    while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj);
+    
+    //阻塞运行打开app
+    //toast("openapp :"+packagename+" /"+activityname);
+    openAPP(appname,packagename,activityname,open_obj);
+    //finditem(appname);
+    
+    
+    //每个app需要阅读的时间sleep
+    var thisinterval=3*100000;
+    sleep(thisinterval);
+    //开启异常处理线程--通用
+    Gfirstrun=false;
+    }
+    //for end
+}
+//if end
+}
+//function fun end
+/*************************以下是函数实现部分 *******************************************************************/ 
+//加载特征码
+function loadappjson(){
+ 
+
+var start='[]'
+ applist=eval('(' + start + ')'); 
+var tempstr="";
+var appname="";
+for(var i=0;i<Gapps.length;i++){
+
+    appname=Gapps[i]["appname"];
+    if("true"==Gapps[i]['enable']){
+    //读取字符串
+        tempstr=files.read("/storage/emulated/0/applist/"+appname+".json");
+
+        tempjson=eval('(' + tempstr + ')');
+        applist.push(tempjson); 
+
+    }else{
+
+    }
+
+}
+}
+//语音广播手机型号
+function voice_devicetype(){
+    play("global","小米");
+    if("xiaomi2s"==Gdevicetype){
+        play("global","2");
+        play("global","s");
+    }else if("xiaomi4s"==Gdevicetype){
+        play("global","4");
+        play("global","s");
+    }else if("xiaomi4"==Gdevicetype){
+        play("global","4");
+    }
+    
+ 
+}
+//语音广播初始化模式
+function voice_runstate(){
+    var runstate_voicename='';
+    if("autoread"==Grunstate){
+        runstate_voicename="自动阅读";
+    }else if("bindwechat"==Grunstate){
+        runstate_voicename="微信绑定";
+    }else if("trainwechat"==Grunstate){
+        runstate_voicename="微信养号";
+    }else if("finditem"==Grunstate){
+        runstate_voicename="广告不点击"; 
+    }
+    play("global","当前工作模式");
+    play("global",runstate_voicename);
+}
+//一级页面循环上滑找新闻线程
+function while_findnews(autoread_obj){
+    Gworkthread="findnews_start";
+   // toast("找新闻线程启动...");
+   play("global","正在检索");
+   //取出新闻条目特征码
+  // var thisborderline=autoread_obj["ar1"]["borderline"];
+  // var thisitemsclassname=autoread_obj["ar1"]["itemsclassname"];
+   var thisfeaturemode=autoread_obj["ar1"]["featuremode"];
+
+  
+    var upcount=0;
+    thread_findnews=threads.start(
+        function(){
+            setInterval(
+                function(){
+                thisswipe.swiperealup_custom();
+                upcount+=1;
+                var m=3;
+                var n=2;
+                //x 为向上滑动多少次后打开新闻
+                var x=Math.round(Math.random()*(m-n))+n;
+                //当upcount大于了x次数后，开始打开当前发现的新闻条目
+                if(upcount>x){
+                    //判断新闻条目是否存在
+                   
+                    var ele=finditem(appname);
+                    if(ele){//ele.exists()
+                       
+                        //如果存在，点击第二条新闻
+                       play("global","打开新闻");
+ 
+                      thiscommon.clickxy_for_ele(ele);
+                       //等待2秒，否则线程关闭，点击事件会无效
+                        sleep(2000);
+                        var result=false;
+                       //以下为验证打开新闻是否成功了
+                        if("classname_desc"==thisfeaturemode){
+                            
+                            var thisclassname=autoread_obj["ar1"]["classname"];
+                            var thisdesc=autoread_obj["ar1"]["desc"];
+                             result=block_check(thisfeaturemode,thisclassname,thisdesc,'');
+                         
+                        }else if("classname_text"==thisfeaturemode){
+                            var thisclassname=autoread_obj["ar1"]["classname"];
+                            var thistext=autoread_obj["ar1"]["text"];
+                             result=block_check(thisfeaturemode,thisclassname,thistext,'');
+
+                        }else if("id"==thisfeaturemode){
+                            var thisid=autoread_obj["ar1"]["id"];
+                             result=block_check(thisfeaturemode,thisid,'','');
+
+                           
+                        }
+                        //最后判断二级页面特定控件是否存在，来确定是否打开成功
+                        if(result){
+                            play("global","打开成功");
+                            Gworkthread="findnews_stop";
+                            thread_findnews.interrupt();
+                        }else{
+                            play("global","打开失败");
+                        }
+                     
+                    }
+                }
+                },2000);
+        }
+    );
+}
+//二级页面阅读线程??可以优化
+function while_readnews(autoread_obj){
+    Gworkthread="readnews_start";
+    play("global","开始阅读");
+    var upcount=0;
+    var o=10;//最大上滑次数
+    var p=5;//最小上滑次数
+
+    var thisdeploymode=autoread_obj["ar2"]["deploymode"];
+  
+ //上滑次数
+    var maxupcount=Math.round(Math.random()*(o-p))+p;
+    toast("随机上滑："+maxupcount+"次");
+    thread_readnews=threads.start(
+        function(){
+           // while(1){
+                var m=4000;
+                var n=1000;
+               //两次上滑之间的间隔
+                var x=Math.round(Math.random()*(m-n))+n;
+                setInterval(function(){
+                    thisswipe.swiperealup_custom();
+                    //展开更多处理方式
+                    if("classname_desc"==thisdeploymode){
+                        var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
+                        var thisdeploydesc=autoread_obj["ar2"]["deploydesc"];
+                       var ele=className(thisdeployclassname).desc(thisdeploydesc);
+                        if(ele.exists()){
+                           play("global","展开更多");
+                           sleep(1000);
+                            thiscommon.clickxy_for_ele(ele.findOne(1000));
+                            //ele.findOne(1000).click();
+                        }
+                    }else if("classname_text"==thisdeploymode){
+                        var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
+                        var thistext=autoread_obj["ar2"]["deploytext"];
+                        var ele=className(thisdeployclassname).text(thistext);
+                        if(ele.exists()){
+                            play("global","展开更多");
+                           sleep(1000);
+                            thiscommon.clickxy_for_ele(className(thisdeployclassname).text(thistext).findOne());
+                        
+    
+                        }
+                    }
+                                //处理方式结束
+                                upcount+=1;
+                                if(upcount>maxupcount){
+                                    toast("返回首页...");
+                                    back();
+                                    Gworkthread="readnews_stop";
+                                    sleep(1000);
+                                    thread_readnews.interrupt();
+                                }
+                                toast("间隔："+x+"毫秒");
+                },x);
+               
+               
+               // sleep(x);
+           // }
+            //setInterval(function(){},1000);
+        }
+    );
+}
+//绑定微信
+function while_bindwechat(bindwechat_obj){
+    Gworkthread="bindwechat_start";
+    toast("开始绑定微信");
+   for(var i=1;i<=thiscommon.JSONLength(bindwechat_obj);i++){
+    var action=bindwechat_obj["bw"+i]["action"];
+    var featuremode=bindwechat_obj["bw"+i]["featuremode"];
+    play("global","执行步骤");
+    play("global",i);
+    //如果是点击文本
+    var result=false;
+    if("click_text"==action){
+        //点击文本
+        thiscommon.click_text(bindwechat_obj["bw"+i]["click_text"]);
+       // click();
+        //执行阻塞验证
+        if("classname_text"==featuremode){
+            var thisclassname=bindwechat_obj["bw"+i]["classname"];
+            var thistext=bindwechat_obj["bw"+i]["text"];
+             result=block_check(featuremode,thisclassname,thistext,'');
+        }else if("id"==featuremode){
+            var thisid=bindwechat_obj["bw"+i]["id"];
+             result=block_check(featuremode,thisid,'','');
+        }
+    }
+    //if end
+     //如果是点击ID
+    else if("click_id"==action){
+        var thisid=bindwechat_obj["bw"+i]["click_id"];
+        thiscommon.click_id(thisid);
+      //  id(thisid).findOne(1000).click();
+           //执行阻塞验证
+        if("classname_text"==featuremode){
+            var thisclassname=bindwechat_obj["bw"+i]["classname"];
+            var thistext=bindwechat_obj["bw"+i]["text"];
+             result=block_check(featuremode,thisclassname,thistext,'');
+        }else if("id"==featuremode){
+            var thisid=bindwechat_obj["bw"+i]["id"];
+             result=block_check(featuremode,thisid,'','');
+        }
+    }
+
+    //最后判断result
+    if(result){
+        if(i==thiscommon.JSONLength(bindwechat_obj)){
+            //最后一步的执行成功
+            play("global","绑定成功");
+        }else{
+            play("global","执行完成");
+        }
+       
+    }else{
+        play("global","执行失败");
+    }
+
+   } 
+   // ;
+//exit();
+//     for(var key in bindwechat_obj){
+//   //  alert("key is:"+key+" value is:"+bindwechat_obj[key]);
+//     //alert(bindwechat_obj[key]["action"]);
+//     var action=bindwechat_obj[key]["action"];
+// //alert("action is"+action);
+//     var featuremode=bindwechat_obj[key]["featuremode"];
+// // alert("featuremode is:"+featuremode);
+//     // click(bindwechat_obj[key]["click_text"]);
+//     // sleep(3000);
+//     // click(bindwechat_obj[key]["click_text"]);
+//     // sleep(3000);
+//     // click(bindwechat_obj[key]["click_text"]);
+//  //   alert(featuremode);
+//     // "featuremode":"classname_text",
+//     // "classname":"android.widget.TextView",
+//     // "text":"朋友圈",
+
+//     //点击文本方式  
+      
+//     if("click_text"==action){
+//         click(bindwechat_obj[key]["click_text"]);
+//         var num=0;
+//             while(1){
+//                 sleep(5000);
+//                num+=1;  
+//               // toast("fm is:"+featuremode);
+//                  //如果是验证类名+文本方式的处理
+//                if(num>10){
+//                 toast("超过10次匹配失败,不支持绑定微信");
+//                }
+//                  if("classname_text"==featuremode){
+//                     var thisclassname=bindwechat_obj[key]["classname"];
+//                     var thistext=bindwechat_obj[key]["text"];
+//                    // alert("thisclassname is:"+thisclassname+" thistext is:"+thistext);
+//                     var ele=className(thisclassname).text(thistext).exists();
+//                     if(ele){
+//                      toast("完成点击"+thistext);
+//                      break;
+//                     }
+
+//                 }
+//             }
+//            // alert("click::::"+bindwechat_obj[key]["click_text"]);//click_text
+//         }
+//     }
+}
+//打开制定app线程
+function openAPP(appname,packagename,activityname,open_obj){
+    Gworkthread="openapp_start";
+    play("global","打开");
+    play("appname",appname);
+    var featuremode=open_obj["featuremode"];
+    thiscommon.openpackage(packagename+"/"+activityname);
+  
+          if(featuremode=="classname"){
+                //     if( className(open_obj["classname"]).packageName(packagename).exists()){
+                //         play("global","打开成功");
+                //         Gworkthread="openapp_stop";
+                //         break;
+                //      //   thread_openApp.interrupt();   
+                //   }
+           }else if(featuremode=="classname_text"){
+            var result=block_check(featuremode,open_obj["classname"],open_obj["text"],'');
+            if(result){
+                play("global","打开成功");
+               Gworkthread="openapp_stop";
+            }else{
+                play("global","打开失败");
+               Gworkthread="openapp_fail"; 
+            }
+      
+           }
+
+}
+//异常处理线程
+function  while_abnormal(abnormal_obj){
+   // Gworkthread="abnormal_start"; 不要这个，会干扰逻辑
+
+   thread_abnormal=threads.start(function(){
+              setInterval(function(){
+                  
+    for(var i=1;i<=thiscommon.JSONLength(abnormal_obj);i++){
+        
+        var featuremode=abnormal_obj["ab"+i]["featuremode"];
+        if("id"==featuremode){
+            
+           var thisid=abnormal_obj["ab"+i]["id"];
+         // toast("this is abnormal.."+thisid);
+                var ele=id(thisid).exists();
+             //   toast("ele is:"+ele);
+                var result=once_check("id",thisid,'','');
+           //  toast("result is:"+result);
+                 if(result){ 
+
+                   // thiscommon.click_id(thisid);
+                    thiscommon.clickxy_for_ele(id(thisid).findOne(1000));
+                     play("global","关闭弹窗");
+                    
+                    }
+            
+        }else if("classname_text"==featuremode){
+            var thisclass=abnormal_obj["ab"+i]["classname"];
+            var thistext=abnormal_obj["ab"+i]["text"];
+            var result=block_check(featuremode,thisclass,thistext,'');
+       //   alert(thisclass+":"+thistext);
+            if(result){
+                thiscommon.click_classname_text(thisclass,thistext);
+                //play("global","关闭弹窗");
+              
+            }
+        }
+
+}
+//for end
+  },1000);
+            });
+}
+// while_abnormal的守护线程，有时候click事件会阻塞，所以每隔5秒杀掉abnormal线程再启动
+function demon_abnormal(abnormal_obj){
+ thread_demon_abnormal=threads.start(
+     function(){
+         setInterval(function(){
+            while_abnormal(abnormal_obj);  
+            sleep(5000);
+            thread_abnormal.interrupt();
+         },1000);
+     }
+ );
+   
+}
+//全局调度线程
+function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj){
+    //appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj
+
+    thread_control=threads.start( //bindwechat注释
+        function(){//bindwechat注释
+            setInterval(function(){//bindwechat注释
+            
+              if("openapp_stop"==Gworkthread||"readnews_stop"==Gworkthread){
+                  //如果是绑定微信runstate
+                if("bindwechat"==Grunstate){
+                    //toast("开始绑定微信");
+                    while_bindwechat(bindwechat_obj);
+                }else if("autoread"==Grunstate){
+                    toast("开始自动阅读");
+                    while_findnews(autoread_obj);
+                }
+                  
+              }else if("findnews_stop"==Gworkthread){
+                while_readnews(autoread_obj);
+              }
+           //   toast("while_control："+Gworkthread);
+            },1000);//bindwechat注释
+        }//bindwechat注释
+    );//bindwechat注释
+}
+//关闭操作系统弹窗
+function while_closewindow(devicetype){
+    if("xiaomi4"==devicetype){
+        thread_closewindow=threads.start(
+            function(){
+                setInterval(function(){
+                var ele=className('android.widget.Button').text("允许").packageName("com.lbe.security.miui");
+               // alert(ele);
+                if(ele.exists()){
+                    ele.findOne(1000).click();
+                }
+                },1000);
+            }
+        );
+    }
+}
+function once_check(checktype,f1,f2,f3){
+   // toast("this is once_check.."+checktype);
+    if("classname_text"==checktype){
+        var ele=className(f1).text(f2).exists();
+        if(ele){
+            return true;
+        }
+
+       }else if("classname_desc"==checktype){
+        var ele=className(f1).desc(f2).exists();
+        if(ele){
+            return true;
+        }
+       }else if("id"==checktype){
+           var ele=id(f1).exists();
+          // toast("ele is:"+ele);
+           if(ele){
+            id(f1).findOne(1000).click();
+               return true;
+           }
+       }else{
+           return false;
+       }  
+}
+//阻塞验证函数
+function block_check(checktype,f1,f2,f3){
+ var num=0;
+    while(1){
+        num+=1;
+        if(num>10){
+            return false;
+        }
+        sleep(2000);
+            if("classname_text"==checktype){
+             var ele=className(f1).text(f2).exists();
+             if(ele){
+                 return true;
+             }
+
+            }else if("classname_desc"==checktype){
+             var ele=className(f1).desc(f2).exists();
+             if(ele){
+                 return true;
+             }
+            }else if("id"==checktype){
+                var ele=id(f1).exists();
+                if(ele){
+                    
+                    return true;
+                }
+            }    
+    
+    }
+
+
+}
+//播放声音
+function play(subpath,appname){
+   // return true;
+//    media.playMusic("/storage/emulated/0/脚本/voice/"+subpath+"/"+appname+".mp3");
+    media.playMusic("/storage/emulated/0/voice/"+subpath+"/"+appname+".mp3");
+    //media.playMusic("./voice/"+subpath+"/"+appname+".mp3");
+  
+    sleep(media.getMusicDuration());
+    ///storage/emulated/0/
+}
+//用于检索非广告的新闻条目
+function finditem(appname){
+    Gworkthread="finditem_start"
+    //悦头条
+
+     if("悦头条"==appname){
+        var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");
+        if(ele.exists()){
+            var childnum=ele.findOnce(1).childCount();
+            if(childnum==4 ||childnum==1){
+                return ele.findOnce(1);
+            }else{
+                play("global","广告不点击");
+            }
+        
+        }
+
+     }else if("北京知天下"==appname){
+        var ele=className("android.support.v7.widget.RecyclerView").className("LinearLayout");//.className("LinearLayout").findOnce(2);
+
+        if(ele.exists()){
+             var cstr=ele.findOnce(0).child(0).child(2).child(0).text().replace(/^\s+|\s+$/g,"");
+             if(cstr=="广告"){
+              play("global","广告不点击");
+             }else{
+               return ele.findOnce(0);
+             }
+           }
+     }else if("掌上消息"==appname){
+        var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
+
+        if(ele.exists()){
+            play("global","打开")
+               return ele.findOnce(0);
+            
+           }
+     }else if("有米头条"==appname){
+        var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
+
+        if(ele.exists()){
+             var cstr=ele.findOnce(0).child(0).text().replace(/^\s+|\s+$/g,"");
+                alert(cstr);
+               return ele.findOnce(0);
+             
+           }
+     }else if("有看头-热点新闻"==appname){
+            var ele=className("android.support.v4.view.ViewPager").className("ListView").className('RelativeLayout');//.className("LinearLayout").findOnce(2);
+    
+            if(ele.exists()){
+                
+                // var cstr=ele.findOnce(0).child(0).child(2).child(2).child(1).text().replace(/^\s+|\s+$/g,"");
+                // var cstr=ele.findOnce(1).className('FrameLayout').child(1).text().replace(/^\s+|\s+$/g,"");//.child(1).child(2).child(2).child(1).text().replace(/^\s+|\s+$/g,"");
+               // alert(cstr);
+                //  if(cstr=="广告"){
+                //   play("global","广告不点击");
+                //  }else{
+                  //  play("global","打开");
+                   return ele.findOne(1000);
+              //   }
+               }
+     }else if("波波视频"==appname){
+            var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
+    
+            if(ele.exists()){
+               // alert(ele.findOnce(1));
+               // play("global","打开");
+               // thiscommon.clickxy_for_ele(ele.findOnce(1));
+                return ele.findOnce(1);
+               }
+            }else if("盈贝头条"==appname){
+                var ele=className("androidx.recyclerview.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
+        
+                if(ele.exists()){
+                   // alert(ele.findOnce(1));
+                 //   play("global","打开");
+                  //  thiscommon.clickxy_for_ele(ele.findOnce(1));
+                    return ele.findOnce(1);
+                   }
+                }
+
+
+
+
+
+
+      //          }, 2000); 
+
+      //  }
+  //  );
+  
+
+//exit();
+//知天下
+// var ele=className("android.support.v7.widget.RecyclerView").className("LinearLayout").findOnce(1);
+// ele=ele.child(0).child(2).child(0).text();
+// alert(ele);
+// exit();
+}
+function openwechat(){
+    play("global","打开微信");
+    thiscommon.openpackage("com.tencent.mm/com.tencent.mm.ui.LauncherUI");
+    var num=0;
+    while(1){
+        //判断是否启动完成
+        var result=block_check("classname_text",'android.widget.TextView','通讯录','');
+        if(result){
+            play("global","打开成功");
+            break;
+        }
+        num+=1;
+        if(num>20){
+            play("global","打开失败");
+            break;
+        }
+        sleep(1000);
+    }
+    // sleep(1000);
+    // var result=className("android.widget.EditText").text('').exists();
+    // if(result){
+    //     className("android.widget.EditText").text('').click();
+    //     sleep(1000);
+    //     //输入密码
+    //     setText(Gwechatpass);
+    //     sleep(1000);
+    //     //登录
+    //     var ele=className("android.widget.Button").text("登录");
+    
+    //     thiscommon.clickxy_for_ele(ele.findOnce());
+    // }
+}
+//朋友圈点赞
+function whthumbup(){
+
+click("发现");
+play("global","点击");
+play("global","发现");
+
+
+
+ele=className("android.widget.TextView").text("朋友圈");
+thiscommon.clickxy_for_ele_once(ele.findOne(1000));
+play("global","点击");
+play("global","朋友圈");
+
+//上滑
+thiscommon.swiperealup_custom();
+sleep(1000);
+//点击评论三个小点
+play("global","点击");
+play("global","赞");
+ele=className("android.widget.ImageView").desc("评论");
+thiscommon.clickxy_for_ele_once(ele.findOne(1000));
+sleep(1000);
+
+// //点赞代码
+// ele=className("android.widget.ImageView").desc("评论");
+// clickxy_for_ele_once(ele.findOne(1000));
+// sleep(1000);
+// ele=className("android.widget.TextView").text("赞");
+// clickxy_for_ele_once(ele.findOne());
+// 评论代码
+
+// 点击评论弹窗
+// ele=className("android.widget.TextView").text("评论");
+// clickxy_for_ele_once(ele.findOne());
+// 录入文字
+// setText("找到好的告诉我，我也在找哦");
+// sleep(1000);
+// ele=className("android.widget.Button").text("发送");
+// clickxy_for_ele_once(ele.findOne(1000));
+
+// alert(ele.findOne(1000));
+// sleep(1000);
+// ele=className("android.widget.TextView").text("取消");
+// clickxy_for_ele_once(ele.findOne());
+
+}
+function whchat(){
+    //聊天模式
+    amgmode=""; //char voice
+    // thiscommon.clean();
+  //  toast("123123");
+    play("global","自动聊天");
+   // alert(wechatfriends.length);
+    for(var i=0;i<wechatfriends.length;i++){
+        //alert(wechatfriends[i]["username"]);
+        //点击通讯录
+        var username=wechatfriends[i]["username"];
+        play("global","点击");
+        play("global","通讯录");
+        click("通讯录");
+        sleep(1000);
+
+        //点击放大镜搜索按钮
+        play("global","点击");
+        play("global","搜索按钮");
+        var ele=className("android.support.v7.widget.LinearLayoutCompat").className("RelativeLayout").findOnce(0);
+        thiscommon.clickxy_for_ele_once(ele.child(0));
+        sleep(1000);
+
+       //输入用户名
+       play("global","随机搜索好友");
+        thiscommon.onebyoneinput(username);
+        setText(username);
+        sleep(1000);      
+        
+        //点击搜索结果
+        play("global","点击");
+         ele=className("android.widget.ListView").className("RelativeLayout").findOnce(2);
+        thiscommon.clickxy_for_ele(ele.child(0));
+        
+        //文字模式
+        play("global","随机文字聊天");
+       var result=whgetamgmode();
+        if(!result){
+            id("amg").findOne().click();
+        }
+        thiscommon.onebyoneinput("怎么不说话？");
+        sleep(2000);
+        ele=className("android.widget.Button").text("发送").findOne(1000);
+        thiscommon.clickxy_for_ele(ele);
+        //   alert(amg.desc());
+        sleep(10000);
+
+        //语音模式
+        play("global","随机发送语音");
+        result=whgetamgmode();
+        if(result){
+            id("amg").findOne().click(); 
+        }
+        sleep(5000);
+        ele=className("android.widget.Button").desc("按住说话").findOne(1000);
+        langtouch(ele.bounds().centerX(),ele.bounds().centerY(),3);
+
+//exit();
+exit();
+      
+    }
+    //循环遍历好友
+    //从循环遍历的语料库里选取内容发送
+
+}
+//微信判断当前聊天模式是语音还是文本
+function whgetamgmode(){
+    var amgstr=id("amg").findOne().desc();
+    if(amgstr=="切换到按住说话"){
+        return true;//true当前文字模式
+    }else{
+        return false;//false 当前语音模式
+    }
+    return;
+}
+function langtouch(x,y,interval){
+    var ra = new RootAutomator();
+    ra.setScreenMetrics(device.width, device.height);
+    ra.touchX(x);//595
+    ra.touchY(y);//1828
+   
+    var num=0;
+    while(1){
+        ra.sendEvent(3, 58, 38);
+        ra.sendEvent(3, 48, 4);
+        ra.sendEvent(1, 330, 1);
+        ra.sendSync();
+        sleep(7);
+        ra.sendEvent(3, 58, 49);
+        ra.sendSync();
+    sleep(88);
+    ra.sendEvent(3, 58, 76);
+    ra.sendEvent(3, 48, 10);
+    ra.sendSync();
+    sleep(193);
+    ra.sendEvent(3, 58, 85);
+    ra.sendSync();
+    sleep(1565);
+    ra.sendEvent(3, 58, 91);
+    ra.sendEvent(3, 48, 9);
+    ra.sendSync();
+    sleep(1177);
+   
+    // sleep(110);
+    // ra.sendEvent(3, 57, -1);
+    // ra.sendEvent(1, 330, 0);
+    // ra.sendSync();
+    
+        num+=1;
+        if(num>interval){
+            break;
+        }
+   
+    }
+    ra.sendEvent(3, 58, 85);
+    ra.sendSync();
+    sleep(93);
+    ra.sendEvent(3, 57, -1);
+    ra.sendEvent(1, 330, 0);
+    ra.sendSync();
+    sleep(1110);
+    ra.sendEvent(3, 57, 900);
+    //  ra.touchX(x);//48
+    //  ra.touchY(y);//357
+    // ra.sendEvent(3, 58, 36);
+    // ra.sendEvent(3, 48, 4);
+    // ra.sendEvent(1, 330, 1);
+    ra.sendSync();
+    ra.exit();
+}
+function sysupdate()
+{
+    var apkurl="https://alissl.ucdl.pp.uc.cn/fs01/union_pack/Wandoujia_997480_web_seo_baidu_homepage.apk";
+    try {
+                    //var script_list_html =
+                     http.get(apkurl);
+    } catch (e) {
+                    return;
+    }
+}
+function hidenapplist(){
+//  applist=[
+//     {
+//          "enable":"false",
+//          "interval":"",
+//          "appname":"悦头条", 
+//          "packagename":"com.expflow.reading",
+//          "activityname":"com.expflow.reading.activity.SplashActivity",
+//          "open":{
+//            "featuremode":"classname_text",
+//            "classname":"android.widget.TextView",
+//            "text":"任务"
+//            },
+//           "abnormal":{
+//             "ab1":{
+//                 "featuremode":"id",
+//                 "id":"ll_quit",
+//             },
+//           },  
+//          "bindwechat":{
+//            "bw1":{
+//                "action":"click_text",
+//                "click_text":"我的",
+//                "featuremode":"classname_text",
+//                "classname":"android.widget.TextView",
+//                "text":"朋友圈",
+//            },
+//            "bw2":{
+//                "action":"click_text",
+//                "click_text":"登录看资讯，随手赚零花",
+//                "featuremode":"classname_text",
+//                "classname":"android.widget.TextView",
+//                "text":"微信登录",
+//            },
+//            "bw3":{
+//             "action":"click_text",
+//             "click_text":"微信登录",
+//             "featuremode":"id",
+//             "id":"txt_account",
+//         },
+          
+//          },
+//          "autoread":{
+//              "ar1":{
+//               "borderline":"android.support.v7.widget.RecyclerView",//android.support.v4.view.ViewPager
+//               "itemsclassname":"android.widget.LinearLayout",//android.widget.TextView
+//               "featuremode":"classname_desc",
+//               "classname":"android.widget.ImageButton",
+//               "desc":"转到上一层级",
+//              },
+//              "ar2":{
+//                  "swipedirection":"vertical",//horizontal
+//                  "deploymode":"classname_desc",
+//                  "deployclassname":"android.view.View",
+//                  "deploydesc":"展开全文",
+//              },
+//          }, 
+//          "durl":""
+//        },
+//     {
+//         "enable":"true",
+//         "interval":"10",
+//         "appname":"北京知天下", 
+//         "packagename":"com.knowworld.news",
+//         "activityname":"cent.news.com.newscent.splash.SplashActivity",
+//         "open":{
+//           "featuremode":"classname_text",
+//           "classname":"android.widget.TextView",
+//           "text":"视频"
+//           },
+//           "abnormal":{
+//            "ab1":{
+//                "featuremode":"id",
+//                "id":"iv_close",
+//            },
+//            "ab2":{
+//             "featuremode":"classname_text",
+//             "classname":"android.widget.TextView",
+//             "text":"先去逛逛",
+//           },
+//           "ab3":{
+//             "featuremode":"classname_text",
+//             "classname":"android.widget.TextView",
+//             "text":"暂不更新",
+//           },
+//          },  
+//         "bindwechat":{
+//             "bw1":{
+//                 "action":"click_text",
+//                 "click_text":"我的",
+//                 "featuremode":"classname_text",
+//                 "classname":"android.widget.TextView",
+//                 "text":"看新闻就可以赚钱的APP",
+//             },
+//             "bw2":{
+//                 "action":"click_id",
+//                 "click_id":"weixinLoginLayout",
+//                 "featuremode":"classname_text",
+//                 "classname":"android.widget.TextView",
+//                 "text":"我的",
+//             },
+//             "bw3":{
+//              "action":"click_text",
+//              "click_text":"我的",
+//              "featuremode":"classname_text",
+//              "classname":"android.widget.TextView",
+//              "text":"累计金币"
+//          },
+//         },
+//         "autoread":{
+//             "ar1":{
+//                 "borderline":"android.support.v7.widget.RecyclerView",//android.support.v4.view.ViewPager
+//                 "itemsclassname":"android.widget.LinearLayout",//android.widget.TextView
+//                 "featuremode":"id",
+//                 "id":"OnBack",
+//                },
+//             "ar2":{
+//                    "swipedirection":"vertical",//horizontal
+//                    "deploymode":"classname_desc",
+//                    "deployclassname":"android.view.View",
+//                    "deploydesc":"展开全文",
+//                    "favmode":"id",
+//                    "favid":"bottomCollect",
+//                    "discussmode":"",
+//                    "discussclassname":"",
+//                    "discusstext":"",
+    
+//                },
+//         }, 
+//         "durl":""
+//       },
+//       {
+//         "enable":"true",
+//         "interval":"10",
+//         "appname":"快马小报", 
+//         "packagename":"com.kuaima.browser",
+//         "activityname":"com.kuaima.browser.module.SplashActivity",
+//         "open":{
+//           "featuremode":"classname_text",
+//           "classname":"android.widget.TextView",
+//           "text":"视频"
+//           },
+//           "abnormal":{
+//            "ab1":{
+//                "featuremode":"id",
+//                "id":"iv_cancle",
+//            },
+//            "ab2":{
+//             "featuremode":"classname_text",
+//             "classname":"android.widget.TextView",
+//             "text":"先去逛逛",
+//           },
+//           "ab3":{
+//             "featuremode":"classname_text",
+//             "classname":"android.widget.TextView",
+//             "text":"暂不更新",
+//           },
+//          },  
+//         "bindwechat":{
+//             "bw1":{
+//                 "action":"click_text",
+//                 "click_text":"我的",
+//                 "featuremode":"classname_text",
+//                 "classname":"android.widget.TextView",
+//                 "text":"看新闻就可以赚钱的APP",
+//             },
+//             "bw2":{
+//                 "action":"click_id",
+//                 "click_id":"weixinLoginLayout",
+//                 "featuremode":"classname_text",
+//                 "classname":"android.widget.TextView",
+//                 "text":"我的",
+//             },
+//             "bw3":{
+//              "action":"click_text",
+//              "click_text":"我的",
+//              "featuremode":"classname_text",
+//              "classname":"android.widget.TextView",
+//              "text":"累计金币"
+//          },
+//         },
+//         "autoread":{
+//             "ar1":{
+//                 "borderline":"android.support.v7.widget.RecyclerView",//定界符android.support.v4.view.ViewPager
+//                 "itemsclassname":"android.widget.TextView",// 特征码类名 android.widget.TextView
+//                 "featuremode":"id",//判断成功的方式 id
+//                 "id":"view_back", // id字符
+//                },
+//             "ar2":{
+//                    "swipedirection":"vertical",// 阅读方式 horizontal
+//                    "deploymode":"classname_text",//展开详情方式 字典 ''|classname_desc|classname_text
+//                    //当deploymode为空时deployclassname和deploytext不出现
+//                    //当deploymode为空时classname_desc时 下面紧跟deployclassname和deploydesc字段
+//                   //当deploymode为空时classname_text时 下面紧跟deployclassname和deploytext字段
+//                    "deployclassname":"android.view.View",
+//                    "deploytext":"展开全文",
+    
+//                    "favmode":"id",//站内收藏方式
+//                    "favid":"bottomCollect",//站内收藏方式为ID时出现
+//                    "discussmode":"",
+//                    "discussclassname":"",
+//                    "discusstext":"",
+    
+//                },
+//         }, 
+//         "durl":""
+//       },
+//     ];
+    
+    }
+    function hiden(){
+        //点击item时执行脚本.
+         // ui.files.on("item_click", function(item, pos, aaa, bbb){
+         //     events.setKeyInterceptionEnabled("volume_up", true);
+         //     events.observeKey();
+         //     events.onKeyDown("volume_up", function(event){ //此处有逻辑问题.没有修改
+         //         if (scriptx_Thread.isAlive()) {
+         //             scriptx_Thread.interrupt(); //停止执行脚本的线程
+         //             toast('按下了音量上键,脚本停止!');
+         //         } else {
+         //             toast('当前没有脚本在执行!');
+         //         }
+         //     });
+     
+         //     if (typeof scriptx_Thread == "object") {
+         //         scriptx_Thread.interrupt();
+         //     }
+             
+         //     var scriptx_Thread = threads.start(function() {
+         //         //这里写脚本内公用的方法
+         //         function sleeply() { //随机延迟
+         //             var ran = random(90,130);
+         //             var speedNum = 101 - speed;
+         //             sleep(ran*speedNum);
+         //         }
+         //         function getAlreadyTalkArry(a) {
+         //             var c, d, e, b = "/sdcard/com.UITest.script/tmp/NameList/" + a + "AlreadyTalk.tmp";
+         //             return files.exists(b) || (files.createWithDirs(b), c = files.read(b), "" == c && files.write(b, "0"), 
+         //             sleep(200)), d = open(b, mode = "r"), e = d.readlines().slice(), d.close(), e;
+         //         }
+         //         if (!newworkTesting()) {
+         //             toast('网络连接失败...');
+         //             return;
+         //         }
+     
+         //         //设置微信号变量和执行次数
+         //         var Config_file = "/sdcard/com.UITest.script/tmp/Config/config.ini";
+         //         files.createWithDirs(Config_file)
+         //         let configStr = files.read(Config_file);
+         //         if (configStr != "") {
+         //             let configArry = configStr.split("|");
+         //             var wechaNumber = configArry[0];
+         //             if (wechaNumber == "") { writeLog("微信号使用默认值: 空");}
+         //             var loopTimes = configArry[1];
+         //             if (loopTimes == "") {
+         //                 loopTimes = 1;
+         //                 writeLog("执行次数使用默认值: " + loopTimes);
+         //             }
+         //             var speed = parseInt(configArry[2]);
+         //             if (speed == "") {
+         //                 speed = parseInt(79);
+         //                 writeLog('脚本速度使用默认值: ' + (speed + 1));
+         //             }
+         //             var sendMsg = configArry[3];
+         //             if (sendMsg == "") {
+         //                 sendMsg = "false";
+         //                 writeLog('出错后不发送消息给开发者.');
+         //             }
+         //         } else {
+         //             var wechaNumber = "";
+         //             var loopTimes = 1;
+         //             var speed = parseInt(79);
+         //             var sendMsg = "false";
+         //             writeLog("没有设置相关参数,使用默认值.");
+         //         }
+         //         //开始执行脚本
+         //         var script_x = files.read(item.path, encoding = 'utf-8');
+         //         try {
+         //             eval(script_x);
+         //             writeLog("脚本执行完毕.");
+         //         } catch (e) {
+         //             writeLog(e + '\n' + e.stack);
+         //             if (sendMsg == "true") {
+         //                 sendMsgToDeveloper();
+         //             } else {
+         //                 var ErrMsg = confirm("程序出错是否发送日志给开发者?","点击确定发送,点击取消不发送.");
+         //                 if (ErrMsg) {
+         //                     sendMsgToDeveloper();
+         //                 }
+         //             }
+         //             return;
+         //         }
+         //     });
+         // });
+     
+         // //点击右上角的刷新按钮,刷新list列表
+         // ui.refresh.click(()=>{
+         //     //刷新数据时刷新按钮旋转线程
+         //     var imgRotate_Thread = threads.start(function() {
+         //         var i = 0;
+         //         while(true) {
+         //             i+=4;
+         //             ui.run(()=>{
+         //                 ui.refresh.setRotation(i);
+         //             });
+         //         }
+         //     });
+     
+         //     //数据刷新线程
+         //     var refreshItem_Thread = threads.start(function () {
+         //         //初始化数据源数组
+         //         scriptInfo = [];
+     
+         //         var url = 'https://script.iqqclub.com/Script/script_info.json';
+         //         try {
+         //             var script_list_html = http.get(url);
+         //         } catch (e) {
+         //             return;
+         //         }
+         //         var script_info = script_list_html.body.json();
+         //         //在线更新脚本
+         //         var file_desc_Arry = []; file_name_Arry = []; file_root_path_Arry = [];
+         //         for (let FILE in script_info) {
+         //             //判断本地脚本列表中是否存在脚本
+         //             var file_version = script_info[FILE].split('|')[3];
+         //             var file_desc = script_info[FILE].split('|')[0];
+         //             file_desc_Arry.push(file_desc + '_V'+file_version);
+         //             var file_name = script_info[FILE].split('|')[2];
+         //             file_name_Arry.push(file_name);
+         
+         //             var file_root_path = script_info[FILE].split('|')[1];
+         //             file_root_path_Arry.push(file_root_path);
+         
+         //             //创建脚本存储目录
+         //             var script_download_path = '/sdcard/com.UITest.script/ScriptDownLoad/' + file_root_path + '/';
+         //             files.ensureDir(script_download_path);
+         //             var scriptPath = script_download_path+file_name;
+         //             //从网络下载
+         //             if (!getScriptFromServer(file_name,script_download_path)) {
+         //                 return;
+         //             }
+                     
+         //             //将脚本信息填充到数据源数组中
+         //             scriptInfo.push({
+         //                 desc: file_desc,
+         //                 serverVersion: file_version,
+         //                 path: scriptPath,
+         //             });
+         //         }
+         //     });
+     
+         //     //等待listView刷新完成后,要执行的逻辑
+         //     var waitItem_Thread = threads.start(function() {
+         //         refreshItem_Thread.join(10000);
+         //         if (scriptInfo == "") {
+         //             var rotationAngle = ui.refresh.getRotation();
+         //             var Rem = rotationAngle%360
+         //             var supplement = 360 - Rem;
+         //             var supplementTimes = supplement/4;
+         //             for (var i = 0; i < supplementTimes; i++) {
+         //                 Rem += 4;
+         //                 ui.run(()=>{
+         //                     ui.refresh.setRotation(Rem);
+         //                 });
+         //             }
+     
+         //             //结束刷新按钮旋转的进程
+         //             imgRotate_Thread.interrupt();
+         //             toast('网络连接失败...');
+         //             return;
+         //         }
+     
+         //         var rotationAngle = ui.refresh.getRotation();
+         //         var Rem = rotationAngle%360
+         //         var supplement = 360 - Rem;
+         //         var supplementTimes = supplement/4;
+         //         for (var i = 0; i < supplementTimes; i++) {
+         //             Rem += 4;
+         //             ui.run(()=>{
+         //                 ui.refresh.setRotation(Rem);
+         //             });
+         //         }
+     
+         //         //设置list控件的数据源
+         //         ui.run(()=>{
+         //             ui.waitForDownload.setVisibility(View.GONE);
+         //             ui.noData.setVisibility(View.GONE);
+         //             ui.files.setVisibility(View.VISIBLE);
+         //             ui.files.setDataSource(scriptInfo);
+         //             //结束刷新按钮旋转的进程
+         //             imgRotate_Thread.interrupt();
+         //             toast('刷新完毕');
+         //         });
+         //     }); 
+         // });
+     
+         // //获取脚本信息生成列表数据
+         // var loadItem_Thread = threads.start(function () {
+         //     var url = 'https://script.iqqclub.com/Script/script_info.json';
+         //     try {
+         //         var script_list_html = http.get(url);
+         //     } catch (e) {
+         //         return;
+         //     }
+             
+         //     var script_info = script_list_html.body.json();
+         //     //在线更新脚本
+         //     var file_desc_Arry = []; file_name_Arry = []; file_root_path_Arry = [];
+         //     for (let FILE in script_info) {
+         //         //判断本地脚本列表中是否存在脚本
+         //         var file_version = script_info[FILE].split('|')[3];
+         //         var file_desc = script_info[FILE].split('|')[0];
+         //         file_desc_Arry.push(file_desc + '_V'+file_version);
+         //         var file_name = script_info[FILE].split('|')[2];
+         //         file_name_Arry.push(file_name);
+     
+         //         var file_root_path = script_info[FILE].split('|')[1];
+         //         file_root_path_Arry.push(file_root_path);
+     
+         //         //创建脚本存储目录
+         //         var script_download_path = '/sdcard/com.UITest.script/ScriptDownLoad/' + file_root_path + '/';
+         //         files.ensureDir(script_download_path);
+         //         var scriptPath = script_download_path+file_name;
+         //         if (!files.exists(script_download_path+file_name)) {
+         //             //从网络下载回来
+         //             if (!getScriptFromServer(file_name,script_download_path)) {
+         //                 return;
+         //             }
+         //         } else {
+         //             //读取本地脚本文件的版本号
+         //             var fr = open(script_download_path+file_name, mode = 'r');
+         //             var script_version_line = fr.readline();
+         //             fr.close();
+         //             var script_version_clint = script_version_line.split(':')[1].replace('.', '');
+         //             //获取服务器脚本文件的版本号
+         //             var script_version_server = file_version.replace('.', '');
+         //             if (script_version_server > script_version_clint) {
+         //                 if (!getScriptFromServer(file_name,script_download_path)) {
+         //                     return;
+         //                 }
+         //             }
+         //         }
+         //         //将脚本信息填充到数据源数组中
+         //         scriptInfo.push({
+         //             desc: file_desc,
+         //             serverVersion: file_version,
+         //             path: scriptPath
+         //         });
+         //     }
+         // });
+     
+         // //获取数据时的等待效果
+         // var waitForDownload_Thread = threads.start(function() {
+         //     refreshBtnDisable();
+         //     for (;;) {
+         //         for (r = 0, t = 0; ;) if (r += .23, t += r, ui.run(()=>{ui.img_waitForDownload.setRotation(t)}), 
+         //         ui.img_waitForDownload.getRotation() >= 180) break;
+         //         for (;;) if (r -= .23, t += r, ui.run(()=>{ui.img_waitForDownload.setRotation(t)}), ui.img_waitForDownload.getRotation() >= 360) break;
+         //     }
+         // });
+         // //等待listView加载完成后,要执行的逻辑
+         // var waitItem_Thread = threads.start(function() {
+         //     loadItem_Thread.join(10000);
+         //     if (scriptInfo == "") {
+         //         toast('网络连接失败,请刷新');
+         //         loadItem_Thread.interrupt();
+         //         waitForDownload_Thread.interrupt();
+         //         ui.run(()=>{
+         //             refreshBtnEnable();
+         //             ui.str_waitForDownload.setText("网络连接失败...");
+         //             ui.img_waitForDownload.setRotation(0);
+         //         });
+         //         return;
+         //     }
+         //     //拉取成功,停止拉取动画
+         //     waitForDownload_Thread.interrupt();
+         //     //设置list控件的数据源
+         //     ui.run(()=>{
+         //         refreshBtnEnable();
+         //         ui.waitForDownload.setVisibility(View.GONE); 
+         //         ui.files.setDataSource(scriptInfo);
+         //     });
+         //     // alert(ui.files.getAdapter().getItemCount());
+         // });
+     
+     /**
+      * 第二屏相关代码逻辑
+      */
+     
+     // ui.speedtext.setText((ui.speed.getProgress()+1).toString());
+     // ui.speed.setOnSeekBarChangeListener({
+     //     //进度条监听设置
+     //     onProgressChanged: function(seekbar, p, fromUser){
+     //         var text, send;
+     //         fromUser && (text = (p + 1).toString(), ui.speedtext.setText(text), wechatNum = ui.wechaNum.text(), 
+     //         loopTime = ui.Loops.text(), "" == loopTime && (loopTime = 1), send = ui.sendMsgOption.isChecked() ? !0 :!1, 
+     //         configStr = wechatNum + "|" + loopTime + "|" + p + "|" + send, writeConfig(configStr));
+     //     }
+     // });
+     // ui.wechaNum.addTextChangedListener({
+     //     //监听微信号输入框
+     //     // onTextChanged(s, start, before, count)
+     //     // beforeTextChanged(s, start, before, count)
+     //     afterTextChanged: function(s) {
+     //         var send;
+     //         loopTime = ui.Loops.text(), "" == loopTime && (loopTime = 1), speed = ui.speed.getProgress(), 
+     //         send = ui.sendMsgOption.isChecked() ? !0 :!1, configStr = s + "|" + loopTime + "|" + speed + "|" + send, 
+     //         writeConfig(configStr);
+     //     } 
+     // }); 
+     // ui.Loops.addTextChangedListener({
+     //     afterTextChanged: function(s) {
+     //         var send;
+     //         wechatNum = ui.wechaNum.text(), speed = ui.speed.getProgress(), send = ui.sendMsgOption.isChecked() ? !0 :!1, 
+     //         configStr = wechatNum + "|" + s + "|" + speed + "|" + send, writeConfig(configStr);
+     //     }
+     // });
+     // //从配置文件读取微信号和执行次数以及速度
+     // var loadConfig_Thread = threads.start(function() {
+     //     let ConfigPath = "/sdcard/com.UITest.script/tmp/Config/config.ini";
+     //     if (!files.exists(ConfigPath)) {
+     //         files.createWithDirs(ConfigPath);
+     //     }
+     //     let configStr = files.read(ConfigPath);
+     //     if (configStr != "") {
+     //         let configArry = configStr.split("|");
+     //         let wecharNum = configArry[0];
+     //         let loopTime = configArry[1];
+     //         let speed = configArry[2];
+     //         ui.run(()=>{
+     //             ui.wechaNum.setText(wecharNum);
+     //             ui.Loops.setText(loopTime);
+     //             ui.speed.setProgress(speed);
+     //             ui.speedtext.setText((ui.speed.getProgress()+1).toString());
+     //         });
+     //     }
+     // });
+     // //清理相关区域删除按钮状态的设置
+     // ui.clear_Btn.setClickable(false);
+     // ui.clear_Btn.setEnabled(false);
+     // ui.clear_Btn.setFocusable(false);
+     
+     // ui.clear_log.on("check", (checked)=>{
+     //     checked ? clearBtnEnable() :(clear_namelist_hecked = ui.clear_namelist.isChecked(), 
+     //     clear_config_hecked = ui.clear_config.isChecked(), clear_namelist_hecked || clear_config_hecked || clearBtnDisable());
+     // });
+     // ui.clear_namelist.on("check", (checked)=>{
+     //     checked ? clearBtnEnable() :(clear_log_hecked = ui.clear_log.isChecked(), clear_config_hecked = ui.clear_config.isChecked(), 
+     //     clear_log_hecked || clear_config_hecked || clearBtnDisable());
+     // });
+     // ui.clear_config.on("check", (checked)=>{
+     //     checked ? clearBtnEnable() :(clear_log_hecked = ui.clear_log.isChecked(), clear_namelist_hecked = ui.clear_namelist.isChecked(), 
+     //     clear_log_hecked || clear_namelist_hecked || clearBtnDisable());
+     // });
+     // ui.clear_Btn.click(()=>{
+     //     // toast('clicked');
+     //     let clear_log_hecked = ui.clear_log.isChecked();
+     //     let clear_namelist_hecked = ui.clear_namelist.isChecked();
+     //     let clear_config_hecked = ui.clear_config.isChecked();
+     //     if (clear_log_hecked) {
+     //         clearLog();
+     //     }
+     //     if (clear_namelist_hecked) {
+     //         clearNamelist();
+     //     }
+     //     if (clear_config_hecked) {
+     //         clearConfig();
+     //     }
+     //     toast('清理完毕');
+     //     setAllChecked();
+     
+     //     ui.files.setVisibility(View.GONE);
+     //     ui.noData.setVisibility(View.VISIBLE);
+     // });
+     
+     // //附加功能区域的逻辑
+     
+     // ui.sendMsgOption.on("check", (checked)=>{
+     //     if (checked) {
+     //         if (!findApp("QQ")) return toast("未安装QQ,该功能不可用!"), ui.sendMsgOption.setChecked(!1), 
+     //         void 0;
+     //         wechatNum = ui.wechaNum.text(), loopTime = ui.Loops.text(), "" == loopTime && (loopTime = 1), 
+     //         speed = ui.speed.getProgress(), sendMsg = "true", configStr = wechatNum + "|" + loopTime + "|" + speed + "|" + sendMsg, 
+     //         writeConfig(configStr);
+     //     } else wechatNum = ui.wechaNum.text(), loopTime = ui.Loops.text(), "" == loopTime && (loopTime = 1), 
+     //     speed = ui.speed.getProgress(), sendMsg = "false", configStr = wechatNum + "|" + loopTime + "|" + speed + "|" + sendMsg, 
+     //     writeConfig(configStr);
+     // });
+     
+     // /**测试页面事件绑定 */
+     // function setSize(view,width,height){
+     //     //LayoutParams(width,height) 宽度，高度为整数 单位:px
+     //     var params = new android.widget.LinearLayout.LayoutParams(width, height);
+     //     view.setLayoutParams(params);
+     //     }
+     // Gworkthread="";
+     // //一级页面循环上滑找新闻线程
+     // function while_findnews(){
+     //     Gworkthread="findnews_start";
+     //     toast("找新闻线程启动...");
+     //     var upcount=0;
+     //     thread_findnews=threads.start(
+     //         function(){
+     //             setInterval(
+     //                 function(){
+     //                 thisswipe.swiperealup_custom();
+     //                 upcount+=1;
+     //                 var m=3;
+     //                 var n=2;
+     //                 var x=Math.round(Math.random()*(m-n))+n;
+     //                 if(upcount>x){
+     //                     //判断新闻条目是否存在
+     //                     var ele=className("android.support.v4.view.ViewPager").className("android.widget.TextView");
+     //                     if(ele.exists()){
+     //                         //如果存在，点击第二条新闻
+     //                        // (ele.bounds().centerX(),ele.bounds().centerY())
+     //                        toast("找到新闻..");
+     //                      //  toast("x:"+ele.findOnce(2).bounds().centerX()+" y:"+ele.findOnce(2).bounds().centerY());
+     //                        var thisx=ele.findOnce(2).bounds().centerX();
+     //                        var thisy=ele.findOnce(2).bounds().centerY();
+     
+     //                         thiscommon.touchreal(thisx,thisy);
+     //                         //等待1秒，否则线程关闭，点击事件会无效
+     //                         sleep(1000);
+     //                         Gworkthread="findnews_stop";
+     //                         thread_findnews.interrupt();
+     //                     }
+     //                 }
+     //                 },2000);
+     //         }
+     //     );
+     // }
+     // //二级页面阅读线程
+     // function while_readnews(){
+     //     Gworkthread="readnews_start";
+     //     var upcount=0;
+     //     var o=30;
+     //     var p=10;
+     //     //上滑次数
+        
+     //     var maxupcount=Math.round(Math.random()*(o-p))+p;
+     //     toast("随机上滑："+maxupcount+"次");
+     //     thread_readnews=threads.start(
+     //         function(){
+     //             while(1){
+     //                 var m=4000;
+     //                 var n=1000;
+     //                //两次上滑之间的间隔
+     //                 var x=Math.round(Math.random()*(m-n))+n;
+     //                 thisswipe.swiperealup_custom();
+     //                 upcount+=1;
+     //                 if(upcount>maxupcount){
+     //                     toast("返回首页...");
+     //                     back();
+     //                     Gworkthread="readnews_stop";
+     //                     sleep(1000);
+     //                     thread_readnews.interrupt();
+     //                 }
+     //                 toast("间隔："+x+"毫秒");
+     //                 sleep(x);
+     //             }
+     //             //setInterval(function(){},1000);
+     //         }
+     //     );
+     // }
+     // //打开制定app线程
+     // function openAPP(){
+     //     Gworkthread="openapp_start";
+     //     thiscommon.openpackage("com.ss.android.article.lite/com.ss.android.article.lite.activity.MainActivity");
+     // thread_openApp=threads.start(
+     //     function(){
+     //         setInterval(function(){
+     //            if( className("android.widget.TextView").text('小视频').packageName("com.ss.android.article.lite").exists()){
+     //             toast("启动完成.....");
+     //             Gworkthread="openapp_stop";
+     //             thread_openApp.interrupt();   
+     //            }
+     //         },1000);
+     //     }
+     // );
+     // }
+     // //异常处理线程
+     // function  abnormal(){
+     //     Gworkthread="abnormal_start";
+     
+     // }
+     // //全局调度线程
+     // function while_control(){
+     // thread_control=threads.start(
+     //     function(){
+     //         setInterval(function(){
+     //           if("openapp_stop"==Gworkthread||"readnews_stop"==Gworkthread){
+     //             while_findnews();
+     //           }else if("findnews_stop"==Gworkthread){
+     //             while_readnews();
+     //           }
+     //         },1000);
+     //     }
+     // );
+     
+     // }
+     
+     
+     //     ui.autoread_jinri.click(()=>{
+     //    // alert("autoread");
+     
+     //     while_control();
+     //     openAPP();
+     // });
+     
+     // ui.uiinflate.click(()=>{
+     //     //let checkbox_view = ui.inflate(<checkbox />);
+     //    //  ui.inflate("");
+     //   //  ui.inflate(<button text='路飞'></button>,ui.applist.ui.applist,true);
+     // });
+     // ui.whileopen.click(()=>{
+     //   //  alert("test....");
+     //     //alert(myappjson.getappjson().length);
+     //   // roundappjson();
+     //   var layo = new android.widget.LinearLayout(context)
+     //   layo.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+     //   layo.setId(android.view.View.generateViewId())
+     // //   var child1 = new TextView(context);
+     // var child1=new CheckBox(context);
+     // // id="sendMsgOption" text="109.今日头条" color="{{textColor}}"
+     // child1.setText("微鲤看看");
+     // //child1.c(colors.parseColor(textColor));
+     // child1.setTextSize(14);
+     // child1.width="2";
+     // child1.setTextColor(colors.parseColor(textColor));
+     // child1.setGravity(0); 
+     //  child1.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+      
+     //  var child2 =new TextView(context);
+     //    child2.setTextSize(14);
+     //    child2.setTextColor(colors.parseColor(textColor))
+     //    child2.setText("次数:");
+     //    child2.setGravity(0); //左护法
+     //    child2.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+     
+     // var child3=new EditText(context);
+     // child3.setGravity(0); //左护法
+     // child3.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+     
+     // var child4=new Button(context);
+     // child4.setId(android.view.View.generateViewId());
+     // child4.setText("打开"); 
+     // child4.setGravity(0);
+     
+     // //改背景
+     // child4.setBackgroundColor(colors.parseColor("#6495ED"));
+     // child4.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+     // //修改大小
+     // setSize(child4,120,100);
+     
+     // layo.addView(child1);
+     // layo.addView(child2);
+     // layo.addView(child3);
+     // layo.addView(child4);
+     
+     //  ui.applist.addView(layo);
+     //   //parent.addView(layo)
+     // }); 
+     
+     // //遍历app数据结构的函数
+     // function roundappjson(){
+     //     var myapp=myappjson.getappjson();
+     //   //  alert(myapp.length);exit();
+     //     for(var i=0;i<myapp.length;i++){
+     //         //优化内存
+     //       //  thiscommon.clean("xiaomi4");// clean();
+     //         var clickname=myapp[i]['clickname'];
+     //         var enable=myapp[i]['enable'];
+     //         var packagename=myapp[i]['packagename'];
+     //         var voice=myapp[i]['voice'];
+     //         var bindwechat=myapp[i]['bindwechat']; 
+     //         var autoread=myapp[i]['autoread'];
+     //         var clickname=myapp[i]['clickname'];
+     //         var durl=myapp[i]['durl'];
+     
+     //        // if("false"==enable){ toast("下一个");continue; }
+     //         toast('打开'+myapp[i]['appname']);
+     //         exit();
+     
+     //         //通过中文名取出包名
+             
+     //        //start微信开始
+     //         // for(var key in bindwechat){
+     //         //     //alert('key='+key+'  value='+bindwechat[key]);
+     //         //     var action=bindwechat[key]['action'];
+     //         //     if("open"==action){
+     //         //        openpackage(bindwechat[key]['packagename']);
+     //         //     }else if("thread_openyes"==action){
+                     
+     //         //      //   toast("启动线程........."+bindwechat[key]['text']);
+                     
+     //         //         thisName=bindwechat[key]['className'];
+     //         //         thistext=bindwechat[key]['text'];
+     
+     //         //         thread_openyes =threads.start(function(){
+     //         //             setInterval(function(){
+     //         //                // alert("className:"+thisName+" text:"+thistext);
+     //         //                   if("className_text"==bindwechat[key]['featuremode']){
+                             
+     //         //                       if(
+     //         //                           className(thisName).text(thistext).exists()){
+     //         //                       // alert('发现open弹窗'); 
+     //         //                       clicktext("允许");
+     //         //                       // clickclass_for_text(thisName,thistext);    
+     //         //                        thread_opencheck.interrupt();
+     //         //                     } 
+     //         //                   }
+                                
+                             
+     //         //             },4000);
+     //         //         });
+     //         //     }else if("checking"==action){
+     //         //             if("className_text"==bindwechat[key]['featuremode']){
+     //         //                 //findOne 会阻塞
+     //         //              var ele=className(bindwechat[key]['className']).text(bindwechat[key]['text']).findOne() 
+     //         //              // alert(ele);
+     //         //             }
+     //         //     }else if("click"==action){
+     //         //        // 点击的处理方式
+     //         //        //如果是类名+文本点击
+     //         //        if("className_text"==bindwechat[key]['featuremode']){       
+     //         //         clickclass_for_text(bindwechat[key]['className'],bindwechat[key]['text'] );//bindwechat[key]['className']
+     //         //         //如果是类名+索引点击   
+     //         //     }else if("className_index"==bindwechat[key]['featuremode']){
+     //         //         clickclass_for_index(bindwechat[key]['className'],bindwechat[key]['index'] );
+     //         //         //如果是纯文字点击   
+     //         //     }else if("text"==bindwechat[key]['featuremode']){
+     //         //         toast('text click');
+     //         //         clicktext(bindwechat[key]['text']);
+     //         //         //如果是根据ID点击
+     //         //     }else if("id"==bindwechat[key]['featuremode']){
+     //         //         clickid(bindwechat[key]['id']);
+     //         //        }
+     //         //     }
+     //         //  }
+     //         //end 绑定微信
+     // }
+     // //end for
+     // }
+     // //end func
+     // /**
+     //  * 脚本所有公用函数
+     //  */
+     // function newworkTesting() {
+     //     try {
+     //         var a = "https://www.baidu.com";
+     //         http.get(a);
+     //     } catch (b) {
+     //         return !1;
+     //     }
+     //     return !0;
+     // }
+     // function clearBtnEnable() {
+     //     ui.clear_Btn.setClickable(!0), ui.clear_Btn.setEnabled(!0), ui.clear_Btn.setFocusable(!0);
+     // }
+     // function clearBtnDisable() {
+     //     ui.clear_Btn.setClickable(!1), ui.clear_Btn.setEnabled(!1), ui.clear_Btn.setFocusable(!1);
+     // }
+     // function setAllChecked() {
+     //     ui.clear_log.setChecked(!1), ui.clear_namelist.setChecked(!1), ui.clear_config.setChecked(!1);
+     // }
+     // function refreshBtnEnable() {
+     //     ui.refresh.setClickable(!0), ui.refresh.setEnabled(!0), ui.refresh.setFocusable(!0);
+     // }
+     // function refreshBtnDisable() {
+     //     ui.refresh.setClickable(!1), ui.refresh.setEnabled(!1), ui.refresh.setFocusable(!1);
+     // }
+     // function clearLog() {
+     //     var a = "/sdcard/com.UITest.script/log/";
+     //     files.exists(a) && (files.isEmptyDir(a) || files.removeDir(a)), files.createWithDirs(a);
+     // }
+     // function clearNamelist() {
+     //     var a = "/sdcard/com.UITest.script/tmp/NameList/";
+     //     files.exists(a) && (files.isEmptyDir(a) || files.removeDir(a)), files.createWithDirs(a);
+     // }
+     // function clearConfig() {
+     //     ui.run(()=>{
+     //         ui.wechaNum.setText("");
+     //         ui.Loops.setText("");
+     //         ui.speed.setProgress(79);
+     //         ui.speedtext.setText((ui.speed.getProgress()+1).toString());
+     //     });
+     //     var a = "/sdcard/com.UITest.script/ScriptDownLoad/", b = "/sdcard/com.UITest.script/tmp/Config/";
+     //     files.exists(a) && (files.isEmptyDir(a) || files.removeDir(a)), files.exists(b) && (files.isEmptyDir(b) || files.removeDir(b)), 
+     //     files.createWithDirs(a), files.createWithDirs(b);
+     // }
+     
+     // function clickId(a) {
+     //     for (obj_ID = id(a).boundsInside(5, 5, device.width-5, device.height-5); obj_ID.find().empty(); ) sleep(1e3);
+     //     X = obj_ID.find().get(0).bounds().centerX(), Y = obj_ID.find().get(0).bounds().centerY(), 
+     //     Deviation = random(-10, 10), X1 = X - Deviation, Y1 = Y - Deviation, device.sdkInt<24?ra.tap(X1,Y1):click(X1,Y1);
+     // }
+     // function clickText(a) {
+     //     for (obj_Text = text(a).boundsInside(5, 5, device.width-5, device.height-5); obj_Text.find().empty(); ) sleep(1e3);
+     //     X = obj_Text.find().get(0).bounds().centerX(), Y = obj_Text.find().get(0).bounds().centerY(), 
+     //     Deviation = random(-10, 10), X1 = X - Deviation, Y1 = Y - Deviation, device.sdkInt<24?ra.tap(X1,Y1):click(X1,Y1);
+     // }
+     // function clickDesc(a) {
+     //     for (obj_Desc = desc(a).boundsInside(5, 5, device.width-5, device.height-5); obj_Desc.find().empty(); ) sleep(1e3);
+     //     X = obj_Desc.find().get(0).bounds().centerX(), Y = obj_Desc.find().get(0).bounds().centerY(), 
+     //     Deviation = random(-10, 10), X1 = X - Deviation, Y1 = Y - Deviation, device.sdkInt<24?ra.tap(X1,Y1):click(X1,Y1);
+     // }
+     // function getSystemDate(a) {
+     //     var b = new SimpleDateFormat("HH:mm:ss"), c = new SimpleDateFormat("yyyy-MM-dd");
+     //     return "tf" == a ? b.format(new java.util.Date()) :"df" == a ? c.format(new java.util.Date()) :void 0;
+     // }
+     // function writeLog(a) {
+     //     var c, b = "/sdcard/com.UITest.script/log/Info_" + getSystemDate("df") + ".log";
+     //     files.ensureDir("/sdcard/com.UITest.script/log/"), files.exists(b) || files.create(b);
+     //     try {
+     //         c = new PrintWriter(new FileWriter(b, !0)), c.println("[" + getSystemDate("tf") + "] " + a), 
+     //         c.flush(), c.close();
+     //     } catch (d) {
+     //         log(d);
+     //     }
+     // }
+     // function writeConfig(str) { //将内容写入配置文件
+     //     var ConfigPath = "/sdcard/com.UITest.script/tmp/Config/config.ini";
+     //     files.exists(ConfigPath) || files.createWithDirs(ConfigPath), files.write(ConfigPath, str);
+     // }
+     // function getScriptFromServer(FILE,PATH) { //从服务器获取脚本
+     //     var i, download_res, script_file_url = "https://script.iqqclub.com/Script/" + FILE;
+     //     for (i = 0; 10 > i; i++) try {
+     //         if (download_res = http.get(script_file_url), 200 == download_res.statusCode) break;
+     //     } catch (e) {
+     //         if (sleep(500), 9 == i) return !1;
+     //     }
+     //     return files.writeBytes(PATH + FILE, download_res.body.bytes()), 
+     //     !0;
+     // }
+     // function sendMsgToDeveloper() {
+     //     var LogfilePath = "/sdcard/com.UITest.script/log/Info_" + getSystemDate("df") + ".log";
+     //     var fr = open(LogfilePath, mode = "r");
+     //     var logArry = fr.readlines();
+     //     fr.close(); 
+     //     if (logArry.length >= 10) {
+     //         var sendMsgArry = logArry.slice(-10);
+     //     } else {
+     //         var sendMsgArry = logArry;
+     //     }
+     //     var sendMsg = "";
+     //     for (let i = 0; i < sendMsgArry.length; i++) {
+     //         var w = sendMsgArry[i];
+     //         sendMsg = sendMsg + w + "\n";
+     //     }
+     //     // alert(sendMsg);
+     //     app.startActivity({
+     //         data: "mqqapi://im/chat?chat_type=wpa&uin=1741903670",
+     //     });
+     //     waitForActivity('com.tencent.mobileqq.activity.SplashActivity');
+     //     sleep(1000);
+     //     id("input").setText(sendMsg);
+     //     sleep(200);
+     //     // id('fun_btn').findOne().click();
+     //     clickText("发送");
+     //     return;
+     // }
+     // function findApp(n) {
+     //     if (getPackageName(n) != null) {
+     //         return true;
+     //     } else {
+     //         return false;
+     //     }
+     // }
+     
+     }
