@@ -10,14 +10,14 @@
            "text":"任务"
            },
     		 "abnormal":{
-           "ab1":{
-               "featuremode":"id",
-               "id":"ll_quit",
-           },
-           "ab2":{
-            "featuremode":"classname_text",
-            "classname_text":"hahahhahaha",
-          },
+        //   "ab1":{
+       //        "featuremode":"id",
+       //        "id":"ll_quit",
+      //     },
+      //     "ab2":{
+      //      "featuremode":"classname_text",
+       //     "classname_text":"hahahhahaha",
+      //    },
          },
          "bindwechat":{
           "bw1":{
