@@ -1,0 +1,26 @@
+{
+        "enable":"true",
+        "appname":"二头条", 
+        "interval":"3",
+         "packagename":"com.emar.mcn",
+        "activityname":"com.emar.mcn.activity.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"视频"
+          },
+          "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"iv_close",
+           },
+           "ab2":{
+            "featuremode":"classname_text",
+            "classname_text":"hahahhahaha",
+          },
+         },  
+       
+        "autoread":{
+        }, 
+        "durl":""
+       }

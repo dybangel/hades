@@ -1,0 +1,29 @@
+{
+        "enable":"false",
+        "appname":"博学方财", 
+        "interval":"3",
+         "packagename":"io.dcloud.UNIA4FC71A",
+        "activityname":"io.dcloud.PandoraEntryActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"视频"
+          },
+          "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"iv_close",
+           },
+           "ab2":{
+            "featuremode":"classname_text",
+            "classname_text":"hahahhahaha",
+          },
+         },  
+        "bindwechat":{
+          
+    
+        },
+        "autoread":{
+        }, 
+        "durl":""
+       }

@@ -1,0 +1,28 @@
+{
+        "enable":"false",
+        "appname":"惠视频", 
+        "interval":"3",
+         "packagename":"com.cashvideo",
+        "activityname":"com.cashvideo.LaunchPageActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"小视频"
+          },
+          "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"iv_close",
+           },
+           "ab2":{
+            "featuremode":"classname_text",
+            "classname_text":"hahahhahaha",
+          },
+         },  
+        "bindwechat":{
+    
+        },
+        "autoread":{
+        }, 
+        "durl":""
+       }

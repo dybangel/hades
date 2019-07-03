@@ -1,0 +1,24 @@
+{
+      "enable":"false",
+      "appname":"趣头条", 
+      "interval":"3",
+         "packagename":"com.jifen.qukan",
+      "activityname":"com.jifen.qkbase.main.MainActivity",
+      "open":{
+        "featuremode":"classname_text",
+        "classname":"android.widget.Button",
+        "text":"任务"
+        },
+       "abnormal":{
+         "ab1":{
+             "featuremode":"id",
+             "id":"ll_quit",
+         },
+       },  
+      "bindwechat":{
+    
+      },
+      "autoread":{
+      }, 
+      "durl":""
+      }

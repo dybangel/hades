@@ -1,0 +1,32 @@
+{
+      "enable":"true",  
+      "appname":"趣故事", 
+      "interval":"3",
+         "packagename":"com.ziqun.story",
+      "activityname":"com.story.SplashActivity",
+      "open":{
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"微信登录"
+        },
+       "abnormal":{
+         "ab1":{
+             "featuremode":"id",
+             "id":"ll_quit",
+         },
+       },  
+      "bindwechat":{
+        "bw1":{
+          "action":"click_id",
+          "click_id":"ll_wechat",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"任务",
+      },
+
+    
+      },
+      "autoread":{
+      }, 
+      "durl":""
+      }

@@ -1,0 +1,28 @@
+{
+         "enable":"false",
+         "appname":"头条多多", 
+         "interval":"3",
+         "packagename":"com.lite.infoflow",
+         "activityname":"com.lite.infoflow.launcher.LauncherActivity",
+         "open":{
+           "featuremode":"classname_text",
+           "classname":"android.widget.LinearLayout",
+           "text":"小视频"
+            },
+            "abnormal":{
+             "ab1":{
+                 "featuremode":"id",
+                 "id":"iv_close",
+            },
+            "ab2":{
+             "featuremode":"classname_text",
+             "classname_text":"hahahhahaha",
+           },
+          },  
+         "bindwechat":{
+          
+         },
+         "autoread":{
+         }, 
+         "durl":""
+       }

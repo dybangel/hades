@@ -1,0 +1,28 @@
+{
+        "enable":"false",
+        "appname":"微鲤看看", 
+        "interval":"3",
+         "packagename":"com.zx.localnews",
+        "activityname":"com.zx.localnews.page.other.activity.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"任务"
+          },
+          "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"iv_close",
+           },
+           "ab2":{
+            "featuremode":"classname_text",
+            "classname_text":"hahahhahaha",
+          },
+         },  
+        "bindwechat":{
+    
+        },
+        "autoread":{
+        }, 
+        "durl":""
+       }

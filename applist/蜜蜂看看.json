@@ -1,0 +1,31 @@
+{
+        "enable":"false",
+        "appname":"蜜蜂看看", 
+        "interval":"3",
+         "packagename":"com.block.factory",
+        "activityname":"com.block.factory.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"使用即代表同意蜜蜂看看《用户服务协议》"
+          },
+         "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"ll_quit",
+           },
+         },  
+        "bindwechat":{
+        "bw1":{
+         "action":"click_id",
+         "click_id":"rippleLayout",
+         "featuremode":"classname_text",
+         "classname":"android.widget.TextView",
+         "text":"任务",
+    },
+    
+        },
+        "autoread":{
+        }, 
+        "durl":""
+      }

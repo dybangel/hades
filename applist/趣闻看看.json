@@ -1,0 +1,28 @@
+{
+      "enable":"false", 
+      "appname":"趣闻看看", 
+      "interval":"3",
+         "packagename":"com.ironman.zzxw",
+      "activityname":"com.ironman.zzxw.activity.SplashActivity",
+      "open":{
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"任务"
+        },
+       "abnormal":{
+         "ab1":{
+             "featuremode":"id",
+             "id":"btn_jump",
+         },
+         "ab1":{
+          "featuremode":"id",
+          "id":"iv_close",
+      },
+       },  
+      "bindwechat":{
+    
+      },
+      "autoread":{
+      }, 
+      "durl":""
+      }

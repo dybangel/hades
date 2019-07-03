@@ -1,0 +1,32 @@
+{
+        "enable":"false",
+        "appname":"韭黄", 
+        "interval":"3",
+         "packagename":"com.jiuhuang.news",
+        "activityname":"com.jiuhuang.news.activity.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"视频"
+          },
+          "abnormal":{
+            "ab1":{
+                  "featuremode":"id",
+                  "id":"iv_close",
+              },
+           "ab2":{
+            "featuremode":"classname_text",
+            "classname_text":"hahahhahaha",
+          },
+            "ab3":{
+                "featuremode":"id",
+                "id":"adstyle_close",
+            },
+         },  
+        "bindwechat":{
+    
+        },
+        "autoread":{
+        }, 
+        "durl":""
+       }
