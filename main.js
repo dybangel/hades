@@ -1,9 +1,12 @@
 "ui";
-
+// var ele=className("android.view.View").desc("展开全文").exists();
+// alert(ele);exit();
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 
-
+// ele=className("android.widget.ImageView").desc("评论");
+// thiscommon.clickxy_for_ele_once(ele.findOne(1000));
+// exit();
 var color = "#4C484C";
 var frameColor = "#7E787F";
 var textColor = "#CCCCCC";
@@ -626,88 +629,101 @@ ui.qidong.click(()=>{
 
 });
 Gapps=[
-    {"appname":"悦头条","enable":"true"},
-{"appname":"北京知天下","enable":"true"},
-{"appname":"2345浏","enable":"true"},
-{"appname":"三言","enable":"true"},
-{"appname":"东方头条","enable":"true"},
- {"appname":"中青看点","enable":"true"},
- {"appname":"乐趣头条","enable":"true"},
- {"appname":"二头条","enable":"true"},
- {"appname":"今日头条极","enable":"true"},
- {"appname":"今日热闻","enable":"true"},
- {"appname":"优看点","enable":"true"},
- {"appname":"光影新闻","enable":"true"},
- {"appname":"全民头条","enable":"true"},
- {"appname":"全民头条6","enable":"true"},
- {"appname":"刷宝短视频","enable":"true"},
- {"appname":"博学方财","enable":"true"},
- {"appname":"唔哩头条","enable":"true"},
- {"appname":"大众头条","enable":"true"},
- {"appname":"大众看点","enable":"true"},
- {"appname":"天天快报","enable":"true"},
- {"appname":"天天趣闻","enable":"true"},
- {"appname":"头条多多","enable":"true"},
- {"appname":"头条精选","enable":"true"},
- {"appname":"引力资讯","enable":"true"},
- {"appname":"微头条","enable":"true"},
- {"appname":"微鲤看看","enable":"true"},
-{"appname":"快狗视频","enable":"true"},
-{"appname":"快看点","enable":"true"},
-{"appname":"快马小报","enable":"true"},
- {"appname":"惠头条","enable":"true"},
- {"appname":"惠视频","enable":"true"},
- {"appname":"掌上消息","enable":"true"},
- {"appname":"掌上热点","enable":"true"},
- {"appname":"搜狐资讯","enable":"true"},
- {"appname":"新闻赚","enable":"true"},
- {"appname":"有料看看","enable":"true"},
-{"appname":"有看头","enable":"true"},
-{"appname":"有看头热","enable":"true"},
-{"appname":"有米头条","enable":"true"},
-{"appname":"本地看点","enable":"true"},
-{"appname":"橙子快报","enable":"true"},
-{"appname":"氪资讯","enable":"true"},
-{"appname":"波波视频","enable":"true"},
-{"appname":"海草公社","enable":"true"},
-{"appname":"淘头条","enable":"true"},
-{"appname":"淘新闻","enable":"true"},
-{"appname":"淘最热点","enable":"true"},
-{"appname":"淘看点","enable":"true"},
-{"appname":"淘集集","enable":"true"},
-{"appname":"点点新闻","enable":"true"},
-{"appname":"热点资讯","enable":"true"},
-{"appname":"爱头条","enable":"true"},
-{"appname":"牛牛资讯","enable":"true"},
-{"appname":"百万看点","enable":"true"},
-{"appname":"百姓头条","enable":"true"},
-{"appname":"盈贝头条","enable":"true"},
-{"appname":"种子视频","enable":"true"},
-{"appname":"米闻快报","enable":"true"},
-{"appname":"精彩看点","enable":"true"},
-{"appname":"红包新闻","enable":"true"},
-{"appname":"红包视频","enable":"true"},
-{"appname":"网易新闻极","enable":"true"},
-{"appname":"翻翻头条","enable":"true"},
-{"appname":"聚看点","enable":"true"},
-{"appname":"菠萝小组","enable":"true"},
-{"appname":"萝卜看点","enable":"true"},
-{"appname":"薪头条","enable":"true"},
-{"appname":"蚂蚁头条","enable":"true"},
-{"appname":"蚂蚁看点","enable":"true"},
-{"appname":"蜜蜂看看","enable":"true"},
-{"appname":"趣头条","enable":"true"},
-{"appname":"趣故事","enable":"true"},
-{"appname":"趣新闻","enable":"true"},
-{"appname":"趣看天下","enable":"true"},
-{"appname":"趣看点","enable":"true"},
-{"appname":"趣闻看看","enable":"true"},
-{"appname":"闪电盒子","enable":"true"},
-{"appname":"阅看阅赚","enable":"true"},
-{"appname":"集好视频","enable":"true"},
-{"appname":"韭菜资讯","enable":"true"},
-{"appname":"韭黄","enable":"true"},
-{"appname":"魔方看点","enable":"true"}
+    {"appname":"北京知天下","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
+    {"appname":"有米头条","enable":"true"},
+    {"appname":"有看头-热点新闻","enable":"true"},
+    {"appname":"波波视频","enable":"true"},
+    {"appname":"盈贝头条","enable":"true"},
+    {"appname":"新闻赚","enable":"true"},
+    {"appname":"网易新闻极速版","enable":"true"},
+    {"appname":"百姓头条","enable":"true"},
+    {"appname":"本地看点","enable":"true"},
+    {"appname":"菠萝小组","enable":"true"},
+    {"appname":"大众看点","enable":"true"},
+
+//      {"appname":"悦头条","enable":"true"},
+//      {"appname":"2345浏","enable":"true"},
+// {"appname":"三言","enable":"true"},
+// {"appname":"东方头条","enable":"true"},
+//  {"appname":"中青看点","enable":"true"},
+//  {"appname":"乐趣头条","enable":"true"},
+//  {"appname":"二头条","enable":"true"},
+//  {"appname":"今日头条极","enable":"true"},
+//  {"appname":"今日热闻","enable":"true"},
+//  {"appname":"优看点","enable":"true"},
+//  {"appname":"光影新闻","enable":"true"},
+//  {"appname":"全民头条","enable":"true"},
+//  {"appname":"全民头条6","enable":"true"},
+//  {"appname":"刷宝短视频","enable":"true"},
+//  {"appname":"博学方财","enable":"true"},
+//  {"appname":"唔哩头条","enable":"true"},
+//  {"appname":"大众头条","enable":"true"},
+
+//  {"appname":"天天快报","enable":"true"},
+//  {"appname":"天天趣闻","enable":"true"},
+//  {"appname":"头条多多","enable":"true"},
+//  {"appname":"头条精选","enable":"true"},
+//  {"appname":"引力资讯","enable":"true"},
+//  {"appname":"微头条","enable":"true"},
+//  {"appname":"微鲤看看","enable":"true"},
+// {"appname":"快狗视频","enable":"true"},
+// {"appname":"快看点","enable":"true"},
+// {"appname":"快马小报","enable":"true"},
+//  {"appname":"惠头条","enable":"true"},
+//  {"appname":"惠视频","enable":"true"},
+
+
+//  {"appname":"掌上热点","enable":"true"},
+//  {"appname":"搜狐资讯","enable":"true"},
+
+//  {"appname":"有料看看","enable":"true"},
+
+// {"appname":"有看头热","enable":"true"},
+
+
+// {"appname":"橙子快报","enable":"true"},
+// {"appname":"氪资讯","enable":"true"},
+
+// {"appname":"海草公社","enable":"true"},
+// {"appname":"淘头条","enable":"true"},
+// {"appname":"淘新闻","enable":"true"},
+// {"appname":"淘最热点","enable":"true"},
+// {"appname":"淘看点","enable":"true"},
+// {"appname":"淘集集","enable":"true"},
+// {"appname":"点点新闻","enable":"true"},
+// {"appname":"热点资讯","enable":"true"},
+// {"appname":"爱头条","enable":"true"},
+// {"appname":"牛牛资讯","enable":"true"},
+// {"appname":"百万看点","enable":"true"},
+
+
+// {"appname":"种子视频","enable":"true"},
+// {"appname":"米闻快报","enable":"true"},
+// {"appname":"精彩看点","enable":"true"},
+// {"appname":"红包新闻","enable":"true"},
+// {"appname":"红包视频","enable":"true"},
+
+// {"appname":"翻翻头条","enable":"true"},
+// {"appname":"聚看点","enable":"true"},
+
+// {"appname":"萝卜看点","enable":"true"},
+// {"appname":"薪头条","enable":"true"},
+// {"appname":"蚂蚁头条","enable":"true"},
+// {"appname":"蚂蚁看点","enable":"true"},
+// {"appname":"蜜蜂看看","enable":"true"},
+// {"appname":"趣头条","enable":"true"},
+// {"appname":"趣故事","enable":"true"},
+// {"appname":"趣新闻","enable":"true"},
+// {"appname":"趣看天下","enable":"true"},
+// {"appname":"趣看点","enable":"true"},
+// {"appname":"趣闻看看","enable":"true"},
+// {"appname":"闪电盒子","enable":"true"},
+// {"appname":"阅看阅赚","enable":"true"},
+// {"appname":"集好视频","enable":"true"},
+// {"appname":"韭菜资讯","enable":"true"},
+// {"appname":"韭黄","enable":"true"},
+// {"appname":"魔方看点","enable":"true"}
 ];
  
 loadappjson();
@@ -748,9 +764,11 @@ function run(){
 //if start
 if(Grunstate=="trainwechat"){
 //lanuchApp("微信");
-// whthumbup();
 openwechat();
-//whchat();
+
+//whthumbup();
+whchat();
+
 }else{
     for(var i=0;i<applist.length;i++){
     
@@ -771,45 +789,30 @@ openwechat();
         // }
         toast('开始'+applist[i]['appname']);
         
-    //开启打开线程--通用
-//     var ele=id("clearAnimView").findOne(1000); 
-// ele.click();
-// home();
-// sleep(1500);
-// recents();//最近任务
-// sleep(1500);
-//         thiscommon.touchreal_once(519,1733);
-//    thiscommon.clean("xiaomi4");
+
  
 
-  thiscommon.clean(Gdevicetype);
-    //exit();
-
-    //    while_closewindow("xiaomi4");
+    // thiscommon.clean(Gdevicetype);
+    // //    while_closewindow("xiaomi4");
+    // //如果不是第一次运行需要关闭该线程再启动
+    // if(!Gfirstrun){
+    // thread_abnormal.interrupt();
+    // }
+    // //异常处理弹窗线程
+    // demon_abnormal(abnormal_obj);
     
+    // //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
+    // while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj);
     
-    //如果不是第一次运行需要关闭该线程再启动
-    if(!Gfirstrun){
-    thread_abnormal.interrupt();
-    }
-    //异常处理弹窗线程
-    //while_abnormal(abnormal_obj)
-    demon_abnormal(abnormal_obj);
-    
-    //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
-    while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj);
-    
-    //阻塞运行打开app
-    //toast("openapp :"+packagename+" /"+activityname);
-    openAPP(appname,packagename,activityname,open_obj);
-    //finditem(appname);
-    
-    
-    //每个app需要阅读的时间sleep
-    var thisinterval=3*100000;
-    sleep(thisinterval);
-    //开启异常处理线程--通用
-    Gfirstrun=false;
+    // //阻塞运行打开app 
+    // openAPP(appname,packagename,activityname,open_obj);
+   
+    // //每个app需要阅读的时间sleep
+    // var thisinterval=3*100000;
+    // var thisinterval=1*100000;
+    // sleep(thisinterval);
+    // //开启异常处理线程--通用
+    // Gfirstrun=false;
     }
     //for end
 }
@@ -874,13 +877,13 @@ function voice_runstate(){
 //一级页面循环上滑找新闻线程
 function while_findnews(autoread_obj){
     Gworkthread="findnews_start";
-   // toast("找新闻线程启动...");
+    toast("找新闻线程启动...");
    play("global","正在检索");
    //取出新闻条目特征码
   // var thisborderline=autoread_obj["ar1"]["borderline"];
   // var thisitemsclassname=autoread_obj["ar1"]["itemsclassname"];
    var thisfeaturemode=autoread_obj["ar1"]["featuremode"];
-
+//toast("this is while_findnews"+this);
   
     var upcount=0;
     thread_findnews=threads.start(
@@ -898,6 +901,7 @@ function while_findnews(autoread_obj){
                     //判断新闻条目是否存在
                    
                     var ele=finditem(appname);
+                //    alert(ele);
                     if(ele){//ele.exists()
                        
                         //如果存在，点击第二条新闻
@@ -942,6 +946,7 @@ function while_findnews(autoread_obj){
 }
 //二级页面阅读线程??可以优化
 function while_readnews(autoread_obj){
+ //toast("readnews启动。。。。");
     Gworkthread="readnews_start";
     play("global","开始阅读");
     var upcount=0;
@@ -968,9 +973,13 @@ function while_readnews(autoread_obj){
                         var thisdeploydesc=autoread_obj["ar2"]["deploydesc"];
                        var ele=className(thisdeployclassname).desc(thisdeploydesc);
                         if(ele.exists()){
+                            if(ele.findOnce().bounds().top<1770){
+                        //alert( "top is:"+ele.findOnce().bounds().top+"::"+"bottom is"+ele.findOnce().bounds().bottom);
                            play("global","展开更多");
                            sleep(1000);
-                            thiscommon.clickxy_for_ele(ele.findOne(1000));
+                            thiscommon.clickxy_for_ele(ele.findOne(1000)); 
+                            }
+                         
                             //ele.findOne(1000).click();
                         }
                     }else if("classname_text"==thisdeploymode){
@@ -1263,7 +1272,7 @@ function block_check(checktype,f1,f2,f3){
  var num=0;
     while(1){
         num+=1;
-        if(num>10){
+        if(num>15){
             return false;
         }
         sleep(2000);
@@ -1302,83 +1311,516 @@ function play(subpath,appname){
 }
 //用于检索非广告的新闻条目
 function finditem(appname){
-    Gworkthread="finditem_start"
+//Gworkthread="finditem_start"
+v4feature="android.support.v4.view.ViewPager";
+v7feature="android.support.v7.widget.RecyclerView";
+androidx="androidx.recyclerview.widget.RecyclerView"
     //悦头条
-
-     if("悦头条"==appname){
-        var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");
-        if(ele.exists()){
-            var childnum=ele.findOnce(1).childCount();
-            if(childnum==4 ||childnum==1){
-                return ele.findOnce(1);
-            }else{
-                play("global","广告不点击");
-            }
-        
-        }
-
-     }else if("北京知天下"==appname){
-        var ele=className("android.support.v7.widget.RecyclerView").className("LinearLayout");//.className("LinearLayout").findOnce(2);
-
-        if(ele.exists()){
-             var cstr=ele.findOnce(0).child(0).child(2).child(0).text().replace(/^\s+|\s+$/g,"");
-             if(cstr=="广告"){
-              play("global","广告不点击");
-             }else{
-               return ele.findOnce(0);
-             }
-           }
-     }else if("掌上消息"==appname){
-        var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
-
-        if(ele.exists()){
-            play("global","打开")
-               return ele.findOnce(0);
-            
-           }
-     }else if("有米头条"==appname){
-        var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
-
-        if(ele.exists()){
-             var cstr=ele.findOnce(0).child(0).text().replace(/^\s+|\s+$/g,"");
-                alert(cstr);
-               return ele.findOnce(0);
-             
-           }
-     }else if("有看头-热点新闻"==appname){
-            var ele=className("android.support.v4.view.ViewPager").className("ListView").className('RelativeLayout');//.className("LinearLayout").findOnce(2);
-    
-            if(ele.exists()){
-                
-                // var cstr=ele.findOnce(0).child(0).child(2).child(2).child(1).text().replace(/^\s+|\s+$/g,"");
-                // var cstr=ele.findOnce(1).className('FrameLayout').child(1).text().replace(/^\s+|\s+$/g,"");//.child(1).child(2).child(2).child(1).text().replace(/^\s+|\s+$/g,"");
-               // alert(cstr);
-                //  if(cstr=="广告"){
-                //   play("global","广告不点击");
-                //  }else{
-                  //  play("global","打开");
-                   return ele.findOne(1000);
-              //   }
-               }
-     }else if("波波视频"==appname){
-            var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
-    
-            if(ele.exists()){
-               // alert(ele.findOnce(1));
-               // play("global","打开");
-               // thiscommon.clickxy_for_ele(ele.findOnce(1));
-                return ele.findOnce(1);
-               }
-            }else if("盈贝头条"==appname){
-                var ele=className("androidx.recyclerview.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
-        
-                if(ele.exists()){
-                   // alert(ele.findOnce(1));
-                 //   play("global","打开");
-                  //  thiscommon.clickxy_for_ele(ele.findOnce(1));
-                    return ele.findOnce(1);
+//toast("this is findnewitem");
+switch (appname){
+    case "北京知天下":
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //先得到有多少个子节点
+            var subcount=ele.findOnce(0).childCount();
+            //在将主框架实例化
+            var main=ele.findOnce();
+            for(var i=0;i<subcount;i++){
+                   try{
+                        var substr=main.child(i).child(0).child(2).child(0).text();
+                        var ll=main.child(i).child(0).child(0).text();
+                      //  alert(ll);
+                        if(substr=="广告"){
+                            play("global",i);
+                            play("global","广告不点击");
+                            return false
+                        }else{
+                            return main.child(i);
+                            play("global",i);
+                            play("global","点击"); 
+                        }
+                   }catch(e){
+                    //alert(e)
+                    return false;
+                    play("global",i);
+                    play("global","广告不点击")
                    }
+            }
+    break;
+        case "掌上消息":
+         var ele=className("android.support.v7.widget.RecyclerView");//.className("LinearLayout").findOnce(5);
+        //先得到有多少个子节点
+        var subcount=ele.findOnce(0).childCount();
+        //在将主框架实例化
+        var main=ele.findOnce();
+        for(var i=0;i<subcount;i++){
+            try{
+                //  var substr=main.child(i).child(0).child(2).child(0).text();
+                    var ll=main.child(i).child(0).text();
+                   // alert(ll);
+                    //if(substr=="广告"){
+                    //   play("global",i);
+                    //  play("global","广告不点击");
+                    //}else{
+                        
+                        play("global",i);
+                        play("global","点击");
+                        return main.child(i); 
+                // }
+            }catch(e){
+                //alert(e)
+                play("global",i);
+                play("global","广告不点击")
+                return false;
+            }
+
+        }
+        break;
+        case "有米头条":
+            var ele=className("android.support.v7.widget.RecyclerView");//.className("LinearLayout").findOnce(5);
+            //先得到有多少个子节点
+            var subcount=ele.findOnce(0).childCount();
+            //在将主框架实例化
+            var main=ele.findOnce();
+            for(var i=0;i<subcount;i++){
+                try{
+                        var ltitle=main.child(i).child(0).text();
+                        alert(ltitle);
+                        if(ltitle!=""){
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                        }else{
+                            play("global",i);
+                            play("global","广告不点击")
+                            return false;
+                        } 
+                }catch(e){
+                    //alert(e)
+                    play("global",i);
+                    play("global","广告不点击")
+                    return false;
                 }
+                }
+        break;
+        case "有看头-热点新闻":
+        break;
+        case "波波视频":
+            //波波视频 注意没有二级页面
+                var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+                //先得到有多少个子节点
+                var subcount=ele.findOnce(0).childCount();
+                //alert(subcount);exit();
+                //在将主框架实例化
+                var main=ele.findOnce();
+                for(var i=0;i<subcount;i++){
+                    try{
+                        var ltitle=main.child(i).child(1).child(0).text();
+                        // alert(ltitle);
+                                try{
+                                    var substr=main.child(i).child(3).child(1).child(0).child(1).id();
+                                // alert(id+"::"+ltitle);
+                                    //如果能顺利执行反而是广告
+                                        play("global",i);
+                                        play("global","广告不点击")
+                                        return false;
+                                }catch(e){
+                                    //抛出异常的，反而是正常的
+                                    play("global",i);
+                                    play("global","点击"); 
+                                    return main.child(i);
+                                }
+                            
+                    }catch(e){
+                        //alert(e)
+                        play("global",i);
+                        play("global","广告不点击")
+                        return false;
+                    }
+                }
+        break;
+        case "盈贝头条":
+                            //1标识出主框架定界符
+                var ele=className(androidx);//.className("LinearLayout").findOnce(5);
+                //2定位到结构块层级父节点，并取出结构块数量
+                var subcount=ele.findOnce(0).childCount();
+                //检测一下子节点数量是否正确
+                //alert(subcount);exit();
+                //将主框架实例化
+                var main=ele.findOnce(0);
+                for(var i=0;i<subcount;i++){
+                    try{
+                        //取出标题，主要是为了验证正确性
+                        var ltitle=main.child(i).child(0).text();
+                        alert(ltitle);
+                        if(ltitle==""){
+                            play("global",i);
+                        play("global","广告不点击")
+                        return false;
+                        }else{
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                        }
+                      
+                            
+                    }catch(e){
+                        //alert(e)
+                        play("global",i);
+                        play("global","广告不点击")
+                        return false;
+                    }
+                }
+        break;
+        case "新闻赚":
+                        //1标识出主框架定界符
+            var ele=className(v4feature);//.className("android.widget.ListView");//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量 0 0 0 0 3 0
+            //var subcount=ele.findOnce(0).childCount();
+            var subcount=ele.findOnce(0).child(0).child(0).child(0).child(0).child(3).child(0).childCount();//.child(3);//.child().childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0).child(0).child(0).child(0).child(0).child(3).child(0);
+            //多了会遮盖
+            for(var i=0;i<subcount;i++){
+                try{
+                    
+                    var bd=main.child(i).child(0).bounds();
+                    var y1=bd.top;
+                    var y2=bd.bottom;
+                    if(y1>318 && y2<1770){
+                        //取出标题，主要是为了验证正确性
+                                var ltitle=main.child(i).child(0).desc();//.child(0).desc();
+                                if(ltitle.indexOf("广告")>0){
+                                    play("global","广告不点击")
+                                    return false;
+                                }else{
+                                  //  alert(ltitle);
+                                    play("global","点击");
+                                    return main.child(i);
+                                }
+
+                    }
+
+                        
+                }catch(e){
+                    play("global","广告不点击")
+                    return false;
+                }
+            }
+        break;
+        case "网易新闻极速版":
+                        //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=0;i<subcount;i++){
+                   try{
+                       //取出标题，主要是为了验证正确性
+                       var ltitle=main.child(i).child(0).child(0).text();
+                      // alert(ltitle);
+                       if(main.child(i).className()=="android.widget.LinearLayout"){
+                        play("global",i);
+                        play("global","广告不点击");
+                        return false;
+                       }else{
+                        play("global",i);
+                        play("global","点击");
+                        return main.child(i);
+                       }  
+                   }catch(e){
+                    //alert(e)
+                     // var ltitle2=main.child(i).child(0).child(1).child(0);//.text();
+                      // alert(ltitle2);
+                     play("global",i);
+                    play("global","广告不点击")
+                    return false;
+                   }
+            }
+        break;
+        case "今日头条极速版":
+        break;
+        case "百姓头条":
+                        //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=0;i<subcount;i++){
+                try{
+                    //取出标题，主要是为了验证正确性
+                    var ltitle=main.child(i).child(0).text();
+                   // alert(ltitle);
+                    try{
+                        //  alert(main.child(i).child(4).text());
+                            if(main.child(i).child(4).text()==""){
+                            play("global",i);
+                            //play("global","打开")
+                            play("global","广告不点击");
+                            return false;
+                        }else{
+                            play("global",i);
+                            play("global","点击");
+                            return main.child(i);
+                        }
+                    }catch(e){
+                        
+                            play("global",i);
+                            play("global","点击");
+                            return main.child(i);
+                            
+                    }
+                    
+                }catch(e){
+            
+                    play("global",i);
+                    play("global","广告不点击")
+                    return false;
+                }
+            }
+        break;
+        case "本地看点":
+                        //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=0;i<subcount;i++){
+                   try{
+                       //取出标题，主要是为了验证正确性
+                       var ltitle=main.child(i).child(0).child(0).text();
+                    //   alert(ltitle);
+                       if(ltitle!=""){
+                        play("global",i);
+                        play("global","点击");
+                        return main.child(i);
+                       }else{
+                           play("global",i);
+                          play("global","广告不点击")
+                          return false;
+                       }               
+                   }catch(e){
+            
+                    // play("global",i);
+                    //play("global","广告不点击")
+                   }
+            }
+        break;
+        case "菠萝小组":
+                        //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=0;i<subcount;i++){
+                   try{
+                       //取出标题，主要是为了验证正确性
+                       var ltitle=main.child(i).child(0).child(0).child(0).text();
+                       alert(ltitle);
+                         play("global",i);
+                         play("global","点击");
+                         return main.child(i);
+                   }catch(e){          
+                     play("global",i);
+                    play("global","广告不点击")
+                    return false;
+                   }
+            }
+        break;
+        case "大众看点":
+                        //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=0;i<subcount;i++){
+                try{
+                    //取出标题，主要是为了验证正确性
+                    var ltitle=main.child(i).child(0).text();
+                    
+                        if(ltitle==""){
+                            var ltitle2=main.child(i).child(0).child(1).child(0).text();
+                            alert(ltitle2);
+                            var substr=main.child(i).child(0).child(1).child(1).child(1).text();
+                            if(substr=="广告"){
+                                play("global",i);
+                                play("global","广告不点击");
+                            }else{
+                                play("global",i);
+                            play("global","点击");
+                            }
+                        
+                        }else{
+                            alert(ltitle);
+                            play("global",i);
+                            play("global","点击");
+                        }
+                        
+                }catch(e){
+            
+                    //play("global",i);
+                // play("global","广告不点击")
+                }
+            }
+        break;
+        case "大众头条":
+        break;
+        case "点点新闻":
+        break;
+        case "翻翻头条":
+        break;
+        case "淘看点":
+        break;
+        case "精彩看点":
+        break;
+        case "氪资讯":
+        break;
+        case "快狗视频":
+        break;
+        case "快看点":
+        break;
+        case "唔哩头条":
+        break;
+        case "蚂蚁看点":
+        break;
+        case "蜜蜂看看":
+        break;
+        case "牛牛资讯":
+        break;
+        case "趣故事":
+        break;
+        case "热点资讯":
+        break;
+        case "刷宝短视频":
+        break;
+        case "搜狐资讯":
+        break;
+        case "淘集集":
+        break;
+        case "淘头条":
+        break;
+        case "天天快报":
+        break;
+        case "天天趣闻":
+        break;
+
+}
+
+
+// var ele=className("android.support.v7.widget.RecyclerView");//.className("LinearLayout").findOnce(5);
+// //先得到有多少个子节点
+// var subcount=ele.findOnce(0).childCount();
+// //在将主框架实例化
+// var main=ele.findOnce();
+// for(var i=0;i<subcount;i++){
+//        try{
+//           //  var substr=main.child(i).child(0).child(2).child(0).text();
+//             var ll=main.child(i).child(0).text();
+//             alert(ll);
+//             //if(substr=="广告"){
+//              //   play("global",i);
+//               //  play("global","广告不点击");
+//             //}else{
+//                 play("global",i);
+//                 play("global","点击"); 
+//            // }
+//        }catch(e){
+//         //alert(e)
+//         play("global",i);
+//         play("global","广告不点击")
+//        }
+
+// }
+    //  if("悦头条"==appname){
+    //     var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");
+    //     if(ele.exists()){
+    //         var childnum=ele.findOnce(1).childCount();
+    //         if(childnum==4 ||childnum==1){
+    //             return ele.findOnce(1);
+    //         }else{
+    //             play("global","广告不点击");
+    //         }
+        
+    //     }
+
+    //  }else if("北京知天下"==appname){
+    //     var ele=className("android.support.v7.widget.RecyclerView").className("LinearLayout");//.className("LinearLayout").findOnce(2);
+
+    //     if(ele.exists()){
+    //          var cstr=ele.findOnce(0).child(0).child(2).child(0).text().replace(/^\s+|\s+$/g,"");
+    //          if(cstr=="广告"){
+    //           play("global","广告不点击");
+    //          }else{
+    //            return ele.findOnce(0);
+    //          }
+    //        }
+    //  }else if("掌上消息"==appname){
+    //     var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
+
+    //     if(ele.exists()){
+    //         play("global","打开")
+    //            return ele.findOnce(0);
+            
+    //        }
+    //  }else if("有米头条"==appname){
+    //     var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
+
+    //     if(ele.exists()){
+    //          var cstr=ele.findOnce(0).child(0).text().replace(/^\s+|\s+$/g,"");
+    //             alert(cstr);
+    //            return ele.findOnce(0);
+             
+    //        }
+    //  }else if("有看头-热点新闻"==appname){
+    //         var ele=className("android.support.v4.view.ViewPager").className("ListView").className('RelativeLayout');//.className("LinearLayout").findOnce(2);
+    
+    //         if(ele.exists()){
+                
+    //             // var cstr=ele.findOnce(0).child(0).child(2).child(2).child(1).text().replace(/^\s+|\s+$/g,"");
+    //             // var cstr=ele.findOnce(1).className('FrameLayout').child(1).text().replace(/^\s+|\s+$/g,"");//.child(1).child(2).child(2).child(1).text().replace(/^\s+|\s+$/g,"");
+    //            // alert(cstr);
+    //             //  if(cstr=="广告"){
+    //             //   play("global","广告不点击");
+    //             //  }else{
+    //               //  play("global","打开");
+    //                return ele.findOne(1000);
+    //           //   }
+    //            }
+    //  }else if("波波视频"==appname){
+    //         var ele=className("android.support.v7.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
+    
+    //         if(ele.exists()){
+    //            // alert(ele.findOnce(1));
+    //            // play("global","打开");
+    //            // thiscommon.clickxy_for_ele(ele.findOnce(1));
+    //             return ele.findOnce(1);
+    //            }
+    //         }else if("盈贝头条"==appname){
+    //             var ele=className("androidx.recyclerview.widget.RecyclerView").className("RelativeLayout");//.className("LinearLayout").findOnce(2);
+        
+    //             if(ele.exists()){
+    //                // alert(ele.findOnce(1));
+    //              //   play("global","打开");
+    //               //  thiscommon.clickxy_for_ele(ele.findOnce(1));
+    //                 return ele.findOnce(1);
+    //                }
+    //             }
 
 
 
@@ -1443,10 +1885,10 @@ ele=className("android.widget.TextView").text("朋友圈");
 thiscommon.clickxy_for_ele_once(ele.findOne(1000));
 play("global","点击");
 play("global","朋友圈");
-
+sleep(2000);
 //上滑
-thiscommon.swiperealup_custom();
-sleep(1000);
+//thiscommon.swiperealup_custom();
+//sleep(1000);
 //点击评论三个小点
 play("global","点击");
 play("global","赞");
