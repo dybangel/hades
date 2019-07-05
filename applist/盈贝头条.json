@@ -14,10 +14,7 @@
                "featuremode":"id",
                "id":"iv_close",
            },
-           "ab2":{
-            "featuremode":"classname_text",
-            "classname_text":"hahahhahaha",
-          },
+         
          },  
         "bindwechat":{
           "bw1":{
@@ -44,6 +41,16 @@
     
         },
         "autoread":{
+          "ar1":{
+            "featuremode":"id",
+            "id":"rl_back",
+        },
+        "ar2":{
+            "deploymode":"classname_desc",
+            "deployclassname":"android.view.View",
+            "deploydesc":"查看全文",
+
+           },
         }, 
         "durl":""
        }

@@ -42,6 +42,16 @@
     
         },
         "autoread":{
+          "ar1":{
+            "featuremode":"id",
+            "id":"head_bar_left_button",
+        },
+        "ar2":{
+            "deploymode":"classname_desc",
+            "deployclassname":"android.view.View",
+            "deploydesc":"查看全文",
+
+           },
         }, 
         "durl":""
        }

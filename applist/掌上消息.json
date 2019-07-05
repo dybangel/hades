@@ -50,6 +50,16 @@
          },
       },
         "autoread":{
+          "ar1":{
+            "featuremode":"classname",
+            "classname":"android.widget.ImageButton",
+        },
+        "ar2":{
+            "deploymode":"classname_desc",
+            "deployclassname":"android.view.View",
+            "deploydesc":"展开查看全文",
+
+           },
         }, 
         "durl":""
        }

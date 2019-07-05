@@ -401,6 +401,57 @@ androidx="androidx.recyclerview.widget.RecyclerView"
 //        // play("global","广告不点击")
 //        }
 // }
+
+//三言
+//1标识出主框架定界符
+var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+//2定位到结构块层级父节点，并取出结构块数量
+var subcount=ele.findOnce(0).childCount();
+//检测一下子节点数量是否正确
+//alert(subcount);exit();
+//将主框架实例化
+var main=ele.findOnce(0);
+for(var i=0;i<subcount;i++){
+       try{
+           //取出标题，主要是为了验证正确性
+           var ltitle=main.child(i).child(0).child(0).child(0).text();
+           //alert(ltitle);
+           if("android.widget.LinearLayout"==main.child(i).className()){
+          
+                    play("global",i);
+                    play("global","广告不点击");
+           }else{
+                play("global",i);
+                play("global","点击"); 
+           }
+           
+           //  if(ltitle==""){
+            //      var ltitle2=main.child(i).child(0).child(1).child(0).text();
+            //      alert(ltitle2);
+            //     var substr=main.child(i).child(0).child(1).child(1).child(1).text();
+            //     if(substr=="广告"){
+            //         play("global",i);
+            //         play("global","广告不点击");
+            //     }else{
+            //            play("global",i);
+            //     play("global","点击");
+            //     }
+             
+            //  }else{
+            //     alert(ltitle);
+            //     play("global",i);
+            //     play("global","点击");
+            //  }
+            
+       }catch(e){
+ 
+         //play("global",i);
+       // play("global","广告不点击")
+       }
+}
+
+
+
 exit();
 
 //只能找第一个节点，在往下用findonce 找不到

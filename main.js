@@ -1,14 +1,5 @@
 "ui";
-// toast("asdf");
-// result=files.exists("/storage/emulated/0/applist/网易新闻极速版1.json");
-// alert(result);
-// exit();
-//  var files=open("/storage/emulated/0/applist/"+appname+".json");
-// var result=files.exists();
-// alert(files);exit();
 
-// var ele=className("android.view.View").desc("展开全文").exists();
-// alert(ele);exit();
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 
@@ -637,11 +628,10 @@ ui.qidong.click(()=>{
 
 });
 Gapps=[
-    {"appname":"北京知天下","enable":"true"},
-    {"appname":"掌上消息","enable":"true"},
-    {"appname":"有米头条","enable":"true"},
-    {"appname":"有看头-热点头条","enable":"true"},
-    {"appname":"波波视频","enable":"true"},
+      //{"appname":"北京知天下","enable":"true"},
+    //  {"appname":"掌上消息","enable":"true"},
+    //{"appname":"有米头条","enable":"true"},
+   // {"appname":"三言","enable":"true"},
     {"appname":"盈贝头条","enable":"true"},
     {"appname":"新闻赚","enable":"true"},
     {"appname":"网易新闻极速版","enable":"true"},
@@ -649,10 +639,14 @@ Gapps=[
     {"appname":"本地看点","enable":"true"},
     {"appname":"菠萝小组","enable":"true"},
     {"appname":"大众看点","enable":"true"},
+    {"appname":"有看头-热点头条","enable":"true"},
+    {"appname":"波波视频","enable":"true"},
+      {"appname":"悦头条","enable":"true"},
 
-//      {"appname":"悦头条","enable":"true"},
+
+
 //      {"appname":"2345浏","enable":"true"},
-// {"appname":"三言","enable":"true"},
+
 // {"appname":"东方头条","enable":"true"},
 //  {"appname":"中青看点","enable":"true"},
 //  {"appname":"乐趣头条","enable":"true"},
@@ -807,7 +801,8 @@ whchat();
     thread_abnormal.interrupt();
     }
     //异常处理弹窗线程
-    demon_abnormal(abnormal_obj);
+    while_abnormal(abnormal_obj);
+    //demon_abnormal(abnormal_obj);
     
     //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
     while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj);
@@ -896,7 +891,7 @@ function while_findnews(autoread_obj){
   // var thisborderline=autoread_obj["ar1"]["borderline"];
   // var thisitemsclassname=autoread_obj["ar1"]["itemsclassname"];
    var thisfeaturemode=autoread_obj["ar1"]["featuremode"];
-//toast("this is while_findnews"+this);
+//toast("this is while_findnews..........................:"+thisfeaturemode);
   
     var upcount=0;
     thread_findnews=threads.start(
@@ -941,6 +936,9 @@ function while_findnews(autoread_obj){
                              result=block_check(thisfeaturemode,thisid,'','');
 
                            
+                        }else if("classname"==thisfeaturemode){
+                            var thisclassname=autoread_obj["ar1"]["classname"];
+                            result=block_check(thisfeaturemode,thisclassname,'','');
                         }
                         //最后判断二级页面特定控件是否存在，来确定是否打开成功
                         if(result){
@@ -1161,19 +1159,21 @@ function openAPP(appname,packagename,activityname,open_obj){
 //异常处理线程
 function  while_abnormal(abnormal_obj){
    // Gworkthread="abnormal_start"; 不要这个，会干扰逻辑
-
+   
    thread_abnormal=threads.start(function(){
               setInterval(function(){
-                  
+         //       toast("this is while_abnormal... allcount is:"+thiscommon.JSONLength(abnormal_obj));             
     for(var i=1;i<=thiscommon.JSONLength(abnormal_obj);i++){
-        
+    
         var featuremode=abnormal_obj["ab"+i]["featuremode"];
+     
         if("id"==featuremode){
             
            var thisid=abnormal_obj["ab"+i]["id"];
-         // toast("this is abnormal.."+thisid);
+      //     toast("this abx is is:"+"ab"+i+" and feautremode is:"+featuremode+" thisid is:"+thisid);
+         // toast("this is abnormal.."+thisid+ " allcount is:"+thiscommon.JSONLength(abnormal_obj)+"  abx is:"+"ab"+i);
                 var ele=id(thisid).exists();
-             //   toast("ele is:"+ele);
+           //     toast("ele is:"+ele);
                 var result=once_check("id",thisid,'','');
            //  toast("result is:"+result);
                  if(result){ 
@@ -1198,11 +1198,12 @@ function  while_abnormal(abnormal_obj){
 
 }
 //for end
-  },1000);
+  },5000);
             });
 }
 // while_abnormal的守护线程，有时候click事件会阻塞，所以每隔5秒杀掉abnormal线程再启动
 function demon_abnormal(abnormal_obj){
+    toast("this is demon_abnormal...");
  thread_demon_abnormal=threads.start(
      function(){
          setInterval(function(){
@@ -1300,6 +1301,13 @@ function block_check(checktype,f1,f2,f3){
              if(ele){
                  return true;
              }
+            }else if("classname"==checktype){
+               
+                var ele=className(f1).exists();
+             //   alert("this is blockcheck ele is:"+ele);
+                if(ele){
+                    return true;
+                }
             }else if("id"==checktype){
                 var ele=id(f1).exists();
                 if(ele){
@@ -1405,7 +1413,7 @@ switch (appname){
             for(var i=0;i<subcount;i++){
                 try{
                         var ltitle=main.child(i).child(0).text();
-                        alert(ltitle);
+                      //  alert(ltitle);
                         if(ltitle!=""){
                             play("global",i);
                             play("global","点击"); 
@@ -1423,7 +1431,7 @@ switch (appname){
                 }
                 }
         break;
-        case "有看头-热点新闻":
+        case "有看头-热点头条":
         break;
         case "波波视频":
             //波波视频 注意没有二级页面
@@ -1531,7 +1539,7 @@ switch (appname){
             }
         break;
         case "网易新闻极速版":
-                        //1标识出主框架定界符
+          //1标识出主框架定界符
             var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
             //2定位到结构块层级父节点，并取出结构块数量
             var subcount=ele.findOnce(0).childCount();
@@ -1739,6 +1747,38 @@ switch (appname){
         case "天天快报":
         break;
         case "天天趣闻":
+        break;
+        case "三言":
+              var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=0;i<subcount;i++){
+                try{
+                    //取出标题，主要是为了验证正确性
+                    var ltitle=main.child(i).child(0).child(0).child(0).text();
+                    //alert(ltitle);
+                    if("android.widget.LinearLayout"==main.child(i).className()){
+                    
+                                play("global",i);
+                                play("global","广告不点击");
+                                return false;
+
+                    }else{
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                    }
+                        
+                }catch(e){
+            
+                    //play("global",i);
+                // play("global","广告不点击")
+                }
+            }
         break;
 
 }

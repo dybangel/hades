@@ -10,14 +10,14 @@
         "text":"任务"
         },
        "abnormal":{
-         "ab1":{
-             "featuremode":"id",
-             "id":"ll_quit",
-         },
-         "ab2":{
-             "featuremode":"id",
-             "id":"ib_pop_btc_eos_activitys_close",
-      },
+                  "ab1":{
+                      "featuremode":"id",
+                      "id":"ib_pop_btc_eos_activitys_close",
+                },
+                "ab2":{
+                  "featuremode":"id",
+                  "id":"ib_pop_update_close",
+                },
        },  
       "bindwechat":{
         "bw1":{
@@ -51,6 +51,14 @@
     
       },
       "autoread":{
+        "ar1":{
+          "featuremode":"id",
+          "id":"left_image",
+      },
+      "ar2":{
+          "deploymode":"id",
+         "id":"id",
+         },
       }, 
       "durl":""
       }
