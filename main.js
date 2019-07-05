@@ -1,4 +1,12 @@
 "ui";
+// toast("asdf");
+// result=files.exists("/storage/emulated/0/applist/网易新闻极速版1.json");
+// alert(result);
+// exit();
+//  var files=open("/storage/emulated/0/applist/"+appname+".json");
+// var result=files.exists();
+// alert(files);exit();
+
 // var ele=className("android.view.View").desc("展开全文").exists();
 // alert(ele);exit();
 const thiscommon=require("./mycommon.js");
@@ -632,7 +640,7 @@ Gapps=[
     {"appname":"北京知天下","enable":"true"},
     {"appname":"掌上消息","enable":"true"},
     {"appname":"有米头条","enable":"true"},
-    {"appname":"有看头-热点新闻","enable":"true"},
+    {"appname":"有看头-热点头条","enable":"true"},
     {"appname":"波波视频","enable":"true"},
     {"appname":"盈贝头条","enable":"true"},
     {"appname":"新闻赚","enable":"true"},
@@ -726,7 +734,7 @@ Gapps=[
 // {"appname":"魔方看点","enable":"true"}
 ];
  
-loadappjson();
+
 testthread=threads.start(function(){
     setInterval(function(){
         if(Grunstate!=""){
@@ -760,7 +768,7 @@ wechatfriends=[
 //run();
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
-
+    loadappjson();
 //if start
 if(Grunstate=="trainwechat"){
 //lanuchApp("微信");
@@ -792,27 +800,27 @@ whchat();
 
  
 
-    // thiscommon.clean(Gdevicetype);
-    // //    while_closewindow("xiaomi4");
-    // //如果不是第一次运行需要关闭该线程再启动
-    // if(!Gfirstrun){
-    // thread_abnormal.interrupt();
-    // }
-    // //异常处理弹窗线程
-    // demon_abnormal(abnormal_obj);
+    thiscommon.clean(Gdevicetype);
+    //    while_closewindow("xiaomi4");
+    //如果不是第一次运行需要关闭该线程再启动
+    if(!Gfirstrun){
+    thread_abnormal.interrupt();
+    }
+    //异常处理弹窗线程
+    demon_abnormal(abnormal_obj);
     
-    // //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
-    // while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj);
+    //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
+    while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj);
     
-    // //阻塞运行打开app 
-    // openAPP(appname,packagename,activityname,open_obj);
+    //阻塞运行打开app 
+    openAPP(appname,packagename,activityname,open_obj);
    
-    // //每个app需要阅读的时间sleep
-    // var thisinterval=3*100000;
-    // var thisinterval=1*100000;
-    // sleep(thisinterval);
-    // //开启异常处理线程--通用
-    // Gfirstrun=false;
+    //每个app需要阅读的时间sleep
+    var thisinterval=3*100000;
+    var thisinterval=1*100000;
+    sleep(thisinterval);
+    //开启异常处理线程--通用
+    Gfirstrun=false;
     }
     //for end
 }
@@ -833,8 +841,13 @@ for(var i=0;i<Gapps.length;i++){
     appname=Gapps[i]["appname"];
     if("true"==Gapps[i]['enable']){
     //读取字符串
-        tempstr=files.read("/storage/emulated/0/applist/"+appname+".json");
-
+         var result=files.exists("/storage/emulated/0/applist/"+appname+".json");
+        if(!result){
+        alert("没有找到"+appname+".json");
+        exit();
+         }
+         tempstr=files.read("/storage/emulated/0/applist/"+appname+".json");
+       // play("appname",appname);
         tempjson=eval('(' + tempstr + ')');
         applist.push(tempjson); 
 
@@ -1303,11 +1316,19 @@ function block_check(checktype,f1,f2,f3){
 function play(subpath,appname){
    // return true;
 //    media.playMusic("/storage/emulated/0/脚本/voice/"+subpath+"/"+appname+".mp3");
-    media.playMusic("/storage/emulated/0/voice/"+subpath+"/"+appname+".mp3");
-    //media.playMusic("./voice/"+subpath+"/"+appname+".mp3");
-  
-    sleep(media.getMusicDuration());
-    ///storage/emulated/0/
+   var voicefile="/storage/emulated/0/voice/"+subpath+"/"+appname+".mp3";
+
+    var result=files.exists(voicefile);
+    if(!result){
+        toast("没有找到语音包"+voicefile+".mp3");
+    }else{
+        media.playMusic("/storage/emulated/0/voice/"+subpath+"/"+appname+".mp3");
+        //media.playMusic("./voice/"+subpath+"/"+appname+".mp3");
+      
+        sleep(media.getMusicDuration());
+        ///storage/emulated/0/
+    }
+
 }
 //用于检索非广告的新闻条目
 function finditem(appname){
