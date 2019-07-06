@@ -54,6 +54,18 @@
     
         },
         "autoread":{
+          "ar1":{
+            "action":"click_text",
+            "click_text":"资讯",
+            "featuremode":"classname",
+            "classname":"android.widget.ImageView",
+        },
+        "ar2":{
+            "deploymode":"classname_desc",
+            "deployclassname":"android.view.View",
+            "deploydesc":"展开全文",
+
+        },
         }, 
         "durl":""
        }

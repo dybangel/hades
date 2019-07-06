@@ -1,5 +1,7 @@
 "ui";
 
+// var result=className("android.widget.TextView").text("明日签到").exists();
+// alert(result);exit();
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 
@@ -628,11 +630,11 @@ ui.qidong.click(()=>{
 
 });
 Gapps=[
-      //{"appname":"北京知天下","enable":"true"},
-    //  {"appname":"掌上消息","enable":"true"},
-    //{"appname":"有米头条","enable":"true"},
-   // {"appname":"三言","enable":"true"},
-    {"appname":"盈贝头条","enable":"true"},
+     {"appname":"北京知天下","enable":"true"},
+    // {"appname":"掌上消息","enable":"true"},
+    // {"appname":"有米头条","enable":"true"},
+    // {"appname":"三言","enable":"true"},
+    // {"appname":"盈贝头条","enable":"true"},
     {"appname":"新闻赚","enable":"true"},
     {"appname":"网易新闻极速版","enable":"true"},
     {"appname":"百姓头条","enable":"true"},
@@ -641,7 +643,7 @@ Gapps=[
     {"appname":"大众看点","enable":"true"},
     {"appname":"有看头-热点头条","enable":"true"},
     {"appname":"波波视频","enable":"true"},
-      {"appname":"悦头条","enable":"true"},
+   {"appname":"悦头条","enable":"true"},
 
 
 
@@ -734,9 +736,10 @@ testthread=threads.start(function(){
         if(Grunstate!=""){
             voice_runstate();
             voice_devicetype();
-       //  toast("开始启动");  
-      
+         toast("开始启动testthread...");  
+    //  Grunstate="run";
         run();
+
         
        // alert(applist[0]['appname']);
             //testthread.interrupt();
@@ -780,11 +783,16 @@ whchat();
         var activityname=applist[i]['activityname'];
         var open_obj=applist[i]["open"];
         var bindwechat_obj=applist[i]['bindwechat']; 
+        signin_obj=applist[i]['signin'];
+      //  alert("aaaa"+thiscommon.JSONLength(signin_obj));
+        if("undefined"==typeof(signin_obj)){
+            toast(appname+".json signin数据项缺失");
+        }
         var autoread_obj=applist[i]["autoread"];
          abnormal_obj=applist[i]["abnormal"]
-        var voice=applist[i]["voice"];
-        var durl=applist[i]["durl"];
-        var interval=applist[i]["interval"];
+       // var voice=applist[i]["voice"];
+       // var durl=applist[i]["durl"];
+       // var interval=applist[i]["interval"];
         // if("false"==enable){
         //     toast("下一个");
         //     continue;
@@ -799,21 +807,32 @@ whchat();
     //如果不是第一次运行需要关闭该线程再启动
     if(!Gfirstrun){
     thread_abnormal.interrupt();
+    thread_control.interrupt();
+        try{    thread_findnews.interrupt();}catch(e){};
+        try{    thread_readnews.interrupt();}catch(e){};
+        try{    thread_signin.interrupt();}catch(e){};
+       
+       
+
     }
     //异常处理弹窗线程
     while_abnormal(abnormal_obj);
     //demon_abnormal(abnormal_obj);
     
     //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
-    while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj);
+    while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj);
     
     //阻塞运行打开app 
+   // alert("打开")
     openAPP(appname,packagename,activityname,open_obj);
-   
+   //alert("开始倒计时");
     //每个app需要阅读的时间sleep
-    var thisinterval=3*100000;
-    var thisinterval=1*100000;
+    //var thisinterval=3*100000;
+    var thisinterval=80000;
+    toast("阅读"+thisinterval+"毫秒......................");
     sleep(thisinterval);
+    toast("准备开始下一个");
+
     //开启异常处理线程--通用
     Gfirstrun=false;
     }
@@ -882,20 +901,133 @@ function voice_runstate(){
     play("global","当前工作模式");
     play("global",runstate_voicename);
 }
+//签到
+function while_signin(signin_obj){
+  //  alert("signin_obj is:"+signin_obj)
+Gworkthread="signin_start";
+play("global","执行");
+play("global","每日签到");
+sleep(2000);
+//针对数据结构错误的处理
+if("undefined"==typeof(signin_obj)){
+    play("global","执行完成");
+    play("global","9")
+    Gworkthread="signin_stop";
+   try{ thread_signin.interrupt();}catch(e){}
+   
+    toast(appname+".json signin数据项缺失");
+}else{
+    thread_signin=threads.start(
+        function(){
+            for(var i=1;i<=thiscommon.JSONLength(signin_obj);i++){
+        
+                try{
+                    var action=signin_obj["sg"+i]["action"];
+                    if("undefined"==typeof(action)){toast(appname+"signin_obj[\"sg\""+i+"][\"action\"]数据结构错误");}
+              
+                    var featuremode=signin_obj["sg"+i]["featuremode"];
+                    if("undefined"==typeof(featuremode)){toast(appname+"signin_obj[\"sg\""+i+"][\"featuremode\"]数据结构错误");}
+              
+                    play("global","执行步骤");
+                    play("global",i);
+                    if("click_text"==action){
+                         thiscommon.click_text(signin_obj["sg"+i]["click_text"]);      
+                    } else if("click_id"==action){
+                            var thisid=bindwechat_obj["sg"+i]["click_id"];
+                             thiscommon.click_id(thisid);
+                    } else if("check_signin"==action){
+                        //判断是否签过到
+                        result=block_mode("while_signin",featuremode,signin_obj,i)
+                        if(result){
+                            play("global","已签到过");
+                            Gworkthread="signin_stop";
+                            break;
+                        }
+            
+                    }
+                   
+                    var result=false;
+            
+                    result=block_mode("while_signin",featuremode,signin_obj,i)
+                       //最后判断result
+                            if(result){
+                                if(i==thiscommon.JSONLength(signin_obj)){
+                                    //最后一步的执行成功
+                                    play("global","执行成功");
+                                }else{
+                                    play("global","执行完成");
+                                }
+                            
+                            }else{
+                                play("global","执行失败");
+                            }
+                       
+                    
+                }catch(e){
+                  alert(e);
+                }
+            
+            }//for end;
+            play("global","执行完成");
+            Gworkthread="signin_stop";
+            thread_signin.interrupt();
+        });
+}
+
+
+
+
+}
+
 //一级页面循环上滑找新闻线程
 function while_findnews(autoread_obj){
     Gworkthread="findnews_start";
-    toast("找新闻线程启动...");
-   play("global","正在检索");
-   //取出新闻条目特征码
+    toast("找新闻线程启动..."); play("global","正在检索");
+   //取出新闻条目特征码 改用函数实现了，后续抽象特征码数据结构
   // var thisborderline=autoread_obj["ar1"]["borderline"];
   // var thisitemsclassname=autoread_obj["ar1"]["itemsclassname"];
-   var thisfeaturemode=autoread_obj["ar1"]["featuremode"];
-//toast("this is while_findnews..........................:"+thisfeaturemode);
+ //数据结构异常的处理 临时
+//try{
+try{
+    var action =autoread_obj["ar1"]["action"];
+}catch(e){
+
+}    
+
+
+   // alert("findnews action is"+action);
+    if("undefined"==typeof(action)){
+          toast(appname+":"+"autoread_obj[\"ar1\"][\"action\"]数据结构错误");
+    }else{
+            //定位首页模块
+            if("click_text"==action){
+                var text=autoread_obj["ar1"]["click_text"];
+                if("undefined"==typeof(text)){  alert(appname+":"+"autoread_obj[\"ar1\"][\"click_text\"]数据结构错误");}
+                //alert("click_text is:"+text);
+                click(text);
+                sleep(1000);
+            }
+    }
+ 
+// }catch(e){
+// toast("检索"+e);
+// }
+ 
+try{
+    var thisfeaturemode=autoread_obj["ar1"]["featuremode"];
+}catch(e){
+
+}
+ 
+   if("undefined"==typeof(thisfeaturemode)){
+       toast(appname+"autoread_obj[\"ar1\"][\"featuremode\"]数据结构错误");
+    }
   
     var upcount=0;
     thread_findnews=threads.start(
         function(){
+       // alert("this is finenew xinsheng");
+
             setInterval(
                 function(){
                 thisswipe.swiperealup_custom();
@@ -907,46 +1039,24 @@ function while_findnews(autoread_obj){
                 //当upcount大于了x次数后，开始打开当前发现的新闻条目
                 if(upcount>x){
                     //判断新闻条目是否存在
-                   
                     var ele=finditem(appname);
-                //    alert(ele);
-                    if(ele){//ele.exists()
-                       
-                        //如果存在，点击第二条新闻
+                    if(ele){
+                        //如果存在，点击新闻
                        play("global","打开新闻");
- 
                       thiscommon.clickxy_for_ele(ele);
                        //等待2秒，否则线程关闭，点击事件会无效
                         sleep(2000);
                         var result=false;
-                       //以下为验证打开新闻是否成功了
-                        if("classname_desc"==thisfeaturemode){
-                            
-                            var thisclassname=autoread_obj["ar1"]["classname"];
-                            var thisdesc=autoread_obj["ar1"]["desc"];
-                             result=block_check(thisfeaturemode,thisclassname,thisdesc,'');
-                         
-                        }else if("classname_text"==thisfeaturemode){
-                            var thisclassname=autoread_obj["ar1"]["classname"];
-                            var thistext=autoread_obj["ar1"]["text"];
-                             result=block_check(thisfeaturemode,thisclassname,thistext,'');
-
-                        }else if("id"==thisfeaturemode){
-                            var thisid=autoread_obj["ar1"]["id"];
-                             result=block_check(thisfeaturemode,thisid,'','');
-
-                           
-                        }else if("classname"==thisfeaturemode){
-                            var thisclassname=autoread_obj["ar1"]["classname"];
-                            result=block_check(thisfeaturemode,thisclassname,'','');
-                        }
                         //最后判断二级页面特定控件是否存在，来确定是否打开成功
+                        result=block_mode("while_findnews",thisfeaturemode,autoread_obj,'');
+                   //     alert("result is"+result);
                         if(result){
                             play("global","打开成功");
                             Gworkthread="findnews_stop";
                             thread_findnews.interrupt();
                         }else{
                             play("global","打开失败");
+                            back();
                         }
                      
                     }
@@ -955,6 +1065,7 @@ function while_findnews(autoread_obj){
         }
     );
 }
+
 //二级页面阅读线程??可以优化
 function while_readnews(autoread_obj){
  //toast("readnews启动。。。。");
@@ -965,6 +1076,7 @@ function while_readnews(autoread_obj){
     var p=5;//最小上滑次数
 
     var thisdeploymode=autoread_obj["ar2"]["deploymode"];
+    if("undefined"==typeof(thisdeploymode)){alert(appname+"autoread_obj[\"ar2\"][\"deploymode\"]数据结构错误");}
   
  //上滑次数
     var maxupcount=Math.round(Math.random()*(o-p))+p;
@@ -981,7 +1093,9 @@ function while_readnews(autoread_obj){
                     //展开更多处理方式
                     if("classname_desc"==thisdeploymode){
                         var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
+                         if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
                         var thisdeploydesc=autoread_obj["ar2"]["deploydesc"];
+                         if("undefined"==typeof(thisdeploydesc)){alert(appname+"autoread_obj[\"ar2\"][\"deploydesc\"]数据结构错误");}
                        var ele=className(thisdeployclassname).desc(thisdeploydesc);
                         if(ele.exists()){
                             if(ele.findOnce().bounds().top<1770){
@@ -995,17 +1109,20 @@ function while_readnews(autoread_obj){
                         }
                     }else if("classname_text"==thisdeploymode){
                         var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
+                        if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
                         var thistext=autoread_obj["ar2"]["deploytext"];
+                         if("undefined"==typeof(thistext)){alert(appname+"autoread_obj[\"ar2\"][\"deploytext\"]数据结构错误");}
                         var ele=className(thisdeployclassname).text(thistext);
                         if(ele.exists()){
-                            play("global","展开更多");
-                           sleep(1000);
-                            thiscommon.clickxy_for_ele(className(thisdeployclassname).text(thistext).findOne());
-                        
-    
+                            if(ele.findOnce().bounds().top<1770){
+                                play("global","展开更多");
+                                sleep(1000);
+                                 thiscommon.clickxy_for_ele(className(thisdeployclassname).text(thistext).findOne());
+                            }
+                            
                         }
                     }
-                                //处理方式结束
+                    //处理方式结束
                                 upcount+=1;
                                 if(upcount>maxupcount){
                                     toast("返回首页...");
@@ -1016,21 +1133,20 @@ function while_readnews(autoread_obj){
                                 }
                                 toast("间隔："+x+"毫秒");
                 },x);
-               
-               
-               // sleep(x);
-           // }
-            //setInterval(function(){},1000);
         }
     );
 }
-//绑定微信
+//绑定微信线程
 function while_bindwechat(bindwechat_obj){
     Gworkthread="bindwechat_start";
     toast("开始绑定微信");
    for(var i=1;i<=thiscommon.JSONLength(bindwechat_obj);i++){
+       //取动作
     var action=bindwechat_obj["bw"+i]["action"];
+    if("undefined"==typeof(action)){alert(appname+"bindwechat_obj[\"bw\""+i+"][\"action\"]数据结构错误");}
+        //取验证模式
     var featuremode=bindwechat_obj["bw"+i]["featuremode"];
+    if("undefined"==typeof(featuremode)){alert(appname+"bindwechat_obj[\"bw\""+i+"][\"featuremode\"]数据结构错误");}
     play("global","执行步骤");
     play("global",i);
     //如果是点击文本
@@ -1038,34 +1154,20 @@ function while_bindwechat(bindwechat_obj){
     if("click_text"==action){
         //点击文本
         thiscommon.click_text(bindwechat_obj["bw"+i]["click_text"]);
-       // click();
-        //执行阻塞验证
-        if("classname_text"==featuremode){
-            var thisclassname=bindwechat_obj["bw"+i]["classname"];
-            var thistext=bindwechat_obj["bw"+i]["text"];
-             result=block_check(featuremode,thisclassname,thistext,'');
-        }else if("id"==featuremode){
-            var thisid=bindwechat_obj["bw"+i]["id"];
-             result=block_check(featuremode,thisid,'','');
-        }
+       //执行阻塞验证
+       result=block_mode("while_bindwechat",featuremode,bindwechat_obj,i);       
     }
     //if end
      //如果是点击ID
     else if("click_id"==action){
         var thisid=bindwechat_obj["bw"+i]["click_id"];
+        if("undefined"==typeof(thisid)){alert(appname+"bindwechat_obj[\"bw\""+i+"][\"click_id\"]数据结构错误");}
         thiscommon.click_id(thisid);
       //  id(thisid).findOne(1000).click();
-           //执行阻塞验证
-        if("classname_text"==featuremode){
-            var thisclassname=bindwechat_obj["bw"+i]["classname"];
-            var thistext=bindwechat_obj["bw"+i]["text"];
-             result=block_check(featuremode,thisclassname,thistext,'');
-        }else if("id"==featuremode){
-            var thisid=bindwechat_obj["bw"+i]["id"];
-             result=block_check(featuremode,thisid,'','');
-        }
+      var result=false;
+      //执行阻塞验证
+      result=block_mode("while_bindwechat",featuremode,bindwechat_obj,i);
     }
-
     //最后判断result
     if(result){
         if(i==thiscommon.JSONLength(bindwechat_obj)){
@@ -1080,80 +1182,86 @@ function while_bindwechat(bindwechat_obj){
     }
 
    } 
-   // ;
-//exit();
-//     for(var key in bindwechat_obj){
-//   //  alert("key is:"+key+" value is:"+bindwechat_obj[key]);
-//     //alert(bindwechat_obj[key]["action"]);
-//     var action=bindwechat_obj[key]["action"];
-// //alert("action is"+action);
-//     var featuremode=bindwechat_obj[key]["featuremode"];
-// // alert("featuremode is:"+featuremode);
-//     // click(bindwechat_obj[key]["click_text"]);
-//     // sleep(3000);
-//     // click(bindwechat_obj[key]["click_text"]);
-//     // sleep(3000);
-//     // click(bindwechat_obj[key]["click_text"]);
-//  //   alert(featuremode);
-//     // "featuremode":"classname_text",
-//     // "classname":"android.widget.TextView",
-//     // "text":"朋友圈",
-
-//     //点击文本方式  
-      
-//     if("click_text"==action){
-//         click(bindwechat_obj[key]["click_text"]);
-//         var num=0;
-//             while(1){
-//                 sleep(5000);
-//                num+=1;  
-//               // toast("fm is:"+featuremode);
-//                  //如果是验证类名+文本方式的处理
-//                if(num>10){
-//                 toast("超过10次匹配失败,不支持绑定微信");
-//                }
-//                  if("classname_text"==featuremode){
-//                     var thisclassname=bindwechat_obj[key]["classname"];
-//                     var thistext=bindwechat_obj[key]["text"];
-//                    // alert("thisclassname is:"+thisclassname+" thistext is:"+thistext);
-//                     var ele=className(thisclassname).text(thistext).exists();
-//                     if(ele){
-//                      toast("完成点击"+thistext);
-//                      break;
-//                     }
-
-//                 }
-//             }
-//            // alert("click::::"+bindwechat_obj[key]["click_text"]);//click_text
-//         }
-//     }
 }
+
 //打开制定app线程
 function openAPP(appname,packagename,activityname,open_obj){
     Gworkthread="openapp_start";
     play("global","打开");
     play("appname",appname);
     var featuremode=open_obj["featuremode"];
+    if("undefined"==typeof(featuremode)){alert(appname+"open_obj[\"featuremode\"]数据结构错误");}
+ 
     thiscommon.openpackage(packagename+"/"+activityname);
-  
-          if(featuremode=="classname"){
-                //     if( className(open_obj["classname"]).packageName(packagename).exists()){
-                //         play("global","打开成功");
-                //         Gworkthread="openapp_stop";
-                //         break;
-                //      //   thread_openApp.interrupt();   
-                //   }
+        var result=false;
+        // result=block_mode("openAPP",featuremode,open_obj,"")
+        // if(result){
+        //     play("global","打开成功");
+        //    Gworkthread="openapp_stop";
+        //    sleep(1000);
+        //    thread_openApp.interrupt();
+        // }else{
+        //     play("global","打开失败");
+        //    Gworkthread="openapp_fail"; 
+        //    sleep(1000);
+        //    thread_openApp.interrupt();
+        // }
+
+        // result=block_mode("openAPP",featuremode,open_obj,'')
+        // if(result){
+        //     play("global","打开成功");
+        //     Gworkthread="openapp_stop";
+        //     thread_openApp.interrupt(); 
+        // }
+       // sleep(30000);
+       var thisnum=0;
+       while(1){
+          
+          
+                if(Number(thisnum) >30){
+                    alert(thisnum);
+                    play("global","打开失败");
+                    play("global","0");
+
+                    Gworkthread="openapp_fail"; 
+                    break;
+                }
+         if(featuremode=="classname"){
+                    if( className(open_obj["classname"]).packageName(packagename).exists()){
+                        play("global","打开成功");
+                        Gworkthread="openapp_stop";
+                        break;
+                       // break;
+                     //   thread_openApp.interrupt();   
+                  }else{
+                    // play("global","打开失败");
+                    // Gworkthread="openapp_fail"; 
+                    // break; 
+                  }
            }else if(featuremode=="classname_text"){
-            var result=block_check(featuremode,open_obj["classname"],open_obj["text"],'');
-            if(result){
-                play("global","打开成功");
-               Gworkthread="openapp_stop";
-            }else{
-                play("global","打开失败");
-               Gworkthread="openapp_fail"; 
-            }
+          //  var result=block_check(featuremode,open_obj["classname"],open_obj["text"],'');
+                        var classname=open_obj["classname"];
+                        var text=open_obj["text"];
+                    if( className(classname).text(text).exists() ){
+                        play("global","打开成功");
+                        Gworkthread="openapp_stop";
+                        break;
+                      //  break;
+                    }else{
+                        // play("global","打开失败");
+                        // play("global","0");
+                        // Gworkthread="openapp_fail";  
+                        // break;
+
+                        
+                    }
       
            }
+
+           sleep(1000);
+           thisnum+=1;
+       }
+
 
 }
 //异常处理线程
@@ -1216,28 +1324,39 @@ function demon_abnormal(abnormal_obj){
    
 }
 //全局调度线程
-function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj){
+function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj){
     //appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj
 
     thread_control=threads.start( //bindwechat注释
         function(){//bindwechat注释
             setInterval(function(){//bindwechat注释
-            
-              if("openapp_stop"==Gworkthread||"readnews_stop"==Gworkthread){
-                  //如果是绑定微信runstate
-                if("bindwechat"==Grunstate){
-                    //toast("开始绑定微信");
-                    while_bindwechat(bindwechat_obj);
-                }else if("autoread"==Grunstate){
-                    toast("开始自动阅读");
-                    while_findnews(autoread_obj);
-                }
-                  
-              }else if("findnews_stop"==Gworkthread){
+            //1如果打开app完成后要做的工作  
+          //  toast("Gworkthread is"+Gworkthread);
+            if("openapp_stop"==Gworkthread){
+                      //如果工作模式是绑定微信runstate
+                      if("bindwechat"==Grunstate){
+                        //toast("开始绑定微信");
+                        while_bindwechat(bindwechat_obj);
+                    }else if("autoread"==Grunstate){
+                        toast("开始签到...");
+                        try{thread_signin.interrupt();}catch(e){};
+                        while_signin(signin_obj);
+                        
+                    }
+              }
+              //2如果是签到完成后要执行的工作   //3如果阅读完成后要做的工作
+              else if("signin_stop"==Gworkthread||"readnews_stop"==Gworkthread){
+                //  alert("findnews start");
+                try{thread_findnews.interrupt();}catch(e){};
+                 while_findnews(autoread_obj);
+              }            
+              //4如果找到新闻后要做的工作    
+              else if("findnews_stop"==Gworkthread){
+                try{thread_readnews.interrupt();}catch(e){};
                 while_readnews(autoread_obj);
               }
            //   toast("while_control："+Gworkthread);
-            },1000);//bindwechat注释
+            },9000);//bindwechat注释
         }//bindwechat注释
     );//bindwechat注释
 }
@@ -1280,6 +1399,66 @@ function once_check(checktype,f1,f2,f3){
        }else{
            return false;
        }  
+}
+//阻塞模式判断函数
+function block_mode(threadfun,featuremode,obj,fori){
+if("openAPP"==threadfun){
+    if("classname_desc"==featuremode){
+      
+        var thisclassname=obj["classname"];
+        var thisdesc=obj["desc"];
+      //  alert("thisclassname is:"+thisclassname+" this desc is:"+thisdesc);
+        result=block_check(featuremode,thisclassname,thisdesc,'');
+        return result;
+    }else if("classname_text"==featuremode){
+    //    alert(obja);
+        var thisclassname=obj["classname"];
+        var thistext=obj["text"];
+      //  alert("thisclassname is:"+thisclassname+" thistext is:"+thistext);
+        result=block_check(featuremode,thisclassname,thistext,'');
+        return result;
+    }else if("classname"==featuremode){
+        var thisclassname=obj["classname"];
+        result=block_check(featuremode,thisclassname,'','');
+        return result;
+    }else if("id"==featuremode){
+        var thisid=obj["id"];
+        result=block_check(featuremode,thisid,'','');
+        return result;
+    }
+}else if("while_findnews"==threadfun){
+    var obja="ar1";
+}else if("while_readnews"==threadfun){
+
+}else if("while_bindwechat"==threadfun){
+  var obja="bw"+fori;
+}else if("while_signin"==threadfun){
+  var obja="sg"+fori;
+}
+
+if("classname_desc"==featuremode){
+    alert(obja);
+    var thisclassname=obj[obja]["classname"];
+    var thisdesc=obj[obja]["desc"];
+    alert("thisclassname is:"+thisclassname+" this desc is:"+thisdesc);
+    result=block_check(featuremode,thisclassname,thisdesc,'');
+    return result;
+}else if("classname_text"==featuremode){
+    var thisclassname=obj[obja]["classname"];
+    var thistext=obj[obja]["text"];
+  //  alert("thisclassname is:"+thisclassname+" thistext is:"+thistext);
+    result=block_check(featuremode,thisclassname,thistext,'');
+    return result;
+}else if("classname"==featuremode){
+    var thisclassname=obj[obja]["classname"];
+    result=block_check(featuremode,thisclassname,'','');
+    return result;
+}else if("id"==featuremode){
+    var thisid=obj[obja]["id"];
+    result=block_check(featuremode,thisid,'','');
+    return result;
+}
+
 }
 //阻塞验证函数
 function block_check(checktype,f1,f2,f3){
@@ -1480,7 +1659,7 @@ switch (appname){
                     try{
                         //取出标题，主要是为了验证正确性
                         var ltitle=main.child(i).child(0).text();
-                        alert(ltitle);
+                     //   alert(ltitle);
                         if(ltitle==""){
                             play("global",i);
                         play("global","广告不点击")
@@ -1572,6 +1751,7 @@ switch (appname){
             }
         break;
         case "今日头条极速版":
+            alert("未实现finditem");
         break;
         case "百姓头条":
                         //1标识出主框架定界符
@@ -1658,7 +1838,7 @@ switch (appname){
                    try{
                        //取出标题，主要是为了验证正确性
                        var ltitle=main.child(i).child(0).child(0).child(0).text();
-                       alert(ltitle);
+                     //  alert(ltitle);
                          play("global",i);
                          play("global","点击");
                          return main.child(i);
@@ -1685,7 +1865,7 @@ switch (appname){
                     
                         if(ltitle==""){
                             var ltitle2=main.child(i).child(0).child(1).child(0).text();
-                            alert(ltitle2);
+                        //    alert(ltitle2);
                             var substr=main.child(i).child(0).child(1).child(1).child(1).text();
                             if(substr=="广告"){
                                 play("global",i);
@@ -1696,7 +1876,7 @@ switch (appname){
                             }
                         
                         }else{
-                            alert(ltitle);
+                           // alert(ltitle);
                             play("global",i);
                             play("global","点击");
                         }
@@ -1709,44 +1889,84 @@ switch (appname){
             }
         break;
         case "大众头条":
+                alert("未实现finditem");
+
         break;
         case "点点新闻":
+                alert("未实现finditem");
+
         break;
         case "翻翻头条":
+                alert("未实现finditem");
+
         break;
         case "淘看点":
+                alert("未实现finditem");
+
         break;
         case "精彩看点":
+                alert("未实现finditem");
+
         break;
         case "氪资讯":
+                alert("未实现finditem");
+
         break;
         case "快狗视频":
+                alert("未实现finditem");
+
         break;
         case "快看点":
+                alert("未实现finditem");
+
         break;
         case "唔哩头条":
+                alert("未实现finditem");
+
         break;
         case "蚂蚁看点":
+                alert("未实现finditem");
+
         break;
         case "蜜蜂看看":
+                alert("未实现finditem");
+
         break;
         case "牛牛资讯":
+                alert("未实现finditem");
+
         break;
         case "趣故事":
+                alert("未实现finditem");
+
         break;
         case "热点资讯":
+                alert("未实现finditem");
+
         break;
         case "刷宝短视频":
+                alert("未实现finditem");
+
         break;
         case "搜狐资讯":
+                alert("未实现finditem");
+
         break;
         case "淘集集":
+                alert("未实现finditem");
+
         break;
         case "淘头条":
+                alert("未实现finditem");
+
         break;
         case "天天快报":
+                alert("未实现finditem");
+
         break;
         case "天天趣闻":
+                alert("未实现finditem");
+
         break;
         case "三言":
               var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
