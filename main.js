@@ -1,8 +1,10 @@
-"ui";
+//"ui";
 
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
-
+//Swipe(400,1000,400,200,500);
+thisswipe.swiperealup_custom_xy(950);
+exit();
 var color = "#4C484C";
 var frameColor = "#7E787F";
 var textColor = "#CCCCCC";

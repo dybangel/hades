@@ -345,7 +345,8 @@ try{
 
             setInterval(
                 function(){
-                thisswipe.swiperealup_custom();
+               // thisswipe.swiperealup_custom();
+                thisswipe.swiperealup_custom_lnnl();
                 upcount+=1;
                 var m=3;
                 var n=2;
@@ -404,7 +405,8 @@ function while_readnews(autoread_obj){
                //两次上滑之间的间隔
                 var x=Math.round(Math.random()*(m-n))+n;
                 setInterval(function(){
-                    thisswipe.swiperealup_custom();
+                    //thisswipe.swiperealup_custom();
+                    thisswipe.swiperealup_custom_lnnl();
                     //展开更多处理方式
                     if("classname_desc"==thisdeploymode){
                         var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
