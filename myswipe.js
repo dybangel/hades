@@ -32,20 +32,20 @@ module.exports = {
         ra.sendSync();
         sleep(8);
         ra.touchX(x+6);
-        ra.touchY(1460);
+        ra.touchY(1460);//1505 35
         ra.sendSync();
         sleep(8);
-        ra.touchY(1452);
+        ra.touchY(y-53);// 1452 1505 
         ra.sendSync();
         sleep(8);
         ra.touchX(x+7);
-        ra.touchY(1443);
+        ra.touchY(1443);//1505
         ra.sendSync();
         sleep(8);
-        ra.touchY(1432);
+        ra.touchY(1432);//1505
         ra.sendSync();
         sleep(8);
-        ra.touchY(1421);
+        ra.touchY(1421);//1505
         ra.sendSync();
         sleep(8);
         ra.touchY(1409);
