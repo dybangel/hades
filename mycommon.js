@@ -75,9 +75,16 @@ module.exports = {
       // var ele=id("clearAnimView").findOne(1000); 
       // ele.click();
       touchreal(519,1733);
-    }else if("xiaomi4s"){
-        touchreal(933,950);
-   
+    }else if("xiaomi4s"==devicetype){
+        touchreal(561,1724);
+      //  touchreal(943,950);
+//        ra.tap(993.950,1);
+  //      ra.tap(993.950,1);
+
+    }else if("lnnl"==devicetype){
+        ra.tap(535, 1687, 1);
+        ra.tap(535, 1687, 1);
+        ra.tap(535, 1687, 1);
     }
     
 

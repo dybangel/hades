@@ -1,13 +1,8 @@
 "ui";
 
-// var result=className("android.widget.TextView").text("明日签到").exists();
-// alert(result);exit();
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 
-// ele=className("android.widget.ImageView").desc("评论");
-// thiscommon.clickxy_for_ele_once(ele.findOne(1000));
-// exit();
 var color = "#4C484C";
 var frameColor = "#7E787F";
 var textColor = "#CCCCCC";
@@ -54,8 +49,8 @@ ui.layout(
                         </linear>
                     <linear h="40" paddingTop="1" >
                                 <radiogroup id='runstate' orientation="horizontal">
-                                    <radio id="bindwechat" text='微信绑定' color="{{textColor}}" checked="true"></radio>
-                                    <radio id="autoread" text='自动阅读' color="{{textColor}}" ></radio>
+                                    <radio id="bindwechat" text='微信绑定' color="{{textColor}}"></radio>
+                                    <radio id="autoread" text='自动阅读' color="{{textColor}}"  checked="true"></radio>
                                     <radio id="trainwechat"  text='微信养号' color="{{textColor}}"></radio>
                                     {/* <radio text='刷支付宝提' color="{{textColor}}"></radio>      */}
                                 </radiogroup>
@@ -69,6 +64,7 @@ ui.layout(
                                     <radio id="xiaomi2s" text='小米2s' color="{{textColor}}"></radio>
                                     <radio id="xiaomi4s" text='小米4s' color="{{textColor}}" checked="true"></radio>
                                     <radio id="xiaomi4"  text='小米4' color="{{textColor}}"></radio>
+                                    <radio id="lnnl"  text='lnnl' color="{{textColor}}"></radio>
                                     {/* <radio text='刷支付宝提' color="{{textColor}}"></radio>      */}
                                 </radiogroup>
                     </linear>
@@ -582,7 +578,9 @@ if (device.sdkInt < 24) {
 // })
 //ui.noData.setVisibility(View.GONE);
 //设置滑动页面的标题
-ui.viewpager.setTitles(["全局设置","首页", "自动阅读", "养号","测试"]);
+//ui.viewpager.setTitles(["全局设置","首页", "自动阅读", "养号","测试"]);
+ui.viewpager.setTitles(["全局设置"]);
+
 //让滑动页面和标签栏联动
 ui.tabs.setupWithViewPager(ui.viewpager);
 
@@ -624,105 +622,157 @@ ui.qidong.click(()=>{
     Gdevicetype="xiaomi4s";
     }else if(ui.xiaomi4.isChecked()){
     Gdevicetype="xiaomi4";
+    }else if(ui.lnnl.isChecked()){
+        Gdevicetype="lnnl";   
     }
  //   alert(Gdevicetype);
     //语音广播初始化模式
 
 });
+// Gapps=[
+  //  {"appname":"北京知天下","enable":"true"},
+    //  {"appname":"掌上消息","enable":"true"},
+    //  {"appname":"有米头条","enable":"true"},
+    //  {"appname":"三言","enable":"true"},
+    // {"appname":"盈贝头条","enable":"true"},
+//     {"appname":"新闻赚","enable":"true"},
+//     {"appname":"网易新闻极速版","enable":"true"},
+//     {"appname":"百姓头条","enable":"true"},
+//     {"appname":"本地看点","enable":"true"},
+//     {"appname":"菠萝小组","enable":"true"},
+//     {"appname":"大众看点","enable":"true"},
+//     {"appname":"有看头-热点头条","enable":"true"},
+//     {"appname":"波波视频","enable":"true"},
+//    {"appname":"悦头条","enable":"true"},
+//      {"appname":"2345浏览器","enable":"true"},
+// {"appname":"东方头条","enable":"true"},
+//  {"appname":"中青看点","enable":"true"},
+//  {"appname":"乐趣头条","enable":"true"},
+//  {"appname":"二头条","enable":"true"},
+//  {"appname":"今日头条极速版","enable":"true"},
+//  {"appname":"今日热闻","enable":"true"},
+//  {"appname":"优看点","enable":"true"},
+//  {"appname":"光影新闻","enable":"true"},
+//  {"appname":"全民头条","enable":"true"},
+//  {"appname":"全民头条6","enable":"true"},
+//  {"appname":"刷宝短视频","enable":"true"},
+//  {"appname":"博学方财","enable":"true"},
+//  {"appname":"唔哩头条","enable":"true"},
+//  {"appname":"大众头条","enable":"true"},
+
+//  {"appname":"天天快报","enable":"true"},
+//  {"appname":"天天趣闻","enable":"true"},
+//  {"appname":"头条多多","enable":"true"},
+//  {"appname":"头条精选","enable":"true"},
+//  {"appname":"引力资讯","enable":"true"},
+//  {"appname":"微头条","enable":"true"},
+//  {"appname":"微鲤看看","enable":"true"},
+// {"appname":"快狗视频","enable":"true"},
+// {"appname":"快看点","enable":"true"},
+// {"appname":"快马小报","enable":"true"},
+//  {"appname":"惠头条","enable":"true"},
+//  {"appname":"惠视频","enable":"true"},
+
+
+//  {"appname":"掌上热点","enable":"true"},
+//  {"appname":"搜狐资讯","enable":"true"},
+
+//  {"appname":"有料看看","enable":"true"},
+
+// {"appname":"橙子快报","enable":"true"},
+// {"appname":"氪资讯","enable":"true"},
+
+// {"appname":"海草公社","enable":"true"},
+// {"appname":"淘头条","enable":"true"},
+// {"appname":"淘新闻","enable":"true"},
+// {"appname":"淘最热点","enable":"true"},
+// {"appname":"淘看点","enable":"true"},
+// {"appname":"淘集集","enable":"true"},
+// {"appname":"点点新闻","enable":"true"},
+// {"appname":"热点资讯","enable":"true"},
+// {"appname":"爱头条","enable":"true"},
+// {"appname":"牛牛资讯","enable":"true"},
+// {"appname":"百万看点","enable":"true"},
+
+
+// {"appname":"种子视频","enable":"true"},
+// {"appname":"米闻快报","enable":"true"},
+// {"appname":"精彩看点","enable":"true"},
+// {"appname":"红包新闻","enable":"true"},
+// {"appname":"红包视频","enable":"true"},
+
+// {"appname":"翻翻头条","enable":"true"},
+// {"appname":"聚看点","enable":"true"},
+
+// {"appname":"萝卜看点","enable":"true"},
+// {"appname":"薪头条","enable":"true"},
+// {"appname":"蚂蚁头条","enable":"true"},
+// {"appname":"蚂蚁看点","enable":"true"},
+// {"appname":"蜜蜂看看","enable":"true"},
+// {"appname":"趣头条","enable":"true"},
+// {"appname":"趣故事","enable":"true"},
+// {"appname":"趣新闻","enable":"true"},
+// {"appname":"趣看天下","enable":"true"},
+// {"appname":"趣看点","enable":"true"},
+// {"appname":"趣闻看看","enable":"true"},
+// {"appname":"闪电盒子","enable":"true"},
+// {"appname":"阅看阅赚","enable":"true"},
+// {"appname":"集好视频","enable":"true"},
+// {"appname":"韭菜资讯","enable":"true"},
+// {"appname":"韭黄","enable":"true"},
+// {"appname":"魔方看点","enable":"true"}
+// ];
 Gapps=[
-    {"appname":"北京知天下","enable":"true"},
-     {"appname":"掌上消息","enable":"true"},
-     {"appname":"有米头条","enable":"true"},
-     {"appname":"三言","enable":"true"},
-     {"appname":"盈贝头条","enable":"true"},
+  //  {"appname":"北京知天下","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
+    {"appname":"有米头条","enable":"true"},
+    {"appname":"有看头-热点新闻","enable":"true"},
+    {"appname":"波波视频","enable":"true"},
+    {"appname":"盈贝头条","enable":"true"},
     {"appname":"新闻赚","enable":"true"},
     {"appname":"网易新闻极速版","enable":"true"},
+    {"appname":"今日头条极速版","enable":"true"},
     {"appname":"百姓头条","enable":"true"},
     {"appname":"本地看点","enable":"true"},
+   
+   
+   
     {"appname":"菠萝小组","enable":"true"},
     {"appname":"大众看点","enable":"true"},
-    {"appname":"有看头-热点头条","enable":"true"},
-    {"appname":"波波视频","enable":"true"},
-   {"appname":"悦头条","enable":"true"},
-     {"appname":"2345浏览器","enable":"true"},
-{"appname":"东方头条","enable":"true"},
- {"appname":"中青看点","enable":"true"},
- {"appname":"乐趣头条","enable":"true"},
- {"appname":"二头条","enable":"true"},
- {"appname":"今日头条极速版","enable":"true"},
- {"appname":"今日热闻","enable":"true"},
- {"appname":"优看点","enable":"true"},
- {"appname":"光影新闻","enable":"true"},
- {"appname":"全民头条","enable":"true"},
- {"appname":"全民头条6","enable":"true"},
- {"appname":"刷宝短视频","enable":"true"},
- {"appname":"博学方财","enable":"true"},
- {"appname":"唔哩头条","enable":"true"},
- {"appname":"大众头条","enable":"true"},
+    {"appname":"大众头条","enable":"true"},
+    {"appname":"点点新闻","enable":"true"},
+    {"appname":"翻翻头条","enable":"true"},
+    {"appname":"淘看点","enable":"true"},
+    {"appname":"精彩看点","enable":"true"},
+    {"appname":"氪资讯","enable":"true"},
+    {"appname":"快狗视频","enable":"true"},
+    {"appname":"快看点","enable":"true"},
+    {"appname":"唔哩头条","enable":"true"},
+    {"appname":"蚂蚁看点","enable":"true"},
+    {"appname":"蜜蜂看看","enable":"true"},
+    {"appname":"牛牛资讯","enable":"true"},
+    {"appname":"趣故事","enable":"true"},
+    {"appname":"热点资讯","enable":"true"},
+    {"appname":"刷宝短视频","enable":"true"},
+    {"appname":"搜狐资讯","enable":"true"},
+    {"appname":"淘集集","enable":"true"},
+    {"appname":"淘头条","enable":"true"},
+    {"appname":"天天快报","enable":"true"},
+    {"appname":"天天趣闻","enable":"true"},
+]; 
 
- {"appname":"天天快报","enable":"true"},
- {"appname":"天天趣闻","enable":"true"},
- {"appname":"头条多多","enable":"true"},
- {"appname":"头条精选","enable":"true"},
- {"appname":"引力资讯","enable":"true"},
- {"appname":"微头条","enable":"true"},
- {"appname":"微鲤看看","enable":"true"},
-{"appname":"快狗视频","enable":"true"},
-{"appname":"快看点","enable":"true"},
-{"appname":"快马小报","enable":"true"},
- {"appname":"惠头条","enable":"true"},
- {"appname":"惠视频","enable":"true"},
-
-
- {"appname":"掌上热点","enable":"true"},
- {"appname":"搜狐资讯","enable":"true"},
-
- {"appname":"有料看看","enable":"true"},
-
-{"appname":"橙子快报","enable":"true"},
-{"appname":"氪资讯","enable":"true"},
-
-{"appname":"海草公社","enable":"true"},
-{"appname":"淘头条","enable":"true"},
-{"appname":"淘新闻","enable":"true"},
-{"appname":"淘最热点","enable":"true"},
-{"appname":"淘看点","enable":"true"},
-{"appname":"淘集集","enable":"true"},
-{"appname":"点点新闻","enable":"true"},
-{"appname":"热点资讯","enable":"true"},
-{"appname":"爱头条","enable":"true"},
-{"appname":"牛牛资讯","enable":"true"},
-{"appname":"百万看点","enable":"true"},
-
-
-{"appname":"种子视频","enable":"true"},
-{"appname":"米闻快报","enable":"true"},
-{"appname":"精彩看点","enable":"true"},
-{"appname":"红包新闻","enable":"true"},
-{"appname":"红包视频","enable":"true"},
-
-{"appname":"翻翻头条","enable":"true"},
-{"appname":"聚看点","enable":"true"},
-
-{"appname":"萝卜看点","enable":"true"},
-{"appname":"薪头条","enable":"true"},
-{"appname":"蚂蚁头条","enable":"true"},
-{"appname":"蚂蚁看点","enable":"true"},
-{"appname":"蜜蜂看看","enable":"true"},
-{"appname":"趣头条","enable":"true"},
-{"appname":"趣故事","enable":"true"},
-{"appname":"趣新闻","enable":"true"},
-{"appname":"趣看天下","enable":"true"},
-{"appname":"趣看点","enable":"true"},
-{"appname":"趣闻看看","enable":"true"},
-{"appname":"闪电盒子","enable":"true"},
-{"appname":"阅看阅赚","enable":"true"},
-{"appname":"集好视频","enable":"true"},
-{"appname":"韭菜资讯","enable":"true"},
-{"appname":"韭黄","enable":"true"},
-{"appname":"魔方看点","enable":"true"}
-];
- 
+events.on("autoread", function(appwords){
+   play("global","执行");
+   play("global","群控指令");
+   if(appwords==""){
+    run();
+   }else{
+    Gapps=a=eval('(' + '[{"appname":"'+appwords+'","enable":"true"}]' + ')');
+    run();
+   }
+  });
+  //保持脚本运行
+  setInterval(()=>{}, 1000);
 
 testthread=threads.start(function(){
     setInterval(function(){
@@ -821,7 +871,9 @@ whchat();
    //alert("开始倒计时");
     //每个app需要阅读的时间sleep
     //var thisinterval=3*100000;
-    var thisinterval=80000;
+    //30分钟=1800秒=1800000毫秒
+    //var thisinterval=1800000;
+    var thisinterval=100000;
     toast("阅读"+thisinterval+"毫秒......................");
     sleep(thisinterval);
     toast("准备开始下一个");
