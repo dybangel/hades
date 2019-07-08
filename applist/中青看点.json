@@ -1,0 +1,49 @@
+{
+        "enable":"false",
+        "appname":"中青看点", 
+        "interval":"3",
+         "packagename":"cn.youth.news",
+        "activityname":"com.weishang.wxrd.activity.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"视频"
+          },
+          "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"iv_close",
+           },
+           "ab2":{
+            "featuremode":"id",
+            "id":"tv_pass",
+          },
+              "ab3":{
+            "featuremode":"id",
+            "id":"button2",
+          },
+            "ab4":{
+            "featuremode":"classname_desc",
+            "classname":"android.widget.Button",
+            "desc":"播放 开始播放"
+          },
+         },  
+        "bindwechat":{
+    
+        },
+        "autoread":{
+          "ar1":{
+            "action":"click_text",
+            "click_text":"首页",
+            "featuremode":"id",
+            "id":"iv_collect",
+        },
+        "ar2":{
+            "deploymode":"classname_desc",
+            "deployclassname":"android.view.View",
+            "deploydesc":"查看全文，奖励更多",
+
+        },
+        }, 
+        "durl":""
+       }

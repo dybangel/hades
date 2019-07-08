@@ -10,7 +10,7 @@ Gapplistpath="./applist/";
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
 Gvoicepath="./voice/";
 //是否开启调试打印  字典true false
-Gdebug=true;
+Gdebug=false;
 
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
