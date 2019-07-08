@@ -559,7 +559,7 @@ function openAPP(appname,packagename,activityname,open_obj){
                         play("global","打开成功");
                         Gworkthread="openapp_stop";
                         openstate=true;
-                        openstate=false;
+                      //  openstate=false;
                         break;  
                   }
            }else if(featuremode=="classname_text"){
@@ -570,7 +570,7 @@ function openAPP(appname,packagename,activityname,open_obj){
                                                 play("global","打开成功");
                                                 Gworkthread="openapp_stop";
                                                 openstate=true;
-                                                openstate=false;
+                                            //    openstate=false;
                                                 break;
                                             }
                     }catch(e){
