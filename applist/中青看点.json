@@ -20,7 +20,7 @@
           },
             "ab3":{
             "featuremode":"id",
-            "id":"button2",
+            "id":"android:id/button2",
           },
             "ab4":{
             "featuremode":"id",

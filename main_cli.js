@@ -15,19 +15,63 @@ Gdebug=false;
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
 //每一个app阅读多长时间的变量
-Gappinterval="100000";
+Gappinterval="1800000";
+//关闭弹窗线程的循环周期
+Gabinterval="5000";
 //所有要阅读那些app数据结构
 Gapps=[
     {"appname":"菠萝小组","enable":"true"},
     {"appname":"掌上消息","enable":"true"},
     {"appname":"波波视频","enable":"true"},
-    {"appname":"盈贝头条","enable":"true"},//查看全文
+     {"appname":"盈贝头条","enable":"true"},//查看全文
     {"appname":"新闻赚","enable":"true"},  
     {"appname":"刷宝短视频","enable":"true"},
     {"appname":"2345浏览器","enable":"true"},
     {"appname":"趣头条","enable":"true"},
     {"appname":"韭菜资讯","enable":"true"},
-    {"appname":"中青看点","enable":"true"},
+   {"appname":"中青看点","enable":"true"},
+
+//临时测试使用
+   {"appname":"菠萝小组","enable":"true"},
+   {"appname":"掌上消息","enable":"true"},
+   {"appname":"波波视频","enable":"true"},
+    {"appname":"盈贝头条","enable":"true"},//查看全文
+   {"appname":"新闻赚","enable":"true"},  
+   {"appname":"刷宝短视频","enable":"true"},
+   {"appname":"2345浏览器","enable":"true"},
+   {"appname":"趣头条","enable":"true"},
+   {"appname":"韭菜资讯","enable":"true"},
+  {"appname":"中青看点","enable":"true"},
+  {"appname":"菠萝小组","enable":"true"},
+  {"appname":"掌上消息","enable":"true"},
+  {"appname":"波波视频","enable":"true"},
+   {"appname":"盈贝头条","enable":"true"},//查看全文
+  {"appname":"新闻赚","enable":"true"},  
+  {"appname":"刷宝短视频","enable":"true"},
+  {"appname":"2345浏览器","enable":"true"},
+  {"appname":"趣头条","enable":"true"},
+  {"appname":"韭菜资讯","enable":"true"},
+ {"appname":"中青看点","enable":"true"},
+ {"appname":"菠萝小组","enable":"true"},
+ {"appname":"掌上消息","enable":"true"},
+ {"appname":"波波视频","enable":"true"},
+  {"appname":"盈贝头条","enable":"true"},//查看全文
+ {"appname":"新闻赚","enable":"true"},  
+ {"appname":"刷宝短视频","enable":"true"},
+ {"appname":"2345浏览器","enable":"true"},
+ {"appname":"趣头条","enable":"true"},
+ {"appname":"韭菜资讯","enable":"true"},
+{"appname":"中青看点","enable":"true"},
+{"appname":"菠萝小组","enable":"true"},
+{"appname":"掌上消息","enable":"true"},
+{"appname":"波波视频","enable":"true"},
+ {"appname":"盈贝头条","enable":"true"},//查看全文
+{"appname":"新闻赚","enable":"true"},  
+{"appname":"刷宝短视频","enable":"true"},
+{"appname":"2345浏览器","enable":"true"},
+{"appname":"趣头条","enable":"true"},
+{"appname":"韭菜资讯","enable":"true"},
+{"appname":"中青看点","enable":"true"},
     
   ]; 
 //脚本通讯监听，接收其它脚本指令是autoread的
@@ -615,7 +659,7 @@ function  while_abnormal(abnormal_obj){
 
 }
 //for end
-  },5000);
+  },Gabinterval);
             });
 }
 // while_abnormal的守护线程，有时候click事件会阻塞，所以每隔5秒杀掉abnormal线程再启动
