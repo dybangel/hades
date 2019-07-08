@@ -393,7 +393,7 @@ module.exports = {
                       }
                 }
             break;
-            case "趣头条":
+                        case "趣头条":
                             //趣头条
                 //1标识出主框架定界符
                 var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
@@ -404,27 +404,28 @@ module.exports = {
                 //将主框架实例化
                 var main=ele.findOnce(0);
                 for(var i=0;i<subcount;i++){
-                      try{
-                           //取出标题，主要是为了验证正确性
-                          var ltitle=main.child(i).child(0).text();
-                           //alert(ltitle);
-                           if("android.widget.ImageView"==main.child(i).child(0).className()){
+                    try{
+                        //取出标题，主要是为了验证正确性
+                        var ltitle=main.child(i).child(0).text();
+                        //alert(ltitle);
                         
+                       
+                            if("android.widget.FrameLayout"==main.child(i).className()){
                                     play("global",i);
                                     play("global","广告不点击");
                                     return false;
-                           }else{
+                        }else{
                                 play("global",i);
                                 play("global","点击"); 
                                 return main.child(i);
-                           }
+                        }
                             
-                     }catch(e){
+                    }catch(e){
                 
-                         play("global",i);
-                       play("global","广告不点击")
-                       return false;
-                      }
+                        play("global",i);
+                    play("global","广告不点击")
+                    return false;
+                    }
                 }
             break;
             case "薪头条":

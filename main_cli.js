@@ -15,85 +15,19 @@ Gdebug=true;
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
 //每一个app阅读多长时间的变量
-Gappinterval="1800000";
+Gappinterval="100000";
 //所有要阅读那些app数据结构
 Gapps=[
-   ////  {"appname":"菠萝小组","enable":"true"},
-   ////   {"appname":"掌上消息","enable":"true"},
-   ////     {"appname":"波波视频","enable":"true"},
-   ////{"appname":"盈贝头条","enable":"true"},//查看全文
-   //// {"appname":"新闻赚","enable":"true"},  
-     ////  {"appname":"刷宝短视频","enable":"true"},
-    //// {"appname":"2345浏览器","enable":"true"},
-   //// {"appname":"趣头条","enable":"true"},
-   ////{"appname":"韭菜资讯","enable":"true"},
-
-
-
-
-    //{"appname":"牛牛资讯","enable":"true"},
-   // {"appname":"百姓头条","enable":"true"},// 需要实现视频不点击
-   //{"appname":"本地看点","enable":"true"},//已实现，未验证，服务器异常
-  // {"appname":"蜜蜂看看","enable":"true"},//已实现，未验证，未找到finditem
-  // {"appname":"三言","enable":"true"},//finditem点击广告了
-
-
-                 //  {"appname":"北京知天下","enable":"true"},
-     
-                 //{"appname":"有米头条","enable":"true"},
-                  // {"appname":"有看头-热点新闻","enable":"true"},
-
-    
-   
-                  // {"appname":"网易新闻极速版","enable":"true"},
-                 // {"appname":"今日头条极速版","enable":"true"},
-      
-  
-          
-      // {"appname":"大众看点","enable":"true"},
-      // {"appname":"大众头条","enable":"true"},
-      // {"appname":"点点新闻","enable":"true"},
-      // {"appname":"翻翻头条","enable":"true"},
-  //  {"appname":"淘看点","enable":"true"},// 有finditem弹窗 没有粘贴过来
-      // {"appname":"精彩看点","enable":"true"},
-      // {"appname":"氪资讯","enable":"true"},
-      // {"appname":"快狗视频","enable":"true"},
-      // {"appname":"快看点","enable":"true"},
-      // {"appname":"唔哩头条","enable":"true"},
-      // {"appname":"蚂蚁看点","enable":"true"},
-   
-      // {"appname":"牛牛资讯","enable":"true"},
-      // {"appname":"趣故事","enable":"true"},
-      // {"appname":"热点资讯","enable":"true"},
- 
-      // {"appname":"搜狐资讯","enable":"true"},
-      // {"appname":"淘集集","enable":"true"},
-      // {"appname":"淘头条","enable":"true"},
-      // {"appname":"天天快报","enable":"true"},
-      // {"appname":"天天趣闻","enable":"true"},
-  
-  
-      
-      // {"appname":"二头条","enable":"true"},
-      //{"appname":"光影新闻","enable":"true"},
-       //{"appname":"全民头条6","enable":"true"},
-      // {"appname":"天天趣闻","enable":"true"},
-       //{"appname":"快马小报","enable":"true"},
-      // {"appname":"惠视频","enable":"true"},
-      //{"appname":"搜狐资讯","enable":"true"},
-       //{"appname":"淘最热点","enable":"true"},
-     //{"appname":"热点资讯","enable":"true"},
-      
-       //{"appname":"薪头条","enable":"true"},
-     
-     
-  
-      {"appname":"中青看点","enable":"true"},
-      // {"appname":"今日热闻","enable":"true"},
-     // {"appname":"氪资讯","enable":"true"},//滑动
-      //{"appname":"淘头条","enable":"true"},//弹窗
-    //   {"appname":"精彩看点","enable":"true"},
-    //   {"appname":"聚看点","enable":"true"},
+    {"appname":"菠萝小组","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
+    {"appname":"波波视频","enable":"true"},
+    {"appname":"盈贝头条","enable":"true"},//查看全文
+    {"appname":"新闻赚","enable":"true"},  
+    {"appname":"刷宝短视频","enable":"true"},
+    {"appname":"2345浏览器","enable":"true"},
+    {"appname":"趣头条","enable":"true"},
+    {"appname":"韭菜资讯","enable":"true"},
+    {"appname":"中青看点","enable":"true"},
     
   ]; 
 //脚本通讯监听，接收其它脚本指令是autoread的
