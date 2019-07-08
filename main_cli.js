@@ -149,7 +149,7 @@ whchat();
     
     //阻塞运行打开app 
    // alert("打开")
-    var opestate=openAPP(appname,packagename,activityname,open_obj);
+    var openstate=openAPP(appname,packagename,activityname,open_obj);
   
     
    //alert("开始倒计时");
