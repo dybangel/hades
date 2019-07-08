@@ -8,7 +8,7 @@ Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
-Gvoicepath="/storage/emulated/0/voice/";
+Gvoicepath="./voice/";
 //是否开启调试打印  字典true false
 Gdebug=true;
 
