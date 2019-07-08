@@ -1150,7 +1150,7 @@ module.exports = {
                     //取出标题，主要是为了验证正确性
                     var ltitle=main.child(i).child(0).text();
                     //alert(ltitle);
-                    if(main.child(i).child(1).text()=="广告"){
+                    if(main.child(i).child(2).child(0).text()=="广告"){
                     
                                 play("global",i);
                                 play("global","广告不点击");
