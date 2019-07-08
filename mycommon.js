@@ -44,6 +44,10 @@ module.exports = {
     click_classname_text:function (classstr,classtext){
         className(classstr).text(classtext).findOne(1000).click();
     },
+      //类名文字点击
+      click_classname_desc:function (classstr,classdesc){
+        className(classstr).desc(classdesc).findOne(1000).click();
+    },
     //根据控件所在的坐标坐标点击
     clickxy_for_ele:function (ele){
     touchreal(ele.bounds().centerX(),ele.bounds().centerY());
