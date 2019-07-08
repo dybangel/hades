@@ -18,11 +18,15 @@
             "featuremode":"id",
             "id":"tv_pass",
           },
-              "ab3":{
+            "ab3":{
             "featuremode":"id",
             "id":"button2",
           },
             "ab4":{
+            "featuremode":"id",
+            "id":"tv_skip_ad",
+          },
+            "ab5":{
             "featuremode":"classname_desc",
             "classname":"android.widget.Button",
             "desc":"播放 开始播放"
