@@ -2,17 +2,21 @@
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 const thisfinditem=require("./finditem.js");
-
-Grunstate="autoread"; //autoread bindwechat trainwechat
+//运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat
+Grunstate="autoread";
 Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl
-Gapplistpath="./applist/";///storage/emulated/0/applist/
+//特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
+Gapplistpath="./applist/";
+//语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
+Gvoicepath="/storage/emulated/0/voice/";
+//是否开启调试打印  字典true false
 Gdebug=true;
+
 //30分钟=1800秒=1800000毫秒
-    //var thisinterval=1800000;
-   // alert(openstate);
-     //如果打开失败跳转到下一个app，节约时间
-  //  var thisinterval=100000;
+//1.3分钟=100000毫秒
+//每一个app阅读多长时间的变量
 Gappinterval="1800000";
+//所有要阅读那些app数据结构
 Gapps=[
    ////  {"appname":"菠萝小组","enable":"true"},
    ////   {"appname":"掌上消息","enable":"true"},
@@ -92,7 +96,7 @@ Gapps=[
     //   {"appname":"聚看点","enable":"true"},
     
   ]; 
-
+//脚本通讯监听，接收其它脚本指令是autoread的
 events.on("autoread", function(appwords){
    play("global","执行");
    play("global","群控指令");
@@ -103,8 +107,6 @@ events.on("autoread", function(appwords){
     run();
    }
   });
-
-
 
         voice_runstate();
         voice_devicetype();
@@ -877,19 +879,13 @@ function block_check(checktype,f1,f2,f3){
 }
 //播放声音
 function play(subpath,appname){
-   // return true;
-//    media.playMusic("/storage/emulated/0/脚本/voice/"+subpath+"/"+appname+".mp3");
-   var voicefile="/storage/emulated/0/voice/"+subpath+"/"+appname+".mp3";
-
+   var voicefile=Gvoicepath+"/"+subpath+"/"+appname+".mp3";
     var result=files.exists(voicefile);
     if(!result){
         toast("没有找到语音包"+voicefile+".mp3");
     }else{
-        media.playMusic("/storage/emulated/0/voice/"+subpath+"/"+appname+".mp3");
-        //media.playMusic("./voice/"+subpath+"/"+appname+".mp3");
-      
-        sleep(media.getMusicDuration());
-        ///storage/emulated/0/
+        media.playMusic(Gvoicepath+"/"+subpath+"/"+appname+".mp3");  
+        sleep(media.getMusicDuration());     
     }
 
 }
