@@ -5,10 +5,9 @@ module.exports = {
     v4feature="android.support.v4.view.ViewPager";
     v7feature="android.support.v7.widget.RecyclerView";
     androidx="androidx.recyclerview.widget.RecyclerView"
-        //悦头条
-    //toast("this is findnewitem");
-    
-    switch (appname){
+ 
+    try{
+        switch (appname){
         case "掌上热点":
                         //掌上热点
                 //1标识出主框架定界符
@@ -1569,7 +1568,12 @@ module.exports = {
         default:
             alert(appname+" 尚未实现新闻调试");
     
+    }  
+    }catch(e){
+        //如果查找节点出错，返回false
+        return false;
     }
+  
     
     
     // var ele=className("android.support.v7.widget.RecyclerView");//.className("LinearLayout").findOnce(5);
