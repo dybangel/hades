@@ -110,41 +110,42 @@ module.exports = {
                     }
                 }
         break;
-        case "引力资讯":
-                        // //引力资讯
-                //1标识出主框架定界符
-                var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
-                //2定位到结构块层级父节点，并取出结构块数量
-                var subcount=ele.findOnce(0).childCount();
-                //检测一下子节点数量是否正确
-                //alert(subcount);exit();
-                //将主框架实例化
-                var main=ele.findOnce(0);
-                for(var i=0;i<subcount;i++){
-                       try{
-                           //取出标题，主要是为了验证正确性
-                           var ltitle=main.child(i).child(0).child(0).child(0).child(0).text();
-                           //alert(ltitle);
-                           if("广告"==main.child(i).child(0).child(2).child(0).className()){
+        // case "引力资讯":
+        //                 // //引力资讯
+        //         //1标识出主框架定界符
+        //         var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+        //         //2定位到结构块层级父节点，并取出结构块数量
+        //         var subcount=ele.findOnce(0).childCount();
+        //         //检测一下子节点数量是否正确
+        //         //alert(subcount);exit();
+        //         //将主框架实例化
+        //         var main=ele.findOnce(0);
+        //         for(var i=0;i<subcount;i++){
+        //                try{
+        //                    //取出标题，主要是为了验证正确性
+        //                    var ltitle=main.child(i).child(0).child(0).child(0).child(0).text();
+        //                    //alert(ltitle);
+        //                    if("广告"==main.child(i).child(0).child(2).child(0).className()){
                         
-                                    play("global",i);
-                                    play("global","点击");
-                                    return main.child(i);
-                           }else{
-                                play("global",i);
-                                play("global","广告不点击"); 
-                                return false;
-                           }
+        //                             play("global",i);
+        //                             play("global","点击");
+        //                             return main.child(i);
+        //                    }else{
+        //                         play("global",i);
+        //                         play("global","广告不点击"); 
+        //                         return false;
+        //                    }
                             
-                       }catch(e){
+        //                }catch(e){
                 
-                         play("global",i);
-                       play("global","点击")
-                       return main.child(i);
+        //                  play("global",i);
+        //                play("global","点击")
+        //                return main.child(i);
     
-                       }
-                }
-        break;
+        //                }
+        //         }
+        // break;
+
         case "头条多多":
                  //头条多多
                 //1标识出主框架定界符
@@ -179,42 +180,81 @@ module.exports = {
                     }
                 }
             break;
-             case "天天快报":
-                                //天天快报
-                    //1标识出主框架定界符
-                    var ele=className(v4feature);//.className("LinearLayout").findOnce(5);
-                    //2定位到结构块层级父节点，并取出结构块数量
-                    var subcount=ele.findOnce(0).childCount();
-                    //检测一下子节点数量是否正确
-                    //alert(subcount);exit();
-                    //将主框架实例化
-                    var main=ele.findOnce(0);
-                    for(var i=0;i<=subcount;i++){
-                          try{
-                               //取出标题，主要是为了验证正确性
-                               var ltitle=main.child(i).child(1).child(0).child(0).child(2).child(1).text();
-                               //alert(ltitle);
-                               if("android.widget.LinearLayout"==main.child(i).className()){
+            //  case "天天快报":
+            //                     //天天快报
+            //         //1标识出主框架定界符
+            //         var ele=className(v4feature);//.className("LinearLayout").findOnce(5);
+            //         //2定位到结构块层级父节点，并取出结构块数量
+            //         var subcount=ele.findOnce(0).childCount();
+            //         //检测一下子节点数量是否正确
+            //         //alert(subcount);exit();
+            //         //将主框架实例化
+            //         var main=ele.findOnce(0);
+            //         for(var i=0;i<=subcount;i++){
+            //               try{
+            //                    //取出标题，主要是为了验证正确性
+            //                    var ltitle=main.child(i).child(1).child(0).child(0).child(2).child(1).text();
+            //                    //alert(ltitle);
+            //                    if("android.widget.LinearLayout"==main.child(i).className()){
                             
-                                        play("global",i);
-                                        play("global","点击");
-                                        return main.child(i);
-                               }else{
-                                    play("global",i);
-                                    play("global","点击"); 
-                                    return main.child(i);
+            //                             play("global",i);
+            //                             play("global","点击");
+            //                             return main.child(i);
+            //                    }else{
+            //                         play("global",i);
+            //                         play("global","点击"); 
+            //                         return main.child(i);
     
-                               }
+            //                    }
                                 
-                          }catch(e){
+            //               }catch(e){
                     
-                            play("global",i);
-                          play("global","点击")
-                          return main.child(i);
+            //                 play("global",i);
+            //               play("global","点击")
+            //               return main.child(i);
     
-                          }
-                     }
-            break;
+            //               }
+            //          }
+            // break;
+            case "天天快报"://天天快报
+        var ele=className(v4feature);//.className("LinearLayout").findOnce(5);
+        //2定位到结构块层级父节点，并取出结构块数量
+        var subcount=ele.findOnce(0).childCount();
+        //检测一下子节点数量是否正确
+        //alert(subcount);exit();
+        //将主框架实例化
+        var main=ele.findOnce(0);
+        for(var i=0;i<subcount;i++){
+        try{
+            //取出标题，主要是为了验证正确性
+            var ltitle=main.child(i).child().child(0).child(0).child(1).child(1).child(0).text();
+            //alert(ltitle);
+            try{
+                //  alert(main.child(i).child(4).text());
+                    if("android.widget.FrameLayout"==main.child(i).child(1).child(0).child(0).child(1).className()){
+                    play("global",i);
+                    //play("global","打开")
+                    play("global","广告不点击");
+                    return false;
+                }else{
+                play("global",i);
+                play("global","点击");
+                return main.child(i);
+                }
+            }catch(e){
+            
+                play("global",i);
+                play("global","点击");  
+                return main.child(i);
+            }
+        }catch(e){
+
+            play("global",i);
+        play("global","广告不点击")
+        return false;
+        }
+        }
+        break;
              case "唔哩头条":
                                 //唔哩头条
                     //1标识出主框架定界符
@@ -463,41 +503,152 @@ module.exports = {
                       }
                 }
             break;
-            case "聚看点":
-                //聚看点
-                //1标识出主框架定界符
-                var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
-                //2定位到结构块层级父节点，并取出结构块数量
-                var subcount=ele.findOnce(0).childCount();
-                //检测一下子节点数量是否正确
-                //alert(subcount);exit();
-                //将主框架实例化
-                var main=ele.findOnce(0);
-                for(var i=0;i<subcount;i++){
-                      try{
-                           //取出标题，主要是为了验证正确性
-                          var ltitle=main.child(i).child(0).text();
-                           //alert(ltitle);
-                           if(main.child(i).child(1).text()=="广告"){
+            // case "聚看点":
+            //     //聚看点
+            //     //1标识出主框架定界符
+            //     var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //     //2定位到结构块层级父节点，并取出结构块数量
+            //     var subcount=ele.findOnce(0).childCount();
+            //     //检测一下子节点数量是否正确
+            //     //alert(subcount);exit();
+            //     //将主框架实例化
+            //     var main=ele.findOnce(0);
+            //     for(var i=0;i<subcount;i++){
+            //           try{
+            //                //取出标题，主要是为了验证正确性
+            //               var ltitle=main.child(i).child(0).text();
+            //                //alert(ltitle);
+            //                if(main.child(i).child(1).text()=="广告"){
                         
-                                    play("global",i);
-                                    play("global","广告不点击");
-                                    return false;
-                           }else{
-                                play("global",i);
-                                play("global","点击"); 
-                                return main.child(i);
-                           }
+            //                         play("global",i);
+            //                         play("global","广告不点击");
+            //                         return false;
+            //                }else{
+            //                     play("global",i);
+            //                     play("global","点击"); 
+            //                     return main.child(i);
+            //                }
                             
-                     }catch(e){
+            //          }catch(e){
                 
-                         play("global",i);
-                       play("global","广告不点击")
-                       return false;
+            //              play("global",i);
+            //            play("global","广告不点击")
+            //            return false;
     
-                      }
-                }
-            break;
+            //           }
+            //     }
+            // break;
+            case "聚看点":
+            //聚看点
+            //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=0;i<subcount;i++){
+                  try{
+                       //取出标题，主要是为了验证正确性
+                      var ltitle=main.child(i).child(0).text();
+                       //alert(ltitle);
+                       
+                        //if(main.child(i).child(1).child(2).child(1).id()=="item_artical_ad_three_bd_flag"||main.child(i).id()=="item_artical_ad_three_parent"){
+                        if(main.child(i).child(2).child(1).id()=="item_artical_ad_three_source"){
+                    
+                                play("global",i);
+                                play("global","广告不点击");
+                                return false;
+                       }else{
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                       }
+                        
+                 }catch(e){
+            
+                     play("global",i);
+                   play("global","广告不点击")
+                   return false;
+
+                  }
+            }
+        break;
+        case "趣看点":
+            //趣看点
+            //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=1;i<subcount;i++){
+                  try{
+                       //取出标题，主要是为了验证正确性
+                      var ltitle=main.child(i).child(0).child(0).child(0).child(0).text();
+                       //alert(ltitle);
+                       
+                       // if(main.child(i).child(0).child(0).child(0).child(1).id()=="adRightImageView"){
+                        if(main.child(i).child(0).child(0).childCount()==1){
+                    
+                                play("global",i);
+                                play("global","广告不点击");
+                                return false;
+                       }else{ 
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                       }
+                        
+                 }catch(e){
+            
+                     play("global",i);
+                   play("global","广告不点击")
+                   return false;
+
+                  }
+            }
+        break;
+        case "淘新闻":
+            //淘新闻
+            //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=1;i<subcount;i++){
+                  try{
+                       //取出标题，主要是为了验证正确性
+                      var ltitle=main.child(i).child(0).text();
+                       //alert(ltitle);
+                       
+                      
+                            if(main.child(i).childCount()==3||main.child(i).childCount()==4){
+                       
+                                play("global",i);
+                                play("global","广告不点击");
+                                return false;
+                       }else{
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                       }
+                        
+                 }catch(e){
+            
+                     play("global",i);
+                   play("global","广告不点击")
+                   return false;
+
+                  }
+            }
+        break;
             case "精彩看点":
                 //精彩看点
                 //1标识出主框架定界符
@@ -1135,6 +1286,76 @@ module.exports = {
     
             //return false;
             break;
+            case "闪电盒子":
+                    // //闪电盒子
+            //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=1;i<subcount;i++){
+                   try{
+                       //取出标题，主要是为了验证正确性
+                       var ltitle=main.child(i).child(0).child(1).text();
+                       //alert(ltitle);
+                       if("action"==main.child(i).child(0).child(4).id()){
+                    
+                                play("global",i);
+                                play("global","广告不点击");
+                                return false;
+                       }else{
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                       }
+                        
+                   }catch(e){
+            
+                     play("global",i);
+                   play("global","点击")
+                   return main.child(i);
+
+                   }
+            }
+    break;
+    case "引力资讯":
+                    // //引力资讯
+            //1标识出主框架定界符
+            var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //2定位到结构块层级父节点，并取出结构块数量
+            var subcount=ele.findOnce(0).childCount();
+            //检测一下子节点数量是否正确
+            //alert(subcount);exit();
+            //将主框架实例化
+            var main=ele.findOnce(0);
+            for(var i=1;i<subcount;i++){
+                   try{
+                       //取出标题，主要是为了验证正确性
+                       var ltitle=main.child(i).child(0).child(0).child(0).child(0).text();
+                       //alert(ltitle);
+                       if("adContainer"==main.child(i).id()||main.child(i).child(0).child(0).child(2).child(0).child(0).id()=="tv_newscount"){
+                    
+                                play("global",i);
+                                play("global","广告不点击");
+                                return false;
+                       }else{
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                       }
+                        
+                   }catch(e){
+            
+                     play("global",i);
+                   play("global","点击")
+                   return main.child(i);
+
+                   }
+            }
+    break;
         case "2345浏览器":
         //1标识出主框架定界符
             var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
@@ -1225,33 +1446,62 @@ module.exports = {
     
             }
             break;
+            // case "有米头条":
+            //     var ele=className("android.support.v7.widget.RecyclerView");//.className("LinearLayout").findOnce(5);
+            //     //先得到有多少个子节点
+            //     var subcount=ele.findOnce(0).childCount();
+            //     //在将主框架实例化
+            //     var main=ele.findOnce();
+            //     for(var i=0;i<subcount;i++){
+            //         try{
+            //                 var ltitle=main.child(i).child(0).text();
+            //               //  alert(ltitle);
+            //                 if(ltitle!=""){
+            //                     play("global",i);
+            //                     play("global","点击"); 
+            //                     return main.child(i);
+            //                 }else{
+            //                     play("global",i);
+            //                     play("global","广告不点击")
+            //                     return false;
+            //                 } 
+            //         }catch(e){
+            //             //alert(e)
+            //             play("global",i);
+            //             play("global","广告不点击")
+            //             return false;
+            //         }
+            //         }
+            // break;
             case "有米头条":
-                var ele=className("android.support.v7.widget.RecyclerView");//.className("LinearLayout").findOnce(5);
-                //先得到有多少个子节点
-                var subcount=ele.findOnce(0).childCount();
-                //在将主框架实例化
-                var main=ele.findOnce();
-                for(var i=0;i<subcount;i++){
-                    try{
-                            var ltitle=main.child(i).child(0).text();
-                          //  alert(ltitle);
-                            if(ltitle!=""){
-                                play("global",i);
-                                play("global","点击"); 
-                                return main.child(i);
-                            }else{
-                                play("global",i);
-                                play("global","广告不点击")
-                                return false;
-                            } 
-                    }catch(e){
-                        //alert(e)
-                        play("global",i);
-                        play("global","广告不点击")
-                        return false;
-                    }
-                    }
-            break;
+            //var ele=className("android.support.v7.widget.RecyclerView");//.className("LinearLayout").findOnce(5);
+            var ele=className(androidx);
+            //先得到有多少个子节点
+            var subcount=ele.findOnce(0).childCount();
+            //在将主框架实例化
+            var main=ele.findOnce();
+            for(var i=0;i<subcount;i++){
+                try{
+                        var ltitle=main.child(i).child(0).text();
+                        //var ltitle=main.child(i).child(0).child(0).child(1).child(0).text();
+                      //  alert(ltitle);
+                        if(ltitle!=""){
+                            play("global",i);
+                            play("global","点击"); 
+                            return main.child(i);
+                        }else{
+                            play("global",i);
+                            play("global","广告不点击")
+                            return false;
+                        } 
+                }catch(e){
+                    //alert(e)
+                    play("global",i);
+                    play("global","广告不点击")
+                    return false;
+                }
+                }
+        break;
             case "有看头-热点头条":
             break;
             case "波波视频":
@@ -1395,48 +1645,86 @@ module.exports = {
             case "今日头条极速版":
                 alert("未实现finditem");
             break;
-            case "百姓头条":
-                            //1标识出主框架定界符
-                var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
-                //2定位到结构块层级父节点，并取出结构块数量
-                var subcount=ele.findOnce(0).childCount();
-                //检测一下子节点数量是否正确
-                //alert(subcount);exit();
-                //将主框架实例化
-                var main=ele.findOnce(0);
-                for(var i=0;i<subcount;i++){
-                    try{
-                        //取出标题，主要是为了验证正确性
-                        var ltitle=main.child(i).child(0).text();
-                       // alert(ltitle);
-                        try{
-                            //  alert(main.child(i).child(4).text());
-                                if(main.child(i).child(4).text()==""||main.child(i).child(0).id()=="rl_video_container"){
-                                play("global",i);
-                                //play("global","打开")
-                                play("global","广告不点击");
-                                return false;
-                            }else{
-                                play("global",i);
-                                play("global","点击");
-                                return main.child(i);
-                            }
-                        }catch(e){
+            // case "百姓头条":
+            //                 //1标识出主框架定界符
+            //     var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //     //2定位到结构块层级父节点，并取出结构块数量
+            //     var subcount=ele.findOnce(0).childCount();
+            //     //检测一下子节点数量是否正确
+            //     //alert(subcount);exit();
+            //     //将主框架实例化
+            //     var main=ele.findOnce(0);
+            //     for(var i=0;i<subcount;i++){
+            //         try{
+            //             //取出标题，主要是为了验证正确性
+            //             var ltitle=main.child(i).child(0).text();
+            //            // alert(ltitle);
+            //             try{
+            //                 //  alert(main.child(i).child(4).text());
+            //                     if(main.child(i).child(4).text()==""||main.child(i).child(0).id()=="rl_video_container"){
+            //                     play("global",i);
+            //                     //play("global","打开")
+            //                     play("global","广告不点击");
+            //                     return false;
+            //                 }else{
+            //                     play("global",i);
+            //                     play("global","点击");
+            //                     return main.child(i);
+            //                 }
+            //             }catch(e){
                             
-                                play("global",i);
-                                play("global","点击");
-                                return main.child(i);
+            //                     play("global",i);
+            //                     play("global","点击");
+            //                     return main.child(i);
                                 
-                        }
+            //             }
                         
-                    }catch(e){
+            //         }catch(e){
                 
-                        play("global",i);
-                        play("global","广告不点击")
-                        return false;
-                    }
-                }
-            break;
+            //             play("global",i);
+            //             play("global","广告不点击")
+            //             return false;
+            //         }
+            //     }
+            // break;
+            case "百姓头条":
+                //1标识出主框架定界符
+    var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+    //2定位到结构块层级父节点，并取出结构块数量
+    var subcount=ele.findOnce(0).childCount();
+    //检测一下子节点数量是否正确
+    //alert(subcount);exit();
+    //将主框架实例化
+    var main=ele.findOnce(0);
+    for(var i=0;i<subcount;i++){
+        try{
+            //取出标题，主要是为了验证正确性
+            var ltitle=main.child(i).child(0).text();
+          // alert(ltitle);//child(i).child(3)  广告
+            ch3top=main.child(i).child(3).bounds().top; 
+            ch3left=main.child(i).child(3).bounds().left;
+            //ch3left 大于473的都是广告  小于35的都是视频
+            if(ch3left>473||ch3left<35){
+                play("global",i);
+                play("global","广告不点击")
+             //   alert(ltitle+" ch3top is:"+ch3top+ " ch3left is:"+ch3left)
+               // return false;
+            }else{
+                play("global",i);
+                play("global","点击")
+               // alert(ltitle+" ch3top is:"+ch3top+ " ch3left is:"+ch3left)
+            }
+           
+          
+            
+        }catch(e){
+    
+          //  play("global",i);
+          //  play("global","广告不点击")
+            return false;
+        }
+    }
+break;
             case "本地看点":
                             //1标识出主框架定界符
                 var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
@@ -1533,38 +1821,73 @@ module.exports = {
                     }
                 }
             break;
-            case "三言":
-                  var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
-                //2定位到结构块层级父节点，并取出结构块数量
-                var subcount=ele.findOnce(0).childCount();
-                //检测一下子节点数量是否正确
-                //alert(subcount);exit();
-                //将主框架实例化
-                var main=ele.findOnce(0);
-                for(var i=0;i<subcount;i++){
-                    try{
-                        //取出标题，主要是为了验证正确性
-                        var ltitle=main.child(i).child(0).child(0).child(0).text();
-                        //alert(ltitle);
-                        if("android.widget.LinearLayout"==main.child(i).className()){
+            // case "三言":
+            //       var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+            //     //2定位到结构块层级父节点，并取出结构块数量
+            //     var subcount=ele.findOnce(0).childCount();
+            //     //检测一下子节点数量是否正确
+            //     //alert(subcount);exit();
+            //     //将主框架实例化
+            //     var main=ele.findOnce(0);
+            //     for(var i=0;i<subcount;i++){
+            //         try{
+            //             //取出标题，主要是为了验证正确性
+            //             var ltitle=main.child(i).child(0).child(0).child(0).text();
+            //             //alert(ltitle);
+            //             if("android.widget.LinearLayout"==main.child(i).className()){
                         
-                                    play("global",i);
-                                    play("global","广告不点击");
-                                    return false;
+            //                         play("global",i);
+            //                         play("global","广告不点击");
+            //                         return false;
     
-                        }else{
-                                play("global",i);
-                                play("global","点击"); 
-                                return main.child(i);
-                        }
+            //             }else{
+            //                     play("global",i);
+            //                     play("global","点击"); 
+            //                     return main.child(i);
+            //             }
                             
-                    }catch(e){
+            //         }catch(e){
                 
-                        //play("global",i);
-                    // play("global","广告不点击")
-                    }
-                }
-            break;
+            //             //play("global",i);
+            //         // play("global","广告不点击")
+            //         }
+            //     }
+            // break;
+            case "三言"://三言
+        //1标识出主框架定界符
+        var ele=className(v7feature);//.className("LinearLayout").findOnce(5);
+        //2定位到结构块层级父节点，并取出结构块数量
+        var subcount=ele.findOnce(0).childCount();
+        //检测一下子节点数量是否正确
+        //alert(subcount);exit();
+        //将主框架实例化
+        var main=ele.findOnce(0);
+        for(var i=1;i<subcount;i++){
+        try{
+            //取出标题，主要是为了验证正确性
+            var ltitle=main.child(i).child(0).child(0).child(0).text();
+            //alert(ltitle);
+            
+           // if(main.child(i).child(0).classname()=="android.widget.FrameLayout"){
+             //   if(main.child(i).child(1).child(0).id()=="iv_iv_item_ad_bottom_ad"||main.child(i).child(0).id()=="view_item_fragment_homelist_three_ad"){
+                 if(main.child(i).child(0).child(1).child(0).text()==""||main.child(i).child(0).child(1).child(0).id()=="rl_homelist_item_video_img"){
+                    play("global",i);
+                    play("global","广告不点击");
+                    return false;
+            }else{
+                play("global",i);
+                play("global","点击"); 
+                return main.child(i);
+            }
+            
+        }catch(e){
+
+            play("global",i);
+        play("global","广告不点击")
+        return false;
+        }
+        }
+        break;
         default:
             alert(appname+" 尚未实现新闻调试");
     

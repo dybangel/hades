@@ -27,7 +27,7 @@ Gapps=[
 
    // {"appname":"菠萝小组","enable":"true"},
    // {"appname":"掌上消息","enable":"true"},
-    {"appname":"波波视频","enable":"true"}, //统一领取
+   // {"appname":"波波视频","enable":"true"}, //统一领取
 //      {"appname":"盈贝头条","enable":"true"},//查看全文
 //     {"appname":"新闻赚","enable":"true"},  
 //     {"appname":"刷宝短视频","enable":"true"},
@@ -35,6 +35,27 @@ Gapps=[
 //     {"appname":"趣头条","enable":"true"},
 //     {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
 //    {"appname":"中青看点","enable":"true"},
+
+
+        {"appname":"菠萝小组","enable":"true"},
+        {"appname":"掌上消息","enable":"true"},
+        {"appname":"波波视频","enable":"true"},
+        {"appname":"盈贝头条","enable":"true"},//查看全文
+        {"appname":"刷宝短视频","enable":"true"},
+        {"appname":"2345浏览器","enable":"true"},
+        {"appname":"趣头条","enable":"true"},
+        {"appname":"韭菜资讯","enable":"true"},
+        {"appname":"中青看点","enable":"true"},
+        {"appname":"闪电盒子","enable":"true"},
+        {"appname":"引力资讯","enable":"true"},
+        {"appname":"聚看点","enable":"true"},
+        {"appname":"趣看点","enable":"true"},//没实现查看全文
+        {"appname":"淘新闻","enable":"true"},//
+        {"appname":"百姓头条","enable":"true"},// 
+        {"appname":"三言","enable":"true"},
+        {"appname":"天天快报","enable":"true"},
+        {"appname":"有米头条","enable":"true"},  
+        {"appname":"新闻赚","enable":"true"},  
 
 // //临时测试使用
 //    {"appname":"菠萝小组","enable":"true"},

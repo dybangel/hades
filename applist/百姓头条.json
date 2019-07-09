@@ -1,0 +1,64 @@
+ {
+        "enable":"false",
+        "appname":"百姓头条", 
+        "interval":"3",
+         "packagename":"com.qiushibaike.inews",
+        "activityname":"com.qiushibaike.inews.home.HomeActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"视频"
+          },
+          "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"iv_close_unopen",
+           },
+          
+          "ab2":{
+            "featuremode":"id",
+            "id":"iv_dialog_close",
+        },
+         },  
+        "bindwechat":{
+          "bw1":{
+            "action":"click_text",
+            "click_text":"我",
+            "featuremode":"classname_text",
+            "classname":"android.widget.TextView",
+            "text":"登录领最高22元新人红包",
+        },
+        "bw2":{
+          "action":"click_id",
+          "click_id":"btn_login_wchat",
+          "featuremode":"classname_text",
+          "classname":"android.widget.Button",
+          "text":"同意"
+         },
+         "bw3":{
+           "action":"click_text",
+           "click_text":"同意",
+           "featuremode":"classname_text",
+           "classname":"android.widget.TextView",
+           "text":"普通会员"
+         },
+    
+        },
+        "autoread":{
+		 "ar1":{
+                "action":"click_text",
+                "click_text":"头条",
+                "featuremode":"classname_desc",
+             "classname":"android.widget.ImageButton",
+                "desc":"Navigate up",
+            },
+            "ar2":{
+                "deploymode":"classname_desc",
+                "deployclassname":"android.view.View",
+                "deploydesc":"点击展开全文",
+
+        }, 
+            },
+        "durl":""
+        
+      }
