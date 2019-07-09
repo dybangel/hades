@@ -2,6 +2,7 @@
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 const thisfinditem=require("./finditem.js");
+
 //运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat
 Grunstate="autoread";
 Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl
@@ -20,58 +21,62 @@ Gappinterval="1800000";
 Gabinterval="5000";
 //所有要阅读那些app数据结构
 Gapps=[
-    {"appname":"菠萝小组","enable":"true"},
-    {"appname":"掌上消息","enable":"true"},
-    {"appname":"波波视频","enable":"true"},
-     {"appname":"盈贝头条","enable":"true"},//查看全文
-    {"appname":"新闻赚","enable":"true"},  
-    {"appname":"刷宝短视频","enable":"true"},
-    {"appname":"2345浏览器","enable":"true"},
-    {"appname":"趣头条","enable":"true"},
-    {"appname":"韭菜资讯","enable":"true"},
-   {"appname":"中青看点","enable":"true"},
+  //  {"appname":"凤凰资讯","enable":"true"},
+  //  {"appname":"花生头条","enable":"true"},
+  //  {"appname":"今日必看","enable":"true"},
 
-//临时测试使用
-   {"appname":"菠萝小组","enable":"true"},
-   {"appname":"掌上消息","enable":"true"},
-   {"appname":"波波视频","enable":"true"},
-    {"appname":"盈贝头条","enable":"true"},//查看全文
-   {"appname":"新闻赚","enable":"true"},  
-   {"appname":"刷宝短视频","enable":"true"},
-   {"appname":"2345浏览器","enable":"true"},
-   {"appname":"趣头条","enable":"true"},
-   {"appname":"韭菜资讯","enable":"true"},
-  {"appname":"中青看点","enable":"true"},
-  {"appname":"菠萝小组","enable":"true"},
-  {"appname":"掌上消息","enable":"true"},
-  {"appname":"波波视频","enable":"true"},
-   {"appname":"盈贝头条","enable":"true"},//查看全文
-  {"appname":"新闻赚","enable":"true"},  
-  {"appname":"刷宝短视频","enable":"true"},
-  {"appname":"2345浏览器","enable":"true"},
-  {"appname":"趣头条","enable":"true"},
-  {"appname":"韭菜资讯","enable":"true"},
- {"appname":"中青看点","enable":"true"},
- {"appname":"菠萝小组","enable":"true"},
- {"appname":"掌上消息","enable":"true"},
- {"appname":"波波视频","enable":"true"},
-  {"appname":"盈贝头条","enable":"true"},//查看全文
- {"appname":"新闻赚","enable":"true"},  
- {"appname":"刷宝短视频","enable":"true"},
- {"appname":"2345浏览器","enable":"true"},
- {"appname":"趣头条","enable":"true"},
- {"appname":"韭菜资讯","enable":"true"},
-{"appname":"中青看点","enable":"true"},
-{"appname":"菠萝小组","enable":"true"},
-{"appname":"掌上消息","enable":"true"},
-{"appname":"波波视频","enable":"true"},
- {"appname":"盈贝头条","enable":"true"},//查看全文
-{"appname":"新闻赚","enable":"true"},  
-{"appname":"刷宝短视频","enable":"true"},
-{"appname":"2345浏览器","enable":"true"},
-{"appname":"趣头条","enable":"true"},
-{"appname":"韭菜资讯","enable":"true"},
-{"appname":"中青看点","enable":"true"},
+   // {"appname":"菠萝小组","enable":"true"},
+   // {"appname":"掌上消息","enable":"true"},
+    {"appname":"波波视频","enable":"true"}, //统一领取
+//      {"appname":"盈贝头条","enable":"true"},//查看全文
+//     {"appname":"新闻赚","enable":"true"},  
+//     {"appname":"刷宝短视频","enable":"true"},
+//     {"appname":"2345浏览器","enable":"true"},
+//     {"appname":"趣头条","enable":"true"},
+//     {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
+//    {"appname":"中青看点","enable":"true"},
+
+// //临时测试使用
+//    {"appname":"菠萝小组","enable":"true"},
+//    {"appname":"掌上消息","enable":"true"},
+//    {"appname":"波波视频","enable":"true"},
+//     {"appname":"盈贝头条","enable":"true"},//查看全文
+//    {"appname":"新闻赚","enable":"true"},  
+//    {"appname":"刷宝短视频","enable":"true"},
+//    {"appname":"2345浏览器","enable":"true"},
+//    {"appname":"趣头条","enable":"true"},
+//    {"appname":"韭菜资讯","enable":"true"},
+//   {"appname":"中青看点","enable":"true"},
+//   {"appname":"菠萝小组","enable":"true"},
+//   {"appname":"掌上消息","enable":"true"},
+//   {"appname":"波波视频","enable":"true"},
+//    {"appname":"盈贝头条","enable":"true"},//查看全文
+//   {"appname":"新闻赚","enable":"true"},  
+//   {"appname":"刷宝短视频","enable":"true"},
+//   {"appname":"2345浏览器","enable":"true"},
+//   {"appname":"趣头条","enable":"true"},
+//   {"appname":"韭菜资讯","enable":"true"},
+//  {"appname":"中青看点","enable":"true"},
+//  {"appname":"菠萝小组","enable":"true"},
+//  {"appname":"掌上消息","enable":"true"},
+//  {"appname":"波波视频","enable":"true"},
+//   {"appname":"盈贝头条","enable":"true"},//查看全文
+//  {"appname":"新闻赚","enable":"true"},  
+//  {"appname":"刷宝短视频","enable":"true"},
+//  {"appname":"2345浏览器","enable":"true"},
+//  {"appname":"趣头条","enable":"true"},
+//  {"appname":"韭菜资讯","enable":"true"},
+// {"appname":"中青看点","enable":"true"},
+// {"appname":"菠萝小组","enable":"true"},
+// {"appname":"掌上消息","enable":"true"},
+// {"appname":"波波视频","enable":"true"},
+//  {"appname":"盈贝头条","enable":"true"},//查看全文
+// {"appname":"新闻赚","enable":"true"},  
+// {"appname":"刷宝短视频","enable":"true"},
+// {"appname":"2345浏览器","enable":"true"},
+// {"appname":"趣头条","enable":"true"},
+// {"appname":"韭菜资讯","enable":"true"},
+// {"appname":"中青看点","enable":"true"},
     
   ]; 
 //脚本通讯监听，接收其它脚本指令是autoread的
@@ -405,7 +410,13 @@ try{
                     if(ele){
                         //如果存在，点击新闻
                        play("global","打开新闻");
+                      // alert(appname);
+                     
+
                       thiscommon.clickxy_for_ele(ele);
+                     // alert(ele);
+                     //波波视频的处理方式，需要调试
+                    //  callback_boboshipin("",ele);
                        //等待2秒，否则线程关闭，点击事件会无效
                         sleep(2000);
                         var result=false;
@@ -1087,6 +1098,78 @@ function sysupdate()
                     return;
     }
 }
+function callback_boboshipin(fucname,ele){
+var thisnum=0;
+//alert(ele.child(1).child(0).text());
+var thistop=ele.child(1).child(0).bounds().top+20;
+var thisleft=ele.child(1).child(0).bounds().left+130;
+
+//     while(1){
+//         if(thisnum>30){
+//             break;
+//         }
+//         //toast("top is"+thistop+" left is"+thisleft);
+//         thiscommon.touchreal(thistop,thisleft);     
+//        // toast("fuck ............."+thisnum);
+//         thisnum+=1;
+//     sleep(3000);
+// }
+var thisnum=0;
+while(1){
+   // thiscommon.touchreal(300,1273);
+   //toast("top is"+thistop+" left is"+thisleft);
+    //点击有收益的地方
+    sleep(1000);
+    thiscommon.touchreal(thisleft,thistop);
+    sleep(800);
+
+    //如果是点击领取
+    var elelq=className("android.view.View").desc("点击领取");//.findOnce(0);
+            if(elelq.exists()){
+                //点击
+                elelq.findOnce(0).click();
+                sleep(1000);
+              //  elelq.findOnce(0).click();  
+            
+              //关闭
+                sleep(1000);
+                var eleclose=id("e8").exists();
+                    if(eleclose){
+                        id("e8").click();
+                    } 
+
+            }
+    //如果是分享给朋友
+        var elefx=className("android.view.View").desc("分享给朋友");
+        if(elefx.exists()){
+            sleep(1000);
+            //关闭
+            var eleclose=id("e8").exists();
+                if(eleclose){
+                    id("e8").click();
+                }    
+        }
+
+
+    if(thisnum>20){
+        break;
+    }
+    thisnum+=1;
+    sleep(5000)
+}
+exit();
+
+}
+
+// var interval=setInterval(
+//     function(){
+//         if(thisnum>30){
+//             clearInterval(interval);
+//         }
+//         thiscommon.touchreal(thistop,thisleft); 
+//         thisnum+=1;  
+//     },3000);
+// }
 function hidenapplist(){
 //  applist=[
 //     {
