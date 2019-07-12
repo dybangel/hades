@@ -37,8 +37,8 @@
 		 "ar1":{
                 "action":"click_text",
                 "click_text":"头条",
-                "featuremode":"id",
-                "id":"en",
+                "featuremode":"ids",
+                "ids":"zh||en||tw",
             },
             "ar2":{
                 "deploymode":"classname_desc",

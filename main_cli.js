@@ -4,7 +4,7 @@ const thisswipe=require("./myswipe.js");
 const thisfinditem=require("./finditem.js");
 
 //运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat popupdebug
-Grunstate="popupdebug";
+Grunstate="autoread";
 Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";
@@ -22,7 +22,7 @@ Gabinterval="5000";
 //所有要阅读那些app数据结构
 Gapps=[
        
-        {"appname":"刷宝短视频","enable":"true"},
+       // {"appname":"刷宝短视频","enable":"true"},
         {"appname":"2345浏览器","enable":"true"},
         {"appname":"趣头条","enable":"true"},
     {"appname":"中青看点","enable":"true"},
@@ -35,7 +35,7 @@ Gapps=[
         {"appname":"天天快报","enable":"true"},
         {"appname":"掌上消息","enable":"true"},
      {"appname":"菠萝小组","enable":"true"},
-    {"appname":"聚看点","enable":"true"}
+    {"appname":"聚看点","enable":"true"},
     {"appname":"波波视频","enable":"true"}, //统一领取
     {"appname":"盈贝头条","enable":"true"},//查看全文
     {"appname":"新闻赚","enable":"true"},  
@@ -843,6 +843,25 @@ if("classname_desc"==featuremode){
     mytoast("block_mode and id mode 执行");
     result=block_check(featuremode,thisid,'','');
     return result;
+}else if("ids"==featuremode){
+    var thisid=obj[obja]["ids"];
+    //var ids="iv_back||iv_playback";
+    ids_arr=thisid.split("||");
+    var num=0;
+    while(true){
+        if(num>15){
+            return false;
+        }
+        for(var i=0;i<ids_arr.length;i++){
+            if(id(ids_arr[i]).exists()){
+               return true;
+            } 
+       }
+       num+=1;
+       sleep(1000);
+    }
+ 
+
 }
 
 }
