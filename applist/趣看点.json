@@ -27,6 +27,11 @@
         "id":"dialog_update_cancel",
     },
        },  
+	   "activitys":{
+            "at1":"com.zhangku.qukandian.activitys.LauncherActivity",
+            "at2":"com.zhangku.qukandian.activitys.information.InformationDetailsAtivity",
+   
+          } , 
       "bindwechat":{
         "bw1":{
           "action":"click_text",
@@ -72,5 +77,5 @@
 
             },
       }, 
-      "durl":""
+      "durl":"http://ftp-new-apk.pconline.com.cn/80c8d68cb5e0d832a195c46cf9f9f3e4/pub/download/201904/pconline1555400913969.apk"
       }

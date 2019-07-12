@@ -3,7 +3,7 @@
         "appname":"有米头条", 
         "interval":"3",
          "packagename":"com.zz.ymtt",
-        "activityname":"com.zz.ymtt.ui.KaipingActivity",
+        "activityname":"com.zz.ymtt.ui.ShouyeActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
@@ -40,6 +40,11 @@
                 "text":"领金币",
           },
          },  
+	    "activitys":{
+			 "at1":"com.zz.ymtt.ui.ShouyeActivity",
+			 "at2":"com.zz.ymtt.ui.NewsDetailActivity",
+
+		   } ,
         "bindwechat":{
           "bw1":{
             "action":"click_text",
@@ -85,5 +90,5 @@
 
            },
         }, 
-        "durl":""
+         "durl":"http://xzc.197746.com/youmitt.apk"
        }

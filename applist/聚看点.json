@@ -9,7 +9,7 @@
           "classname":"android.widget.TextView",
           "text":"视频"
           },
-          "abnormal":{
+        "abnormal":{
            "ab1":{
                "featuremode":"id",
                "id":"close_button",
@@ -31,6 +31,11 @@
             "id":"iv_cancel",
           },
          },  
+		"activitys":{
+            "at1":"com.xiangzi.jukandian.activity.MainActivity",
+            "at2":"com.xiangzi.jukandian.activity.WebViewActivity",
+   
+          } , 
         "bindwechat":{
        
         },
@@ -48,5 +53,5 @@
 
             },
         }, 
-        "durl":""
+         "durl":"http://1.szwt.pc0359.cn/soft/c/com.xiangzi.jukandian.apk"
        }

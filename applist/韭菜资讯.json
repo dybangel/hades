@@ -20,6 +20,11 @@
            },
          
          },  
+		 "activitys":{
+            "at1":"com.zujikandian.android.home.HomeActivity",
+            "at2":"com.zuijikandian.android.article.ArticleActivity",
+   
+          } , 
         "bindwechat":{
     
         },
@@ -36,6 +41,7 @@
                 "deployid":"imageView11",
 
         }, 
-        "durl":""
-       }
+		},
+        "durl":"http://js.xiazaicc.com/anzhuoyy/jiucaixixun_downcc.apk"
+       
       }

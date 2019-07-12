@@ -31,6 +31,11 @@
              "id":"imgClose",
          },
        },  
+	   "activitys":{
+			 "at1":"com.donews.firsthot.common.activitys.MainActivity",
+			 "at2":"com.donews.firsthot.news.activitys.NewsDetailActivity",
+
+		   } ,
       "bindwechat":{
         "bw1":{
           "action":"click_id",
@@ -69,5 +74,5 @@
 
             },
       }, 
-      "durl":""
+       "durl":"http://ftp-new-apk.pconline.com.cn/80c8d68cb5e0d832a195c46cf9f9f3e4/pub/download/201904/pconline1556344741684.apk"
       }

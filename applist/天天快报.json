@@ -16,6 +16,11 @@
             "id":"just_see_see",
         },
          },  
+		 "activitys":{
+         "at1":"com.tencent.reading.activity.SplashActivity",
+         "at2":"com.tencent.reading.ui.NewsDetailActivity",
+
+       } ,
         "bindwechat":{
           "bw1":{
             "action":"click_text",
@@ -47,5 +52,5 @@
 
         },
         }, 
-        "durl":""
+       "durl":"http://ftp-apk.pconline.com.cn/80c8d68cb5e0d832a195c46cf9f9f3e4/pub/download/201010/com.tencent.reading_5.0.20_5020.apk"
       }

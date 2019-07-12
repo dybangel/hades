@@ -3,7 +3,7 @@
       "appname":"三言", 
       "interval":"3",
          "packagename":"com.sylife",
-      "activityname":"com.sylife.layout.activity.StartActivity",
+      "activityname":"com.sylife.layout.activity.MainActivity",
       "open":{
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
@@ -19,6 +19,11 @@
                   "id":"ib_pop_update_close",
                 },
        },  
+	   "activitys":{
+            "at1":"com.sylife.layout.activity.MainActivity",
+            "at2":"com.sylife.layout.activity.article.ArticleWebViewActivity",
+   
+          } , 
       "bindwechat":{
         "bw1":{
           "action":"click_text",
@@ -64,5 +69,5 @@
 
       },
       }, 
-      "durl":""
+       "durl":"http://gyxzup.syzjxz2018.cn/up1/rj_cst1/sanyan.apk"
       }

@@ -19,7 +19,12 @@
             "classname":"android.widget.TextView",
             "text":"知道了",
           },
-         },  
+         }, 
+		  "activitys":{
+					"at1":"com.kg.v1.MainActivity",
+				
+		   
+          } , 		 
         "bindwechat":{
           "bw1":{
             "action":"click_text",
@@ -59,5 +64,5 @@
         }, 
         
        },
-        "durl":""
+        "durl":"http://cr1.197946.com/boboshipin.apk"
       }

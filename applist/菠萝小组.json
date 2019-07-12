@@ -3,7 +3,7 @@
         "appname":"菠萝小组", 
         "interval":"3",
          "packagename":"com.nook.boluopai",
-        "activityname":"com.nook.boluopai.ui.activity.SplashActivity",
+        "activityname":"com.nook.boluopai.ui.activity.MainActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
@@ -20,6 +20,11 @@
             "id":"closeImg",
         },
          },  
+		  "activitys":{
+            "at1":"com.nook.boluopai.ui.activity.MainActivity",
+            "at2":"com.nook.boluopai.ui.activity.article.ArticleDetailActivity",
+   
+          } , 
         "bindwechat":{
           "bw1":{
             "action":"click_text",
@@ -64,6 +69,7 @@
                 "deploydesc":"展开全文",
 
         }, 
-        "durl":""
-       }
+		},
+      "durl":"http://dx8.198174.com/boloxiaozu.apk"
+       
       }

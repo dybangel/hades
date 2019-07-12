@@ -18,7 +18,11 @@
                "featuremode":"id",
                "id":"guide_know_btn",
            },
-         },  
+         }, 
+		 "activitys":{
+			 "at1":"com.swkj.future.view.activity.MainActivity",
+			 "at2":"com.swkj.future.view.activity.ArticleMainActivity",
+		   } ,
         "bindwechat":{
           "bw1":{
             "action":"click_text",
@@ -64,5 +68,5 @@
 
            },
         }, 
-        "durl":""
+        "durl":"http://1.szwt.pc0359.cn/soft/c/com.swkj.future.apk"
        }

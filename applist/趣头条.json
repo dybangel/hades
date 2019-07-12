@@ -27,6 +27,11 @@
              "id":"ty",
          },
        },  
+	   "activitys":{
+            "at1":"com.jifen.qkbase.main.MainActivity",
+            "at2":"com.jifen.qkbase.content.newsdetail.news.NewsDetailNewActivity",
+   
+          } , 
       "bindwechat":{
     
       },
@@ -43,6 +48,7 @@
                 "deploydesc":"展开全文",
 
       }, 
-      "durl":""
-      }
+	  },
+      "durl":"http://ftp-apk.pconline.com.cn/80c8d68cb5e0d832a195c46cf9f9f3e4/pub/download/201010/com.jifen.qukan_3.9.32.000.0703.1030_30932000.apk"
+      
     }

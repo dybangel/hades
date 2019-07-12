@@ -9,7 +9,8 @@
           "classname":"android.widget.TextView",
           "text":"视频"
           },
-          "abnormal":{
+        "abnormal":{
+		  
            "ab1":{
                "featuremode":"id",
                "id":"iv_close_unopen",
@@ -20,6 +21,11 @@
             "id":"iv_dialog_close",
         },
          },  
+		"activitys":{
+            "at1":"com.qiushibaike.inews.home.HomeActivity",
+            "at2":"com.qiushibaike.inews.common.web.v2.base.BaseWebActivity",
+   
+          } , 
         "bindwechat":{
           "bw1":{
             "action":"click_text",
@@ -59,6 +65,6 @@
 
         }, 
             },
-        "durl":""
+           "durl":"http://acj3.pc6.com/pc6_soure/2018-10/com.qiushibaike.inews_26.apk"
         
       }

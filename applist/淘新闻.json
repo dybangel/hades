@@ -23,6 +23,11 @@
             "id":"close",
         },
          },  
+		 "activitys":{
+         "at1":"com.coohua.xinwenzhuan.controller.MainActivity",
+         
+
+       } ,
         "bindwechat":{
           "bw1":{
             "action":"click_text",
@@ -63,5 +68,5 @@
 
             },
         }, 
-        "durl":""
+         "durl":"http://down.aicukg.com:801/down/taoxinwen3.3.3.pc141.apk"
       }

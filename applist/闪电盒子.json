@@ -23,6 +23,11 @@
              "id":"btn_close",
       },
        },  
+	    "activitys":{
+            "at1":"c.l.a.views.AppBoxHomeActivity",
+            "at2":"c.l.a.feed.wyyl.FeedArticleDetailActivitySub2",
+   
+          } , 
       "bindwechat":{
         "bw1":{
           "action":"click_text",
@@ -68,5 +73,5 @@
 
             },
       }, 
-      "durl":""
+      "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
       }

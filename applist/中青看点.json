@@ -31,7 +31,12 @@
             "classname":"android.widget.Button",
             "desc":"播放 开始播放"
           },
-         },  
+         }, 
+		 "activitys":{
+			 "at1":"com.weishang.wxrd.activity.MainActivity",
+			 "at2":"com.weishang.wxrd.activity.WebViewActivity",
+
+		   } ,
         "bindwechat":{
     
         },
@@ -49,5 +54,5 @@
 
         },
         }, 
-        "durl":""
+       "durl":"https://res.youth.cn/youth_v1.2.8_code20_180824_c3001.apk"
        }
