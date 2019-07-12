@@ -16,16 +16,16 @@ Gdebug=false;
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
 //每一个app阅读多长时间的变量
-Gappinterval="1800000";
+Gappinterval="100000";
 //关闭弹窗线程的循环周期
 Gabinterval="5000";
 //所有要阅读那些app数据结构
 Gapps=[
        
-       // {"appname":"刷宝短视频","enable":"true"},
+        {"appname":"刷宝短视频","enable":"true"},
         {"appname":"2345浏览器","enable":"true"},
         {"appname":"趣头条","enable":"true"},
-        {"appname":"中青看点","enable":"true"},
+    {"appname":"中青看点","enable":"true"},
         {"appname":"闪电盒子","enable":"true"},
         {"appname":"引力资讯","enable":"true"},
         {"appname":"趣看点","enable":"true"},//没实现查看全文
@@ -34,74 +34,14 @@ Gapps=[
         {"appname":"三言","enable":"true"},
         {"appname":"天天快报","enable":"true"},
         {"appname":"掌上消息","enable":"true"},
-     // {"appname":"菠萝小组","enable":"true"},
-    // {"appname":"聚看点","enable":"true"}
-    // {"appname":"波波视频","enable":"true"}, //统一领取
-    // {"appname":"盈贝头条","enable":"true"},//查看全文
-    // {"appname":"新闻赚","enable":"true"},  
-    // {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
-    // {"appname":"有米头条","enable":"true"}, //多读一会儿
+     {"appname":"菠萝小组","enable":"true"},
+    {"appname":"聚看点","enable":"true"}
+    {"appname":"波波视频","enable":"true"}, //统一领取
+    {"appname":"盈贝头条","enable":"true"},//查看全文
+    {"appname":"新闻赚","enable":"true"},  
+    {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
+    {"appname":"有米头条","enable":"true"}, //多读一会儿
 
-    {"appname":"刷宝短视频","enable":"true"},
-    {"appname":"2345浏览器","enable":"true"},
-    {"appname":"趣头条","enable":"true"},
-    {"appname":"中青看点","enable":"true"},
-    {"appname":"闪电盒子","enable":"true"},
-    {"appname":"引力资讯","enable":"true"},
-    {"appname":"趣看点","enable":"true"},//没实现查看全文
-    {"appname":"淘新闻","enable":"true"},//
-    {"appname":"百姓头条","enable":"true"},// 
-    {"appname":"三言","enable":"true"},
-    {"appname":"天天快报","enable":"true"},
-    {"appname":"掌上消息","enable":"true"},
-    {"appname":"刷宝短视频","enable":"true"},
-    {"appname":"2345浏览器","enable":"true"},
-    {"appname":"趣头条","enable":"true"},
-    {"appname":"中青看点","enable":"true"},
-    {"appname":"闪电盒子","enable":"true"},
-    {"appname":"引力资讯","enable":"true"},
-    {"appname":"趣看点","enable":"true"},//没实现查看全文
-    {"appname":"淘新闻","enable":"true"},//
-    {"appname":"百姓头条","enable":"true"},// 
-    {"appname":"三言","enable":"true"},
-    {"appname":"天天快报","enable":"true"},
-    {"appname":"掌上消息","enable":"true"},
-    {"appname":"刷宝短视频","enable":"true"},
-    {"appname":"2345浏览器","enable":"true"},
-    {"appname":"趣头条","enable":"true"},
-    {"appname":"中青看点","enable":"true"},
-    {"appname":"闪电盒子","enable":"true"},
-    {"appname":"引力资讯","enable":"true"},
-    {"appname":"趣看点","enable":"true"},//没实现查看全文
-    {"appname":"淘新闻","enable":"true"},//
-    {"appname":"百姓头条","enable":"true"},// 
-    {"appname":"三言","enable":"true"},
-    {"appname":"天天快报","enable":"true"},
-    {"appname":"掌上消息","enable":"true"},
-    {"appname":"刷宝短视频","enable":"true"},
-    {"appname":"2345浏览器","enable":"true"},
-    {"appname":"趣头条","enable":"true"},
-    {"appname":"中青看点","enable":"true"},
-    {"appname":"闪电盒子","enable":"true"},
-    {"appname":"引力资讯","enable":"true"},
-    {"appname":"趣看点","enable":"true"},//没实现查看全文
-    {"appname":"淘新闻","enable":"true"},//
-    {"appname":"百姓头条","enable":"true"},// 
-    {"appname":"三言","enable":"true"},
-    {"appname":"天天快报","enable":"true"},
-    {"appname":"掌上消息","enable":"true"},
-    {"appname":"刷宝短视频","enable":"true"},
-    {"appname":"2345浏览器","enable":"true"},
-    {"appname":"趣头条","enable":"true"},
-    {"appname":"中青看点","enable":"true"},
-    {"appname":"闪电盒子","enable":"true"},
-    {"appname":"引力资讯","enable":"true"},
-    {"appname":"趣看点","enable":"true"},//没实现查看全文
-    {"appname":"淘新闻","enable":"true"},//
-    {"appname":"百姓头条","enable":"true"},// 
-    {"appname":"三言","enable":"true"},
-    {"appname":"天天快报","enable":"true"},
-    {"appname":"掌上消息","enable":"true"},
 
 
 
@@ -147,81 +87,86 @@ openwechat();
 whchat();
 
 }else{
-    for(var i=0;i<applist.length;i++){
+    while(true){
+        for(var i=0;i<applist.length;i++){
     
-        var enable=applist[i]['enable'];
-         appname=applist[i]['appname'] 
-        var packagename=applist[i]['packagename']
-        var activityname=applist[i]['activityname'];
-        var open_obj=applist[i]["open"];
-        var bindwechat_obj=applist[i]['bindwechat']; 
-        signin_obj=applist[i]['signin'];
-      //  alert("aaaa"+thiscommon.JSONLength(signin_obj));
-        if("undefined"==typeof(signin_obj)){
-            toast(appname+".json signin数据项缺失");
-        }
-        var autoread_obj=applist[i]["autoread"];
-         abnormal_obj=applist[i]["abnormal"];
-         activitys_obj=applist[i]["activitys"];
-         if("undefined"==typeof(activitys_obj)){
-            toast(appname+".json activitys数据项缺失");
-        }
-        toast('开始'+applist[i]['appname']);
+            var enable=applist[i]['enable'];
+             appname=applist[i]['appname'] 
+            var packagename=applist[i]['packagename']
+            var activityname=applist[i]['activityname'];
+            var open_obj=applist[i]["open"];
+            var bindwechat_obj=applist[i]['bindwechat']; 
+            signin_obj=applist[i]['signin'];
+          //  alert("aaaa"+thiscommon.JSONLength(signin_obj));
+            if("undefined"==typeof(signin_obj)){
+                toast(appname+".json signin数据项缺失");
+            }
+            var autoread_obj=applist[i]["autoread"];
+             abnormal_obj=applist[i]["abnormal"];
+             activitys_obj=applist[i]["activitys"];
+             if("undefined"==typeof(activitys_obj)){
+                toast(appname+".json activitys数据项缺失");
+            }
+            toast('开始'+applist[i]['appname']);
+            
+    
+            try{    thread_abnormal.interrupt();}catch(e){};
+            try{    thread_control.interrupt();}catch(e){};
+            try{    thread_findnews.interrupt();}catch(e){};
+            try{    thread_readnews.interrupt();}catch(e){};
+            try{    thread_signin.interrupt();}catch(e){};
+            try{    thread_abnormal_overtime.interrupt();}catch(e){};
+     
+            sleep(2000);
+           thiscommon.clean(Gdevicetype);
+        //    while_closewindow("xiaomi4");
         
-
-        try{    thread_abnormal.interrupt();}catch(e){};
-        try{    thread_control.interrupt();}catch(e){};
-        try{    thread_findnews.interrupt();}catch(e){};
-        try{    thread_readnews.interrupt();}catch(e){};
-        try{    thread_signin.interrupt();}catch(e){};
-        try{    thread_abnormal_overtime.interrupt();}catch(e){};
- 
-        sleep(2000);
-       thiscommon.clean(Gdevicetype);
-    //    while_closewindow("xiaomi4");
+           
+           
     
-       
-       
-
-    //}
-    //异常处理弹窗线程
-    while_abnormal(abnormal_obj);
-    //demon_abnormal(abnormal_obj);
-  
+        //}
+        //异常处理弹窗线程
+        while_abnormal(abnormal_obj);
+        //demon_abnormal(abnormal_obj);
+      
+        
+        
+        //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
+        while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj);
+        
+        //阻塞运行打开app 
+       // alert("打开")
+        var openstate=openAPP(appname,packagename,activityname,open_obj);
+      
+        
+       //alert("开始倒计时");
+        //每个app需要阅读的时间sleep
+        //var thisinterval=3*100000;
+        //30分钟=1800秒=1800000毫秒
+        //var thisinterval=1800000;
+       // alert(openstate);
+         //如果打开失败跳转到下一个app，节约时间
+      //  var thisinterval=100000;
+        if(openstate){
+            toast("阅读"+Gappinterval+"毫秒......................");
+            if("popupdebug"==Grunstate){
+                while_abnormal_overtime(activitys_obj); 
+             }
+            sleep(Gappinterval);
+        }
+            toast("准备开始下一个");
+        
+      
+        
     
-    
-    //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
-    while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj);
-    
-    //阻塞运行打开app 
-   // alert("打开")
-    var openstate=openAPP(appname,packagename,activityname,open_obj);
-  
-    
-   //alert("开始倒计时");
-    //每个app需要阅读的时间sleep
-    //var thisinterval=3*100000;
-    //30分钟=1800秒=1800000毫秒
-    //var thisinterval=1800000;
-   // alert(openstate);
-     //如果打开失败跳转到下一个app，节约时间
-  //  var thisinterval=100000;
-    if(openstate){
-        toast("阅读"+Gappinterval+"毫秒......................");
-        if("popupdebug"==Grunstate){
-            while_abnormal_overtime(activitys_obj); 
-         }
-        sleep(Gappinterval);
+        //开启异常处理线程--通用
+        Gfirstrun=false;
+        sleep(1000)
+        }
+          //for end
     }
-        toast("准备开始下一个");
-    
+    //while end
   
-    
-
-    //开启异常处理线程--通用
-    Gfirstrun=false;
-    }
-    //for end
 }
 //if end
 }
