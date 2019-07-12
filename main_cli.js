@@ -3,9 +3,9 @@ const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 const thisfinditem=require("./finditem.js");
 
-//运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat
-Grunstate="autoread";
-Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl
+//运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat popupdebug
+Grunstate="popupdebug";
+Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
@@ -22,7 +22,7 @@ Gabinterval="5000";
 //所有要阅读那些app数据结构
 Gapps=[
        
-        {"appname":"刷宝短视频","enable":"true"},
+       // {"appname":"刷宝短视频","enable":"true"},
         {"appname":"2345浏览器","enable":"true"},
         {"appname":"趣头条","enable":"true"},
         {"appname":"中青看点","enable":"true"},
@@ -42,7 +42,66 @@ Gapps=[
     // {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
     // {"appname":"有米头条","enable":"true"}, //多读一会儿
 
-
+    {"appname":"刷宝短视频","enable":"true"},
+    {"appname":"2345浏览器","enable":"true"},
+    {"appname":"趣头条","enable":"true"},
+    {"appname":"中青看点","enable":"true"},
+    {"appname":"闪电盒子","enable":"true"},
+    {"appname":"引力资讯","enable":"true"},
+    {"appname":"趣看点","enable":"true"},//没实现查看全文
+    {"appname":"淘新闻","enable":"true"},//
+    {"appname":"百姓头条","enable":"true"},// 
+    {"appname":"三言","enable":"true"},
+    {"appname":"天天快报","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
+    {"appname":"刷宝短视频","enable":"true"},
+    {"appname":"2345浏览器","enable":"true"},
+    {"appname":"趣头条","enable":"true"},
+    {"appname":"中青看点","enable":"true"},
+    {"appname":"闪电盒子","enable":"true"},
+    {"appname":"引力资讯","enable":"true"},
+    {"appname":"趣看点","enable":"true"},//没实现查看全文
+    {"appname":"淘新闻","enable":"true"},//
+    {"appname":"百姓头条","enable":"true"},// 
+    {"appname":"三言","enable":"true"},
+    {"appname":"天天快报","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
+    {"appname":"刷宝短视频","enable":"true"},
+    {"appname":"2345浏览器","enable":"true"},
+    {"appname":"趣头条","enable":"true"},
+    {"appname":"中青看点","enable":"true"},
+    {"appname":"闪电盒子","enable":"true"},
+    {"appname":"引力资讯","enable":"true"},
+    {"appname":"趣看点","enable":"true"},//没实现查看全文
+    {"appname":"淘新闻","enable":"true"},//
+    {"appname":"百姓头条","enable":"true"},// 
+    {"appname":"三言","enable":"true"},
+    {"appname":"天天快报","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
+    {"appname":"刷宝短视频","enable":"true"},
+    {"appname":"2345浏览器","enable":"true"},
+    {"appname":"趣头条","enable":"true"},
+    {"appname":"中青看点","enable":"true"},
+    {"appname":"闪电盒子","enable":"true"},
+    {"appname":"引力资讯","enable":"true"},
+    {"appname":"趣看点","enable":"true"},//没实现查看全文
+    {"appname":"淘新闻","enable":"true"},//
+    {"appname":"百姓头条","enable":"true"},// 
+    {"appname":"三言","enable":"true"},
+    {"appname":"天天快报","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
+    {"appname":"刷宝短视频","enable":"true"},
+    {"appname":"2345浏览器","enable":"true"},
+    {"appname":"趣头条","enable":"true"},
+    {"appname":"中青看点","enable":"true"},
+    {"appname":"闪电盒子","enable":"true"},
+    {"appname":"引力资讯","enable":"true"},
+    {"appname":"趣看点","enable":"true"},//没实现查看全文
+    {"appname":"淘新闻","enable":"true"},//
+    {"appname":"百姓头条","enable":"true"},// 
+    {"appname":"三言","enable":"true"},
+    {"appname":"天天快报","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
 
 
 
@@ -102,7 +161,11 @@ whchat();
             toast(appname+".json signin数据项缺失");
         }
         var autoread_obj=applist[i]["autoread"];
-         abnormal_obj=applist[i]["abnormal"]
+         abnormal_obj=applist[i]["abnormal"];
+         activitys_obj=applist[i]["activitys"];
+         if("undefined"==typeof(activitys_obj)){
+            toast(appname+".json activitys数据项缺失");
+        }
         toast('开始'+applist[i]['appname']);
         
 
@@ -111,6 +174,7 @@ whchat();
         try{    thread_findnews.interrupt();}catch(e){};
         try{    thread_readnews.interrupt();}catch(e){};
         try{    thread_signin.interrupt();}catch(e){};
+        try{    thread_abnormal_overtime.interrupt();}catch(e){};
  
         sleep(2000);
        thiscommon.clean(Gdevicetype);
@@ -123,6 +187,8 @@ whchat();
     //异常处理弹窗线程
     while_abnormal(abnormal_obj);
     //demon_abnormal(abnormal_obj);
+  
+    
     
     //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
     while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj);
@@ -142,6 +208,9 @@ whchat();
   //  var thisinterval=100000;
     if(openstate){
         toast("阅读"+Gappinterval+"毫秒......................");
+        if("popupdebug"==Grunstate){
+            while_abnormal_overtime(activitys_obj); 
+         }
         sleep(Gappinterval);
     }
         toast("准备开始下一个");
@@ -231,6 +300,8 @@ function voice_runstate(){
         runstate_voicename="微信养号";
     }else if("finditem"==Grunstate){
         runstate_voicename="广告不点击"; 
+    }else if("popupdebug"==Grunstate){
+        runstate_voicename="弹窗跟踪调试";
     }
     play("global","当前工作模式");
     play("global",runstate_voicename);
@@ -642,6 +713,37 @@ function  while_abnormal(abnormal_obj){
   },Gabinterval);
             });
 }
+//弹窗与跳出app监测
+function while_abnormal_overtime(activitys_obj){
+    thread_abnormal_overtime=threads.start(
+        function(){
+            setInterval(function(){
+                try{
+                    var  thispackagename=currentPackage();
+                    var  thisactivity=currentActivity();
+                    var itemcount=thiscommon.JSONLength(activitys_obj);
+                   // alert("itemcount is :"+itemcount);
+                      Gwindowstate=false;
+                      for(var i=1;i<=itemcount;i++){
+                     // alert(activitys_obj["at"+i]);
+                          if(thisactivity==activitys_obj["at"+i]){
+                              play("global","状态正常")
+                              play("global",i);
+                              Gwindowstate=true;
+                          }
+                      }
+                      if(Gwindowstate==false){
+                      //    alert(thisactivity);
+                          play("global","发现未关闭弹窗");
+                      }
+                }catch(e){
+                    toast(e);
+                }
+         
+            },1000);
+        }
+    );
+}
 // while_abnormal的守护线程，有时候click事件会阻塞，所以每隔5秒杀掉abnormal线程再启动
 function demon_abnormal(abnormal_obj){
     mytoast("this is demon_abnormal...");
@@ -671,10 +773,15 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                         //toast("开始绑定微信");
                         while_bindwechat(bindwechat_obj);
                     }else if("autoread"==Grunstate){
-                        toast("开始签到...");
+                       // toast("开始签到...");
                         try{thread_signin.interrupt();}catch(e){};
                         while_signin(signin_obj);
                         
+                    }else if("popupdebug"==Grunstate){
+                        toast("弹窗跟踪调试");
+                     
+                        //这个线程不需要
+                       // sleep(5000);
                     }
               }
               //2如果是签到完成后要执行的工作   //3如果阅读完成后要做的工作
@@ -1130,983 +1237,5 @@ exit();
 
 }
 
-// var interval=setInterval(
-//     function(){
-//         if(thisnum>30){
-//             clearInterval(interval);
-//         }
-//         thiscommon.touchreal(thistop,thisleft); 
-//         thisnum+=1;  
-//     },3000);
-// }
-function hidenapplist(){
-//  applist=[
-//     {
-//          "enable":"false",
-//          "interval":"",
-//          "appname":"悦头条", 
-//          "packagename":"com.expflow.reading",
-//          "activityname":"com.expflow.reading.activity.SplashActivity",
-//          "open":{
-//            "featuremode":"classname_text",
-//            "classname":"android.widget.TextView",
-//            "text":"任务"
-//            },
-//           "abnormal":{
-//             "ab1":{
-//                 "featuremode":"id",
-//                 "id":"ll_quit",
-//             },
-//           },  
-//          "bindwechat":{
-//            "bw1":{
-//                "action":"click_text",
-//                "click_text":"我的",
-//                "featuremode":"classname_text",
-//                "classname":"android.widget.TextView",
-//                "text":"朋友圈",
-//            },
-//            "bw2":{
-//                "action":"click_text",
-//                "click_text":"登录看资讯，随手赚零花",
-//                "featuremode":"classname_text",
-//                "classname":"android.widget.TextView",
-//                "text":"微信登录",
-//            },
-//            "bw3":{
-//             "action":"click_text",
-//             "click_text":"微信登录",
-//             "featuremode":"id",
-//             "id":"txt_account",
-//         },
-          
-//          },
-//          "autoread":{
-//              "ar1":{
-//               "borderline":"android.support.v7.widget.RecyclerView",//android.support.v4.view.ViewPager
-//               "itemsclassname":"android.widget.LinearLayout",//android.widget.TextView
-//               "featuremode":"classname_desc",
-//               "classname":"android.widget.ImageButton",
-//               "desc":"转到上一层级",
-//              },
-//              "ar2":{
-//                  "swipedirection":"vertical",//horizontal
-//                  "deploymode":"classname_desc",
-//                  "deployclassname":"android.view.View",
-//                  "deploydesc":"展开全文",
-//              },
-//          }, 
-//          "durl":""
-//        },
-//     {
-//         "enable":"true",
-//         "interval":"10",
-//         "appname":"北京知天下", 
-//         "packagename":"com.knowworld.news",
-//         "activityname":"cent.news.com.newscent.splash.SplashActivity",
-//         "open":{
-//           "featuremode":"classname_text",
-//           "classname":"android.widget.TextView",
-//           "text":"视频"
-//           },
-//           "abnormal":{
-//            "ab1":{
-//                "featuremode":"id",
-//                "id":"iv_close",
-//            },
-//            "ab2":{
-//             "featuremode":"classname_text",
-//             "classname":"android.widget.TextView",
-//             "text":"先去逛逛",
-//           },
-//           "ab3":{
-//             "featuremode":"classname_text",
-//             "classname":"android.widget.TextView",
-//             "text":"暂不更新",
-//           },
-//          },  
-//         "bindwechat":{
-//             "bw1":{
-//                 "action":"click_text",
-//                 "click_text":"我的",
-//                 "featuremode":"classname_text",
-//                 "classname":"android.widget.TextView",
-//                 "text":"看新闻就可以赚钱的APP",
-//             },
-//             "bw2":{
-//                 "action":"click_id",
-//                 "click_id":"weixinLoginLayout",
-//                 "featuremode":"classname_text",
-//                 "classname":"android.widget.TextView",
-//                 "text":"我的",
-//             },
-//             "bw3":{
-//              "action":"click_text",
-//              "click_text":"我的",
-//              "featuremode":"classname_text",
-//              "classname":"android.widget.TextView",
-//              "text":"累计金币"
-//          },
-//         },
-//         "autoread":{
-//             "ar1":{
-//                 "borderline":"android.support.v7.widget.RecyclerView",//android.support.v4.view.ViewPager
-//                 "itemsclassname":"android.widget.LinearLayout",//android.widget.TextView
-//                 "featuremode":"id",
-//                 "id":"OnBack",
-//                },
-//             "ar2":{
-//                    "swipedirection":"vertical",//horizontal
-//                    "deploymode":"classname_desc",
-//                    "deployclassname":"android.view.View",
-//                    "deploydesc":"展开全文",
-//                    "favmode":"id",
-//                    "favid":"bottomCollect",
-//                    "discussmode":"",
-//                    "discussclassname":"",
-//                    "discusstext":"",
-    
-//                },
-//         }, 
-//         "durl":""
-//       },
-//       {
-//         "enable":"true",
-//         "interval":"10",
-//         "appname":"快马小报", 
-//         "packagename":"com.kuaima.browser",
-//         "activityname":"com.kuaima.browser.module.SplashActivity",
-//         "open":{
-//           "featuremode":"classname_text",
-//           "classname":"android.widget.TextView",
-//           "text":"视频"
-//           },
-//           "abnormal":{
-//            "ab1":{
-//                "featuremode":"id",
-//                "id":"iv_cancle",
-//            },
-//            "ab2":{
-//             "featuremode":"classname_text",
-//             "classname":"android.widget.TextView",
-//             "text":"先去逛逛",
-//           },
-//           "ab3":{
-//             "featuremode":"classname_text",
-//             "classname":"android.widget.TextView",
-//             "text":"暂不更新",
-//           },
-//          },  
-//         "bindwechat":{
-//             "bw1":{
-//                 "action":"click_text",
-//                 "click_text":"我的",
-//                 "featuremode":"classname_text",
-//                 "classname":"android.widget.TextView",
-//                 "text":"看新闻就可以赚钱的APP",
-//             },
-//             "bw2":{
-//                 "action":"click_id",
-//                 "click_id":"weixinLoginLayout",
-//                 "featuremode":"classname_text",
-//                 "classname":"android.widget.TextView",
-//                 "text":"我的",
-//             },
-//             "bw3":{
-//              "action":"click_text",
-//              "click_text":"我的",
-//              "featuremode":"classname_text",
-//              "classname":"android.widget.TextView",
-//              "text":"累计金币"
-//          },
-//         },
-//         "autoread":{
-//             "ar1":{
-//                 "borderline":"android.support.v7.widget.RecyclerView",//定界符android.support.v4.view.ViewPager
-//                 "itemsclassname":"android.widget.TextView",// 特征码类名 android.widget.TextView
-//                 "featuremode":"id",//判断成功的方式 id
-//                 "id":"view_back", // id字符
-//                },
-//             "ar2":{
-//                    "swipedirection":"vertical",// 阅读方式 horizontal
-//                    "deploymode":"classname_text",//展开详情方式 字典 ''|classname_desc|classname_text
-//                    //当deploymode为空时deployclassname和deploytext不出现
-//                    //当deploymode为空时classname_desc时 下面紧跟deployclassname和deploydesc字段
-//                   //当deploymode为空时classname_text时 下面紧跟deployclassname和deploytext字段
-//                    "deployclassname":"android.view.View",
-//                    "deploytext":"展开全文",
-    
-//                    "favmode":"id",//站内收藏方式
-//                    "favid":"bottomCollect",//站内收藏方式为ID时出现
-//                    "discussmode":"",
-//                    "discussclassname":"",
-//                    "discusstext":"",
-    
-//                },
-//         }, 
-//         "durl":""
-//       },
-//     ];
-    
-    }
-    function hiden(){
-        //点击item时执行脚本.
-         // ui.files.on("item_click", function(item, pos, aaa, bbb){
-         //     events.setKeyInterceptionEnabled("volume_up", true);
-         //     events.observeKey();
-         //     events.onKeyDown("volume_up", function(event){ //此处有逻辑问题.没有修改
-         //         if (scriptx_Thread.isAlive()) {
-         //             scriptx_Thread.interrupt(); //停止执行脚本的线程
-         //             toast('按下了音量上键,脚本停止!');
-         //         } else {
-         //             toast('当前没有脚本在执行!');
-         //         }
-         //     });
-     
-         //     if (typeof scriptx_Thread == "object") {
-         //         scriptx_Thread.interrupt();
-         //     }
-             
-         //     var scriptx_Thread = threads.start(function() {
-         //         //这里写脚本内公用的方法
-         //         function sleeply() { //随机延迟
-         //             var ran = random(90,130);
-         //             var speedNum = 101 - speed;
-         //             sleep(ran*speedNum);
-         //         }
-         //         function getAlreadyTalkArry(a) {
-         //             var c, d, e, b = "/sdcard/com.UITest.script/tmp/NameList/" + a + "AlreadyTalk.tmp";
-         //             return files.exists(b) || (files.createWithDirs(b), c = files.read(b), "" == c && files.write(b, "0"), 
-         //             sleep(200)), d = open(b, mode = "r"), e = d.readlines().slice(), d.close(), e;
-         //         }
-         //         if (!newworkTesting()) {
-         //             toast('网络连接失败...');
-         //             return;
-         //         }
-     
-         //         //设置微信号变量和执行次数
-         //         var Config_file = "/sdcard/com.UITest.script/tmp/Config/config.ini";
-         //         files.createWithDirs(Config_file)
-         //         let configStr = files.read(Config_file);
-         //         if (configStr != "") {
-         //             let configArry = configStr.split("|");
-         //             var wechaNumber = configArry[0];
-         //             if (wechaNumber == "") { writeLog("微信号使用默认值: 空");}
-         //             var loopTimes = configArry[1];
-         //             if (loopTimes == "") {
-         //                 loopTimes = 1;
-         //                 writeLog("执行次数使用默认值: " + loopTimes);
-         //             }
-         //             var speed = parseInt(configArry[2]);
-         //             if (speed == "") {
-         //                 speed = parseInt(79);
-         //                 writeLog('脚本速度使用默认值: ' + (speed + 1));
-         //             }
-         //             var sendMsg = configArry[3];
-         //             if (sendMsg == "") {
-         //                 sendMsg = "false";
-         //                 writeLog('出错后不发送消息给开发者.');
-         //             }
-         //         } else {
-         //             var wechaNumber = "";
-         //             var loopTimes = 1;
-         //             var speed = parseInt(79);
-         //             var sendMsg = "false";
-         //             writeLog("没有设置相关参数,使用默认值.");
-         //         }
-         //         //开始执行脚本
-         //         var script_x = files.read(item.path, encoding = 'utf-8');
-         //         try {
-         //             eval(script_x);
-         //             writeLog("脚本执行完毕.");
-         //         } catch (e) {
-         //             writeLog(e + '\n' + e.stack);
-         //             if (sendMsg == "true") {
-         //                 sendMsgToDeveloper();
-         //             } else {
-         //                 var ErrMsg = confirm("程序出错是否发送日志给开发者?","点击确定发送,点击取消不发送.");
-         //                 if (ErrMsg) {
-         //                     sendMsgToDeveloper();
-         //                 }
-         //             }
-         //             return;
-         //         }
-         //     });
-         // });
-     
-         // //点击右上角的刷新按钮,刷新list列表
-         // ui.refresh.click(()=>{
-         //     //刷新数据时刷新按钮旋转线程
-         //     var imgRotate_Thread = threads.start(function() {
-         //         var i = 0;
-         //         while(true) {
-         //             i+=4;
-         //             ui.run(()=>{
-         //                 ui.refresh.setRotation(i);
-         //             });
-         //         }
-         //     });
-     
-         //     //数据刷新线程
-         //     var refreshItem_Thread = threads.start(function () {
-         //         //初始化数据源数组
-         //         scriptInfo = [];
-     
-         //         var url = 'https://script.iqqclub.com/Script/script_info.json';
-         //         try {
-         //             var script_list_html = http.get(url);
-         //         } catch (e) {
-         //             return;
-         //         }
-         //         var script_info = script_list_html.body.json();
-         //         //在线更新脚本
-         //         var file_desc_Arry = []; file_name_Arry = []; file_root_path_Arry = [];
-         //         for (let FILE in script_info) {
-         //             //判断本地脚本列表中是否存在脚本
-         //             var file_version = script_info[FILE].split('|')[3];
-         //             var file_desc = script_info[FILE].split('|')[0];
-         //             file_desc_Arry.push(file_desc + '_V'+file_version);
-         //             var file_name = script_info[FILE].split('|')[2];
-         //             file_name_Arry.push(file_name);
-         
-         //             var file_root_path = script_info[FILE].split('|')[1];
-         //             file_root_path_Arry.push(file_root_path);
-         
-         //             //创建脚本存储目录
-         //             var script_download_path = '/sdcard/com.UITest.script/ScriptDownLoad/' + file_root_path + '/';
-         //             files.ensureDir(script_download_path);
-         //             var scriptPath = script_download_path+file_name;
-         //             //从网络下载
-         //             if (!getScriptFromServer(file_name,script_download_path)) {
-         //                 return;
-         //             }
-                     
-         //             //将脚本信息填充到数据源数组中
-         //             scriptInfo.push({
-         //                 desc: file_desc,
-         //                 serverVersion: file_version,
-         //                 path: scriptPath,
-         //             });
-         //         }
-         //     });
-     
-         //     //等待listView刷新完成后,要执行的逻辑
-         //     var waitItem_Thread = threads.start(function() {
-         //         refreshItem_Thread.join(10000);
-         //         if (scriptInfo == "") {
-         //             var rotationAngle = ui.refresh.getRotation();
-         //             var Rem = rotationAngle%360
-         //             var supplement = 360 - Rem;
-         //             var supplementTimes = supplement/4;
-         //             for (var i = 0; i < supplementTimes; i++) {
-         //                 Rem += 4;
-         //                 ui.run(()=>{
-         //                     ui.refresh.setRotation(Rem);
-         //                 });
-         //             }
-     
-         //             //结束刷新按钮旋转的进程
-         //             imgRotate_Thread.interrupt();
-         //             toast('网络连接失败...');
-         //             return;
-         //         }
-     
-         //         var rotationAngle = ui.refresh.getRotation();
-         //         var Rem = rotationAngle%360
-         //         var supplement = 360 - Rem;
-         //         var supplementTimes = supplement/4;
-         //         for (var i = 0; i < supplementTimes; i++) {
-         //             Rem += 4;
-         //             ui.run(()=>{
-         //                 ui.refresh.setRotation(Rem);
-         //             });
-         //         }
-     
-         //         //设置list控件的数据源
-         //         ui.run(()=>{
-         //             ui.waitForDownload.setVisibility(View.GONE);
-         //             ui.noData.setVisibility(View.GONE);
-         //             ui.files.setVisibility(View.VISIBLE);
-         //             ui.files.setDataSource(scriptInfo);
-         //             //结束刷新按钮旋转的进程
-         //             imgRotate_Thread.interrupt();
-         //             toast('刷新完毕');
-         //         });
-         //     }); 
-         // });
-     
-         // //获取脚本信息生成列表数据
-         // var loadItem_Thread = threads.start(function () {
-         //     var url = 'https://script.iqqclub.com/Script/script_info.json';
-         //     try {
-         //         var script_list_html = http.get(url);
-         //     } catch (e) {
-         //         return;
-         //     }
-             
-         //     var script_info = script_list_html.body.json();
-         //     //在线更新脚本
-         //     var file_desc_Arry = []; file_name_Arry = []; file_root_path_Arry = [];
-         //     for (let FILE in script_info) {
-         //         //判断本地脚本列表中是否存在脚本
-         //         var file_version = script_info[FILE].split('|')[3];
-         //         var file_desc = script_info[FILE].split('|')[0];
-         //         file_desc_Arry.push(file_desc + '_V'+file_version);
-         //         var file_name = script_info[FILE].split('|')[2];
-         //         file_name_Arry.push(file_name);
-     
-         //         var file_root_path = script_info[FILE].split('|')[1];
-         //         file_root_path_Arry.push(file_root_path);
-     
-         //         //创建脚本存储目录
-         //         var script_download_path = '/sdcard/com.UITest.script/ScriptDownLoad/' + file_root_path + '/';
-         //         files.ensureDir(script_download_path);
-         //         var scriptPath = script_download_path+file_name;
-         //         if (!files.exists(script_download_path+file_name)) {
-         //             //从网络下载回来
-         //             if (!getScriptFromServer(file_name,script_download_path)) {
-         //                 return;
-         //             }
-         //         } else {
-         //             //读取本地脚本文件的版本号
-         //             var fr = open(script_download_path+file_name, mode = 'r');
-         //             var script_version_line = fr.readline();
-         //             fr.close();
-         //             var script_version_clint = script_version_line.split(':')[1].replace('.', '');
-         //             //获取服务器脚本文件的版本号
-         //             var script_version_server = file_version.replace('.', '');
-         //             if (script_version_server > script_version_clint) {
-         //                 if (!getScriptFromServer(file_name,script_download_path)) {
-         //                     return;
-         //                 }
-         //             }
-         //         }
-         //         //将脚本信息填充到数据源数组中
-         //         scriptInfo.push({
-         //             desc: file_desc,
-         //             serverVersion: file_version,
-         //             path: scriptPath
-         //         });
-         //     }
-         // });
-     
-         // //获取数据时的等待效果
-         // var waitForDownload_Thread = threads.start(function() {
-         //     refreshBtnDisable();
-         //     for (;;) {
-         //         for (r = 0, t = 0; ;) if (r += .23, t += r, ui.run(()=>{ui.img_waitForDownload.setRotation(t)}), 
-         //         ui.img_waitForDownload.getRotation() >= 180) break;
-         //         for (;;) if (r -= .23, t += r, ui.run(()=>{ui.img_waitForDownload.setRotation(t)}), ui.img_waitForDownload.getRotation() >= 360) break;
-         //     }
-         // });
-         // //等待listView加载完成后,要执行的逻辑
-         // var waitItem_Thread = threads.start(function() {
-         //     loadItem_Thread.join(10000);
-         //     if (scriptInfo == "") {
-         //         toast('网络连接失败,请刷新');
-         //         loadItem_Thread.interrupt();
-         //         waitForDownload_Thread.interrupt();
-         //         ui.run(()=>{
-         //             refreshBtnEnable();
-         //             ui.str_waitForDownload.setText("网络连接失败...");
-         //             ui.img_waitForDownload.setRotation(0);
-         //         });
-         //         return;
-         //     }
-         //     //拉取成功,停止拉取动画
-         //     waitForDownload_Thread.interrupt();
-         //     //设置list控件的数据源
-         //     ui.run(()=>{
-         //         refreshBtnEnable();
-         //         ui.waitForDownload.setVisibility(View.GONE); 
-         //         ui.files.setDataSource(scriptInfo);
-         //     });
-         //     // alert(ui.files.getAdapter().getItemCount());
-         // });
-     
-     /**
-      * 第二屏相关代码逻辑
-      */
-     
-     // ui.speedtext.setText((ui.speed.getProgress()+1).toString());
-     // ui.speed.setOnSeekBarChangeListener({
-     //     //进度条监听设置
-     //     onProgressChanged: function(seekbar, p, fromUser){
-     //         var text, send;
-     //         fromUser && (text = (p + 1).toString(), ui.speedtext.setText(text), wechatNum = ui.wechaNum.text(), 
-     //         loopTime = ui.Loops.text(), "" == loopTime && (loopTime = 1), send = ui.sendMsgOption.isChecked() ? !0 :!1, 
-     //         configStr = wechatNum + "|" + loopTime + "|" + p + "|" + send, writeConfig(configStr));
-     //     }
-     // });
-     // ui.wechaNum.addTextChangedListener({
-     //     //监听微信号输入框
-     //     // onTextChanged(s, start, before, count)
-     //     // beforeTextChanged(s, start, before, count)
-     //     afterTextChanged: function(s) {
-     //         var send;
-     //         loopTime = ui.Loops.text(), "" == loopTime && (loopTime = 1), speed = ui.speed.getProgress(), 
-     //         send = ui.sendMsgOption.isChecked() ? !0 :!1, configStr = s + "|" + loopTime + "|" + speed + "|" + send, 
-     //         writeConfig(configStr);
-     //     } 
-     // }); 
-     // ui.Loops.addTextChangedListener({
-     //     afterTextChanged: function(s) {
-     //         var send;
-     //         wechatNum = ui.wechaNum.text(), speed = ui.speed.getProgress(), send = ui.sendMsgOption.isChecked() ? !0 :!1, 
-     //         configStr = wechatNum + "|" + s + "|" + speed + "|" + send, writeConfig(configStr);
-     //     }
-     // });
-     // //从配置文件读取微信号和执行次数以及速度
-     // var loadConfig_Thread = threads.start(function() {
-     //     let ConfigPath = "/sdcard/com.UITest.script/tmp/Config/config.ini";
-     //     if (!files.exists(ConfigPath)) {
-     //         files.createWithDirs(ConfigPath);
-     //     }
-     //     let configStr = files.read(ConfigPath);
-     //     if (configStr != "") {
-     //         let configArry = configStr.split("|");
-     //         let wecharNum = configArry[0];
-     //         let loopTime = configArry[1];
-     //         let speed = configArry[2];
-     //         ui.run(()=>{
-     //             ui.wechaNum.setText(wecharNum);
-     //             ui.Loops.setText(loopTime);
-     //             ui.speed.setProgress(speed);
-     //             ui.speedtext.setText((ui.speed.getProgress()+1).toString());
-     //         });
-     //     }
-     // });
-     // //清理相关区域删除按钮状态的设置
-     // ui.clear_Btn.setClickable(false);
-     // ui.clear_Btn.setEnabled(false);
-     // ui.clear_Btn.setFocusable(false);
-     
-     // ui.clear_log.on("check", (checked)=>{
-     //     checked ? clearBtnEnable() :(clear_namelist_hecked = ui.clear_namelist.isChecked(), 
-     //     clear_config_hecked = ui.clear_config.isChecked(), clear_namelist_hecked || clear_config_hecked || clearBtnDisable());
-     // });
-     // ui.clear_namelist.on("check", (checked)=>{
-     //     checked ? clearBtnEnable() :(clear_log_hecked = ui.clear_log.isChecked(), clear_config_hecked = ui.clear_config.isChecked(), 
-     //     clear_log_hecked || clear_config_hecked || clearBtnDisable());
-     // });
-     // ui.clear_config.on("check", (checked)=>{
-     //     checked ? clearBtnEnable() :(clear_log_hecked = ui.clear_log.isChecked(), clear_namelist_hecked = ui.clear_namelist.isChecked(), 
-     //     clear_log_hecked || clear_namelist_hecked || clearBtnDisable());
-     // });
-     // ui.clear_Btn.click(()=>{
-     //     // toast('clicked');
-     //     let clear_log_hecked = ui.clear_log.isChecked();
-     //     let clear_namelist_hecked = ui.clear_namelist.isChecked();
-     //     let clear_config_hecked = ui.clear_config.isChecked();
-     //     if (clear_log_hecked) {
-     //         clearLog();
-     //     }
-     //     if (clear_namelist_hecked) {
-     //         clearNamelist();
-     //     }
-     //     if (clear_config_hecked) {
-     //         clearConfig();
-     //     }
-     //     toast('清理完毕');
-     //     setAllChecked();
-     
-     //     ui.files.setVisibility(View.GONE);
-     //     ui.noData.setVisibility(View.VISIBLE);
-     // });
-     
-     // //附加功能区域的逻辑
-     
-     // ui.sendMsgOption.on("check", (checked)=>{
-     //     if (checked) {
-     //         if (!findApp("QQ")) return toast("未安装QQ,该功能不可用!"), ui.sendMsgOption.setChecked(!1), 
-     //         void 0;
-     //         wechatNum = ui.wechaNum.text(), loopTime = ui.Loops.text(), "" == loopTime && (loopTime = 1), 
-     //         speed = ui.speed.getProgress(), sendMsg = "true", configStr = wechatNum + "|" + loopTime + "|" + speed + "|" + sendMsg, 
-     //         writeConfig(configStr);
-     //     } else wechatNum = ui.wechaNum.text(), loopTime = ui.Loops.text(), "" == loopTime && (loopTime = 1), 
-     //     speed = ui.speed.getProgress(), sendMsg = "false", configStr = wechatNum + "|" + loopTime + "|" + speed + "|" + sendMsg, 
-     //     writeConfig(configStr);
-     // });
-     
-     // /**测试页面事件绑定 */
-     // function setSize(view,width,height){
-     //     //LayoutParams(width,height) 宽度，高度为整数 单位:px
-     //     var params = new android.widget.LinearLayout.LayoutParams(width, height);
-     //     view.setLayoutParams(params);
-     //     }
-     // Gworkthread="";
-     // //一级页面循环上滑找新闻线程
-     // function while_findnews(){
-     //     Gworkthread="findnews_start";
-     //     toast("找新闻线程启动...");
-     //     var upcount=0;
-     //     thread_findnews=threads.start(
-     //         function(){
-     //             setInterval(
-     //                 function(){
-     //                 thisswipe.swiperealup_custom();
-     //                 upcount+=1;
-     //                 var m=3;
-     //                 var n=2;
-     //                 var x=Math.round(Math.random()*(m-n))+n;
-     //                 if(upcount>x){
-     //                     //判断新闻条目是否存在
-     //                     var ele=className("android.support.v4.view.ViewPager").className("android.widget.TextView");
-     //                     if(ele.exists()){
-     //                         //如果存在，点击第二条新闻
-     //                        // (ele.bounds().centerX(),ele.bounds().centerY())
-     //                        toast("找到新闻..");
-     //                      //  toast("x:"+ele.findOnce(2).bounds().centerX()+" y:"+ele.findOnce(2).bounds().centerY());
-     //                        var thisx=ele.findOnce(2).bounds().centerX();
-     //                        var thisy=ele.findOnce(2).bounds().centerY();
-     
-     //                         thiscommon.touchreal(thisx,thisy);
-     //                         //等待1秒，否则线程关闭，点击事件会无效
-     //                         sleep(1000);
-     //                         Gworkthread="findnews_stop";
-     //                         thread_findnews.interrupt();
-     //                     }
-     //                 }
-     //                 },2000);
-     //         }
-     //     );
-     // }
-     // //二级页面阅读线程
-     // function while_readnews(){
-     //     Gworkthread="readnews_start";
-     //     var upcount=0;
-     //     var o=30;
-     //     var p=10;
-     //     //上滑次数
-        
-     //     var maxupcount=Math.round(Math.random()*(o-p))+p;
-     //     toast("随机上滑："+maxupcount+"次");
-     //     thread_readnews=threads.start(
-     //         function(){
-     //             while(1){
-     //                 var m=4000;
-     //                 var n=1000;
-     //                //两次上滑之间的间隔
-     //                 var x=Math.round(Math.random()*(m-n))+n;
-     //                 thisswipe.swiperealup_custom();
-     //                 upcount+=1;
-     //                 if(upcount>maxupcount){
-     //                     toast("返回首页...");
-     //                     back();
-     //                     Gworkthread="readnews_stop";
-     //                     sleep(1000);
-     //                     thread_readnews.interrupt();
-     //                 }
-     //                 toast("间隔："+x+"毫秒");
-     //                 sleep(x);
-     //             }
-     //             //setInterval(function(){},1000);
-     //         }
-     //     );
-     // }
-     // //打开制定app线程
-     // function openAPP(){
-     //     Gworkthread="openapp_start";
-     //     thiscommon.openpackage("com.ss.android.article.lite/com.ss.android.article.lite.activity.MainActivity");
-     // thread_openApp=threads.start(
-     //     function(){
-     //         setInterval(function(){
-     //            if( className("android.widget.TextView").text('小视频').packageName("com.ss.android.article.lite").exists()){
-     //             toast("启动完成.....");
-     //             Gworkthread="openapp_stop";
-     //             thread_openApp.interrupt();   
-     //            }
-     //         },1000);
-     //     }
-     // );
-     // }
-     // //异常处理线程
-     // function  abnormal(){
-     //     Gworkthread="abnormal_start";
-     
-     // }
-     // //全局调度线程
-     // function while_control(){
-     // thread_control=threads.start(
-     //     function(){
-     //         setInterval(function(){
-     //           if("openapp_stop"==Gworkthread||"readnews_stop"==Gworkthread){
-     //             while_findnews();
-     //           }else if("findnews_stop"==Gworkthread){
-     //             while_readnews();
-     //           }
-     //         },1000);
-     //     }
-     // );
-     
-     // }
-     
-     
-     //     ui.autoread_jinri.click(()=>{
-     //    // alert("autoread");
-     
-     //     while_control();
-     //     openAPP();
-     // });
-     
-     // ui.uiinflate.click(()=>{
-     //     //let checkbox_view = ui.inflate(<checkbox />);
-     //    //  ui.inflate("");
-     //   //  ui.inflate(<button text='路飞'></button>,ui.applist.ui.applist,true);
-     // });
-     // ui.whileopen.click(()=>{
-     //   //  alert("test....");
-     //     //alert(myappjson.getappjson().length);
-     //   // roundappjson();
-     //   var layo = new android.widget.LinearLayout(context)
-     //   layo.setOrientation(android.widget.LinearLayout.HORIZONTAL);
-     //   layo.setId(android.view.View.generateViewId())
-     // //   var child1 = new TextView(context);
-     // var child1=new CheckBox(context);
-     // // id="sendMsgOption" text="109.今日头条" color="{{textColor}}"
-     // child1.setText("微鲤看看");
-     // //child1.c(colors.parseColor(textColor));
-     // child1.setTextSize(14);
-     // child1.width="2";
-     // child1.setTextColor(colors.parseColor(textColor));
-     // child1.setGravity(0); 
-     //  child1.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-      
-     //  var child2 =new TextView(context);
-     //    child2.setTextSize(14);
-     //    child2.setTextColor(colors.parseColor(textColor))
-     //    child2.setText("次数:");
-     //    child2.setGravity(0); //左护法
-     //    child2.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-     
-     // var child3=new EditText(context);
-     // child3.setGravity(0); //左护法
-     // child3.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-     
-     // var child4=new Button(context);
-     // child4.setId(android.view.View.generateViewId());
-     // child4.setText("打开"); 
-     // child4.setGravity(0);
-     
-     // //改背景
-     // child4.setBackgroundColor(colors.parseColor("#6495ED"));
-     // child4.setLayoutParams(new android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-     // //修改大小
-     // setSize(child4,120,100);
-     
-     // layo.addView(child1);
-     // layo.addView(child2);
-     // layo.addView(child3);
-     // layo.addView(child4);
-     
-     //  ui.applist.addView(layo);
-     //   //parent.addView(layo)
-     // }); 
-     
-     // //遍历app数据结构的函数
-     // function roundappjson(){
-     //     var myapp=myappjson.getappjson();
-     //   //  alert(myapp.length);exit();
-     //     for(var i=0;i<myapp.length;i++){
-     //         //优化内存
-     //       //  thiscommon.clean("xiaomi4");// clean();
-     //         var clickname=myapp[i]['clickname'];
-     //         var enable=myapp[i]['enable'];
-     //         var packagename=myapp[i]['packagename'];
-     //         var voice=myapp[i]['voice'];
-     //         var bindwechat=myapp[i]['bindwechat']; 
-     //         var autoread=myapp[i]['autoread'];
-     //         var clickname=myapp[i]['clickname'];
-     //         var durl=myapp[i]['durl'];
-     
-     //        // if("false"==enable){ toast("下一个");continue; }
-     //         toast('打开'+myapp[i]['appname']);
-     //         exit();
-     
-     //         //通过中文名取出包名
-             
-     //        //start微信开始
-     //         // for(var key in bindwechat){
-     //         //     //alert('key='+key+'  value='+bindwechat[key]);
-     //         //     var action=bindwechat[key]['action'];
-     //         //     if("open"==action){
-     //         //        openpackage(bindwechat[key]['packagename']);
-     //         //     }else if("thread_openyes"==action){
-                     
-     //         //      //   toast("启动线程........."+bindwechat[key]['text']);
-                     
-     //         //         thisName=bindwechat[key]['className'];
-     //         //         thistext=bindwechat[key]['text'];
-     
-     //         //         thread_openyes =threads.start(function(){
-     //         //             setInterval(function(){
-     //         //                // alert("className:"+thisName+" text:"+thistext);
-     //         //                   if("className_text"==bindwechat[key]['featuremode']){
-                             
-     //         //                       if(
-     //         //                           className(thisName).text(thistext).exists()){
-     //         //                       // alert('发现open弹窗'); 
-     //         //                       clicktext("允许");
-     //         //                       // clickclass_for_text(thisName,thistext);    
-     //         //                        thread_opencheck.interrupt();
-     //         //                     } 
-     //         //                   }
-                                
-                             
-     //         //             },4000);
-     //         //         });
-     //         //     }else if("checking"==action){
-     //         //             if("className_text"==bindwechat[key]['featuremode']){
-     //         //                 //findOne 会阻塞
-     //         //              var ele=className(bindwechat[key]['className']).text(bindwechat[key]['text']).findOne() 
-     //         //              // alert(ele);
-     //         //             }
-     //         //     }else if("click"==action){
-     //         //        // 点击的处理方式
-     //         //        //如果是类名+文本点击
-     //         //        if("className_text"==bindwechat[key]['featuremode']){       
-     //         //         clickclass_for_text(bindwechat[key]['className'],bindwechat[key]['text'] );//bindwechat[key]['className']
-     //         //         //如果是类名+索引点击   
-     //         //     }else if("className_index"==bindwechat[key]['featuremode']){
-     //         //         clickclass_for_index(bindwechat[key]['className'],bindwechat[key]['index'] );
-     //         //         //如果是纯文字点击   
-     //         //     }else if("text"==bindwechat[key]['featuremode']){
-     //         //         toast('text click');
-     //         //         clicktext(bindwechat[key]['text']);
-     //         //         //如果是根据ID点击
-     //         //     }else if("id"==bindwechat[key]['featuremode']){
-     //         //         clickid(bindwechat[key]['id']);
-     //         //        }
-     //         //     }
-     //         //  }
-     //         //end 绑定微信
-     // }
-     // //end for
-     // }
-     // //end func
-     // /**
-     //  * 脚本所有公用函数
-     //  */
-     // function newworkTesting() {
-     //     try {
-     //         var a = "https://www.baidu.com";
-     //         http.get(a);
-     //     } catch (b) {
-     //         return !1;
-     //     }
-     //     return !0;
-     // }
-     // function clearBtnEnable() {
-     //     ui.clear_Btn.setClickable(!0), ui.clear_Btn.setEnabled(!0), ui.clear_Btn.setFocusable(!0);
-     // }
-     // function clearBtnDisable() {
-     //     ui.clear_Btn.setClickable(!1), ui.clear_Btn.setEnabled(!1), ui.clear_Btn.setFocusable(!1);
-     // }
-     // function setAllChecked() {
-     //     ui.clear_log.setChecked(!1), ui.clear_namelist.setChecked(!1), ui.clear_config.setChecked(!1);
-     // }
-     // function refreshBtnEnable() {
-     //     ui.refresh.setClickable(!0), ui.refresh.setEnabled(!0), ui.refresh.setFocusable(!0);
-     // }
-     // function refreshBtnDisable() {
-     //     ui.refresh.setClickable(!1), ui.refresh.setEnabled(!1), ui.refresh.setFocusable(!1);
-     // }
-     // function clearLog() {
-     //     var a = "/sdcard/com.UITest.script/log/";
-     //     files.exists(a) && (files.isEmptyDir(a) || files.removeDir(a)), files.createWithDirs(a);
-     // }
-     // function clearNamelist() {
-     //     var a = "/sdcard/com.UITest.script/tmp/NameList/";
-     //     files.exists(a) && (files.isEmptyDir(a) || files.removeDir(a)), files.createWithDirs(a);
-     // }
-     // function clearConfig() {
-     //     ui.run(()=>{
-     //         ui.wechaNum.setText("");
-     //         ui.Loops.setText("");
-     //         ui.speed.setProgress(79);
-     //         ui.speedtext.setText((ui.speed.getProgress()+1).toString());
-     //     });
-     //     var a = "/sdcard/com.UITest.script/ScriptDownLoad/", b = "/sdcard/com.UITest.script/tmp/Config/";
-     //     files.exists(a) && (files.isEmptyDir(a) || files.removeDir(a)), files.exists(b) && (files.isEmptyDir(b) || files.removeDir(b)), 
-     //     files.createWithDirs(a), files.createWithDirs(b);
-     // }
-     
-     // function clickId(a) {
-     //     for (obj_ID = id(a).boundsInside(5, 5, device.width-5, device.height-5); obj_ID.find().empty(); ) sleep(1e3);
-     //     X = obj_ID.find().get(0).bounds().centerX(), Y = obj_ID.find().get(0).bounds().centerY(), 
-     //     Deviation = random(-10, 10), X1 = X - Deviation, Y1 = Y - Deviation, device.sdkInt<24?ra.tap(X1,Y1):click(X1,Y1);
-     // }
-     // function clickText(a) {
-     //     for (obj_Text = text(a).boundsInside(5, 5, device.width-5, device.height-5); obj_Text.find().empty(); ) sleep(1e3);
-     //     X = obj_Text.find().get(0).bounds().centerX(), Y = obj_Text.find().get(0).bounds().centerY(), 
-     //     Deviation = random(-10, 10), X1 = X - Deviation, Y1 = Y - Deviation, device.sdkInt<24?ra.tap(X1,Y1):click(X1,Y1);
-     // }
-     // function clickDesc(a) {
-     //     for (obj_Desc = desc(a).boundsInside(5, 5, device.width-5, device.height-5); obj_Desc.find().empty(); ) sleep(1e3);
-     //     X = obj_Desc.find().get(0).bounds().centerX(), Y = obj_Desc.find().get(0).bounds().centerY(), 
-     //     Deviation = random(-10, 10), X1 = X - Deviation, Y1 = Y - Deviation, device.sdkInt<24?ra.tap(X1,Y1):click(X1,Y1);
-     // }
-     // function getSystemDate(a) {
-     //     var b = new SimpleDateFormat("HH:mm:ss"), c = new SimpleDateFormat("yyyy-MM-dd");
-     //     return "tf" == a ? b.format(new java.util.Date()) :"df" == a ? c.format(new java.util.Date()) :void 0;
-     // }
-     // function writeLog(a) {
-     //     var c, b = "/sdcard/com.UITest.script/log/Info_" + getSystemDate("df") + ".log";
-     //     files.ensureDir("/sdcard/com.UITest.script/log/"), files.exists(b) || files.create(b);
-     //     try {
-     //         c = new PrintWriter(new FileWriter(b, !0)), c.println("[" + getSystemDate("tf") + "] " + a), 
-     //         c.flush(), c.close();
-     //     } catch (d) {
-     //         log(d);
-     //     }
-     // }
-     // function writeConfig(str) { //将内容写入配置文件
-     //     var ConfigPath = "/sdcard/com.UITest.script/tmp/Config/config.ini";
-     //     files.exists(ConfigPath) || files.createWithDirs(ConfigPath), files.write(ConfigPath, str);
-     // }
-     // function getScriptFromServer(FILE,PATH) { //从服务器获取脚本
-     //     var i, download_res, script_file_url = "https://script.iqqclub.com/Script/" + FILE;
-     //     for (i = 0; 10 > i; i++) try {
-     //         if (download_res = http.get(script_file_url), 200 == download_res.statusCode) break;
-     //     } catch (e) {
-     //         if (sleep(500), 9 == i) return !1;
-     //     }
-     //     return files.writeBytes(PATH + FILE, download_res.body.bytes()), 
-     //     !0;
-     // }
-     // function sendMsgToDeveloper() {
-     //     var LogfilePath = "/sdcard/com.UITest.script/log/Info_" + getSystemDate("df") + ".log";
-     //     var fr = open(LogfilePath, mode = "r");
-     //     var logArry = fr.readlines();
-     //     fr.close(); 
-     //     if (logArry.length >= 10) {
-     //         var sendMsgArry = logArry.slice(-10);
-     //     } else {
-     //         var sendMsgArry = logArry;
-     //     }
-     //     var sendMsg = "";
-     //     for (let i = 0; i < sendMsgArry.length; i++) {
-     //         var w = sendMsgArry[i];
-     //         sendMsg = sendMsg + w + "\n";
-     //     }
-     //     // alert(sendMsg);
-     //     app.startActivity({
-     //         data: "mqqapi://im/chat?chat_type=wpa&uin=1741903670",
-     //     });
-     //     waitForActivity('com.tencent.mobileqq.activity.SplashActivity');
-     //     sleep(1000);
-     //     id("input").setText(sendMsg);
-     //     sleep(200);
-     //     // id('fun_btn').findOne().click();
-     //     clickText("发送");
-     //     return;
-     // }
-     // function findApp(n) {
-     //     if (getPackageName(n) != null) {
-     //         return true;
-     //     } else {
-     //         return false;
-     //     }
-     // }
-     
-     }
+
+

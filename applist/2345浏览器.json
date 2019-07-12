@@ -23,7 +23,12 @@
             "featuremode":"id",
             "id":"gu",
         },
-         },  
+         }, 
+         "activitys":{
+            "at1":"com.browser2345.BrowserActivity",
+            "at2":"com.browser2345.module.news.NewsDetailActivity",
+   
+          } , 
         "bindwechat":{
          
     
