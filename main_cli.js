@@ -1,7 +1,7 @@
 
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
-const thisfinditem=require("./finditem.js");
+
 
 //运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat popupdebug
 Grunstate="autoread";
@@ -18,6 +18,9 @@ Gvoicepath="./voice/";
 //是否开启调试打印  字典true false
 Gdebug=false;
 
+v4feature="android.support.v4.view.ViewPager";
+v7feature="android.support.v7.widget.RecyclerView";
+androidx="androidx.recyclerview.widget.RecyclerView";
 
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
@@ -28,25 +31,25 @@ Gabinterval="5000";
 //所有要阅读那些app数据结构
 Gapps=[
        
-       // {"appname":"刷宝短视频","enable":"true"},
-        {"appname":"2345浏览器","enable":"true"},
-        {"appname":"趣头条","enable":"true"},
-       {"appname":"中青看点","enable":"true"},
-        {"appname":"闪电盒子","enable":"true"},
-        {"appname":"引力资讯","enable":"true"},
-        {"appname":"趣看点","enable":"true"},//没实现查看全文
-        {"appname":"淘新闻","enable":"true"},//
-        {"appname":"百姓头条","enable":"true"},// 
-        {"appname":"三言","enable":"true"},
-        {"appname":"天天快报","enable":"true"},
-        {"appname":"掌上消息","enable":"true"},
-        {"appname":"菠萝小组","enable":"true"},
-        {"appname":"聚看点","enable":"true"},
-        {"appname":"波波视频","enable":"true"}, //统一领取
-        {"appname":"盈贝头条","enable":"true"},//查看全文
-        {"appname":"新闻赚","enable":"true"},  
-        {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
-        {"appname":"有米头条","enable":"true"}, //多读一会儿
+           {"appname":"刷宝短视频","enable":"true"},
+           {"appname":"2345浏览器","enable":"true"},
+           {"appname":"趣头条","enable":"true"},
+           {"appname":"中青看点","enable":"true"},
+           {"appname":"闪电盒子","enable":"true"},
+           {"appname":"引力资讯","enable":"true"},
+           {"appname":"趣看点","enable":"true"},//没实现查看全文
+           {"appname":"淘新闻","enable":"true"},//
+           {"appname":"百姓头条","enable":"true"},// 
+           {"appname":"三言","enable":"true"},
+           {"appname":"天天快报","enable":"true"},
+           {"appname":"掌上消息","enable":"true"},
+           {"appname":"菠萝小组","enable":"true"},
+           {"appname":"聚看点","enable":"true"},
+           {"appname":"波波视频","enable":"true"}, //统一领取
+           {"appname":"盈贝头条","enable":"true"},//查看全文
+           {"appname":"新闻赚","enable":"true"},  
+           {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
+           {"appname":"有米头条","enable":"true"}, //多读一会儿
 
 
 
@@ -84,6 +87,7 @@ wechatfriends=[
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
     loadappjson();
+   
 //if start
 if(Grunstate=="trainwechat"){
 //lanuchApp("微信");
@@ -115,7 +119,9 @@ whchat();
             }
             toast('开始'+applist[i]['appname']);
             
-    
+            //加载finditem 代码
+            loadappjs();
+
             try{    thread_abnormal.interrupt();}catch(e){};
             try{    thread_control.interrupt();}catch(e){};
             try{    thread_findnews.interrupt();}catch(e){};
@@ -124,19 +130,13 @@ whchat();
             try{    thread_abnormal_overtime.interrupt();}catch(e){};
      
             sleep(2000);
-           thiscommon.clean(Gdevicetype);
+            thiscommon.clean(Gdevicetype);
         //    while_closewindow("xiaomi4");
-        
-           
-           
-    
         //}
         //异常处理弹窗线程
         while_abnormal(abnormal_obj);
         //demon_abnormal(abnormal_obj);
-      
-        
-        
+            
         //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
         while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj);
         
@@ -180,12 +180,12 @@ whchat();
 /*************************以下是函数实现部分 *******************************************************************/ 
 //加载特征码
 function loadappjson(){
- 
-
 var start='[]'
  applist=eval('(' + start + ')'); 
 var tempstr="";
 var appname="";
+var voiceplaynum=0;
+
 for(var i=0;i<Gapps.length;i++){
 
     appname=Gapps[i]["appname"];
@@ -193,9 +193,13 @@ for(var i=0;i<Gapps.length;i++){
     if("true"==Gapps[i]['enable']){
         //如果是云端特征码机制
         if(Gjsonloadstate=="remote"){
-            play("global","加载");
-            play("global","云端");
-            play("global","特征码");
+            if(voiceplaynum==0){
+              play("global","加载");
+              play("global","云端");
+              play("global","特征码");
+              voiceplaynum+=1;
+            }
+          
 
             var r=http.get(Gapplistpath_remote+"/"+appname+".json")
             toast('code=',r.statusCode)
@@ -217,9 +221,13 @@ for(var i=0;i<Gapps.length;i++){
 
         //如果是本地特征码机制
         }else if(Gjsonloadstate=="local"){
-            play("global","加载");
-            play("global","本地");
-            play("global","特征码");
+            if(voiceplaynum==0){
+                play("global","加载");
+                play("global","本地");
+                play("global","特征码");
+                voiceplaynum+=1;
+            }
+           
                 //判断文件是否存在
                     var result=files.exists(Gapplistpath+"/"+appname+".json");
                     //如果手机上没有这个json文件
@@ -247,6 +255,27 @@ for(var i=0;i<Gapps.length;i++){
     }
 
 }
+}
+function loadappjs(){
+   thisfinditem=require(Gapplistpath+"/"+appname+".js");
+  //thisfinditem=require("http://192.168.3.89/jsonurl/2345%E6%B5%8F%E8%A7%88%E5%99%A8.js");
+//   http://192.168.3.89/jsonurl/2345%E6%B5%8F%E8%A7%88%E5%99%A8.js
+// alert("loadappjs appname is:"+appname);
+//  var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+//  alert(r.body.string());
+//  alert('code=',r.statusCode)
+//   //alert(r.body.string());
+//   var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+//  var jsbyte=r.body.bytes();
+ 
+// // files.createWithDirs(Gapplistpath+"/tmp");
+//  files.writeBytes(Gapplistpath+"/tmp/finditem.js",jsbyte);
+
+
+// sleep(3000);
+//  thisfinditem=require(Gapplistpath+"/tmp/finditem.js");
+// files.remove(Gapplistpath+"/tmp/finditem.js");
+// //files.close();
 }
 //语音广播手机型号
 function voice_devicetype(){
