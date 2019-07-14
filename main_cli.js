@@ -6,12 +6,18 @@ const thisfinditem=require("./finditem.js");
 //运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat popupdebug
 Grunstate="autoread";
 Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl
+//json特征码加载方式 remote local 
+//目前已经支持从云端获取特征码，Gjsonloadstate改为remote即可从指定的云端路径下载json文件，现在Gapplistpath_remote的路径
+//使用的是开发人员及其，后期发版是需要改为点趣域名，并将特征码更新到云端路径
+Gjsonloadstate="local";
+Gapplistpath_remote="http://192.168.3.89/jsonurl/";
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
 Gvoicepath="./voice/";
 //是否开启调试打印  字典true false
 Gdebug=false;
+
 
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
@@ -25,7 +31,7 @@ Gapps=[
        // {"appname":"刷宝短视频","enable":"true"},
         {"appname":"2345浏览器","enable":"true"},
         {"appname":"趣头条","enable":"true"},
-    {"appname":"中青看点","enable":"true"},
+       {"appname":"中青看点","enable":"true"},
         {"appname":"闪电盒子","enable":"true"},
         {"appname":"引力资讯","enable":"true"},
         {"appname":"趣看点","enable":"true"},//没实现查看全文
@@ -34,13 +40,13 @@ Gapps=[
         {"appname":"三言","enable":"true"},
         {"appname":"天天快报","enable":"true"},
         {"appname":"掌上消息","enable":"true"},
-     {"appname":"菠萝小组","enable":"true"},
-    {"appname":"聚看点","enable":"true"},
-    {"appname":"波波视频","enable":"true"}, //统一领取
-    {"appname":"盈贝头条","enable":"true"},//查看全文
-    {"appname":"新闻赚","enable":"true"},  
-    {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
-    {"appname":"有米头条","enable":"true"}, //多读一会儿
+        {"appname":"菠萝小组","enable":"true"},
+        {"appname":"聚看点","enable":"true"},
+        {"appname":"波波视频","enable":"true"}, //统一领取
+        {"appname":"盈贝头条","enable":"true"},//查看全文
+        {"appname":"新闻赚","enable":"true"},  
+        {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
+        {"appname":"有米头条","enable":"true"}, //多读一会儿
 
 
 
@@ -185,21 +191,55 @@ for(var i=0;i<Gapps.length;i++){
     appname=Gapps[i]["appname"];
     
     if("true"==Gapps[i]['enable']){
-    //读取字符串
-         var result=files.exists(Gapplistpath+"/"+appname+".json");
-        if(!result){
-        alert("没有找到"+appname+".json");
-        exit();
-         }
-         //alert(result+":"+appname);
-         try{
-            tempstr=files.read(Gapplistpath+appname+".json");
-                // play("appname",appname);
+        //如果是云端特征码机制
+        if(Gjsonloadstate=="remote"){
+            play("global","加载");
+            play("global","云端");
+            play("global","特征码");
+
+            var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+            toast('code=',r.statusCode)
+            if(r.statusCode=="200"){  
+                var jsonstr=r.body.string();
+                log(jsonstr);
+                try{
+                    tempjson=eval('(' + jsonstr + ')');
+                            //将json添加到applist中
+                     applist.push(tempjson); 
+                }catch(e){
+                    alert(appname+" 远程数据结构错误");
+                }
+              
+            }else{
+                alert("没有找到远程"+appname+".json");
+            }
+           
+
+        //如果是本地特征码机制
+        }else if(Gjsonloadstate=="local"){
+            play("global","加载");
+            play("global","本地");
+            play("global","特征码");
+                //判断文件是否存在
+                    var result=files.exists(Gapplistpath+"/"+appname+".json");
+                    //如果手机上没有这个json文件
+                    if(!result){
+                        alert("没有找到本地"+appname+".json");
+                        exit();
+                    }
+                try{
+                    //读取手机上的json
+                    tempstr=files.read(Gapplistpath+appname+".json");
+                    //将字符串转换成json
                     tempjson=eval('(' + tempstr + ')');
+                    //将json添加到applist中
                     applist.push(tempjson); 
-         }catch(e){
-            alert(appname+" 数据结构错误");
-         }
+                }catch(e){
+                    alert(appname+" 本地数据结构错误");
+                }
+        }
+   
+
          
 
     }else{
