@@ -213,21 +213,25 @@
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 Gapps=[
-                {"appnum":"050","appname":"亿刻看点","enable":"true"},
+             {"appnum":"016","appname":"掌上热点","enable":"true"},
+             {"appnum":"028","appname":"微鲤看看","enable":"true"},
+            {"appnum":"035","appname":"东方头条","enable":"true"},
             {"appnum":"043","appname":"红包视频","enable":"true"},
-            {"appnum":"016","appname":"掌上热点","enable":"true"},
-            {"appnum":"072","appname":"全民头条","enable":"true"},
-            {"appnum":"028","appname":"微鲤看看","enable":"true"},
+            {"appnum":"050","appname":"亿刻看点","enable":"true"},
             {"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
-            {"appnum":"069","appname":"趣头条","enable":"true"},//已经实现
-            {"appnum":"081","appname":"淘头条","enable":"true"},
             {"appnum":"054","appname":"氪资讯","enable":"true"},
             {"appnum":"055","appname":"快狗视频","enable":"true"},
-            {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
-            {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
-            {"appnum":"035","appname":"东方头条","enable":"true"},
             {"appnum":"056","appname":"快看点","enable":"true"},
+            {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
             {"appnum":"066","appname":"趣故事","enable":"true"},  
+            {"appnum":"069","appname":"趣头条","enable":"true"},//已经实现
+            {"appnum":"072","appname":"全民头条","enable":"true"},
+            {"appnum":"081","appname":"淘头条","enable":"true"},
+            {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
+          
+          
+          
+          
     //过往实现过的app如下19个
     // {"appnum":"","appname":"刷宝短视频","enable":"true"},
     // {"appnum":"","appname":"2345浏览器","enable":"true"},
