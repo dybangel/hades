@@ -1,11 +1,277 @@
+// "ui";
+// var color = "#009688";
+// var color = "#4C484C";
+// var frameColor = "#7E787F";
+// var textColor = "#009688";
+// var img_scriptIconColor = "#007E787F";
+// var img_refreshIconColor = "#FFFFFF";
 
+// importClass(android.view.View);
+// importClass(android.graphics.Color)
+// importClass(android.app.AlertDialog);
+// importClass(android.widget.EditText);
+// importClass(java.io.File);
+
+// var window = activity.getWindow();
+// var decorView = window.getDecorView();
+// var option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+// 			 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+// decorView.setSystemUiVisibility(option);
+// //decorView.getChildAt(0).getChildAt(1).getLayoutParams().height=device.height
+// //fd.setLayoutParams(lp)
+// window.addFlags(android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+// window.setStatusBarColor(Color.TRANSPARENT);
+
+// ui.layout(
+//     <drawer id="drawer">
+//         <vertical>
+//             <appbar>
+//                 <toolbar id="toolbar" title="海趣助手"/>
+//                 <tabs id="tabs"/>
+//             </appbar>
+//             <viewpager id="viewpager">
+//             <scroll layout_gravity="center">
+//                 <frame>
+//                 <vertical h="*">
+//                         {/* text label */}
+//                         <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+//                             <text text="基础设置" textSize="12sp" textColor="{{textColor}}" />
+//                             <text autoLink="all" text="恢复默认" marginLeft="10sp" />
+//                         </linear>
+
+//                         {/* 空行 */}
+                        
+//                          {/* 勾选框 */}
+//                             <linear h="40" paddingTop="1" >
+//                                 <radiogroup id='fbName' orientation="horizontal">
+//                                     <radio text='全刷' color="{{textColor}}"></radio>
+//                                     <radio text='推荐' color="{{textColor}}" checked="true"></radio>
+//                                     <radio text='刷微信提' color="{{textColor}}"></radio>
+//                                     <radio text='刷支付宝提' color="{{textColor}}"></radio>     
+//                                 </radiogroup>
+//                             </linear>
+
+                    
+                     
+
+//                         {/* 分割线填充 */}
+//                         <vertical w="*" h="1" bg="{{color}}" ></vertical>
+
+//                         {/* 其他功能区域相关配置 */}
+//                         <linear w="*" h="*" paddingLeft="8" gravity="left|center" >
+//                             <text text="软件列表" textSize="12sp" textColor="{{textColor}}" />
+//                         </linear>
+//                         <vertical margin="0 20 0 20" id="applist">
+//                             {/* <linear layout_weight="1" >
+//                                 <checkbox id="str" text="脚本运行前开启录屏(功能未开发)" color="{{textColor}}" />
+//                             </linear> */}
+//                             {/* 支持的app列表开始 */}
+//                             {/* <linear layout_weight="1" >
+//                                 <checkbox id="sendMsgOption" text="109.今日头条" color="{{textColor}}" />
+//                                 <text text="次数:"
+//                                     marginLeft="10"
+//                                     marginRight="1"
+//                                     color="{{textColor}}"
+//                                     size="16sp"
+//                                      />
+//                                  <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>
+                                
+                               
+//                                 <linear layout_weight="1" gravity="right" >
+//                                     <button id="open" text="打开" w="60" h="40" />
+//                                 </linear>
+//                             </linear> */}
+
+                            
+//                             {/* 支持的app列表结束 */}
+//                         </vertical>
+
+//                         {/* 分割线填充 */}
+//                         <vertical w="*" h="1" bg="{{color}}" ></vertical>
+
+//                         {/* 垃圾清理区域相关配置 */}
+//                         <linear w="*" h="24" paddingLeft="8" gravity="left|center" >
+//                             <text text="清理相关" textSize="12sp" textColor="{{textColor}}" />
+//                         </linear>
+//                         <vertical>
+//                             <linear w="*" h="50" margin="0 20 0 20" gravity="center" >
+//                                 <linear layout_weight="1" >
+//                                     <checkbox id="clear_log" text="日志" color="{{textColor}}" />
+//                                 </linear>
+//                                 <linear layout_weight="1" >
+//                                     <checkbox id="clear_namelist" text="已聊名单" color="{{textColor}}" />
+//                                 </linear>
+//                                 <linear layout_weight="1" >
+//                                     <checkbox id="clear_config" text="配置文件" color="{{textColor}}" />
+//                                 </linear>
+//                                 <linear layout_weight="1" gravity="right" >
+//                                     <button id="clear_Btn" text="删除" w="60" h="40" />
+//                                 </linear>
+//                             </linear>
+
+//                         </vertical>
+
+//                         {/* 分割线填充 */}
+//                         <vertical w="*" h="1" bg="{{color}}" ></vertical>
+                        
+
+
+
+
+
+
+
+//                         {/* 测试开始 */}
+                        
+//                         {/* 测试结束 */}
+//                         {/* <linear gravity="center" margin="0 0 0 0">
+//                             <button id="reset" w="85" h="40" style="Widget.AppCompat.Button.Colored" bg="#E1E4E5" textSize="16sp" textStyle="bold" textColor="#000000" text="清除缓存" margin="12"></button>
+//                             <button id="start" w="85" h="40" style="Widget.AppCompat.Button.Colored" bg="#3CCA3C" textSize="16sp" textStyle="bold" textColor="#FFFFFF" text="开  始" margin="12"></button>
+//                         </linear> */}
+//                     </vertical>
+               
+//                 </frame>
+//                 </scroll>
+//                 <frame>
+//                     <text text="第二页内容" textColor="red" textSize="16sp"/>
+//                 </frame>
+//                 <frame>
+//                     <text text="第三页内容" textColor="green" textSize="16sp"/>
+//                 </frame>
+//             </viewpager>
+//         </vertical>
+//         <vertical layout_gravity="left" bg="#ffffff" w="280">
+//             <img w="280" h="200" scaleType="fitXY" src="http://images.shejidaren.com/wp-content/uploads/2014/10/023746fki.jpg"/>
+//             <list id="menu">
+//                 <horizontal bg="?selectableItemBackground" w="*">
+//                     <img w="50" h="50" padding="16" src="{{this.icon}}" tint="{{color}}"/>
+//                     <text textColor="black" textSize="15sp" text="{{this.title}}" layout_gravity="center"/>
+//                 </horizontal>
+//             </list>
+//         </vertical>
+//     </drawer>
+// );
+// activity.setSupportActionBar(ui.toolbar);
+
+// //设置滑动页面的标题
+// ui.viewpager.setTitles(["全局设置", "标签二", "标签三"]);
+// //让滑动页面和标签栏联动
+// ui.tabs.setupWithViewPager(ui.viewpager);
+
+// //让工具栏左上角可以打开侧拉菜单
+// ui.toolbar.setupWithDrawer(ui.drawer);
+
+// ui.menu.setDataSource([
+//   {
+//       title: "开始运行",
+//       icon: "@drawable/ic_android_black_48dp"
+//   },
+//   {
+//       title: "选项二",
+//       icon: "@drawable/ic_settings_black_48dp"
+//   },
+//   {
+//       title: "选项三",
+//       icon: "@drawable/ic_favorite_black_48dp"
+//   },
+//   {
+//       title: "退出",
+//       icon: "@drawable/ic_exit_to_app_black_48dp"
+//   }
+// ]);
+
+// ui.menu.on("item_click", item => {
+//     switch(item.title){
+//         case "退出":
+//             ui.finish();
+//             break;
+//         case "开始运行":
+//             //alert("start");
+//             Grunstate="autoread";
+
+//         break;
+//     }
+// })
+// // //创建选项菜单(右上角)
+// // ui.emitter.on("create_options_menu", menu=>{
+// //     menu.add("设置");
+// //     menu.add("关于");
+// // });
+// // //监听选项菜单点击
+// // ui.emitter.on("options_item_selected", (e, item)=>{
+// //     switch(item.getTitle()){
+// //         case "设置":
+// //             toast("还没有设置");
+// //             break;
+// //         case "关于":
+// //             alert("关于", "Auto.js界面模板 v1.0.0");
+// //             break;
+// //     }
+// //     e.consumed = true;
+// // });
+/************************************* UI结束**********************************************************************/ 
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
+Gapps=[
+       
+    {"appname":"刷宝短视频","enable":"true"},
+    {"appname":"2345浏览器","enable":"true"},
+    {"appname":"趣头条","enable":"true"},
+    {"appname":"中青看点","enable":"true"},
+    {"appname":"闪电盒子","enable":"true"},
+    {"appname":"引力资讯","enable":"true"},
+    {"appname":"趣看点","enable":"true"},//没实现查看全文
+    {"appname":"淘新闻","enable":"true"},//
+    {"appname":"百姓头条","enable":"true"},// 
+    {"appname":"三言","enable":"true"},
+    {"appname":"天天快报","enable":"true"},
+    {"appname":"掌上消息","enable":"true"},
+    {"appname":"菠萝小组","enable":"true"},
+    {"appname":"聚看点","enable":"true"},
+    {"appname":"波波视频","enable":"true"}, //统一领取
+    {"appname":"盈贝头条","enable":"true"},//查看全文
+    {"appname":"新闻赚","enable":"true"},  
+    {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
+    {"appname":"有米头条","enable":"true"}, //多读一会儿
+
+]; 
+//ref_ui_list();
+//音量下键关闭脚本
+events.setKeyInterceptionEnabled("volume_down", true);
+threads.start(function(){
+events.observeKey();
+events.on("key", function(volume_down, event){
+    //处理按键事件
+    toast("脚本已停止运行");
+    threads.shutDownAll();
+    ui.finish();
+    exit();
+
+});
+});
 
 
+//当前工作模式，如果有UI界面，则该变量需要在UI的启动按钮中声明
 //运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat popupdebug
 Grunstate="autoread";
+//底层是否已经运行
+Galready=false;
+//是否加载过json文件
+Galready_loadjson=false;
+Gworkthread="";
+Gfirstrun=true;
+//是否开启调试打印  字典true false
+Gdebug=false;
+//所有要阅读那些app数据结构
+//30分钟=1800秒=1800000毫秒
+//1.3分钟=100000毫秒
+//每一个app阅读多长时间的变量
+Gappinterval="100000";
+//关闭弹窗线程的循环周期
+Gabinterval="3000";
+//设备类型
 Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl
+
 //json特征码加载方式 remote local 
 //目前已经支持从云端获取特征码，Gjsonloadstate改为remote即可从指定的云端路径下载json文件，现在Gapplistpath_remote的路径
 //使用的是开发人员及其，后期发版是需要改为点趣域名，并将特征码更新到云端路径
@@ -15,47 +281,12 @@ Gapplistpath_remote="http://192.168.3.89/jsonurl/";
 Gapplistpath="./applist/";
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
 Gvoicepath="./voice/";
-//是否开启调试打印  字典true false
-Gdebug=false;
 
+//fitem 函数专用定界特征码
 v4feature="android.support.v4.view.ViewPager";
 v7feature="android.support.v7.widget.RecyclerView";
 androidx="androidx.recyclerview.widget.RecyclerView";
 
-//30分钟=1800秒=1800000毫秒
-//1.3分钟=100000毫秒
-//每一个app阅读多长时间的变量
-Gappinterval="100000";
-//关闭弹窗线程的循环周期
-Gabinterval="5000";
-//所有要阅读那些app数据结构
-Gapps=[
-       
-           {"appname":"刷宝短视频","enable":"true"},
-           {"appname":"2345浏览器","enable":"true"},
-           {"appname":"趣头条","enable":"true"},
-           {"appname":"中青看点","enable":"true"},
-           {"appname":"闪电盒子","enable":"true"},
-           {"appname":"引力资讯","enable":"true"},
-           {"appname":"趣看点","enable":"true"},//没实现查看全文
-           {"appname":"淘新闻","enable":"true"},//
-           {"appname":"百姓头条","enable":"true"},// 
-           {"appname":"三言","enable":"true"},
-           {"appname":"天天快报","enable":"true"},
-           {"appname":"掌上消息","enable":"true"},
-           {"appname":"菠萝小组","enable":"true"},
-           {"appname":"聚看点","enable":"true"},
-           {"appname":"波波视频","enable":"true"}, //统一领取
-           {"appname":"盈贝头条","enable":"true"},//查看全文
-           {"appname":"新闻赚","enable":"true"},  
-           {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
-           {"appname":"有米头条","enable":"true"}, //多读一会儿
-
-
-
-
-    
-  ]; 
 //脚本通讯监听，接收其它脚本指令是autoread的
 events.on("autoread", function(appwords){
    play("global","执行");
@@ -68,13 +299,11 @@ events.on("autoread", function(appwords){
    }
   });
 
-        voice_runstate();
-        voice_devicetype();
-        run();
+       // voice_runstate();
+       // voice_devicetype();
+       // run();
 
-Gworkthread="";
-// Grunstate="autoread";// bindwechat autoread trainwechat finditem
-Gfirstrun=true;
+
 Gwechatnumber="duyuanbowy";
 Gwechatpass="dyb";
 wechatfriends=[
@@ -83,18 +312,44 @@ wechatfriends=[
 ];
 
 
-//run();
+alert("appversionname is:"+app.verionName+"\n appversioncode is:"+app.versionCode+"\n"+"");
+testthread=threads.start(function(){
+    setInterval(function(){
+        if(Grunstate!="" && Galready==false){
+            Galready=true;
+            voice_runstate();
+            voice_devicetype();
+         //toast("开始启动testthread...");  
+        run();
+        };
+        if(Galready_loadjson==false){
+          //  alert("hahah");
+        //    ref_ui_list();
+      
+            Galready_loadjson==true;
+        }
+    },1000)
+});
+
+
+
+
+
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
-    loadappjson();
-   
-//if start
+//注册真实点击事件
+ ra = new RootAutomator();
+// //ra.setScreenMetrics(device.width, device.height);
+ ra.setScreenMetrics(1080, 1920);
+ //读取配置文件
+ loadappjson();
+  
+//如果是微信养号需要的操作
 if(Grunstate=="trainwechat"){
-//lanuchApp("微信");
-openwechat();
-
-//whthumbup();
-whchat();
+    //lanuchApp("微信");
+    openwechat();
+    //whthumbup();
+    whchat();
 
 }else{
     while(true){
@@ -189,7 +444,7 @@ var voiceplaynum=0;
 for(var i=0;i<Gapps.length;i++){
 
     appname=Gapps[i]["appname"];
-    
+   
     if("true"==Gapps[i]['enable']){
         //如果是云端特征码机制
         if(Gjsonloadstate=="remote"){
@@ -277,6 +532,30 @@ function loadappjs(){
 // files.remove(Gapplistpath+"/tmp/finditem.js");
 // //files.close();
 }
+//将app名称加载的UI界面上
+function ref_ui_list(){
+    for(var i=0;i<Gapps.length;i++){
+     var thisappname=Gapps[i]["appname"];
+      appliststr='<linear layout_weight="1" >';
+      appliststr+='<checkbox id="sendMsgOption" text="'+thisappname+'" color="{{textColor}}" />'
+      appliststr+='<text text="次数:"';
+      appliststr+='   marginLeft="10"';
+      appliststr+='   marginRight="1"';
+      appliststr+='   color="{{textColor}}"';
+      appliststr+='   size="16sp"';
+      appliststr+='   />';
+      appliststr+=' <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>';
+      appliststr+='<linear layout_weight="1" gravity="right" >';
+      appliststr+='    <button id="open" text="打开" w="60" h="40" />';
+      appliststr+='</linear>';
+      appliststr+='</linear>';
+      ui.inflate( appliststr,ui.applist,true); 
+      }
+     
+}
+
+
+
 //语音广播手机型号
 function voice_devicetype(){
     

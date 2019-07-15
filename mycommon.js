@@ -1,18 +1,5 @@
-//音量下键关闭脚本
-events.setKeyInterceptionEnabled("volume_down", true);
-threads.start(function(){
-events.observeKey();
-events.on("key", function(volume_down, event){
-    //处理按键事件
-    toast("脚本已停止运行");
-    threads.shutDownAll();
-    exit();
-});
-});
-//注册真实点击事件
-var ra = new RootAutomator();
-//ra.setScreenMetrics(device.width, device.height);
-ra.setScreenMetrics(1080, 1920);
+
+
 
 function touchreal(x,y){
     var ra = new RootAutomator();
