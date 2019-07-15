@@ -10,11 +10,11 @@
         "text":"任务"
         },
        "abnormal":{
-         "ab1":{
+        "ab1":{
           "featuremode":"id",
-          "id":"imgClose",
-      },
-           "ab2":{
+          "id":"com.jm.video:id/imgClose",
+      },    
+         "ab2":{
           "featuremode":"id",
           "id":"cancel",
       },

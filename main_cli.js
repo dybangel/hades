@@ -213,26 +213,41 @@
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 Gapps=[
-       
-    {"appname":"刷宝短视频","enable":"true"},
-    {"appname":"2345浏览器","enable":"true"},
-    {"appname":"趣头条","enable":"true"},
-    {"appname":"中青看点","enable":"true"},
-    {"appname":"闪电盒子","enable":"true"},
-    {"appname":"引力资讯","enable":"true"},
-    {"appname":"趣看点","enable":"true"},//没实现查看全文
-    {"appname":"淘新闻","enable":"true"},//
-    {"appname":"百姓头条","enable":"true"},// 
-    {"appname":"三言","enable":"true"},
-    {"appname":"天天快报","enable":"true"},
-    {"appname":"掌上消息","enable":"true"},
-    {"appname":"菠萝小组","enable":"true"},
-    {"appname":"聚看点","enable":"true"},
-    {"appname":"波波视频","enable":"true"}, //统一领取
-    {"appname":"盈贝头条","enable":"true"},//查看全文
-    {"appname":"新闻赚","enable":"true"},  
-    {"appname":"韭菜资讯","enable":"true"}, //多读一会儿
-    {"appname":"有米头条","enable":"true"}, //多读一会儿
+                {"appnum":"050","appname":"亿刻看点","enable":"true"},
+            {"appnum":"043","appname":"红包视频","enable":"true"},
+            {"appnum":"016","appname":"掌上热点","enable":"true"},
+            {"appnum":"072","appname":"全民头条","enable":"true"},
+            {"appnum":"028","appname":"微鲤看看","enable":"true"},
+            {"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
+            {"appnum":"069","appname":"趣头条","enable":"true"},//已经实现
+            {"appnum":"081","appname":"淘头条","enable":"true"},
+            {"appnum":"054","appname":"氪资讯","enable":"true"},
+            {"appnum":"055","appname":"快狗视频","enable":"true"},
+            {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
+            {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
+            {"appnum":"035","appname":"东方头条","enable":"true"},
+            {"appnum":"056","appname":"快看点","enable":"true"},
+            {"appnum":"066","appname":"趣故事","enable":"true"},  
+    //过往实现过的app如下19个
+    // {"appnum":"","appname":"刷宝短视频","enable":"true"},
+    // {"appnum":"","appname":"2345浏览器","enable":"true"},
+    // {"appnum":"","appname":"趣头条","enable":"true"},
+    // {"appnum":"","appname":"中青看点","enable":"true"},
+    // {"appnum":"","appname":"闪电盒子","enable":"true"},
+    // {"appnum":"","appname":"引力资讯","enable":"true"},
+    // {"appnum":"","appname":"趣看点","enable":"true"},//没实现查看全文
+    // {"appnum":"","appname":"淘新闻","enable":"true"},//
+    // {"appnum":"","appname":"百姓头条","enable":"true"},// 
+    // {"appnum":"","appname":"三言","enable":"true"},
+    // {"appnum":"","appname":"天天快报","enable":"true"},
+    // {"appnum":"","appname":"掌上消息","enable":"true"},
+    // {"appnum":"","appname":"菠萝小组","enable":"true"},
+    // {"appnum":"","appname":"聚看点","enable":"true"},
+    // {"appnum":"","appname":"波波视频","enable":"true"}, //统一领取
+    // {"appnum":"","appname":"盈贝头条","enable":"true"},//查看全文
+    // {"appnum":"","appname":"新闻赚","enable":"true"},  
+    // {"appnum":"","appname":"韭菜资讯","enable":"true"}, //多读一会儿
+    // {"appnum":"","appname":"有米头条","enable":"true"}, //多读一会儿
 
 ]; 
 //ref_ui_list();
@@ -261,7 +276,7 @@ Galready_loadjson=false;
 Gworkthread="";
 Gfirstrun=true;
 //是否开启调试打印  字典true false
-Gdebug=true;
+Gdebug=false;
 //所有要阅读那些app数据结构
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
@@ -957,18 +972,23 @@ function  while_abnormal(abnormal_obj){
            var thisid=abnormal_obj["ab"+i]["id"];
            mytoast("while_abnormal，featuremode is id， for x is :"+i+" thisid is:"+thisid);
            try{
-                    var result=once_check("id",thisid,'','');
+                   // var result=once_check("id",thisid,'','');
                                             mytoast("while_abnormal result is:"+result);
-                                                if(result){ 
+                                              //  if(result){ 
                                                    // var result=id(thisid).click();
                                                    // alert("result is:"+result);
                                                     //if(result){
-                                                        thiscommon.clickxy_for_ele(id(thisid).findOnce());
-                                                        play("global","关闭弹窗");  
+                                                        try{
+                                                            thiscommon.clickxy_for_ele(id(thisid).findOnce());
+                                                            play("global","关闭弹窗");   
+                                                        }catch(e){
+
+                                                        }
+                                                       
                                                     //}
                                                    
                                                   
-                                                    }
+                                                //    }
            }catch(e){
                     back();
               
