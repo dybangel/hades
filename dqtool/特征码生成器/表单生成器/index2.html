@@ -663,7 +663,9 @@ Gnow_bwxnum=1;
     <div id="ab{{#def.getnum()}}"> 
             <div class="form-group" id="bw1div1">
                     <label class="col-sm-2 control-label" style="    margin-left: 23rem;">弹窗{{#def.getnum()}}</label>
-            </div>
+                    <label class="col-sm-1 control-label"><i class="fa fa-trash-o select-del abdel" title="删除" style="font-size:18px; cursor:pointer;"></i></label>
+
+                </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">ab{{#def.getnum()}}：</label>
@@ -698,7 +700,8 @@ Gnow_bwxnum=1;
         <div id="bw{{#def.getnum()}}"> 
                 <div class="form-group" id="bw{{#def.getnum()}}div1">
                         <label class="col-sm-2 control-label" style="    margin-left: 23rem;">步骤{{#def.getnum()}}</label>
-                        
+                        <label class="col-sm-1 control-label"><i class="fa fa-trash-o select-del bwdel" title="删除" style="font-size:18px; cursor:pointer;"></i></label>
+
                     </div>
                 <div class="form-group" id="bw{{#def.getnum()}}div2">
                     <label class="col-sm-2 control-label">action：</label>
@@ -745,60 +748,70 @@ Gnow_bwxnum=1;
 
 <script>
     //通用函数
+//对于新增的关闭弹窗dom节点绑定事件 原则上使用on委托只需要绑定一次即可，但是由于使用了dot.min.js导致委托失效，所以该函数每次添加节点时都要调用
 function bindabx_feature(){
     $('.ab_featuremode').on('change','',function(){ 
         var selectedtext=$(this).find("option:selected").text();
+        var ele=$(this).parent().parent().next();
         if("classname_text"==selectedtext){
-            $(this).parent().parent().next().children()[0].innerHTML="classname:"
-            $(this).parent().parent().next().next().children()[0].innerHTML="text:"
-            $(this).parent().parent().next().next().css("display","block")
+            ele.children()[0].innerHTML="classname:"
+            ele.next().children()[0].innerHTML="text:"
+            ele.next().css("display","block")
         }else if("classname_desc"==selectedtext){
-            $(this).parent().parent().next().children()[0].innerHTML="classname:"
-            $(this).parent().parent().next().next().children()[0].innerHTML="desc:"
-            $(this).parent().parent().next().next().css("display","block")
+            ele.children()[0].innerHTML="classname:"
+            ele.next().children()[0].innerHTML="desc:"
+            ele.next().css("display","block")
         }else if("id"==selectedtext){
            // $(this).parent().parent().next().next()
-           $(this).parent().parent().next().children()[0].innerHTML="id:"
-            $(this).parent().parent().next().next().css("display","none")
+            ele.children()[0].innerHTML="id:"
+            ele.next().css("display","none")
         }
 
        });
-}
+    $('.abdel').on('click','',function(){
+        $(this).parent().parent().parent().remove()
+        Gnow_abxnum-=1;
+        var childcount=$('#abx').children().length;
+        //当删除一个节点时，上一个节点的删除按钮恢复显示
+         $($($($('#abx').children('div')[childcount-1]).children()[0]).children()[1]).css("display","block")
+    });
+    }
+//对于新增的绑定微信dom节点绑定事件
 function bindbwx_feature(){
     $('.bw_action').on('change','',function(){ 
         var selectedtext=$(this).find("option:selected").text();
-        if("click_text"==selectedtext){
-         //   alert("click_text");
-            $(this).parent().parent().next().children()[0].innerHTML="click_text";
-            // $(this).parent().parent().next().children()[0].innerHTML="classname:"
-            // $(this).parent().parent().next().next().children()[0].innerHTML="text:"
-            // $(this).parent().parent().next().next().css("display","block")
+        var ele=$(this).parent().parent().next();
+        if("click_text"==selectedtext){ 
+           ele.children()[0].innerHTML="click_text";
         }else if("click_id"==selectedtext){
-         //   alert("click_id");
-            $(this).parent().parent().next().children()[0].innerHTML="click_id";
-            // $(this).parent().parent().next().children()[0].innerHTML="classname:"
-            // $(this).parent().parent().next().next().children()[0].innerHTML="desc:"
-            // $(this).parent().parent().next().next().css("display","block")
+           ele.children()[0].innerHTML="click_id";
         }
 
        });
     $('.bw_featuremode').on('change','',function(){
         var selectedtext=$(this).find("option:selected").text();
+        var ele= $(this).parent().parent().next();
         if("classname_text"==selectedtext){
-            $(this).parent().parent().next().children()[0].innerHTML="classname:";
-            $(this).parent().parent().next().next().css("display","block")
-            $(this).parent().parent().next().next().children()[0].innerHTML="text:"
+            ele.children()[0].innerHTML="classname:";
+            ele.next().css("display","block")
+            ele.next().children()[0].innerHTML="text:"
         }else if("classname_desc"==selectedtext){
-            $(this).parent().parent().next().children()[0].innerHTML="classname:";
-            $(this).parent().parent().next().next().css("display","block")
-            $(this).parent().parent().next().next().children()[0].innerHTML="desc:"
+            ele.children()[0].innerHTML="classname:";
+            ele.next().css("display","block")
+            ele.next().children()[0].innerHTML="desc:"
         }else if("id"==selectedtext){
-            $(this).parent().parent().next().children()[0].innerHTML="id:";
-            $(this).parent().parent().next().next().css("display","none")
+            ele.children()[0].innerHTML="id:";
+            ele.next().css("display","none")
         }
        
     })
-
+    $('.bwdel').on('click','',function(){
+        $(this).parent().parent().parent().remove()
+        Gnow_bwxnum-=1;
+        var childcount=$('#bwx').children().length;
+        //当删除一个节点时，上一个节点的删除按钮恢复显示
+         $($($($('#bwx').children('div')[childcount-1]).children()[0]).children()[1]).css("display","block")
+    });
     }
 </script>
 
@@ -815,6 +828,11 @@ function bindbwx_feature(){
                         var  dot = doT.template(template.innerHTML);
                         $('#abx')[0].innerHTML=$('#abx')[0].innerHTML+dot();
                         bindabx_feature();
+                        var childcount=$('#abx').children().length;
+                          for(var i=1;i<childcount;i++){
+                          //当添加一个节点时，上一个节点的删除按钮应当隐藏，避免用户从中间删除，导致数据结构混乱
+                            $($($($('#abx').children('div')[i-1]).children()[0]).children()[1]).css("display","none")
+                          }
 
                    });
 
@@ -826,7 +844,11 @@ function bindbwx_feature(){
                          $('#bwx')[0].innerHTML+=dot();
                         //bindbwx_feature();
                           bindbwx_feature();
-
+                          var childcount=$('#bwx').children().length;
+                          for(var i=1;i<childcount;i++){
+                          //当添加一个节点时，上一个节点的删除按钮应当隐藏，避免用户从中间删除，导致数据结构混乱
+                            $($($($('#bwx').children('div')[i-1]).children()[0]).children()[1]).css("display","none")
+                          }
                    });
 
                  
@@ -836,13 +858,7 @@ function bindbwx_feature(){
     })
 
 
-// 
-// 								
-// 								if(action_3=="append"){
-// 									
-// 								}else{
-// 									$('#'+action+'_container')[0].innerHTML=dot(data);
-//                                 }
+
                                 
 </script>
 
