@@ -213,21 +213,21 @@
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 Gapps=[
-             {"appnum":"016","appname":"掌上热点","enable":"true"},
-             {"appnum":"028","appname":"微鲤看看","enable":"true"},
-            {"appnum":"035","appname":"东方头条","enable":"true"},
-            {"appnum":"043","appname":"红包视频","enable":"true"},
-            {"appnum":"050","appname":"亿刻看点","enable":"true"},
+            //  {"appnum":"016","appname":"掌上热点","enable":"true"},
+            //  {"appnum":"028","appname":"微鲤看看","enable":"true"},
+            // {"appnum":"035","appname":"东方头条","enable":"true"},
+            // {"appnum":"043","appname":"红包视频","enable":"true"},
+            // {"appnum":"050","appname":"亿刻看点","enable":"true"},
             {"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
-            {"appnum":"054","appname":"氪资讯","enable":"true"},
-            {"appnum":"055","appname":"快狗视频","enable":"true"},
-            {"appnum":"056","appname":"快看点","enable":"true"},
-            {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
-            {"appnum":"066","appname":"趣故事","enable":"true"},  
-            {"appnum":"069","appname":"趣头条","enable":"true"},//已经实现
-            {"appnum":"072","appname":"全民头条","enable":"true"},
-            {"appnum":"081","appname":"淘头条","enable":"true"},
-            {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
+            // {"appnum":"054","appname":"氪资讯","enable":"true"},
+            // {"appnum":"055","appname":"快狗视频","enable":"true"},
+            // {"appnum":"056","appname":"快看点","enable":"true"},
+            // {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
+            // {"appnum":"066","appname":"趣故事","enable":"true"},  
+            // {"appnum":"069","appname":"趣头条","enable":"true"},//已经实现
+            // {"appnum":"072","appname":"全民头条","enable":"true"},
+            // {"appnum":"081","appname":"淘头条","enable":"true"},
+            // {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
           
           
           
@@ -294,7 +294,7 @@ Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl
 //json特征码加载方式 remote local 
 //目前已经支持从云端获取特征码，Gjsonloadstate改为remote即可从指定的云端路径下载json文件，现在Gapplistpath_remote的路径
 //使用的是开发人员及其，后期发版是需要改为点趣域名，并将特征码更新到云端路径
-Gjsonloadstate="local";
+Gjsonloadstate="remote";
 Gapplistpath_remote="http://192.168.3.89/jsonurl/";
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";
@@ -479,7 +479,7 @@ for(var i=0;i<Gapps.length;i++){
             toast('code=',r.statusCode)
             if(r.statusCode=="200"){  
                 var jsonstr=r.body.string();
-                log(jsonstr);
+             //   log(jsonstr);
                 try{
                     tempjson=eval('(' + jsonstr + ')');
                             //将json添加到applist中
@@ -650,8 +650,8 @@ if("undefined"==typeof(signin_obj)){
                     if("click_text"==action){
                          thiscommon.click_text(signin_obj["sg"+i]["click_text"]);      
                     } else if("click_id"==action){
-                            var thisid=bindwechat_obj["sg"+i]["click_id"];
-                             thiscommon.click_id(thisid);
+                            var thisid=signin_obj["sg"+i]["click_id"];
+                             thiscommon.clickxy_for_ele(id(thisid).findOnce());
                     } else if("check_signin"==action){
                         //判断是否签过到
                         result=block_mode("while_signin",featuremode,signin_obj,i)
@@ -670,7 +670,7 @@ if("undefined"==typeof(signin_obj)){
                             if(result){
                                 if(i==thiscommon.JSONLength(signin_obj)){
                                     //最后一步的执行成功
-                                    play("global","执行成功");
+                                    play("global","签到成功");
                                 }else{
                                     play("global","执行完成");
                                 }
@@ -685,7 +685,7 @@ if("undefined"==typeof(signin_obj)){
                 }
             
             }//for end;
-            play("global","执行完成");
+          //  play("global","执行完成");
             Gworkthread="signin_stop";
             thread_signin.interrupt();
         });
