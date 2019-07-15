@@ -261,7 +261,7 @@ Galready_loadjson=false;
 Gworkthread="";
 Gfirstrun=true;
 //是否开启调试打印  字典true false
-Gdebug=false;
+Gdebug=true;
 //所有要阅读那些app数据结构
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
@@ -312,7 +312,7 @@ wechatfriends=[
 ];
 
 
-alert("appversionname is:"+app.verionName+"\n appversioncode is:"+app.versionCode+"\n"+"");
+//alert("appversionname is:"+app.verionName+"\n appversioncode is:"+app.versionCode+"\n"+"");
 testthread=threads.start(function(){
     setInterval(function(){
         if(Grunstate!="" && Galready==false){
@@ -960,8 +960,14 @@ function  while_abnormal(abnormal_obj){
                     var result=once_check("id",thisid,'','');
                                             mytoast("while_abnormal result is:"+result);
                                                 if(result){ 
-                                                    thiscommon.clickxy_for_ele(id(thisid).findOne(1000));
-                                                    play("global","关闭弹窗");
+                                                   // var result=id(thisid).click();
+                                                   // alert("result is:"+result);
+                                                    //if(result){
+                                                        thiscommon.clickxy_for_ele(id(thisid).findOnce());
+                                                        play("global","关闭弹窗");  
+                                                    //}
+                                                   
+                                                  
                                                     }
            }catch(e){
                     back();

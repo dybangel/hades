@@ -10,7 +10,6 @@
         "text":"任务"
         },
        "abnormal":{
-        
          "ab1":{
           "featuremode":"id",
           "id":"imgClose",
