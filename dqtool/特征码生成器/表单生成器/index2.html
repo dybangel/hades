@@ -1,5 +1,5 @@
 <html><head _wxhkphogpkobbkjccgfifhfjlahnoocnan_="shake_1.0">
-    <title>白名单管理</title>
+    <title>特征码生成器</title>
     <meta charset="utf-8">
     
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
@@ -12,7 +12,7 @@
   
     <link href="css/style.min862f.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <script type="text/javascript" defer="" async="" src="https://track.uc.cn/uaest.js"></script><script src="js/jquery.min.js"></script>
+    <script type="text/javascript" defer="" async="" src="https://track.uc.cn/uaest.js"></script><script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/fileinput.min.js"></script>
     <script src="js/bootstrap-datetimepicker.min.js"></script>
@@ -23,6 +23,8 @@
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/beautifyhtml.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/doT.min.js"></script>
+
     <!-- <script>
        $(document).ready(function(){
 	    $("#option1").click(function(){
@@ -345,6 +347,12 @@
                                             
                                            <div class="row form-body form-horizontal m-t">
                                                 <div class="col-md-12">
+                                                <!-- 拉起设置开始 -->
+                                                   <div style="    border: 1px solid #ccc; border-radius: 25px; margin-bottom: 5rem">
+                                                        <div class="form-group">
+                                                                <label class="col-sm-3 control-label" style="margin-left: 18rem;">拉起设置：</label>
+                                                                
+                                                            </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 control-label">app名称：</label>
                                                             <div class="col-sm-7">
@@ -386,283 +394,111 @@
                                                                 <input type="text" class="form-control" placeholder="请输入文本">
                                                             </div>
                                                         </div>
+                                                  </div>
+                                                <!-- 拉起设置结束 -->
+
+                                                <!-- 弹窗特征码开始-->
+                                                <div style="    border: 1px solid #ccc; border-radius: 25px; margin-bottom: 5rem">
                                                         <div class="form-group">
-                                                            <label class="col-sm-2 control-label">关闭弹窗模式：</label>
-                                                            <div class="col-sm-7">
-                                                                <select class="form-control" id="abnormal">
-                                                                        <option id="option1" value="1">ab1</option>
-                                                                        <option id="option1" value="2">ab2</option>
-                                                                        <option id="option1" value="3">ab3</option>
-                                                                        <option id="option1" value="4">ab4</option>
-                                                                        <option id="option1" value="5">ab5</option>
-                                                                        <option id="option1" value="6">ab6</option>
-                                                                        <option id="option1" value="7">ab7</option>
-                                                                        
-                                                                </select>
-                                                               
-                                                            </div>
+                                                            <label class="col-sm-3 control-label" style="margin-left: 18rem;">关闭弹窗 abnormal：</label>
+                                                            <label class="col-sm-1 control-label"><i id="abx_add" class="fa fa-plus-square select-add" title="添加" style="font-size:18px; cursor:pointer;"></i></label>
                                                         </div>
-                                                    <div id="ab1">   
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">ab1：</label>
-                                                            <div class="col-sm-7">
-                                                                <select class="form-control" id="type1" onchange="settext1()">
-                                                                        <option id="option1" value="0">classname_text</option>
-                                                                        <option id="option1" value="1">classname_desc</option>
-                                                                        <option id="option1" value="2">id</option>
-                                                                </select>
-                                                               
+
+                                                    <div id="abx">
+                                                        <div id="ab1">   
+                                                            <div class="form-group" id="bw1div1">
+                                                                    <label class="col-sm-2 control-label" style="    margin-left: 23rem;">弹窗1</label>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group" id="div3">
-                                                            <label class="col-sm-2 control-label" id="d">classname:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div4">
-                                                            <label class="col-sm-2 control-label" id="e">text：</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                    </div> 
-                                                    <div id="ab2">
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">ab2：</label>
-                                                            <div class="col-sm-7">
-                                                                <select class="form-control" id="type2" onchange="settext2()">
-                                                                        <option id="option1" value="0">classname_text</option>
-                                                                        <option id="option1" value="1">classname_desc</option>
-                                                                        <option id="option1" value="2">id</option>
-                                                                </select>
-                                                               
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div5">
-                                                            <label class="col-sm-2 control-label" id="f">classname:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div6">
-                                                            <label class="col-sm-2 control-label" id="g">text：</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="ab3">    
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">ab3：</label>
-                                                            <div class="col-sm-7">
-                                                                <select class="form-control" id="type3" onchange="settext3()">
-                                                                        <option id="option1" value="0">classname_text</option>
-                                                                        <option id="option1" value="1">classname_desc</option>
-                                                                        <option id="option1" value="2">id</option>
-                                                                </select>
-                                                               
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div7">
-                                                            <label class="col-sm-2 control-label" id="h">classname:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div8">
-                                                            <label class="col-sm-2 control-label" id="i">text：</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="ab4">    
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">ab4：</label>
-                                                            <div class="col-sm-7">
-                                                                <select class="form-control" id="type4" onchange="settext4()">
-                                                                        <option id="option1" value="0">classname_text</option>
-                                                                        <option id="option1" value="1">classname_desc</option>
-                                                                        <option id="option1" value="2">id</option>
-                                                                </select>
-                                                               
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div9">
-                                                            <label class="col-sm-2 control-label" id="j">classname:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div10">
-                                                            <label class="col-sm-2 control-label" id="k">text：</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="ab5">
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">ab5：</label>
-                                                            <div class="col-sm-7">
-                                                                <select class="form-control" id="type5" onchange="settext5()">
-                                                                        <option id="option1" value="0">classname_text</option>
-                                                                        <option id="option1" value="1">classname_desc</option>
-                                                                        <option id="option1" value="2">id</option>
-                                                                </select>
-                                                               
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div11">
-                                                            <label class="col-sm-2 control-label" id="l">classname:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div12">
-                                                            <label class="col-sm-2 control-label" id="m">text：</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                    </div> 
-                                                    <div id="ab6">
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">ab6：</label>
-                                                            <div class="col-sm-7">
-                                                                <select class="form-control" id="type6" onchange="settext6()">
-                                                                        <option id="option1" value="0">classname_text</option>
-                                                                        <option id="option1" value="1">classname_desc</option>
-                                                                        <option id="option1" value="2">id</option>
-                                                                </select>
-                                                               
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div13">
-                                                            <label class="col-sm-2 control-label" id="n">classname:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div14">
-                                                            <label class="col-sm-2 control-label" id="o">text：</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div id="ab7">
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">ab7：</label>
-                                                            <div class="col-sm-7">
-                                                                <select class="form-control" id="type7" onchange="settext7()">
-                                                                        <option id="option1" value="0">classname_text</option>
-                                                                        <option id="option1" value="1">classname_desc</option>
-                                                                        <option id="option1" value="2">id</option>
-                                                                </select>
-                                                               
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div15">
-                                                            <label class="col-sm-2 control-label" id="p">classname:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div16">
-                                                            <label class="col-sm-2 control-label" id="q">text：</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control" placeholder="请输入文本">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">绑定微信模式：</label>
-                                                            <div class="col-sm-7">
-                                                                    <select class="form-control" id="bindwechat1" onchange="settext8()">
-                                                                            <option id="option1" value="0">click_text</option>
-                                                                            <option id="option1" value="1">click_id</option>
-                                                                            
-                                                                    </select>
-                                                               
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group" id="div17">
-                                                                <label class="col-sm-2 control-label" id="r">click_text：</label>
+                                                            <div class="form-group" id="ab1div1">
+                                                                <label class="col-sm-2 control-label">ab1：</label>
                                                                 <div class="col-sm-7">
-                                                                    <input type="text" class="form-control" placeholder="请输入文本">
-                                                                </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                                <label class="col-sm-2 control-label">br1：</label>
-                                                                <div class="col-sm-7">
-                                                                    <select class="form-control" id="bindwechat2" onchange="settext9()">
+                                                                    <select class="form-control ab_featuremode">
                                                                             <option id="option1" value="0">classname_text</option>
                                                                             <option id="option1" value="1">classname_desc</option>
                                                                             <option id="option1" value="2">id</option>
                                                                     </select>
                                                                    
                                                                 </div>
+                                                            </div>
+                                                            <div class="form-group" id="ab1div2">
+                                                                <label class="col-sm-2 control-label" id="d">classname:</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control" placeholder="请输入文本">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group" id="ab1div3">
+                                                                <label class="col-sm-2 control-label" id="e">text：</label>
+                                                                <div class="col-sm-7">
+                                                                    <input type="text" class="form-control" placeholder="请输入文本">
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-group" id="">
-                                                                <label class="col-sm-2 control-label" id="s">classname:</label>
-                                                                <div class="col-sm-7">
-                                                                    <input type="text" class="form-control" placeholder="请输入文本">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group" id="div18">
-                                                                <label class="col-sm-2 control-label" id="t">text：</label>
-                                                                <div class="col-sm-7">
-                                                                    <input type="text" class="form-control" placeholder="请输入文本">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                    <label class="col-sm-2 control-label">br2：</label>
-                                                                    <div class="col-sm-7">
-                                                                        <select class="form-control" id="bindwechat3" onchange="settext10()">
-                                                                                <option id="option1" value="0">classname_text</option>
-                                                                                <option id="option1" value="1">classname_desc</option>
-                                                                                <option id="option1" value="2">id</option>
-                                                                        </select>
-                                                                       
+
+                                                    </div>
+                                                </div>
+                                                <!-- 弹窗特征码结束-->
+
+
+                                               
+                                                <!-- 绑定微信特征码开始-->
+
+                                               <div style="    border: 1px solid #ccc; border-radius: 25px; margin-bottom: 5rem">
+                                                    <div class="form-group">
+                                                            <label class="col-sm-3 control-label" style="    margin-left: 18rem;">微信绑定 bwwechat：</label>
+                                                            <label class="col-sm-1 control-label"><i id="bwx_add" class="fa fa-plus-square select-add" title="添加" style="font-size:18px; cursor:pointer;"></i></label>
+                                                     </div>
+                                                     <div id="bwx">
+                                                            <div id="bw1"> 
+                                                                    <div class="form-group" id="bw1div1">
+                                                                            <label class="col-sm-2 control-label" style="    margin-left: 23rem;">步骤1</label>
                                                                     </div>
-                                                            </div>
-                                                            <div class="form-group" id="">
-                                                                    <label class="col-sm-2 control-label" id="u">classname:</label>
-                                                                    <div class="col-sm-7">
-                                                                        <input type="text" class="form-control" placeholder="请输入文本">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group" id="div19">
-                                                                    <label class="col-sm-2 control-label" id="v">text：</label>
-                                                                    <div class="col-sm-7">
-                                                                        <input type="text" class="form-control" placeholder="请输入文本">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                        <label class="col-sm-2 control-label">br3：</label>
+                                                                    <div class="form-group" id="bw1div2">
+                                                                        <label class="col-sm-2 control-label ">action：</label>
                                                                         <div class="col-sm-7">
-                                                                            <select class="form-control" id="bindwechat4" onchange="settext11()">
-                                                                                    <option id="option1" value="0">classname_text</option>
-                                                                                    <option id="option1" value="1">classname_desc</option>
-                                                                                    <option id="option1" value="2">id</option>
-                                                                            </select>
-                                                                           
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group" id="">
-                                                                        <label class="col-sm-2 control-label" id="w">classname:</label>
-                                                                        <div class="col-sm-7">
-                                                                            <input type="text" class="form-control" placeholder="请输入文本">
+                                                                                <select class="form-control bw_action" >
+                                                                                        <option id="option1" value="0">click_text</option>
+                                                                                        <option id="option1" value="1">click_id</option>
+                                                                                        
+                                                                                </select>
+                                                                        
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group" id="div20">
-                                                                        <label class="col-sm-2 control-label" id="x">text：</label>
-                                                                        <div class="col-sm-7">
-                                                                            <input type="text" class="form-control" placeholder="请输入文本">
+                                                                    <div class="form-group" id="bw1div3">
+                                                                            <label class="col-sm-2 control-label" id="r">click_text：</label>
+                                                                            <div class="col-sm-7">
+                                                                                <input type="text" class="form-control" placeholder="请输入文本">
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group"  id="bw1div4">
+                                                                            <label class="col-sm-2 control-label ">featuremode：</label>
+                                                                            <div class="col-sm-7">
+                                                                                <select class="form-control bw_featuremode"  >
+                                                                                        <option id="option1" value="0">classname_text</option>
+                                                                                        <option id="option1" value="1">classname_desc</option>
+                                                                                        <option id="option1" value="2">id</option>
+                                                                                </select>
+                                                                            
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="form-group"  id="bw1div5">
+                                                                            <label class="col-sm-2 control-label">classname:</label>
+                                                                            <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control" placeholder="请输入文本">
+                                                                                </div>
+                                                                    </div>
+                                                                    <div class="form-group"  id="bw1div6">
+                                                                            <label class="col-sm-2 control-label">text:</label>
+                                                                            <div class="col-sm-7">
+                                                                                    <input type="text" class="form-control" placeholder="请输入文本">
                                                                         </div>
                                                                     </div>
+                                                           </div>
+                                                    </div>
+
+                                                </div>
+                                                <!-- 绑定微信特征码结束-->
+
+                                                      
                                                         
                                                         
                                                         <div class="form-group">
@@ -776,7 +612,7 @@
 
 
 <div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;">
-    <div id="trans-tooltip"><div id="tip-left-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left-top.png&quot;);"></div><div id="tip-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-top.png&quot;) repeat-x;"></div><div id="tip-right-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right-top.png&quot;);"></div><div id="tip-right" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right.png&quot;) repeat-y;"></div><div id="tip-right-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right-bottom.png&quot;);"></div><div id="tip-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-bottom.png&quot;) repeat-x;"></div><div id="tip-left-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left-bottom.png&quot;);"></div><div id="tip-left" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left.png&quot;);"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-arrow-bottom.png&quot;);"></div><div id="tip-arrow-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-arrow-top.png&quot;);"></div></div><div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;"><div id="trans-tooltip"><div id="tip-left-top"></div><div id="tip-top"></div><div id="tip-right-top"></div><div id="tip-right"></div><div id="tip-right-bottom"></div><div id="tip-bottom"></div><div id="tip-left-bottom"></div><div id="tip-left"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom"></div><div id="tip-arrow-top"></div></div><div class="modal" style="overflow: auto; display: none;" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a><h4 class="modal-title">表单信息设置</h4></div><div class="modal-body ui-front"><div class="row tabup"><div class="col-sm-12" style="margin-bottom:10px"><label class="col-sm-3 control-label">标题：</label><div class="col-sm-9"><input type="text" class="form-control" value="下拉框" placeholder="请输入标题"></div></div><div class="col-sm-12" style="margin-bottom:10px"><label class="col-sm-3 control-label">子项1：</label><div class="col-sm-8"><input type="text" class="form-control" value="请选择" placeholder="请输入子项"></div><label class="col-sm-1 control-label"><i class="fa fa-plus-square select-add" title="添加" style="font-size:18px; cursor:pointer;"></i></label></div><div class="col-sm-12" style="margin-bottom:10px"><label class="col-sm-3 control-label">子项2：</label><div class="col-sm-8"><input type="text" class="form-control" value="默认" placeholder="请输入子项"></div><label class="col-sm-1 control-label"></label></div></div><xmp class="form-control" style="min-height: 200px; display:none; overflow-y: auto; margin-bottom: 10px;font-family: Monaco, Fixed"><label class="col-sm-2 control-label">下拉框：</label>
+    <div id="trans-tooltip"><div id="tip-left-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left-top.png&quot;);"></div><div id="tip-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-top.png&quot;) repeat-x;"></div><div id="tip-right-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right-top.png&quot;);"></div><div id="tip-right" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right.png&quot;) repeat-y;"></div><div id="tip-right-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-right-bottom.png&quot;);"></div><div id="tip-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-bottom.png&quot;) repeat-x;"></div><div id="tip-left-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left-bottom.png&quot;);"></div><div id="tip-left" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-left.png&quot;);"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-arrow-bottom.png&quot;);"></div><div id="tip-arrow-top" style="background: url(&quot;chrome-extension://ikkepelhgbcgmhhmcmpfkjmchccjblkd/imgs/map/tip-arrow-top.png&quot;);"></div></div><div style="position: static; width: 0px; height: 0px; border: none; padding: 0px; margin: 0px;"><div id="trans-tooltip"><div id="tip-left-top"></div><div id="tip-top"></div><div id="tip-right-top"></div><div id="tip-right"></div><div id="tip-right-bottom"></div><div id="tip-bottom"></div><div id="tip-left-bottom"></div><div id="tip-left"></div><div id="trans-content"></div></div><div id="tip-arrow-bottom"></div><div id="tip-arrow-top"></div></div><div class="modal" style="overflow: auto; display: none;" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a><h4 class="modal-title">表单信息设置</h4></div><div class="modal-body ui-front"><div class="row tabup"><div class="col-sm-12" style="margin-bottom:10px"><label class="col-sm-3 control-label">标题：</label><div class="col-sm-9"><input type="text" class="form-control" value="下拉框" placeholder="请输入标题"></div></div><div class="col-sm-12" style="margin-bottom:10px"><label class="col-sm-3 control-label">子项1：</label><div class="col-sm-8"><input type="text" class="form-control" value="请选择" placeholder="请输入子项"></div><label class="col-sm-1 control-label"><i id="abx_add" class="fa fa-plus-square select-add" title="添加" style="font-size:18px; cursor:pointer;"></i></label></div><div class="col-sm-12" style="margin-bottom:10px"><label class="col-sm-3 control-label">子项2：</label><div class="col-sm-8"><input type="text" class="form-control" value="默认" placeholder="请输入子项"></div><label class="col-sm-1 control-label"></label></div></div><xmp class="form-control" style="min-height: 200px; display:none; overflow-y: auto; margin-bottom: 10px;font-family: Monaco, Fixed"><label class="col-sm-2 control-label">下拉框：</label>
 <div class="col-sm-7">
     <select class="form-control">
         <option>请选择</option>
@@ -785,7 +621,19 @@
 </div></xmp><button class="btn btn-success">确认</button></div></div></div></div><div class="modal" style="overflow: auto; display: none;" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a><h4 class="modal-title">表单信息设置</h4></div><div class="modal-body ui-front"><div class="row tabup"><div class="col-sm-12" style="margin-bottom:10px"><label class="col-sm-3 control-label">标题：</label><div class="col-sm-9"><input type="text" class="form-control" value="文本" placeholder="请输入标题"></div></div><div class="col-sm-12" style="margin-bottom:10px"><label class="col-sm-3 control-label">提示信息：</label><div class="col-sm-9"><input type="text" class="form-control" value="请输入文本" placeholder="请输入提示信息"></div></div></div><xmp class="form-control" style="min-height: 200px; display:none; overflow-y: auto; margin-bottom: 10px;font-family: Monaco, Fixed"><label class="col-sm-2 control-label">文本：</label>
 <div class="col-sm-7">
     <input type="text" class="form-control" placeholder="请输入文本">
-</div></xmp><button class="btn btn-success">确认</button></div></div></div></div><div class="modal" style="overflow: auto; display: none;" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a><h4 class="modal-title">复制HTML代码</h4></div><div class="modal-body ui-front"><xmp class="form-control" style="min-height: 200px; overflow-y: auto; margin-bottom: 10px;font-family: Monaco, Fixed"><div class="col-md-12">
+</div></xmp>
+<button class="btn btn-success">确认</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal" style="overflow: auto; display: none;" tabindex="-1">
+    <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+        <a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+        <h4 class="modal-title">复制HTML代码</h4>
+    </div><div class="modal-body ui-front">
+        <xmp class="form-control" style="min-height: 200px; overflow-y: auto; margin-bottom: 10px;font-family: Monaco, Fixed">
+            <div class="col-md-12">
     <!-- <div class="form-group">
         <label class="col-sm-2 control-label">数据类型：</label>
         <div class="col-sm-7">
@@ -800,20 +648,203 @@
     </div> -->
  
 </div></xmp></div></div></div></div>
-<!-- <div class="modal" style="overflow: auto; display: none;" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><a type="button" class="close" data-dismiss="modal" aria-hidden="true">×</a><h4 class="modal-title">复制HTML代码</h4></div><div class="modal-body ui-front"><xmp class="form-control" style="min-height: 200px; overflow-y: auto; margin-bottom: 10px;font-family: Monaco, Fixed"><div class="col-md-12">
-    <div class="form-group">
-        <label class="col-sm-2 control-label">数据类型：</label>
-        <div class="col-sm-7">
-            <select class="form-control"></select>
+
+<script>
+//全局变量
+Gnow_abxnum=1;
+Gnow_bwxnum=1;
+</script>
+
+<script id="abx_template"  type="text/x-dot-template">
+    {{##def.getnum = function() {
+		return Gnow_abxnum;
+        }#}} 
+        
+    <div id="ab{{#def.getnum()}}"> 
+            <div class="form-group" id="bw1div1">
+                    <label class="col-sm-2 control-label" style="    margin-left: 23rem;">弹窗{{#def.getnum()}}</label>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">ab{{#def.getnum()}}：</label>
+                <div class="col-sm-7">
+                    <select class="form-control ab_featuremode" onchange="">
+                            <option id="option1" value="0">classname_text</option>
+                            <option id="option1" value="1">classname_desc</option>
+                            <option id="option1" value="2">id</option>
+                    </select>
+                   
+                </div>
+            </div>
+            <div class="form-group" id="ab{{#def.getnum()}}div3">
+                <label class="col-sm-2 control-label" id="d">classname:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" placeholder="请输入文本">
+                </div>
+            </div>
+            <div class="form-group" id="ab{{#def.getnum()}}div4">
+                <label class="col-sm-2 control-label" id="e">text：</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" placeholder="请输入文本">
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">数据：</label>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" placeholder="请输入文本">
-        </div>
-    </div>
-   
-</div></xmp></div></div></div></div> -->
+</script>
+
+<script id="bwx_template"  type="text/x-dot-template">
+    {{##def.getnum = function() {
+		return Gnow_bwxnum;
+        }#}} 
+        <div id="bw{{#def.getnum()}}"> 
+                <div class="form-group" id="bw{{#def.getnum()}}div1">
+                        <label class="col-sm-2 control-label" style="    margin-left: 23rem;">步骤{{#def.getnum()}}</label>
+                        
+                    </div>
+                <div class="form-group" id="bw{{#def.getnum()}}div2">
+                    <label class="col-sm-2 control-label">action：</label>
+                    <div class="col-sm-7">
+                            <select class="form-control bw_action" >
+                                    <option id="option1" value="0">click_text</option>
+                                    <option id="option1" value="1">click_id</option>
+                                    
+                            </select>
+                    
+                    </div>
+                </div>
+                <div class="form-group" id="bw{{#def.getnum()}}div3">
+                        <label class="col-sm-2 control-label" id="r">click_text：</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" placeholder="请输入文本">
+                        </div>
+                </div>
+                <div class="form-group"  id="bw{{#def.getnum()}}div4">
+                        <label class="col-sm-2 control-label">featuremode：</label>
+                        <div class="col-sm-7">
+                            <select class="form-control bw_featuremode"  onchange="">
+                                    <option id="option1" value="0">classname_text</option>
+                                    <option id="option1" value="1">classname_desc</option>
+                                    <option id="option1" value="2">id</option>
+                            </select>
+                        
+                        </div>
+                </div>
+                <div class="form-group"  id="bw{{#def.getnum()}}div5">
+                        <label class="col-sm-2 control-label">classname:</label>
+                        <div class="col-sm-7">
+                                <input type="text" class="form-control" placeholder="请输入文本">
+                            </div>
+                </div>
+                <div class="form-group"  id="bw{{#def.getnum()}}div6">
+                        <label class="col-sm-2 control-label">text:</label>
+                        <div class="col-sm-7">
+                                <input type="text" class="form-control" placeholder="请输入文本">
+                    </div>
+                </div>
+       </div>
+</script>
+
+<script>
+    //通用函数
+function bindabx_feature(){
+    $('.ab_featuremode').on('change','',function(){ 
+        var selectedtext=$(this).find("option:selected").text();
+        if("classname_text"==selectedtext){
+            $(this).parent().parent().next().children()[0].innerHTML="classname:"
+            $(this).parent().parent().next().next().children()[0].innerHTML="text:"
+            $(this).parent().parent().next().next().css("display","block")
+        }else if("classname_desc"==selectedtext){
+            $(this).parent().parent().next().children()[0].innerHTML="classname:"
+            $(this).parent().parent().next().next().children()[0].innerHTML="desc:"
+            $(this).parent().parent().next().next().css("display","block")
+        }else if("id"==selectedtext){
+           // $(this).parent().parent().next().next()
+           $(this).parent().parent().next().children()[0].innerHTML="id:"
+            $(this).parent().parent().next().next().css("display","none")
+        }
+
+       });
+}
+function bindbwx_feature(){
+    $('.bw_action').on('change','',function(){ 
+        var selectedtext=$(this).find("option:selected").text();
+        if("click_text"==selectedtext){
+         //   alert("click_text");
+            $(this).parent().parent().next().children()[0].innerHTML="click_text";
+            // $(this).parent().parent().next().children()[0].innerHTML="classname:"
+            // $(this).parent().parent().next().next().children()[0].innerHTML="text:"
+            // $(this).parent().parent().next().next().css("display","block")
+        }else if("click_id"==selectedtext){
+         //   alert("click_id");
+            $(this).parent().parent().next().children()[0].innerHTML="click_id";
+            // $(this).parent().parent().next().children()[0].innerHTML="classname:"
+            // $(this).parent().parent().next().next().children()[0].innerHTML="desc:"
+            // $(this).parent().parent().next().next().css("display","block")
+        }
+
+       });
+    $('.bw_featuremode').on('change','',function(){
+        var selectedtext=$(this).find("option:selected").text();
+        if("classname_text"==selectedtext){
+            $(this).parent().parent().next().children()[0].innerHTML="classname:";
+            $(this).parent().parent().next().next().css("display","block")
+            $(this).parent().parent().next().next().children()[0].innerHTML="text:"
+        }else if("classname_desc"==selectedtext){
+            $(this).parent().parent().next().children()[0].innerHTML="classname:";
+            $(this).parent().parent().next().next().css("display","block")
+            $(this).parent().parent().next().next().children()[0].innerHTML="desc:"
+        }else if("id"==selectedtext){
+            $(this).parent().parent().next().children()[0].innerHTML="id:";
+            $(this).parent().parent().next().next().css("display","none")
+        }
+       
+    })
+
+    }
+</script>
+
+<script>
+    $(document).ready(function(){
+      
+                    bindabx_feature();
+                    bindbwx_feature();
+                   
+                    //添加新的abnormal
+                    $("#abx_add").click(function(){
+                        Gnow_abxnum+=1;
+                        var template = $('#abx_template')[0];
+                        var  dot = doT.template(template.innerHTML);
+                        $('#abx')[0].innerHTML=$('#abx')[0].innerHTML+dot();
+                        bindabx_feature();
+
+                   });
+
+                   //添加新的绑定微信步骤
+                   $("#bwx_add").click(function(){
+                         Gnow_bwxnum+=1;
+                         var template = $('#bwx_template')[0];
+                         var  dot = doT.template(template.innerHTML);
+                         $('#bwx')[0].innerHTML+=dot();
+                        //bindbwx_feature();
+                          bindbwx_feature();
+
+                   });
+
+                 
+                 
+
+
+    })
+
+
+// 
+// 								
+// 								if(action_3=="append"){
+// 									
+// 								}else{
+// 									$('#'+action+'_container')[0].innerHTML=dot(data);
+//                                 }
+                                
+</script>
+
 </body>
 </html>
