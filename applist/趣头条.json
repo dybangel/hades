@@ -6,8 +6,8 @@
       "activityname":"com.jifen.qkbase.main.MainActivity",
       "open":{
         "featuremode":"classname_text",
-        "classname":"android.widget.Button",
-        "text":"任务"
+        "classname":"android.widget.TextView",
+        "text":"推荐"
         },
        "abnormal":{
          "ab1":{
@@ -26,21 +26,57 @@
              "featuremode":"id",
              "id":"ty",
          },
+           "ab5":{
+             "featuremode":"classname_text",
+             "classname":"android.widget.TextView",
+               "text":"先去逛逛",
+         },
+           "ab6":{
+             "featuremode":"id",
+             "id":"tg",
+         },
        },  
 	   "activitys":{
             "at1":"com.jifen.qkbase.main.MainActivity",
-            "at2":"com.jifen.qkbase.content.newsdetail.news.NewsDetailNewActivity",
+            "at2":"com.jifen.qukan.content.newsdetail.news.NewsDetailNewActivity",
    
           } , 
       "bindwechat":{
-    
+            "bw1":{
+          "action":"click_text",
+          "click_text":"我的",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"微信登录",
+      },
+        "bw2":{
+          "action":"click_id",
+          "click_id":"avj",
+          "featuremode":"id",
+          "id":"b0v",
+          
+      },
+        "bw3":{
+         "action":"click_id",
+         "click_id":"b0v",
+         "featuremode":"classname_text",
+         "classname":"android.widget.Button",
+         "text":"同意",
+     },
+      "bw4":{
+       "action":"click_text",
+       "click_text":"同意",
+       "featuremode":"classname_text",
+       "classname":"android.widget.TextView",
+       "text":"推荐",
+  },
       },
       "autoread":{
 	   "ar1":{
                 "action":"click_text",
                 "click_text":"头条",
                 "featuremode":"id",
-                "id":"aie",
+                "id":"asb",
             },
             "ar2":{
                 "deploymode":"classname_desc",
