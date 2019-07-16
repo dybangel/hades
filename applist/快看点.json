@@ -1,0 +1,64 @@
+{
+        "enable":"false",
+        "appname":"快看点", 
+        "interval":"3",
+         "packagename":"com.yuncheapp.android.pearl",
+        "activityname":"com.kuaishou.athena.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"小视频"
+          },
+         "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"tv_close",
+           },
+         },  
+        "activitys":{
+            "at1":"com.kuaishou.athena.MainActivity",
+            "at2":"com.kuaishou.athena.business.detail2.FeedDetailActivity",
+   
+          } , 
+        "bindwechat":{
+          "bw1":{
+            "action":"click_text",
+            "click_text":"福利",
+            "featuremode":"classname_text",
+            "classname":"android.widget.TextView",
+            "text":"微信登录",
+        },
+          "bw2":{
+            "action":"click_id",
+            "click_id":"btn",
+            "featuremode":"classname_text",
+            "classname":"android.widget.Button",
+            "text":"同意",
+        },
+          "bw3":{
+           "action":"click_text",
+           "click_text":"同意",
+           "featuremode":"classname_text",
+           "classname":"android.widget.TextView",
+           "text":"我的金币",
+       },
+  
+    
+        },
+        "autoread":{
+		 "ar1":{
+                "action":"click_text",
+                "click_text":"首页",
+                "featuremode":"ids",
+                "ids":"back||video_back",
+            },
+            "ar2":{
+                "deploymode":"classname_desc",
+                "deployclassname":"android.view.View",
+                "deploydesc":"展开全文",
+
+        }, 
+        },
+        "durl":"http://xzf.197946.com/kuaikandian.apk"
+      
+    }
