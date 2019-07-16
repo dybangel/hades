@@ -346,7 +346,7 @@ Gdebug=false;
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
 //每一个app阅读多长时间的变量
-Gappinterval="1800000";
+Gappinterval="100000";
 //关闭弹窗线程的循环周期
 Gabinterval="3000";
 //设备类型
@@ -487,7 +487,7 @@ if(Grunstate=="trainwechat"){
             toast('开始'+applist[i]['appname']);
             
             //加载finditem 代码
-            loadappjs();
+            //loadappjs();
 
             try{    thread_abnormal.interrupt();}catch(e){};
             try{    thread_control.interrupt();}catch(e){};
@@ -646,12 +646,20 @@ for(var i=0;i<Gapps.length;i++){
 }
 //加载finditem js脚本
 function loadappjs(){
-   thisfinditem=require(Gapplistpath+"/"+appname+".js");
+  // thisfinditem=require(Gapplistpath+"/"+appname+".js");
   //thisfinditem=require("http://192.168.3.89/jsonurl/2345%E6%B5%8F%E8%A7%88%E5%99%A8.js");
 //   http://192.168.3.89/jsonurl/2345%E6%B5%8F%E8%A7%88%E5%99%A8.js
 // alert("loadappjs appname is:"+appname);
-//  var r=http.get(Gapplistpath_remote+"/"+appname+".js")
-//  alert(r.body.string());
+  var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+  tmpstr=r.body.string();
+ // alert(tmpstr);
+  //thisfinditem=
+  try{
+    eval(r);
+
+  }catch(e){
+alert("eval error:"+e)
+  }
 //  alert('code=',r.statusCode)
 //   //alert(r.body.string());
 //   var r=http.get(Gapplistpath_remote+"/"+appname+".js")
@@ -857,6 +865,11 @@ try{
     }
   
     var upcount=0;
+    //从云端获取特征码js
+    var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+    tmpstr=r.body.string();
+    eval(tmpstr);
+
     thread_findnews=threads.start(
         function(){
        // alert("this is finenew xinsheng");
@@ -867,14 +880,31 @@ try{
                 thisswipe.swiperealup_custom_lnnl();
                 sleep(1500);
                 upcount+=1;
-                var m=3;
-                var n=2;
+                var m=2;
+                var n=1;
                 //x 为向上滑动多少次后打开新闻
                 var x=Math.round(Math.random()*(m-n))+n;
                 //当upcount大于了x次数后，开始打开当前发现的新闻条目
                 if(upcount>x){
                     //判断新闻条目是否存在
-                    var ele=thisfinditem.finditem(appname);
+                   // var ele=thisfinditem.finditem(appname);
+                  
+                   try{
+                  //  loadappjs();
+                    //var ele=thisfinditem();
+                    
+                       //不行 var ele=window['thisfinditem'].call(this,'param');
+                       
+                    // 没反应 var ele=eval(+'thisfinditem()');
+                    
+                    var ele=finditem();
+                }catch(e){
+                    alert("finditem error :"+e);
+                   }
+                   
+                 
+                    // alert(ele);
+                   //alert(ele.bounds().centerX()+"::"+ele.bounds().centerY());
                     if(ele){
                         //如果存在，点击新闻
                        play("global","打开新闻");
