@@ -213,12 +213,12 @@
 const thiscommon=require("./mycommon.js");
 const thisswipe=require("./myswipe.js");
 Gapps=[
-            //  {"appnum":"016","appname":"掌上热点","enable":"true"},
-            //  {"appnum":"028","appname":"微鲤看看","enable":"true"},
+            //{"appnum":"016","appname":"掌上热点","enable":"true"},
+             //{"appnum":"028","appname":"微鲤看看","enable":"true"},
             // {"appnum":"035","appname":"东方头条","enable":"true"},
             // {"appnum":"043","appname":"红包视频","enable":"true"},
-            // {"appnum":"050","appname":"亿刻看点","enable":"true"},
-            {"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
+             {"appnum":"050","appname":"亿刻看点","enable":"true"},
+            //{"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
             // {"appnum":"054","appname":"氪资讯","enable":"true"},
             // {"appnum":"055","appname":"快狗视频","enable":"true"},
             // {"appnum":"056","appname":"快看点","enable":"true"},
@@ -289,12 +289,12 @@ Gappinterval="100000";
 //关闭弹窗线程的循环周期
 Gabinterval="3000";
 //设备类型
-Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl
+Gdevicetype="xiaomi4s"; //字典 xiaomi4 xiaomi4s lnnl
 
 //json特征码加载方式 remote local 
 //目前已经支持从云端获取特征码，Gjsonloadstate改为remote即可从指定的云端路径下载json文件，现在Gapplistpath_remote的路径
 //使用的是开发人员及其，后期发版是需要改为点趣域名，并将特征码更新到云端路径
-Gjsonloadstate="remote";
+Gjsonloadstate="local";
 Gapplistpath_remote="http://192.168.3.89/jsonurl/";
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";
