@@ -1,0 +1,50 @@
+{
+      "enable":"true",  
+      "appname":"趣故事", 
+      "interval":"3",
+         "packagename":"com.ziqun.story",
+      "activityname":"com.story.MainTabActivity",
+      "open":{
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"任务"
+        },
+       "abnormal":{
+         "ab1":{
+             "featuremode":"id",
+             "id":"img_close",
+         },
+       },
+        "activitys":{
+            "at1":"com.story.MainTabActivity",
+            "at2":"com.story.news.ui.NativeNewsDetailActivity",
+   
+          } ,
+      "bindwechat":{
+        "bw1":{
+          "action":"click_id",
+          "click_id":"ll_wechat",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"任务",
+      },
+
+    
+      },
+      "autoread":{
+	   "ar1":{
+                "action":"click_text",
+                "click_text":"首页",
+                "featuremode":"id",
+                "id":"iv_back",
+            },
+            "ar2":{
+                "deploymode":"classname_text",
+                "deployclassname":"android.widget.TextView",
+                "deploytext":"展开全文",
+
+      },
+      },
+      "durl":"http://xzd.197946.com/quhgusd.apk"
+      
+    }

@@ -1,0 +1,42 @@
+{
+        "enable":"false",
+        "appname":"微鲤看看", 
+        "interval":"3",
+         "packagename":"cn.weli.story",
+        "activityname":"cn.etouch.ecalendar.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"签到"
+          },
+          "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"cn.weli.story:id/iv_close",
+           },
+         
+         },  
+		 "activitys":{
+            "at1":"cn.etouch.ecalendar.MainActivity",
+            "at2":"cn.etouch.ecalendar.tools.life.LifeDetailsActivity",
+   
+          } , 
+        "bindwechat":{
+    
+        },
+        "autoread":{
+          "ar1":{
+            "action":"click_id",
+            "click_id":"iv_tab_1",
+            "featuremode":"id",
+            "id":"cn.weli.story:id/btn_back",
+        },
+        "ar2":{
+            "deploymode":"classname_text",
+            "deployclassname":"android.widget.TextView",
+            "deploytext":"展开查看全文",
+
+        },
+        }, 
+        "durl":"http://cr1.197946.com/cn.weli.story.1906061317.apk"
+       }

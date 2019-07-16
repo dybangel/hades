@@ -1,0 +1,70 @@
+{
+        "enable":"false",
+        "appname":"蚂蚁看点", 
+        "interval":"3",
+         "packagename":"com.ldzs.zhangxin",
+        "activityname":"com.weishang.wxrd.activity.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"任务"
+          },
+         "abnormal":{
+           
+           "ab1":{
+            "featuremode":"id",
+            "id":"iv_close_packet2",
+        },
+             "ab2":{
+            "featuremode":"id",
+            "id":"btn_close",
+        },
+         },  
+        "activitys":{
+            "at1":"com.weishang.wxrd.activity.MainActivity",
+            "at2":"com.weishang.wxrd.activity.WebViewActivity",
+   
+          } , 
+        "bindwechat":{
+          "bw1":{
+            "action":"click_text",
+            "click_text":"我的",
+            "featuremode":"classname_text",
+            "classname":"android.widget.TextView",
+            "text":"微信一键登录",
+        },
+          "bw2":{
+            "action":"click_id",
+            "click_id":"tv_button",
+            "featuremode":"classname_text",
+            "classname":"android.widget.Button",
+            "text":"同意",
+        },
+          "bw3":{
+           "action":"click_text",
+           "click_text":"同意",
+           "featuremode":"classname_text",
+           "classname":"android.widget.TextView",
+           "text":"金币余额",
+       },
+
+
+    
+        },
+        "autoread":{
+		 "ar1":{
+                "action":"click_text",
+                "click_text":"看点",
+                "featuremode":"id",
+                "id":"iv_back_533",
+            },
+            "ar2":{
+                "deploymode":"classname_desc",
+                "deployclassname":"android.widget.Image",
+                "deploydesc":"open",
+
+        }, 
+        },
+        "durl":"http://cr1.197946.com/mayikandian.apk"
+      
+    }
