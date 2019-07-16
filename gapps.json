@@ -1,0 +1,38 @@
+[
+            //  {"appnum":"016","appname":"掌上热点","enable":"true"},
+            //  {"appnum":"028","appname":"微鲤看看","enable":"true"},
+            // {"appnum":"035","appname":"东方头条","enable":"true"},
+            // {"appnum":"043","appname":"红包视频","enable":"true"},
+            // {"appnum":"050","appname":"亿刻看点","enable":"true"},
+           // {"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
+             {"appnum":"054","appname":"氪资讯","enable":"true"},
+            // {"appnum":"055","appname":"快狗视频","enable":"true"},
+            // {"appnum":"056","appname":"快看点","enable":"true"},
+            // {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
+            // {"appnum":"066","appname":"趣故事","enable":"true"},  
+            // {"appnum":"069","appname":"趣头条","enable":"true"},//已经实现
+            // {"appnum":"072","appname":"全民头条","enable":"true"},
+            // {"appnum":"081","appname":"淘头条","enable":"true"},
+            // {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
+    //过往实现过的app如下19个
+    // {"appnum":"","appname":"刷宝短视频","enable":"true"},
+    // {"appnum":"","appname":"2345浏览器","enable":"true"},
+    // {"appnum":"","appname":"趣头条","enable":"true"},
+    // {"appnum":"","appname":"中青看点","enable":"true"},
+    // {"appnum":"","appname":"闪电盒子","enable":"true"},
+    // {"appnum":"","appname":"引力资讯","enable":"true"},
+    // {"appnum":"","appname":"趣看点","enable":"true"},//没实现查看全文
+    // {"appnum":"","appname":"淘新闻","enable":"true"},//
+    // {"appnum":"","appname":"百姓头条","enable":"true"},// 
+    // {"appnum":"","appname":"三言","enable":"true"},
+    // {"appnum":"","appname":"天天快报","enable":"true"},
+    // {"appnum":"","appname":"掌上消息","enable":"true"},
+    // {"appnum":"","appname":"菠萝小组","enable":"true"},
+    // {"appnum":"","appname":"聚看点","enable":"true"},
+    // {"appnum":"","appname":"波波视频","enable":"true"}, //统一领取
+    // {"appnum":"","appname":"盈贝头条","enable":"true"},//查看全文
+    // {"appnum":"","appname":"新闻赚","enable":"true"},  
+    // {"appnum":"","appname":"韭菜资讯","enable":"true"}, //多读一会儿
+    // {"appnum":"","appname":"有米头条","enable":"true"}, //多读一会儿
+
+]
