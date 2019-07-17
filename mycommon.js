@@ -67,7 +67,8 @@ module.exports = {
       // ele.click();
       touchreal(519,1733);
     }else if("xiaomi4s"==devicetype){
-        touchreal(561,1724);
+        //touchreal(561,1724);
+        id('com.android.systemui:id/clearButton').click();
       //  touchreal(943,950);
 //        ra.tap(993.950,1);
   //      ra.tap(993.950,1);
