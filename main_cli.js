@@ -1022,7 +1022,7 @@ function while_readnews(autoread_obj){
                             try{ele.findOne(1000).click();}catch(e){
 
                             }
-                          thiscommon.clickxy_for_ele(ele.findOne(1000)); 
+                        //  thiscommon.clickxy_for_ele(ele.findOne(1000)); 
 
                         }
                          
@@ -1041,7 +1041,7 @@ function while_readnews(autoread_obj){
                            try{ ele.findOne(1000).click();}catch(e){
                                
                            }
-                                 thiscommon.clickxy_for_ele(className(thisdeployclassname).text(thistext).findOne());
+                                // thiscommon.clickxy_for_ele(className(thisdeployclassname).text(thistext).findOne());
                             }
                             
                         }
