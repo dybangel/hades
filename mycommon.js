@@ -74,9 +74,10 @@ module.exports = {
   //      ra.tap(993.950,1);
 
     }else if("lnnl"==devicetype){
-        ra.tap(535, 1687, 1);
-        ra.tap(535, 1687, 1);
-        ra.tap(535, 1687, 1);
+        // ra.tap(535, 1687, 1);
+        // ra.tap(535, 1687, 1);
+        // ra.tap(535, 1687, 1);
+        id('com.android.systemui:id/clear_recents').click();
     }
     
 
