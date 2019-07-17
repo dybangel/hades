@@ -78,6 +78,7 @@ ui.layout(
                         <linear w="*" h="*" paddingLeft="8" gravity="left|center" >
                             <text text="软件列表" textSize="12sp" textColor="{{textColor}}" />
                         </linear>
+                        <button id="appinfo" text="详情"/>
                         <vertical margin="0 20 0 20" id="applist">
                             {/* <linear layout_weight="1" >
                                 <checkbox id="str" text="脚本运行前开启录屏(功能未开发)" color="{{textColor}}" />
@@ -188,6 +189,7 @@ ui.emitter.on("resume", function() {
 });
 //开始运行脚本
 ui.start.on("click", function(){
+   
     //程序开始运行之前判断无障碍服务
     if(auto.service == null) {
         toast("请先开启无障碍服务！");
@@ -259,8 +261,16 @@ ui.menu.on("item_click", item => {
         break;
     }
 })
-
-
+ui.appinfo.click(()=>{
+  //  alert(Gapps);
+    try{
+        ref_ui_list();
+    }catch(e){
+        toast("列表加载中..请等3秒钟再试");
+    }
+   
+  
+});
 
 
 //ui.allrun.setText("123");
@@ -346,7 +356,7 @@ Gdebug=false;
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
 //每一个app阅读多长时间的变量
-Gappinterval="100000";
+Gappinterval="1800000";
 //关闭弹窗线程的循环周期
 Gabinterval="3000";
 //设备类型
@@ -419,11 +429,37 @@ UI_run_thread=threads.start(function(){
 });
 
 
-
-
+function addTextView(parent) {
+    // var child = view
+    var child = new TextView(context);
+    child.setTextSize(20);
+    child.setTextColor(colors.parseColor("#ff00f0"))
+    child.setText("左护法");
+    child.setGravity(0); //左护法
+    parent.addView(child);
+    log(child)
+    var child = new TextView(context);
+    child.setTextSize(20);
+    child.setTextColor(colors.parseColor("#ff00f0"))
+    child.setText("大长老"); //中间的是大长老
+    child.setGravity(1);
+    parent.addView(child);
+    log(child)
+    var child = new TextView(context);
+    child.setTextSize(20);
+    child.setTextColor(colors.parseColor("#ff00f0"))
+    child.setText("右护法");
+    child.setGravity(5); //右护法
+    parent.addView(child);
+    log(child)
+  }
+//appinfo
 update_thread=threads.start(
     function(){
         loadGapps();
+        //alert(Gapps);
+       
+       // addTextView(ui.applist);
         //alert("ok");
        // sleep(3000);
        
@@ -484,8 +520,14 @@ if(Grunstate=="trainwechat"){
              if("undefined"==typeof(activitys_obj)){
                 toast(appname+".json activitys数据项缺失");
             }
+      
             toast('开始'+applist[i]['appname']);
-            
+            // var checkid=appname;
+            // if(ui.{checkid}.checked==true){
+            //     alert("a1 check");
+            //   }else{
+            //     alert("a1 no");
+            //   }
             //加载finditem 代码
             //loadappjs();
 
@@ -676,24 +718,26 @@ alert("eval error:"+e)
 }
 //将app名称加载的UI界面上
 function ref_ui_list(){
-    alert(Gapps.length);
+   // alert(Gapps.length);
     for(var i=0;i<Gapps.length;i++){
      var thisappname=Gapps[i]["appname"];
-      appliststr='<linear layout_weight="1" >';
-      appliststr+='<checkbox id="sendMsgOption" text="'+thisappname+'" color="{{textColor}}" />'
-      appliststr+='<text text="次数:"';
-      appliststr+='   marginLeft="10"';
-      appliststr+='   marginRight="1"';
-      appliststr+='   color="{{textColor}}"';
-      appliststr+='   size="16sp"';
-      appliststr+='   />';
-      appliststr+=' <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>';
+      appliststr='<linear id="aa" layout_weight="1" >';
+      appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'123" color="{{textColor}}" checked="true"/>'
+    //   appliststr+='<text text="次数:"';
+    //   appliststr+='   marginLeft="10"';
+    //   appliststr+='   marginRight="1"';
+    //   appliststr+='   color="{{textColor}}"';
+    //   appliststr+='   size="16sp"';
+    //   appliststr+='   />';
+    //   appliststr+=' <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>';
       appliststr+='<linear layout_weight="1" gravity="right" >';
-      appliststr+='    <button id="open" text="打开" w="60" h="40" />';
+      appliststr+='    <button id="android:id/open" text="" w="60" h="40" />';
       appliststr+='</linear>';
       appliststr+='</linear>';
       ui.inflate( appliststr,ui.applist,true); 
       }
+     
+     
      
 }
 
@@ -974,9 +1018,11 @@ function while_readnews(autoread_obj){
                             if(ele.findOnce().bounds().top<1770){
                         //alert( "top is:"+ele.findOnce().bounds().top+"::"+"bottom is"+ele.findOnce().bounds().bottom);
                            play("global","展开更多");
-                           sleep(1000);
-                            thiscommon.clickxy_for_ele(ele.findOne(1000)); 
-                            }
+                           //sleep(1000);
+                            ele.findOne(1000).click();
+                          thiscommon.clickxy_for_ele(ele.findOne(1000)); 
+
+                        }
                          
                             //ele.findOne(1000).click();
                         }
@@ -989,7 +1035,8 @@ function while_readnews(autoread_obj){
                         if(ele.exists()){
                             if(ele.findOnce().bounds().top<1770){
                                 play("global","展开更多");
-                                sleep(1000);
+                            //    sleep(1000);
+                            ele.findOne(1000).click();
                                  thiscommon.clickxy_for_ele(className(thisdeployclassname).text(thistext).findOne());
                             }
                             
