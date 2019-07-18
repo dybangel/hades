@@ -1,0 +1,71 @@
+{
+      "enable":"false",  
+      "appname":"全民头条",
+      "appver":"2.2.1",
+      "interval":"3",
+         "packagename":"com.top.quanmin.app",
+      "activityname":"com.top.quanmin.app.ui.activity.HomeActivity",
+      "open":{
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"任务"
+        },
+       "abnormal":{
+         "ab1":{
+             "featuremode":"id",
+             "id":"com.top.quanmin.app:id/iv_red_picket_close",
+         },
+       },  
+         "activitys":{
+            "at1":"com.top.quanmin.app.ui.activity.HomeActivity",
+            "at2":"com.top.quanmin.app.ui.activity.ArticleDetailActivity",
+   
+          } ,
+      "bindwechat":{
+        "bw1":{
+          "action":"click_text",
+          "click_text":"我的",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"登录立即领现金",
+      },
+        "bw2":{
+          "action":"click_id",
+          "click_id":"com.top.quanmin.app:id/iv_wx_login",
+          "featuremode":"classname_text",
+          "classname":"android.widget.Button",
+          "text":"微信一键登录",
+      },
+        "bw3":{
+         "action":"click_text",
+         "click_text":"微信一键登录",
+         "featuremode":"classname_text",
+         "classname":"android.widget.Button",
+         "text":"同意",
+     },
+      "bw4":{
+       "action":"click_text",
+       "click_text":"同意",
+       "featuremode":"classname_text",
+       "classname":"android.widget.TextView",
+       "text":"我的金币",
+  },
+    
+      },
+      "autoread":{
+        "ar1":{
+          "action":"click_text",
+          "click_text":"头条",
+          "featuremode":"id",
+          "id":"com.top.quanmin.app:id/ll_title_back",
+      },
+      "ar2":{
+          "deploymode":"classname_text",
+          "deployclassname":"android.widget.TextView",
+          "deploytext":"展开全文",
+
+      },
+      }, 
+      "durl":"http://b.xiazaicc.com/apk3/quanmintoutiaov2.5.0_downcc.com.apk"
+      }
+    

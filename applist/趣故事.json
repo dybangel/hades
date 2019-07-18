@@ -1,6 +1,7 @@
 {
       "enable":"true",  
-      "appname":"趣故事", 
+      "appname":"趣故事",
+      "appver":"4.5.0",
       "interval":"3",
          "packagename":"com.ziqun.story",
       "activityname":"com.story.MainTabActivity",
@@ -12,7 +13,7 @@
        "abnormal":{
          "ab1":{
              "featuremode":"id",
-             "id":"img_close",
+             "id":"com.ziqun.story:id/img_close",
          },
        },
         "activitys":{
@@ -23,20 +24,18 @@
       "bindwechat":{
         "bw1":{
           "action":"click_id",
-          "click_id":"ll_wechat",
+          "click_id":"com.ziqun.story:id/ll_wechat",
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"任务",
       },
-
-    
       },
       "autoread":{
 	   "ar1":{
                 "action":"click_text",
                 "click_text":"首页",
                 "featuremode":"id",
-                "id":"iv_back",
+                "id":"com.ziqun.story:id/iv_back",
             },
             "ar2":{
                 "deploymode":"classname_text",

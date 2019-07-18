@@ -1,6 +1,7 @@
 {
         "enable":"false",
         "appname":"淘新闻", 
+        "appver":"3.4.6.2",
         "interval":"3",
          "packagename":"com.coohua.xinwenzhuan",
         "activityname":"com.coohua.xinwenzhuan.controller.MainActivity",
@@ -12,15 +13,15 @@
          "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"xlxl_alert_negative",
+               "id":"com.coohua.xinwenzhuan:id/xlxl_alert_negative",
            },
            "ab2":{
             "featuremode":"id",
-            "id":"guide_skip",
+            "id":"com.coohua.xinwenzhuan:id/guide_skip",
         },
              "ab3":{
             "featuremode":"id",
-            "id":"close",
+            "id":"com.coohua.xinwenzhuan:id/close",
         },
          },  
 		 "activitys":{
@@ -38,7 +39,7 @@
         },
         "bw2":{
             "action":"click_id",
-            "click_id":"avatar",
+            "click_id":"com.coohua.xinwenzhuan:id/avatar",
             "featuremode":"classname_text",
             "classname":"android.widget.TextView",
             "text":"微信一键登录",
@@ -48,21 +49,18 @@
           "click_text":"微信一键登录",
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"收藏",
+          "text":"金币",
        },
-     
-    
         },
         "autoread":{
              "ar1":{
                 "action":"click_text",
                 "click_text":"新闻",
                 "featuremode":"id",
-                "id":"comment",
+                "id":"com.coohua.xinwenzhuan:id/comment",
             },
             "ar2":{
-                "deploymode":"classname_desc",
-                
+                "deploymode":"classname_desc", 
                 "deployclassname":"android.view.View",
                 "deploydesc":"展开全文",
 

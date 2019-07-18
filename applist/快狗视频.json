@@ -1,36 +1,42 @@
 {
         "enable":"false",
-        "appname":"快看点", 
-        "appver":"1.4.1.51",
+        "appname":"快狗视频", 
+        "appver":"5.0.1.0",
         "interval":"3",
-         "packagename":"com.yuncheapp.android.pearl",
-        "activityname":"com.kuaishou.athena.MainActivity",
+         "packagename":"com.xike.yipai",
+        "activityname":"com.xike.yipai.view.activity.StartActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"小视频"
+          "text":"任务"
           },
          "abnormal":{
+           
            "ab1":{
-               "featuremode":"id",
-               "id":"com.yuncheapp.android.pearl:id/tv_close",
-           },
-         },  
+            "featuremode":"id",
+            "id":"com.xike.yipai:id/du_btn_ignore",
+        },
+             "ab2":{
+            "featuremode":"id",
+            "id":"com.xike.yipai:id/img_hope_login_close",
+        },
+         }, 
         "activitys":{
-            "at1":"com.kuaishou.athena.MainActivity",
-            "at2":"com.kuaishou.athena.business.detail2.FeedDetailActivity",
+            "at1":"com.xike.yipai.main.activity.MainActivityEx",
+            
+   
           } , 
         "bindwechat":{
           "bw1":{
             "action":"click_text",
-            "click_text":"福利",
+            "click_text":"我的",
             "featuremode":"classname_text",
             "classname":"android.widget.TextView",
-            "text":"微信登录",
+            "text":"微信一键登录",
         },
           "bw2":{
             "action":"click_id",
-            "click_id":"com.yuncheapp.android.pearl:id/icon",
+            "click_id":"com.xike.yipai:id/img_wechat_login",
             "featuremode":"classname_text",
             "classname":"android.widget.Button",
             "text":"同意",
@@ -40,15 +46,16 @@
            "click_text":"同意",
            "featuremode":"classname_text",
            "classname":"android.widget.TextView",
-           "text":"我的金币",
+           "text":"关注",
        },
+    
         },
         "autoread":{
 		 "ar1":{
                 "action":"click_text",
                 "click_text":"首页",
-                "featuremode":"ids",
-                "ids":"com.yuncheapp.android.pearl:id/back||com.yuncheapp.android.pearl:id/video_back",
+                "featuremode":"id",
+                "id":"com.xike.yipai:id/rl_bottom_nav_wide_video",
             },
             "ar2":{
                 "deploymode":"classname_desc",
@@ -56,7 +63,7 @@
                 "deploydesc":"展开全文",
 
         }, 
-        },
-        "durl":"http://xzf.197946.com/kuaikandian.apk"
+        }, 
+        "durl":"http://app.2345.cn/appsoft/81738.apk"
       
     }

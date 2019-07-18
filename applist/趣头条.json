@@ -1,6 +1,7 @@
 {
       "enable":"false",
       "appname":"趣头条", 
+      "appver":"3.9.27.000.0529.1101",
       "interval":"3",
          "packagename":"com.jifen.qukan",
       "activityname":"com.jifen.qkbase.main.MainActivity",
@@ -12,19 +13,19 @@
        "abnormal":{
          "ab1":{
              "featuremode":"id",
-             "id":"a4q",
+             "id":"com.jifen.qukan:id/a4q",
          },
            "ab2":{
              "featuremode":"id",
-             "id":"a3n",
+             "id":"com.jifen.qukan:id/a3n",
          },
            "ab3":{
              "featuremode":"id",
-             "id":"vo",
+             "id":"com.jifen.qukan:id/vo",
          },
            "ab4":{
              "featuremode":"id",
-             "id":"ty",
+             "id":"com.jifen.qukan:id/ty",
          },
            "ab5":{
              "featuremode":"classname_text",
@@ -33,7 +34,7 @@
          },
            "ab6":{
              "featuremode":"id",
-             "id":"tg",
+             "id":"com.jifen.qukan:id/tg",
          },
        },  
 	   "activitys":{
@@ -51,14 +52,15 @@
       },
         "bw2":{
           "action":"click_id",
-          "click_id":"avj",
-          "featuremode":"id",
-          "id":"b0v",
+          "click_id":"com.jifen.qukan:id/apn",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"其他方式登录",
           
       },
         "bw3":{
          "action":"click_id",
-         "click_id":"b0v",
+         "click_id":"com.jifen.qukan:id/aps",
          "featuremode":"classname_text",
          "classname":"android.widget.Button",
          "text":"同意",
@@ -76,7 +78,7 @@
                 "action":"click_text",
                 "click_text":"头条",
                 "featuremode":"id",
-                "id":"asb",
+                "id":"com.jifen.qukan:id/aie",
             },
             "ar2":{
                 "deploymode":"classname_desc",
