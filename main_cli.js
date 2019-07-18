@@ -996,7 +996,7 @@ try{
     tmpstr=r.body.string();
     eval(tmpstr);
 }catch(e){
-    alert("this is findnews httpget and eval:"+e);
+    toast("this is findnews httpget and eval:"+e);
     }
 
 
@@ -1513,11 +1513,19 @@ if("classname_desc"==featuremode){
         if(num>15){
             return false;
         }
-        for(var i=0;i<ids_arr.length;i++){
+        try{
+            for(var i=0;i<ids_arr.length;i++){
             if(id(ids_arr[i]).exists()){
                return true;
             } 
-       }
+        }  
+        }catch(e){
+            
+            toast("this is block_mode ids for:"+e);
+            return false;
+        }
+      
+
        num+=1;
        sleep(1000);
     }
