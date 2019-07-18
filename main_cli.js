@@ -992,7 +992,9 @@ try{
     var upcount=0;
     //从云端获取特征码js
     try{
+    http.__okhttp__.setTimeout(10000);
     var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+   
     tmpstr=r.body.string();
     eval(tmpstr);
 }catch(e){
