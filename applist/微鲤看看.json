@@ -1,6 +1,7 @@
 {
         "enable":"false",
         "appname":"微鲤看看", 
+		 "appver":"1.5.0",
         "interval":"3",
          "packagename":"cn.weli.story",
         "activityname":"cn.etouch.ecalendar.MainActivity",
@@ -14,7 +15,6 @@
                "featuremode":"id",
                "id":"cn.weli.story:id/iv_close",
            },
-         
          },  
 		 "activitys":{
             "at1":"cn.etouch.ecalendar.MainActivity",
@@ -22,12 +22,39 @@
    
           } , 
         "bindwechat":{
-    
+          "bw1":{
+            "action":"click_text",
+            "click_text":"我的",
+            "featuremode":"classname_text",
+            "classname":"android.widget.TextView",
+            "text":"登录看文章赚零花",
+        },
+        "bw2":{
+          "action":"click_text",
+          "click_text":"立即赚钱",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"微信一键登录",
+         },
+		  "bw3":{
+          "action":"click_id",
+          "click_id":"cn.weli.story:id/login_0",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"同意",
+         },
+         "bw4":{
+          "action":"click_text",
+          "click_text":"同意",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"兑换提现",
+        },
         },
         "autoread":{
           "ar1":{
             "action":"click_id",
-            "click_id":"iv_tab_1",
+            "click_id":"cn.weli.story:id/rl_bottom_1",
             "featuremode":"id",
             "id":"cn.weli.story:id/btn_back",
         },

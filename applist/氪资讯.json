@@ -1,6 +1,7 @@
 {
         "enable":"false",
         "appname":"氪资讯", 
+		 "appver":"1.0.6",
         "interval":"3",
          "packagename":"zixun.digu.ke",
         "activityname":"zixun.digu.ke.main.HomeActivity",
@@ -33,7 +34,7 @@
         },
         "bw2":{
           "action":"click_id",
-          "click_id":"tv_wechat_login",
+          "click_id":"zixun.digu.ke:id/tv_wechat_login",
           "featuremode":"classname_text",
           "classname":"android.widget.Button",
           "text":"同意",
@@ -52,7 +53,7 @@
                 "action":"click_text",
                 "click_text":"首页",
                 "featuremode":"id",
-                "id":"back",
+                "id":"zixun.digu.ke:id/back",
             },
             "ar2":{
                 "deploymode":"classname_text",
