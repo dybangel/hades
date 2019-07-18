@@ -1,6 +1,7 @@
 {
   "enable":"false",
   "appname":"东方头条", 
+  "appver":"2.5.3",
   "interval":"3",
    "packagename":"com.songheng.eastnews",
   "activityname":"com.songheng.eastfirst.common.view.activity.MainActivity",

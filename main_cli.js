@@ -43,6 +43,12 @@ ui.layout(
                         <Switch id="autoService" text="无障碍服务" checked="{{auto.service != null}}" padding="8 8 8 8" textSize="15sp"/>
                          {/* 勾选框 */}
                          <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="开发调试" textSize="12sp" textColor="{{textColor}}" />
+                            <checkbox id="showappver" text="app版本输出" color="{{textColor}}" checked="true"/>
+                            {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
+                        </linear>
+                        
+                         <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="手机型号" textSize="12sp" textColor="{{textColor}}" />
                             {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
                         </linear>
@@ -520,16 +526,24 @@ if(Grunstate=="trainwechat"){
              if("undefined"==typeof(activitys_obj)){
                 toast(appname+".json activitys数据项缺失");
             }
-      
+            //当开启app版本号输出时
+            if(ui.showappver.checked==true){
+                        console.show();
+                    var appversion=getPackageVersion(packagename);
+                    var appversion_server="未设置"; 
+                    try{appversion_server=applist[i]["appver"];}catch(e){
+                    // appversion_server="未设置"; 
+                    }
+                    if("undefined"==typeof(appversion_server)){
+                        var appversion_server="未设置";  
+                    }
+                    log(appname+" ver: "+appversion+"\n服务器ver: "+appversion_server);
+                    sleep(5000); 
+                    console.hide();
+            }
+           
             toast('开始'+applist[i]['appname']);
-            // var checkid=appname;
-            // if(ui.{checkid}.checked==true){
-            //     alert("a1 check");
-            //   }else{
-            //     alert("a1 no");
-            //   }
-            //加载finditem 代码
-            //loadappjs();
+            
 
             try{    thread_abnormal.interrupt();}catch(e){};
             try{    thread_control.interrupt();}catch(e){};
@@ -539,6 +553,7 @@ if(Grunstate=="trainwechat"){
             try{    thread_abnormal_overtime.interrupt();}catch(e){};
      
             sleep(2000);
+            
             thiscommon.clean(Gdevicetype);
         //    while_closewindow("xiaomi4");
         //}
@@ -584,7 +599,8 @@ if(Grunstate=="trainwechat"){
   
 }
 //if end
-}
+} //while end
+
 //function fun end
 /*************************以下是函数实现部分 *******************************************************************/ 
 function loadGapps(){
@@ -913,7 +929,6 @@ try{
     var r=http.get(Gapplistpath_remote+"/"+appname+".js")
     tmpstr=r.body.string();
     eval(tmpstr);
-
     thread_findnews=threads.start(
         function(){
        // alert("this is finenew xinsheng");
@@ -1830,6 +1845,12 @@ else{
  
 }
 
+function getPackageVersion(packageName) {
+    importPackage(android.content);
+    var pckMan = context.getPackageManager();
+    var packageInfo = pckMan.getPackageInfo(packageName, 0);
+    return packageInfo.versionName;
+  }
 
 
 function callback_boboshipin(fucname,ele){
