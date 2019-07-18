@@ -991,9 +991,15 @@ try{
   
     var upcount=0;
     //从云端获取特征码js
+    try{
     var r=http.get(Gapplistpath_remote+"/"+appname+".js")
     tmpstr=r.body.string();
     eval(tmpstr);
+}catch(e){
+    alert("this is findnews httpget and eval:"+e);
+    }
+
+
     thread_findnews=threads.start(
         function(){
        // alert("this is finenew xinsheng");
