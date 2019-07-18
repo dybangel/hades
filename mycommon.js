@@ -9,6 +9,13 @@ function touchreal(x,y){
  }
 
 module.exports = {
+    //根据包名返回软件版本号
+    getPackageVersion:function(packageName){
+        importPackage(android.content);
+        var pckMan = context.getPackageManager();
+        var packageInfo = pckMan.getPackageInfo(packageName, 0);
+        return packageInfo.versionName;
+    },
     //通过包名启动app
     openpackage : function(packagestr) {
         activity = packagestr;
@@ -137,11 +144,11 @@ setgps:function (state){
     if("open"==state){
         //toast("开启GPS....");
        var result= shell("settings put secure location_providers_allowed +gps,+network6.0" , true);
-        toast(result);
+      //  toast(result);
     }else{
-        toast("关闭GPS....");
+       // toast("关闭GPS....");
        var result= shell("settings put secure location_providers_allowed -gps,+network6.0" , true);
-        toast(result);
+     //   toast(result);
     }
    
     

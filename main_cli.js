@@ -43,16 +43,25 @@ ui.layout(
                         <Switch id="autoService" text="无障碍服务" checked="{{auto.service != null}}" padding="8 8 8 8" textSize="15sp"/>
                          {/* 勾选框 */}
                          <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
-                            <text text="开发调试" textSize="12sp" textColor="{{textColor}}" />
+                            <text text="显示app版本" textSize="12sp" textColor="{{textColor}}" />
                             <checkbox id="showappver" text="app版本输出" color="{{textColor}}" checked="true"/>
+                            {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
+                        </linear>
+                        <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="每APP阅读时间" textSize="12sp" textColor="{{textColor}}" />
+                            <radiogroup id='fbName' orientation="horizontal">
+                                    {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
+                                    <radio  id="shorttime" text='1分20秒' color="{{textColor}}" checked="true"></radio>
+                                    <radio id="longtime" text='30分钟' color="{{textColor}}"></radio>
+                                         
+                                </radiogroup>
                             {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
                         </linear>
                         
                          <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="手机型号" textSize="12sp" textColor="{{textColor}}" />
                             {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
-                        </linear>
-                        <linear h="40" paddingTop="1" >
+                            <linear h="40" paddingTop="1" >
                                 <radiogroup id='fbName' orientation="horizontal">
                                     {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
                                     <radio  id="xiaomi4" text='小米4' color="{{textColor}}" checked="true"></radio>
@@ -60,11 +69,12 @@ ui.layout(
                                     <radio id="lnnl" text='LnnL' color="{{textColor}}"></radio>     
                                 </radiogroup>
                             </linear>
+                        </linear>
+                       
 
                          <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="工作模式" textSize="12sp" textColor="{{textColor}}" />
                             {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
-                        </linear>
                             <linear h="40" paddingTop="1" >
                                 <radiogroup id='fbName' orientation="horizontal">
                                     {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
@@ -73,12 +83,35 @@ ui.layout(
                                     <radio id="trainwechat" text='微信养号' color="{{textColor}}"></radio>     
                                 </radiogroup>
                             </linear>
+                        </linear>
+                            
 
-                    
+                        <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="场景" textSize="12sp" textColor="{{textColor}}" />
+                            {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
+                            <linear h="40" paddingTop="1" >
+                                <radiogroup id='changjing' orientation="horizontal">
+                                    {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
+                                    <radio  id="indoor" text='室内' color="{{textColor}}" checked="true"></radio>
+                                    <radio id="outdoor" text='户外' color="{{textColor}}"></radio>
+                                    <text text="(ps:室内场景会自动关闭GPS定位)" textSize="12sp" textColor="{{textColor}}" />
+                                </radiogroup>
+                            </linear>
+                        </linear>    
+                        <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="软件语音" textSize="12sp" textColor="{{textColor}}" />
+                            {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
+                            <linear h="40" paddingTop="1" >
+                                <radiogroup id='changjing' orientation="horizontal">
+                                    {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
+                                    <checkbox id="softvoice" text="软件语音" color="{{textColor}}" checked="true"/>
+                                </radiogroup>
+                            </linear>
+                        </linear>     
                      
 
                         {/* 分割线填充 */}
-                        <vertical w="*" h="1" bg="{{color}}" ></vertical>
+                        <vertical w="*" h="1" bg="{{textColor}}" ></vertical>
 
                         {/* 其他功能区域相关配置 */}
                         <linear w="*" h="*" paddingLeft="8" gravity="left|center" >
@@ -111,7 +144,7 @@ ui.layout(
                         </vertical>
 
                         {/* 分割线填充 */}
-                        <vertical w="*" h="1" bg="{{color}}" ></vertical>
+                        <vertical w="*" h="1" bg="{{textColor}}" ></vertical>
 
                         {/* 垃圾清理区域相关配置 */}
                         {/* <linear w="*" h="24" paddingLeft="8" gravity="left|center" >
@@ -136,7 +169,7 @@ ui.layout(
                         </vertical> */}
 
                         {/* 分割线填充 */}
-                        <vertical w="*" h="1" bg="{{color}}" ></vertical>
+                        {/* <vertical w="*" h="1" bg="{{color}}" ></vertical> */}
                         
 
 
@@ -267,6 +300,7 @@ ui.menu.on("item_click", item => {
         break;
     }
 })
+//获取哪些要刷的app列表
 ui.appinfo.click(()=>{
   //  alert(Gapps);
     try{
@@ -279,6 +313,51 @@ ui.appinfo.click(()=>{
 });
 
 
+ui.indoor.on('check',(checked)=>{
+    if(checked){
+     toast("正在关闭gps");
+     Genv="indoor";
+     setTimeout(function(){
+          //  play("global","关闭");
+         //   play("global","gps");
+            thiscommon.setgps('close');
+         },1000); 
+    
+    }
+})
+ui.outdoor.on('check',(checked)=>{
+    if(checked){
+     toast("正在打开gps");
+     Genv="outdoor";
+     setTimeout(function(){
+       // play("global","打开");
+      //  play("global","gps");
+        thiscommon.setgps('open');
+     },1000);       
+    }
+})
+ui.softvoice.on('check',(checked)=>{
+    if(checked){
+    Gsoftvoice=true;
+    }else{
+    Gsoftvoice=false;
+    }
+});
+ui.shorttime.on('check',(checked)=>{
+if(checked){
+//alert("short");
+//所有要阅读那些app数据结构
+//30分钟=1800秒=1800000毫秒
+//1.3分钟=100000毫秒
+//每一个app阅读多长时间的变量
+Gappinterval="100000";
+}
+});
+ui.longtime.on('check',(checked)=>{
+    if(checked){
+        Gappinterval="1800000";
+    }
+});
 //ui.allrun.setText("123");
 
 //alert(ui.toolbar.getText());
@@ -300,56 +379,14 @@ ui.appinfo.click(()=>{
 //     e.consumed = true;
 // });
 /************************************* UI结束**********************************************************************/ 
-//downloadapp();
-// Gapps=[
-//             //  {"appnum":"016","appname":"掌上热点","enable":"true"},
-//             //  {"appnum":"028","appname":"微鲤看看","enable":"true"},
-//             // {"appnum":"035","appname":"东方头条","enable":"true"},
-//             // {"appnum":"043","appname":"红包视频","enable":"true"},
-//             // {"appnum":"050","appname":"亿刻看点","enable":"true"},
-//            // {"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
-//              {"appnum":"054","appname":"氪资讯","enable":"true"},
-//             // {"appnum":"055","appname":"快狗视频","enable":"true"},
-//             // {"appnum":"056","appname":"快看点","enable":"true"},
-//             // {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
-//             // {"appnum":"066","appname":"趣故事","enable":"true"},  
-//             // {"appnum":"069","appname":"趣头条","enable":"true"},//已经实现
-//             // {"appnum":"072","appname":"全民头条","enable":"true"},
-//             // {"appnum":"081","appname":"淘头条","enable":"true"},
-//             // {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
-          
-          
-          
-          
-//     //过往实现过的app如下19个
-//     // {"appnum":"","appname":"刷宝短视频","enable":"true"},
-//     // {"appnum":"","appname":"2345浏览器","enable":"true"},
-//     // {"appnum":"","appname":"趣头条","enable":"true"},
-//     // {"appnum":"","appname":"中青看点","enable":"true"},
-//     // {"appnum":"","appname":"闪电盒子","enable":"true"},
-//     // {"appnum":"","appname":"引力资讯","enable":"true"},
-//     // {"appnum":"","appname":"趣看点","enable":"true"},//没实现查看全文
-//     // {"appnum":"","appname":"淘新闻","enable":"true"},//
-//     // {"appnum":"","appname":"百姓头条","enable":"true"},// 
-//     // {"appnum":"","appname":"三言","enable":"true"},
-//     // {"appnum":"","appname":"天天快报","enable":"true"},
-//     // {"appnum":"","appname":"掌上消息","enable":"true"},
-//     // {"appnum":"","appname":"菠萝小组","enable":"true"},
-//     // {"appnum":"","appname":"聚看点","enable":"true"},
-//     // {"appnum":"","appname":"波波视频","enable":"true"}, //统一领取
-//     // {"appnum":"","appname":"盈贝头条","enable":"true"},//查看全文
-//     // {"appnum":"","appname":"新闻赚","enable":"true"},  
-//     // {"appnum":"","appname":"韭菜资讯","enable":"true"}, //多读一会儿
-//     // {"appnum":"","appname":"有米头条","enable":"true"}, //多读一会儿
-
-// ]; 
-//ref_ui_list();
-
-
 
 //当前工作模式，如果有UI界面，则该变量需要在UI的启动按钮中声明
 //运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat popupdebug
 Grunstate="";
+//手机场景  包括室内 和户外 分别用indoor outdoor字典表示
+Genv="indoor";
+//软件语音开关量 true false
+Gsoftvoice=true;
 //底层是否已经运行
 Galready=false;
 //是否加载过json文件
@@ -362,7 +399,7 @@ Gdebug=false;
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
 //每一个app阅读多长时间的变量
-Gappinterval="1800000";
+Gappinterval="100000";
 //关闭弹窗线程的循环周期
 Gabinterval="3000";
 //设备类型
@@ -421,8 +458,9 @@ UI_run_thread=threads.start(function(){
             Galready=true;
             voice_runstate();
             voice_devicetype();
-         //toast("开始启动testthread...");  
-        run();
+            voice_env();
+            
+            run();
         };
         if(Galready_loadjson==false){
           //  alert("hahah");
@@ -475,8 +513,7 @@ update_thread=threads.start(
 
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
-
-    //音量下键关闭脚本
+//音量下键关闭脚本
 events.setKeyInterceptionEnabled("volume_down", true);
 threads.start(function(){
 events.observeKey();
@@ -494,16 +531,15 @@ events.on("key", function(volume_down, event){
 // //ra.setScreenMetrics(device.width, device.height);
  ra.setScreenMetrics(1080, 1920);
  //读取配置文件
-
-
  loadappjson();
-  
+ //根据场景设置gps
+ setgps_status();
 //如果是微信养号需要的操作
 if(Grunstate=="trainwechat"){
     //lanuchApp("微信");
     openwechat();
     //whthumbup();
-    whchat();
+   // whchat();
 
 }else{
     while(true){
@@ -516,7 +552,7 @@ if(Grunstate=="trainwechat"){
             var open_obj=applist[i]["open"];
             var bindwechat_obj=applist[i]['bindwechat']; 
             signin_obj=applist[i]['signin'];
-          //  alert("aaaa"+thiscommon.JSONLength(signin_obj));
+
             if("undefined"==typeof(signin_obj)){
                 toast(appname+".json signin数据项缺失");
             }
@@ -529,10 +565,9 @@ if(Grunstate=="trainwechat"){
             //当开启app版本号输出时
             if(ui.showappver.checked==true){
                         console.show();
-                    var appversion=getPackageVersion(packagename);
+                    var appversion=thiscommon.getPackageVersion(packagename);
                     var appversion_server="未设置"; 
                     try{appversion_server=applist[i]["appver"];}catch(e){
-                    // appversion_server="未设置"; 
                     }
                     if("undefined"==typeof(appversion_server)){
                         var appversion_server="未设置";  
@@ -544,7 +579,7 @@ if(Grunstate=="trainwechat"){
            
             toast('开始'+applist[i]['appname']);
             
-
+            //每轮运行前杀死之前的线程，防止缓存
             try{    thread_abnormal.interrupt();}catch(e){};
             try{    thread_control.interrupt();}catch(e){};
             try{    thread_findnews.interrupt();}catch(e){};
@@ -553,30 +588,30 @@ if(Grunstate=="trainwechat"){
             try{    thread_abnormal_overtime.interrupt();}catch(e){};
      
             sleep(2000);
-            
+            //根据设备类型优化内存
             thiscommon.clean(Gdevicetype);
-        //    while_closewindow("xiaomi4");
-        //}
-        //异常处理弹窗线程
+      
+        //开启异常处理弹窗线程
         while_abnormal(abnormal_obj);
         //demon_abnormal(abnormal_obj);
             
-        //控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
+        //开启控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
         while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj);
         
         //阻塞运行打开app 
-       // alert("打开")
         var openstate=openAPP(appname,packagename,activityname,open_obj);
       
         
-       //alert("开始倒计时");
+
         //每个app需要阅读的时间sleep
+
         //var thisinterval=3*100000;
         //30分钟=1800秒=1800000毫秒
+        //1分20秒=100000毫秒
+
         //var thisinterval=1800000;
        // alert(openstate);
-         //如果打开失败跳转到下一个app，节约时间
-      //  var thisinterval=100000;
+         //如果打开失败跳转到下一个app，如果成功则进行延迟等待，这样节约时间
         if(openstate){
             toast("阅读"+Gappinterval+"毫秒......................");
             if("popupdebug"==Grunstate){
@@ -779,6 +814,16 @@ function voice_devicetype(){
     
  
 }
+//语音广播场景
+function voice_env(){
+    play('global',"场景")
+    if(ui.indoor.checked==true){
+        play('global',"室内")
+    }else if(ui.outdoor.checked==true){
+        play('global',"户外")
+
+    }
+}
 //自定义打印函数
 function mytoast(mystr){
     if(Gdebug){
@@ -801,6 +846,17 @@ function voice_runstate(){
     }
     play("global","当前工作模式");
     play("global",runstate_voicename);
+}
+function setgps_status(){
+if(Genv=="indoor"){
+   // alert("关闭gps");
+    thiscommon.setgps("close");
+}else if(Genv=="outdoor"){
+   // alert("打开gps");
+
+    thiscommon.setgps("open");
+
+}
 }
 //签到
 function while_signin(signin_obj){
@@ -1498,17 +1554,18 @@ function block_check(checktype,f1,f2,f3){
 }
 //播放声音
 function play(subpath,appname){
-   var voicefile=Gvoicepath+"/"+subpath+"/"+appname+".mp3";
-    var result=files.exists(voicefile);
-    if(!result){
-        toast("没有找到语音包"+voicefile+".mp3");
-    }else{
-        media.playMusic(Gvoicepath+"/"+subpath+"/"+appname+".mp3");  
-        sleep(media.getMusicDuration());     
+    if(Gsoftvoice==true){
+            var voicefile=Gvoicepath+"/"+subpath+"/"+appname+".mp3";
+            var result=files.exists(voicefile);
+            if(!result){
+                toast("没有找到语音包"+voicefile);
+            }else{
+                media.playMusic(Gvoicepath+"/"+subpath+"/"+appname+".mp3");  
+                sleep(media.getMusicDuration());     
+            }   
     }
-
 }
-
+//打开微信并判断状态
 function openwechat(){
     play("global","打开微信");
     thiscommon.openpackage("com.tencent.mm/com.tencent.mm.ui.LauncherUI");
@@ -1588,6 +1645,7 @@ sleep(1000);
 // clickxy_for_ele_once(ele.findOne());
 
 }
+//微信聊天
 function whchat(){
     //聊天模式
     amgmode=""; //char voice
@@ -1663,6 +1721,7 @@ function whgetamgmode(){
     }
     return;
 }
+//用户微信发送语音长按键
 function langtouch(x,y,interval){
     var ra = new RootAutomator();
     ra.setScreenMetrics(device.width, device.height);
@@ -1718,7 +1777,7 @@ function langtouch(x,y,interval){
     ra.sendSync();
     ra.exit();
 }
-
+//下载并安装最新海趣助手
 function download_installapp(){
     importClass("java.io.FileOutputStream")
     importClass("java.io.IOException")
@@ -1729,7 +1788,7 @@ function download_installapp(){
     importClass("java.util.ArrayList")
 downloadthread=threads.start(
     function(){
-        var myPath = "/storage/emulated/0/脚本/applist/update.apk";
+var myPath = "/storage/emulated/0/脚本/applist/update.apk";
 console.show();
 log('im alive')
 var myUrl = "http://download.dqu360.com:81/haiqu/haiqu.apk";
@@ -1773,6 +1832,7 @@ installapp();
 );
 
 }
+//安装海趣助手app
 function installapp(path){
 path = '/storage/emulated/0/脚本/applist/update.apk'
 app.startActivity({
@@ -1787,7 +1847,7 @@ try{
 
 }
 }
-
+//软件升级检测
 function sysupdate_check()
 {
 // var Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json";
@@ -1845,14 +1905,9 @@ else{
  
 }
 
-function getPackageVersion(packageName) {
-    importPackage(android.content);
-    var pckMan = context.getPackageManager();
-    var packageInfo = pckMan.getPackageInfo(packageName, 0);
-    return packageInfo.versionName;
-  }
 
 
+//波波视频的一个特殊阅读处理
 function callback_boboshipin(fucname,ele){
 var thisnum=0;
 //alert(ele.child(1).child(0).text());
@@ -1915,8 +1970,4 @@ while(1){
 exit();
 
 }
-
-
-
-
 
