@@ -649,6 +649,7 @@ if(Grunstate=="trainwechat"){
 /*************************以下是函数实现部分 *******************************************************************/ 
 function loadGapps(){
     if(Gjsonloadstate=="remote"){
+        http.__okhttp__.setTimeout(10000);
         var r=http.get(Gappspath_remote);
         if("200"==r.statusCode){
           //  alert(r.body.string());
@@ -690,7 +691,7 @@ for(var i=0;i<Gapps.length;i++){
               voiceplaynum+=1;
             }
           
-
+            http.__okhttp__.setTimeout(10000);
             var r=http.get(Gapplistpath_remote+"/"+appname+".json")
           //  toast('code=',r.statusCode)
             if(r.statusCode=="200"){  
@@ -1031,7 +1032,7 @@ try{
                     
                     var ele=finditem();
                 }catch(e){
-                    alert("finditem error :"+e);
+                    toast("finditem error :"+e);
                    }
                    
                  
@@ -1975,6 +1976,7 @@ try{
 function sysupdate_check()
 {
 // var Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json";
+http.__okhttp__.setTimeout(10000);
  var r=http.get(Gapi_json_url);
 
 
