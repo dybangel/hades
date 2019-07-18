@@ -1092,7 +1092,7 @@ function while_readnews(autoread_obj){
                 setInterval(function(){
                     //thisswipe.swiperealup_custom();
                     thisswipe.swiperealup_custom_lnnl();
-                    sleep(1500);
+                    sleep(3000);
                     //展开更多处理方式
                     if("classname_desc"==thisdeploymode){
                         var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
@@ -1105,10 +1105,13 @@ function while_readnews(autoread_obj){
                         //alert( "top is:"+ele.findOnce().bounds().top+"::"+"bottom is"+ele.findOnce().bounds().bottom);
                            play("global","展开更多");
                            //sleep(1000);
-                            try{ele.findOne(1000).click();}catch(e){
+                            try{
+                                //ele.findOne(1000).click();
+                                  thiscommon.clickxy_for_ele(ele.findOne(1000)); 
+                            }catch(e){
 
                             }
-                        //  thiscommon.clickxy_for_ele(ele.findOne(1000)); 
+                        
 
                         }
                          
@@ -1124,10 +1127,13 @@ function while_readnews(autoread_obj){
                             if(ele.findOnce().bounds().top<1770){
                                 play("global","展开更多");
                             //    sleep(1000);
-                           try{ ele.findOne(1000).click();}catch(e){
+                           try{
+                               // ele.findOne(1000).click();
+                                thiscommon.clickxy_for_ele(ele.findOne(1000));
+                            }catch(e){
                                
                            }
-                                // thiscommon.clickxy_for_ele(className(thisdeployclassname).text(thistext).findOne());
+                                
                             }
                             
                         }
