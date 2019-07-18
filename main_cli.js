@@ -537,9 +537,18 @@ events.on("key", function(volume_down, event){
 //如果是微信养号需要的操作
 if(Grunstate=="trainwechat"){
     //lanuchApp("微信");
-    openwechat();
-    //whthumbup();
-   // whchat();
+            thiscommon.clean(Gdevicetype);
+            var result= openwechat();
+            if(result==false){
+                play('global','打开失败');
+            }else{
+                play('global','打开成功');
+                //聊天 
+            //    whchat();
+                //朋友圈点赞
+                while_findmoments();
+            }   
+            // whchat();
 
 }else{
     while(true){
@@ -1571,12 +1580,28 @@ function openwechat(){
     thiscommon.openpackage("com.tencent.mm/com.tencent.mm.ui.LauncherUI");
     var num=0;
     while(1){
-        //判断是否启动完成
-        var result=block_check("classname_text",'android.widget.TextView','通讯录','');
-        if(result){
-            play("global","打开成功");
-            break;
+        var  thispackagename=currentPackage();
+        var  thisactivity=currentActivity();
+        if("com.tencent.mm"==thispackagename){
+            //说明微信包名已经拉起，要判断是否是已经登录的微信
+            //如果是已经登录的微信返回成功
+            //如果不是则提示用户登录
+            if("com.tencent.mm.plugin.account.ui.LoginPasswordUI"==thisactivity){
+                alert("请输入微信密码登录");
+                return false;
+            }else if(""==thisactivity){
+                alert("请登录微信");
+                return false;
+            }else if("com.tencent.mm.ui.LauncherUI"==thisactivity){
+                return true;
+            }
         }
+        //判断是否启动完成
+        // var result=block_check("classname_text",'android.widget.TextView','通讯录','');
+        // if(result){
+        //     play("global","打开成功");
+        //     break;
+        // }
         num+=1;
         if(num>20){
             play("global","打开失败");
@@ -1599,6 +1624,75 @@ function openwechat(){
     // }
 }
 //朋友圈点赞
+function while_findmoments(){
+    try{thread_findmoments.interrupt();}catch(e){}
+    click("发现");
+    play("global","点击");
+    play("global","发现");
+
+
+
+    ele=className("android.widget.TextView").text("朋友圈");
+    thiscommon.clickxy_for_ele_once(ele.findOne(1000));
+    play("global","点击");
+    play("global","朋友圈");
+    sleep(2000);
+    play("global","正在检索");
+    upcount=0
+    thread_findmoments=threads.start(
+        function(){
+            setInterval(function(){
+                thisswipe.swiperealup_custom_lnnl();
+               
+                sleep(2000);
+                upcount+=1;
+                toast("upcount is:"+upcount);
+                var m=2;
+                var n=1;
+                //x 为向上滑动多少次后打开新闻
+                var x=Math.round(Math.random()*(m-n))+n;
+                if(upcount>x){
+                    upcount=0;
+                   // toast("准备点赞");
+                        //开始找moment
+                                // try{
+                                    mainfeature="android.widget.ListView";
+                                    var result=className(mainfeature).exists();
+                                    if(result){
+                                        //列表下有几个新闻块
+                                       // var subcount=className(mainfeature).findOnce().childCount();
+                                        //定义主框架
+                                       // var main=className(mainfeature).findOnce();
+                                        //看三个点是否存在
+                                        var result=id("com.tencent.mm:id/eho").exists();
+                                        //alert(result);
+                                        if(result){
+                                                ehoid=id("com.tencent.mm:id/eho").findOnce(1);
+                                            //点击三个点
+                                                thiscommon.clickxy_for_ele(ehoid);
+                                                //在判断小红心是否出现了
+                                                sleep(2000)
+                                                var result=id("com.tencent.mm:id/eha").exists();
+                                                if(result){
+                                                    ehaid=id("com.tencent.mm:id/eha").findOnce();
+                                                    play("global","点击");
+                                                    play("global","赞");
+                                                    thiscommon.clickxy_for_ele(ehaid);
+                                                }
+                                        }
+    
+                                    }//if end
+
+                              //   }catch(e){
+
+                                // }                       //先判断列表存不存在
+                           
+
+                } //if upcount>x end
+            },2000)
+        }//func end;
+    );
+}
 function whthumbup(){
 
 click("发现");
@@ -1665,8 +1759,10 @@ function whchat(){
         //点击放大镜搜索按钮
         play("global","点击");
         play("global","搜索按钮");
-        var ele=className("android.support.v7.widget.LinearLayoutCompat").className("RelativeLayout").findOnce(0);
-        thiscommon.clickxy_for_ele_once(ele.child(0));
+        var searchbutton=id("com.tencent.mm:id/jb").findOnce();
+
+        //var ele=className("android.support.v7.widget.LinearLayoutCompat").className("RelativeLayout").findOnce(0);
+        thiscommon.clickxy_for_ele_once(searchbutton);
         sleep(1000);
 
        //输入用户名
@@ -1677,8 +1773,14 @@ function whchat(){
         
         //点击搜索结果
         play("global","点击");
-         ele=className("android.widget.ListView").className("RelativeLayout").findOnce(2);
-        thiscommon.clickxy_for_ele(ele.child(0));
+        var result=className('android.widget.ListView').exists();
+        if(result){
+            ele=className('android.widget.ListView').findOnce();
+            ele.child(1).click();
+            thiscommon.clickxy_for_ele(ele.child(1));
+        }
+        //  ele=className("android.widget.ListView").className("RelativeLayout").findOnce(2);
+        // thiscommon.clickxy_for_ele(ele.child(0));
         
         //文字模式
         play("global","随机文字聊天");
