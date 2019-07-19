@@ -62,7 +62,7 @@
             "ar2":{
                 "deploymode":"classname_desc", 
                 "deployclassname":"android.view.View",
-                "deploydesc":"展开全文",
+                "deploydesc":"展开全文 ",
 
             },
         }, 

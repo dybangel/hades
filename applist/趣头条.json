@@ -36,6 +36,22 @@
              "featuremode":"id",
              "id":"com.jifen.qukan:id/tg",
          },
+           "ab7":{
+             "featuremode":"id",
+             "id":"com.jifen.qukan:id/uv",
+         },
+           "ab8":{
+             "featuremode":"id",
+             "id":"com.jifen.qukan:id/rc",
+         },
+           "ab9":{
+             "featuremode":"id",
+             "id":"com.jifen.qukan:id/a1h",
+         },
+           "ab10":{
+             "featuremode":"id",
+             "id":"com.jifen.qukan:id/a1j",
+         },
        },  
 	   "activitys":{
             "at1":"com.jifen.qkbase.main.MainActivity",
@@ -77,8 +93,8 @@
 	   "ar1":{
                 "action":"click_text",
                 "click_text":"头条",
-                "featuremode":"id",
-                "id":"com.jifen.qukan:id/aie",
+                "featuremode":"ids",
+                "ids":"com.jifen.qukan:id/aie||com.jifen.qukan:id/mq",
             },
             "ar2":{
                 "deploymode":"classname_desc",
