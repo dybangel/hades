@@ -5,7 +5,7 @@
             for(var i=1;i<subcount;i++){
                 try{
                     var gg1=main.child(i).child(0).child(1).child(0).child(2);
-                    if(gg1.className()='android.widget.ImageView'){
+                    if(gg1.className()=='android.widget.ImageView'){
                     play('global',i);
                     play('global','广告不点击'); 
                     return false;

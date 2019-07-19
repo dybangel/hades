@@ -13,11 +13,15 @@
           "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"iv_close",
+               "id":"zixun.digu.ke:id/iv_close",
            },
            "ab2":{
                "featuremode":"id",
-               "id":"close",
+               "id":"zixun.digu.ke:id/image_redOpen",
+           },
+		    "ab3":{
+               "featuremode":"id",
+               "id":"zixun.digu.ke:id/image_close",
            },
          },  
 		 "activitys":{

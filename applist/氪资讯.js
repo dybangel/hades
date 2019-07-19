@@ -13,8 +13,8 @@ function finditem(){
         }catch(e){
             }
         try{
-            var gg2=main.child(i).child(0).child(0).child(0).child(0).child(0).child(0).child(0).child(0);
-            if(gg2.className()!=''){
+            var gg2=main.child(i).child(0).child(0).child(0).child(0).child(0).child(0).child(0);
+            if(gg2.childCount()==1){
                 play('global',i);
                 play('global','广告不点击'); 
                 return false;

@@ -1,7 +1,7 @@
 {
   "enable":"false",
   "appname":"东方头条", 
-  "appver":"2.5.3",
+  "appver":"2.4.1",
   "interval":"3",
    "packagename":"com.songheng.eastnews",
   "activityname":"com.songheng.eastfirst.common.view.activity.MainActivity",
@@ -13,16 +13,36 @@
     "abnormal":{
      "ab1":{
          "featuremode":"id",
-         "id":"iv_close",
+         "id":"com.songheng.eastnews:id/iv_close",
      },
    "ab2":{
          "featuremode":"id",
-         "id":"w3",
+         "id":"com.songheng.eastnews:id/w3",
      },
  "ab3":{
          "featuremode":"id",
-         "id":"a_v1"
+         "id":"com.songheng.eastnews:id/a_v1"
      },
+  "ab4":{
+	 "featuremode":"id",
+	 "id":"com.songheng.eastnews:id/wb"
+ },
+ "ab5":{
+	 "featuremode":"id",
+	 "id":"com.songheng.eastnews:id/xu"
+ },
+ "ab6":{
+	 "featuremode":"id",
+	 "id":"com.songheng.eastnews:id/wz"
+ },
+ "ab7":{
+	 "featuremode":"id",
+	 "id":"com.songheng.eastnews:id/u9"
+ },
+ "ab8":{
+	 "featuremode":"id",
+	 "id":"com.songheng.eastnews:id/wt"
+ },
  },
  "activitys":{
       "at1":"com.songheng.eastfirst.common.view.activity.MainActivity",
