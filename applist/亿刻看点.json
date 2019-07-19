@@ -35,6 +35,14 @@
                "featuremode":"id",
                "id":"com.cnode.blockchain:id/tv_upgrade_cancel",
            },
+           "ab7":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/tv_signin_dialog_gold",
+           },
+              "ab8":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/iv_signin_result_box_content_close",
+           },
 		   },
 		 "activitys":{
 			 "at1":"com.cnode.blockchain.MainActivity",
