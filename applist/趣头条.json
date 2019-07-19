@@ -52,6 +52,14 @@
              "featuremode":"id",
              "id":"com.jifen.qukan:id/a1j",
          },
+           "ab11":{
+             "featuremode":"id",
+             "id":"com.jifen.qukan:id/ta",
+         },
+           "ab12":{
+             "featuremode":"id",
+             "id":"com.jifen.qukan:id/q2",
+         },
        },  
 	   "activitys":{
             "at1":"com.jifen.qkbase.main.MainActivity",
