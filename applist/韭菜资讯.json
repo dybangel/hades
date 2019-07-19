@@ -1,6 +1,7 @@
  {
         "enable":"false",
-        "appname":"韭菜资讯", 
+        "appname":"韭菜资讯",
+        "appver":"2.0.7",
         "interval":"3",
          "packagename":"com.zujikandian.android",
         "activityname":"com.zujikandian.android.home.HomeActivity",
