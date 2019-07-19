@@ -1033,6 +1033,7 @@ try{
                     var ele=finditem();
                 }catch(e){
                     toast("finditem error :"+e);
+                    ele=false;
                    }
                    
                  
