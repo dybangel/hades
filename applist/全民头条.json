@@ -10,6 +10,29 @@
         "classname":"android.widget.TextView",
         "text":"任务"
         },
+		 "signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"任务",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务大厅",
+            },
+            "sg2":{
+              "action":"click_id",
+              "click_id":"com.top.quanmin.app:id/tv_sign_in",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"签到成功",
+            },
+			"sg3":{
+              "action":"click_id",
+              "click_id":"com.top.quanmin.app:id/tv_detail",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"已签到",
+            },
+          },
        "abnormal":{
          "ab1":{
              "featuremode":"id",

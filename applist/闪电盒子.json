@@ -10,6 +10,22 @@
         "classname":"android.widget.TextView",
         "text":"任务"
         },
+		 "signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"任务",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"余额账户",
+            },
+			"sg2":{
+              "action":"click_id",
+              "click_id":"c.l.a:id/red_pack_signed_btn",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"已领取",
+            },
+			},
        "abnormal":{
          "ab1":{
              "featuremode":"id",

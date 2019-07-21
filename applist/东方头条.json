@@ -10,7 +10,23 @@
     "classname":"android.widget.RadioButton",
     "text":"视频"
     },
-    "abnormal":{
+  "signin":{
+		"sg1":{
+		  "action":"click_text",
+		  "click_text":"任务",
+		  "featuremode":"classname_text",
+		  "classname":"android.widget.TextView",
+		  "text":"任务中心",
+		},
+		"sg2":{
+		  "action":"click_desc",
+		  "click_desc":"领金币",
+		  "featuremode":"classname_desc",
+		  "classname":"android.widget.TextView",
+		  "desc":"sign_active_okSign",
+		},
+	  },
+  "abnormal":{
      "ab1":{
          "featuremode":"id",
          "id":"com.songheng.eastnews:id/iv_close",
@@ -44,7 +60,7 @@
 	 "id":"com.songheng.eastnews:id/wt"
  },
  },
- "activitys":{
+  "activitys":{
       "at1":"com.songheng.eastfirst.common.view.activity.MainActivity",
       "at2":"com.songheng.eastfirst.business.newsdetail.viewactivity.NewsDetailH5Activity",
 

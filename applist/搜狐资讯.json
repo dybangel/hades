@@ -10,6 +10,22 @@
           "classname":"android.widget.TextView",
           "text":"任务"
           },
+		  "signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"任务",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"签到",
+            },
+			"sg2":{
+              "action":"click_id",
+              "click_id":"com.sohu.infonews:id/sign_common_iv",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"补签",
+            },
+			},
          "abnormal":{
          
            "ab1":{

@@ -1,4 +1,4 @@
-{
+ {
         "enable":"false",
         "appname":"微鲤看看", 
 		 "appver":"1.5.0",
@@ -16,7 +16,7 @@
                "id":"cn.weli.story:id/iv_close",
            },
          },  
-		 "activitys":{
+		"activitys":{
             "at1":"cn.etouch.ecalendar.MainActivity",
             "at2":"cn.etouch.ecalendar.tools.life.LifeDetailsActivity",
    

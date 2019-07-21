@@ -10,7 +10,7 @@
           "classname":"android.widget.TextView",
           "text":"视频"
           },
-          "abnormal":{
+        "abnormal":{
            "ab1":{
                "featuremode":"id",
                "id":"zixun.digu.ke:id/iv_close",
@@ -24,7 +24,7 @@
                "id":"zixun.digu.ke:id/image_close",
            },
          },  
-		 "activitys":{
+		"activitys":{
             "at1":"zixun.digu.ke.main.HomeActivity",
             "at2":"zixun.digu.ke.main.home.details.news.NewDetailsActivity",
           } , 
