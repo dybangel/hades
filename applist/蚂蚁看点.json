@@ -3,14 +3,14 @@
         "appname":"蚂蚁看点",
         "appver":"5.5.2.1",
         "interval":"3",
-         "packagename":"com.ldzs.zhangxin",
+        "packagename":"com.ldzs.zhangxin",
         "activityname":"com.weishang.wxrd.activity.MainActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"任务"
           },
-		   "signin":{
+        "signin":{
             "sg1":{
               "action":"click_text",
               "click_text":"任务",
@@ -18,17 +18,17 @@
               "classname":"android.view.View",
               "desc":"推荐任务",
             },
-         "abnormal":{
-           
+           },
+        "abnormal":{
            "ab1":{
             "featuremode":"id",
             "id":"com.ldzs.zhangxin:id/iv_close_packet2",
         },
-             "ab2":{
+           "ab2":{
             "featuremode":"id",
             "id":"com.ldzs.zhangxin:id/btn_close",
            },
-             "ab3":{
+           "ab3":{
             "featuremode":"id",
             "id":"com.ldzs.zhangxin:id/iv_close",
            },
@@ -36,7 +36,6 @@
         "activitys":{
             "at1":"com.weishang.wxrd.activity.MainActivity",
             "at2":"com.weishang.wxrd.activity.WebViewActivity",
-   
           } , 
         "bindwechat":{
           "bw1":{
@@ -68,7 +67,7 @@
                 "featuremode":"id",
                 "id":"com.ldzs.zhangxin:id/iv_back_533",
             },
-            "ar2":{
+         "ar2":{
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
                 "deploydesc":"点击查看全文",
