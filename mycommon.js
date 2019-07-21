@@ -2,7 +2,7 @@
 
 
 function touchreal(x,y){
-    var ra = new RootAutomator();
+   // var ra = new RootAutomator();
     ra.setScreenMetrics(device.width, device.height);
     ra.tap(x, y, 1);
    // ra.tap(x, y, 1);
