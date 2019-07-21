@@ -73,7 +73,7 @@ module.exports = {
       // var ele=id("clearAnimView").findOne(1000); 
       // ele.click();
       touchreal(519,1733);
-    }else if("xiaomi4s"==devicetype){
+    }else if("xiaomi4s"==devicetype||"xiaominote2"==devicetype){
         //touchreal(561,1724);
         id('com.android.systemui:id/clearButton').click();
       //  touchreal(943,950);

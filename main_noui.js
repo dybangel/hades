@@ -403,7 +403,7 @@ Gappinterval="100000";
 //关闭弹窗线程的循环周期
 Gabinterval="3000";
 //设备类型
-Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl
+Gdevicetype="xiaominote2"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
 
 //json特征码加载方式 remote local 
 //目前已经支持从云端获取特征码，Gjsonloadstate改为remote即可从指定的云端路径下载json文件，现在Gapplistpath_remote的路径
@@ -509,11 +509,11 @@ function addTextView(parent) {
 //     }
 // );
 loadGapps();
-run();
-/*************************以下是主线程循环 *******************************************************************/ 
-function run(){
-//音量下键关闭脚本
-events.setKeyInterceptionEnabled("volume_down", true);
+//注册真实点击事件
+ra = new RootAutomator();
+// //ra.setScreenMetrics(device.width, device.height);
+ ra.setScreenMetrics(1080, 1920);
+ events.setKeyInterceptionEnabled("volume_down", true);
 threads.start(function(){
 events.observeKey();
 events.on("key", function(volume_down, event){
@@ -525,10 +525,12 @@ events.on("key", function(volume_down, event){
 
 });
 });
-//注册真实点击事件
- ra = new RootAutomator();
-// //ra.setScreenMetrics(device.width, device.height);
- ra.setScreenMetrics(1080, 1920);
+run();
+/*************************以下是主线程循环 *******************************************************************/ 
+function run(){
+//音量下键关闭脚本
+
+
  //读取配置文件
  loadappjson();
  //根据场景设置gps
@@ -825,6 +827,11 @@ function voice_devicetype(){
         play("global","4");
     }else if("lnnl"==Gdevicetype){
         play("global","lnnl");
+    }else if("xiaominote2"==Gdevicetype){
+        play("global","小米");
+        play("global","note");
+        play("global","2");
+
     }
     
  
@@ -1854,7 +1861,7 @@ function whgetamgmode(){
 }
 //用户微信发送语音长按键
 function langtouch(x,y,interval){
-    var ra = new RootAutomator();
+ //   var ra = new RootAutomator();
     ra.setScreenMetrics(device.width, device.height);
     ra.touchX(x);//595
     ra.touchY(y);//1828
