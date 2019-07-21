@@ -1,8 +1,9 @@
 {
       "enable":"true",  
-      "appname":"闪电盒子", 
+      "appname":"闪电盒子",
+      "appver":"5.3.0.8",
       "interval":"3",
-         "packagename":"c.l.a",
+      "packagename":"c.l.a",
       "activityname":"c.l.a.views.AppBoxHomeActivity",
       "open":{
         "featuremode":"classname_text",
@@ -12,17 +13,17 @@
        "abnormal":{
          "ab1":{
              "featuremode":"id",
-             "id":"ll_quit",
-         },
-         "ab2":{
+             "id":"c.l.a:id/btn_left",
+                },
+           "ab2":{
              "featuremode":"id",
-             "id":"btn_left",
-      },
+             "id":"c.l.a:id/btn_close",
+                },
            "ab3":{
              "featuremode":"id",
-             "id":"btn_close",
-      },
-       },  
+             "id":"c.l.a:id/dialog_close",
+                },
+                },  
 	    "activitys":{
             "at1":"c.l.a.views.AppBoxHomeActivity",
             "at2":"c.l.a.feed.wyyl.FeedArticleDetailActivitySub2",
@@ -38,7 +39,7 @@
       },
         "bw2":{
           "action":"click_id",
-          "click_id":"user_name",
+          "click_id":"c.l.a:id/user_name",
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"微信一键登录",
@@ -49,29 +50,27 @@
          "featuremode":"classname_text",
          "classname":"android.widget.Button",
          "text":"同意",
-     },
+       },
       "bw4":{
        "action":"click_text",
        "click_text":"同意",
        "featuremode":"classname_text",
        "classname":"android.widget.TextView",
        "text":"我的余额",
-  },
-    
-      },
+       },
+       },
       "autoread":{
           "ar1":{
                 "action":"click_text",
                 "click_text":"首页",
                 "featuremode":"id",
-                "id":"back",
-            },
+                "id":"c.l.a:id/back",
+                },
             "ar2":{
                 "deploymode":"classname_text",
                 "deployclassname":"android.widget.TextView",
                 "deploytext":"展开全文",
-
-            },
-      }, 
+                 },
+          }, 
       "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
       }

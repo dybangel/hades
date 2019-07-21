@@ -1,0 +1,48 @@
+{
+        "enable":"false",
+        "appname":"蜜蜂看看", 
+        "appver":"3.3.0",
+        "interval":"3",
+         "packagename":"com.block.factory",
+        "activityname":"com.block.factory.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"资讯",
+          },
+         "abnormal":{
+              "ab1":{
+               "featuremode":"id",
+               "id":"com.block.factory:id/ivSkip",
+           }, 
+         },  
+        "activitys":{
+            "at1":"com.block.factory.MainActivity",
+            "at2":"com.block.factory.yidian.StaticNewsDetailActivity",
+          } , 
+        "bindwechat":{
+        "bw1":{
+         "action":"click_id",
+         "click_id":"com.block.factory:id/rippleLayout",
+         "featuremode":"classname_text",
+         "classname":"android.widget.TextView",
+         "text":"任务",
+        },
+    
+        },
+        "autoread":{
+		 "ar1":{
+                "action":"click_text",
+                "click_text":"资讯",
+                "featuremode":"id",
+                "id":"com.block.factory:id/back",
+            },
+            "ar2":{
+                "deploymode":"classname_text",
+                "deployclassname":"android.widget.TextView",
+                "deploytext":"展开查看全文",
+
+        }, 
+        "durl":""
+      }
+    }

@@ -1,0 +1,61 @@
+{
+        "enable":"false",
+        "appname":"光影新闻", 
+        "appver":"2.1.5",
+        "interval":"3",
+         "packagename":"com.oppo.cameracom.android.ctsxinwen",
+        "activityname":"net.guangying.news.MainActivity",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"视频",
+          },
+          "abnormal":{
+           "ab1":{
+               "featuremode":"id",
+               "id":"com.oppo.cameracom.android.ctsxinwen:id/iv_close",
+          
+         }, 
+              "ab2":{
+               "featuremode":"id",
+               "id":"com.oppo.cameracom.android.ctsxinwen:id/fp",
+          
+         }, 
+              "ab3":{
+               "featuremode":"id",
+               "id":"com.oppo.cameracom.android.ctsxinwen:id/gl",
+          
+         }, 
+          },
+        "activitys":{
+            "at1":"net.guangying.news.MainActivity",
+            "at2":"net.guangying.news.MainActivity",
+   
+          } ,
+        "bindwechat":{
+            "bw1":{
+         "action":"click_text",
+         "click_id":"我的",
+         "featuremode":"classname_text",
+         "classname":"android.widget.TextView",
+         "text":"今日收入",
+        },
+         
+        },
+        "autoread":{
+		 "ar1":{
+                "action":"click_text",
+                "click_text":"首页",
+                "featuremode":"id",
+                "id":"com.oppo.cameracom.android.ctsxinwen:id/i6",
+            },
+            "ar2":{
+                "deploymode":"classname_desc",
+                "deployclassname":"android.view.View",
+                "deploydesc":"查看全文",
+
+        }, 
+        },
+        "durl":""
+       
+          }
