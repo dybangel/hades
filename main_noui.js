@@ -403,7 +403,7 @@ Gappinterval="100000";
 //关闭弹窗线程的循环周期
 Gabinterval="3000";
 //设备类型
-Gdevicetype="xiaominote2"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
+Gdevicetype="xiaomi4s"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
 
 //json特征码加载方式 remote local 
 //目前已经支持从云端获取特征码，Gjsonloadstate改为remote即可从指定的云端路径下载json文件，现在Gapplistpath_remote的路径
@@ -1022,7 +1022,12 @@ try{
             setInterval(
                 function(){
                // thisswipe.swiperealup_custom();
-                thisswipe.swiperealup_custom_lnnl();
+                
+                if("lnnl"==Gdevicetype){
+                   thisswipe.swiperealup_custom_lnnl();
+                }else{
+                    thisswipe.swiperealup_custom();
+                }
                 sleep(1500);
                 upcount+=1;
                 var m=2;
@@ -1050,8 +1055,9 @@ try{
                    
                  
                     // alert(ele);
-                   //alert(ele.bounds().centerX()+"::"+ele.bounds().centerY());
+                   
                     if(ele){
+                       // alert(ele.bounds().centerX()+"::"+ele.bounds().centerY());
                         //如果存在，点击新闻
                        play("global","打开新闻");
                       // alert(appname);
@@ -1106,8 +1112,13 @@ function while_readnews(autoread_obj){
                //两次上滑之间的间隔
                 var x=Math.round(Math.random()*(m-n))+n;
                 setInterval(function(){
-                    //thisswipe.swiperealup_custom();
-                    thisswipe.swiperealup_custom_lnnl();
+                  
+                    if("lnnl"==Gdevicetype){
+                        thisswipe.swiperealup_custom_lnnl();
+                     }else{
+                         thisswipe.swiperealup_custom();
+                     }
+                 
                     sleep(3000);
                     //展开更多处理方式
                     if("classname_desc"==thisdeploymode){
@@ -1678,8 +1689,11 @@ function while_findmoments(){
     thread_findmoments=threads.start(
         function(){
             setInterval(function(){
-                thisswipe.swiperealup_custom_lnnl();
-               
+                if("lnnl"==Gdevicetype){
+                    thisswipe.swiperealup_custom_lnnl();
+                 }else{
+                     thisswipe.swiperealup_custom();
+                 }
                 sleep(2000);
                 upcount+=1;
                 toast("upcount is:"+upcount);
