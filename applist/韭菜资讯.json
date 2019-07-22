@@ -20,7 +20,7 @@
             },
             "sg2":{
               "action":"click_id",
-              "click_id":"qiandao_tv",
+              "click_id":"com.zujikandian.android:id/qiandao_tv",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
               "text":"韭菜",
@@ -29,11 +29,11 @@
           "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"iv_close",
+               "id":"com.zujikandian.android:id/iv_close",
            },
               "ab2":{
                "featuremode":"id",
-               "id":"start_tv",
+               "id":"com.zujikandian.android:id/start_tv",
            },
          
          },  
@@ -50,12 +50,11 @@
                 "action":"click_text",
                 "click_text":"头条",
                 "featuremode":"id",
-                "id":"left_btn",
+                "id":"com.zujikandian.android:id/left_btn",
             },
             "ar2":{
-                "deploymode":"classname_id",
-                "deployclassname":"android.widget.ImageView",
-                "deployid":"imageView11",
+                "deploymode":"id", 
+                "id":"com.zujikandian.android:id/imageView11",
 
         }, 
 		},
