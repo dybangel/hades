@@ -92,8 +92,9 @@
         },
         "autoread":{
           "ar1":{
-            "action":"click_text",
-            "click_text":"back",
+            "action":"click_boundary_path",
+            "boundary":"android.widget.FrameLayout",
+            "path":"0||0||0||2||0",
             "featuremode":"ids",
             "ids":"com.cnode.blockchain:id/iv_common_topbar_back||com.cnode.blockchain:id/iv_common_videp_back",
         },
