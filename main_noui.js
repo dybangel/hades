@@ -936,6 +936,10 @@ if("undefined"==typeof(signin_obj)){
                             play("global","已签到过");
                             Gworkthread="signin_stop";
                             break;
+                        }else if("click_boundary_path"==action){
+                            var boundary=signin_obj["sg"+i]["boundary"];;
+                            var path=signin_obj["sg"+i]["path"];;;
+                            thiscommon.click_boundary_path(boundary,path);
                         }
             
                     }
@@ -1540,7 +1544,7 @@ if("classname_desc"==featuremode){
 }else if("classname_text"==featuremode){
     var thisclassname=obj[obja]["classname"];
     var thistext=obj[obja]["text"];
-  //  alert("thisclassname is:"+thisclassname+" thistext is:"+thistext);
+   // alert("thisclassname is:"+thisclassname+" thistext is:"+thistext);
     result=block_check(featuremode,thisclassname,thistext,'');
     return result;
 }else if("classname"==featuremode){
@@ -1593,6 +1597,7 @@ function block_check(checktype,f1,f2,f3){
         sleep(2000);
             if("classname_text"==checktype){
              var ele=className(f1).text(f2).exists();
+           //  alert("f1 is"+f1+" f2 is:"+f2+"  "+ ele);
              if(ele){
                  return true;
              }
@@ -2138,4 +2143,6 @@ while(1){
 exit();
 
 }
+
+
 

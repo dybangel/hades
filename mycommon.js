@@ -46,7 +46,22 @@ module.exports = {
     clickxy_for_ele:function (ele){
     touchreal(ele.bounds().centerX(),ele.bounds().centerY());
     },
-    
+    click_boundary_path:function(boundary,path){
+        try{
+                    var result=className(boundary).exists();
+                    if(result){
+                    var tmparr=path.split("||");
+                    tmpstr="";
+                    for(var i=0;i<tmparr.length;i++){
+                        tmpstr+=".child("+tmparr[i]+")";
+                    }//for end   
+                    var evalstr="var ele=className(\""+boundary+"\").findOnce()"+tmpstr;
+                        eval(evalstr);
+                        thiscommon.clickxy_for_ele(ele);
+                    }   
+        }catch(e){
+        }
+    },//func end
     touchreal_once:function(x,y){
         ra.tap(x, y, 1);  
     },
