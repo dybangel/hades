@@ -12,8 +12,9 @@
           },
 		   "signin":{
             "sg1":{
-              "action":"click_text",
-              "click_text":"红包",
+              "action":"click_boundary_path",
+              "boundary":"android.widget.LinearLayout",
+			  "path":"0||0||2||3",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
               "text":"已领",
@@ -43,6 +44,23 @@
 		    "ab6":{
                "featuremode":"id",
                "id":"com.cnode.blockchain:id/tv_upgrade_cancel",
+           },
+		   "ab7":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/tv_signin_dialog_gold",
+           },
+		   "ab8":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/iv_sign_in_result_close",
+           },
+		   "ab9":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/tv_push_guide_cancel",
+           },
+		    "ab10":{
+               "featuremode":"click_boundary_path",
+               "boundary":"android.webkit.WebView",
+			   "path":"0||3||1||0||0",
            },
 		   },
 		"activitys":{
