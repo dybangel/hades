@@ -1365,6 +1365,15 @@ function  while_abnormal(abnormal_obj){
                 }catch(e){
 
                 }
+        }else if("click_boundary_path"==featuremode){
+            try{
+                var boundary=abnormal_obj["ab"+i]["boundary"];
+                var path=abnormal_obj["ab"+i]["path"];
+                thiscommon.click_boundary_path(boundary,path);
+            }catch(e){
+
+            }
+        
         }
 
 }
