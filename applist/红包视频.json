@@ -29,13 +29,17 @@
         "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"iv_close",
+               "id":"com.sanmiao.sound:id/iv_close",
            },
-         "ab1":{
+         "ab2":{
                "featuremode":"classname_text",
                "classname":"android.widget.TextView",
 			   "text":"恭喜您获得一个新人红包",
 			   },
+	     "ab3":{
+			   "featuremode":"id",
+			   "id":"com.sanmiao.sound:id/iv_signIn_close",
+		   },
          },  
 		"activitys":{
             "at1":"com.sanmiao.sound.activity.MainActivity",
