@@ -1,13 +1,13 @@
 {
         "enable":"false",
         "appname":"掌上热点", 
-		 "appver":"1.6.0",
+		 "appver":"1.7.0",
         "interval":"3",
          "packagename":"com.kdlc.hnmcc",
         "activityname":"com.kdlc.hnmcc.MainActivity",
         "open":{
           "featuremode":"classname_text",
-          "classname":"android.widget.RadioButton",
+          "classname":"android.widget.TextView",
           "text":"任务"
           },
 		"signin":{
