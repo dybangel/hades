@@ -4,7 +4,8 @@ function finditem(){
         var main=ele.findOnce(0);
         for(var i=1;i<subcount;i++){     
             try{
-            if("android.widget.FrameLayout"==main.child(i).className()){
+            var gg1=main.child(i);
+            if("android.widget.FrameLayout"==gg1.className()){
                 play('global',i);
                 play('global','广告不点击'); 
                 return false;

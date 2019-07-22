@@ -3,7 +3,7 @@
       "appname":"趣头条", 
       "appver":"3.9.27.000.0529.1101",
       "interval":"3",
-         "packagename":"com.jifen.qukan",
+      "packagename":"com.jifen.qukan",
       "activityname":"com.jifen.qkbase.main.MainActivity",
       "open":{
         "featuremode":"classname_text",
@@ -19,8 +19,8 @@
               "text":"已签",
             },
           },
-       "abnormal":{
-         "ab1":{
+      "abnormal":{
+           "ab1":{
              "featuremode":"id",
              "id":"com.jifen.qukan:id/a4q",
          },
@@ -70,13 +70,13 @@
              "id":"com.jifen.qukan:id/q2",
          },
        },  
-	   "activitys":{
+      "activitys":{
             "at1":"com.jifen.qkbase.main.MainActivity",
             "at2":"com.jifen.qukan.content.newsdetail.news.NewsDetailNewActivity",
    
           } , 
       "bindwechat":{
-            "bw1":{
+        "bw1":{
           "action":"click_text",
           "click_text":"我的",
           "featuremode":"classname_text",
@@ -98,7 +98,7 @@
          "classname":"android.widget.Button",
          "text":"同意",
      },
-      "bw4":{
+        "bw4":{
        "action":"click_text",
        "click_text":"同意",
        "featuremode":"classname_text",
@@ -107,13 +107,13 @@
   },
       },
       "autoread":{
-	   "ar1":{
+	      "ar1":{
                 "action":"click_text",
                 "click_text":"头条",
                 "featuremode":"ids",
                 "ids":"com.jifen.qukan:id/aie||com.jifen.qukan:id/mq",
             },
-            "ar2":{
+          "ar2":{
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
                 "deploydesc":"展开全文",
@@ -122,4 +122,4 @@
 	  },
       "durl":"http://ftp-apk.pconline.com.cn/80c8d68cb5e0d832a195c46cf9f9f3e4/pub/download/201010/com.jifen.qukan_3.9.32.000.0703.1030_30932000.apk"
       
-    }
+}
