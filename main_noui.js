@@ -403,7 +403,19 @@ Gappinterval="100000";
 //关闭弹窗线程的循环周期
 Gabinterval="3000";
 //设备类型
-Gdevicetype="xiaomi4s"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
+//自动判断
+devicestr=device.model
+if("Redmi Note 2"==devicestr){
+    Gdevicetype="xiaominote2";
+}if("MI 4S"==devicestr){
+    Gdevicetype="xiaomi4s"; 
+}if("MI 4LTE"==devicestr){
+    Gdevicetype="xiaomi4"; 
+}if("R11 Plus"==devicestr){
+    Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
+}
+
+//Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
 
 //json特征码加载方式 remote local 
 //目前已经支持从云端获取特征码，Gjsonloadstate改为remote即可从指定的云端路径下载json文件，现在Gapplistpath_remote的路径
@@ -510,7 +522,11 @@ function addTextView(parent) {
 // );
 loadGapps();
 //注册真实点击事件
-ra = new RootAutomator();
+
+run();
+/*************************以下是主线程循环 *******************************************************************/ 
+function run(){
+    ra = new RootAutomator();
 // //ra.setScreenMetrics(device.width, device.height);
  ra.setScreenMetrics(1080, 1920);
  events.setKeyInterceptionEnabled("volume_down", true);
@@ -520,16 +536,15 @@ events.on("key", function(volume_down, event){
     //处理按键事件
     toast("脚本已停止运行");
     threads.shutDownAll();
-    ui.finish();
+   //ui.finish();
     exit();
 
 });
 });
-run();
-/*************************以下是主线程循环 *******************************************************************/ 
-function run(){
-//音量下键关闭脚本
 
+    voice_runstate();
+    voice_devicetype();
+    //voice_env();
 
  //读取配置文件
  loadappjson();
