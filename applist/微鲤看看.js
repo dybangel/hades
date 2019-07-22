@@ -13,6 +13,15 @@
                 }catch(e){
                 }
                 try{
+                    var gg2=main.child(i);
+                    if(gg2.childCount()==3){
+                    play('global',i);
+                    play('global','广告不点击'); 
+                    return false;
+                    }
+                }catch(e){
+                }
+                try{
                     play('global',i);
                     play('global','点击');
                     return main.child(i);

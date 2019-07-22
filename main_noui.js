@@ -936,13 +936,14 @@ if("undefined"==typeof(signin_obj)){
                             play("global","已签到过");
                             Gworkthread="signin_stop";
                             break;
-                        }else if("click_boundary_path"==action){
-                            var boundary=signin_obj["sg"+i]["boundary"];;
-                            var path=signin_obj["sg"+i]["path"];;;
-                            thiscommon.click_boundary_path(boundary,path);
                         }
             
-                    }
+                    }else if("click_boundary_path"==action){
+                            var boundary=signin_obj["sg"+i]["boundary"];;
+                            var path=signin_obj["sg"+i]["path"];;;
+                         //   alert("boundary is:"+boundary+"  path is:"+path);
+                            thiscommon.click_boundary_path(boundary,path);
+                        }
                    
                     var result=false;
             
