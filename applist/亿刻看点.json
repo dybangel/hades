@@ -6,20 +6,19 @@
          "packagename":"com.cnode.blockchain",
         "activityname":"com.cnode.blockchain.MainActivity",
         "open":{
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"视频"
+          "featuremode":"id",
+          "id":"com.cnode.blockchain:id/bage_wrapper",
           },
-		   "signin":{
+		"signin":{
             "sg1":{
               "action":"click_boundary_path",
-              "boundary":"android.widget.LinearLayout",
+              "boundary":"android.widget.LinearLayout", 
 			  "path":"0||0||2||3",
               "featuremode":"id",
               "id":"com.cnode.blockchain:id/bage_wrapper",
             },
           },
-          "abnormal":{
+        "abnormal":{
            "ab1":{
                "featuremode":"id",
                "id":"com.cnode.blockchain:id/iv_close",
@@ -61,6 +60,10 @@
                "boundary":"android.webkit.WebView",
 			   "path":"0||3||1||0||0",
            },
+		   "ab11":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/tv_news_person_dialog_guest_ok",
+           },
 		   },
 		"activitys":{
 			 "at1":"com.cnode.blockchain.MainActivity",
@@ -96,13 +99,12 @@
             "boundary":"android.widget.FrameLayout",
             "path":"0||0||0||2||0",
             "featuremode":"ids",
-            "ids":"com.cnode.blockchain:id/iv_common_topbar_back||com.cnode.blockchain:id/iv_common_videp_back",
+            "ids":"com.cnode.blockchain:id/iv_common_topbar_back||com.cnode.blockchain:id/iv_detail_bottom_share",
         },
         "ar2":{
             "deploymode":"classname_text",
             "deployclassname":"android.widget.TextView",
             "deploytext":"展开阅读全文",
-
         },
         }, 
         "durl":"http://cr1.197946.com/com.cnode.blockchain_1.9.0_58.apk"
