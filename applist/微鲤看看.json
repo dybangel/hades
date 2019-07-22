@@ -8,7 +8,7 @@
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"签到"
+          "text":"发照片"
           },
 		  "signin":{
             "sg1":{
@@ -18,7 +18,7 @@
               "id":"cn.weli.story:id/iv_back",
             },
             "sg2":{
-              "action":"classname_boundary_path",
+              "action":"click_boundary_path",
               "boundary":"android.webkit.WebView",
 			  "path":"0||1",
               "featuremode":"classname_desc",
@@ -48,6 +48,10 @@
 		   "ab2":{
                "featuremode":"id",
                "id":"cn.weli.story:id/text_open",
+           },
+		   "ab3":{
+               "featuremode":"id",
+               "id":"cn.weli.story:id/text_ok",
            },
          },  
 		"activitys":{
