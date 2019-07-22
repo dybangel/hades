@@ -1005,10 +1005,11 @@ try{
                 //alert("click_text is:"+text);
                 click(text);
                 sleep(1000);
+               
             }else if("click_boundary_path"==action){
                 try{
-                    var boundary=abnormal_obj["ar1"]["boundary"];
-                    var path=abnormal_obj["ar1"]["path"];
+                    var boundary=autoread_obj["ar1"]["boundary"];
+                    var path=autoread_obj["ar1"]["path"];
                     thiscommon.click_boundary_path(boundary,path);
                 }catch(e){
 
