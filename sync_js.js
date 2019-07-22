@@ -15,4 +15,8 @@ var r=http.get("https://raw.githubusercontent.com/dybangel/hades/master/appver_c
 var tmpstr=r.body.string();
 files.write("appver_check.js",tmpstr);
 
-alert("老铁！同步成功！\n  main_noui.js \n myswipe.js \n mycommon.js \n appver_check.js");
+var r=http.get("https://raw.githubusercontent.com/dybangel/hades/master/app_clear_data.js");
+var tmpstr=r.body.string();
+files.write("app_clear_data.js",tmpstr);
+
+alert("老铁！同步成功！\n  main_noui.js \n myswipe.js \n mycommon.js \n appver_check.js \n app_clear_data.js");
