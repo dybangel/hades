@@ -1038,7 +1038,7 @@ try{
                 function(){
                // thisswipe.swiperealup_custom();
                 
-                if("lnnl"==Gdevicetype){
+                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype){
                    thisswipe.swiperealup_custom_lnnl();
                 }else{
                     thisswipe.swiperealup_custom();
@@ -1128,7 +1128,7 @@ function while_readnews(autoread_obj){
                 var x=Math.round(Math.random()*(m-n))+n;
                 setInterval(function(){
                   
-                    if("lnnl"==Gdevicetype){
+                    if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype){
                         thisswipe.swiperealup_custom_lnnl();
                      }else{
                          thisswipe.swiperealup_custom();
@@ -1704,7 +1704,7 @@ function while_findmoments(){
     thread_findmoments=threads.start(
         function(){
             setInterval(function(){
-                if("lnnl"==Gdevicetype){
+                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype){
                     thisswipe.swiperealup_custom_lnnl();
                  }else{
                      thisswipe.swiperealup_custom();
