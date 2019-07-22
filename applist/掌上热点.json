@@ -82,7 +82,7 @@
             "action":"click_text",
             "click_text":"首页",
             "featuremode":"id",
-            "id":"tv_login_top_back",
+            "id":"com.kdlc.hnmcc:id/tv_login_top_back",
         },
         "ar2":{
             "deploymode":"classname_text",
