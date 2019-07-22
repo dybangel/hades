@@ -10,10 +10,44 @@
           "classname":"android.widget.TextView",
           "text":"签到"
           },
+		  "signin":{
+            "sg1":{
+              "action":"click_id",
+              "click_id":"cn.weli.story:id/rl_head_line",
+              "featuremode":"id",
+              "id":"cn.weli.story:id/iv_back",
+            },
+            "sg2":{
+              "action":"classname_boundary_path",
+              "boundary":"android.webkit.WebView",
+			  "path":"0||1",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"保存稍后分享",
+            },
+			"sg3":{
+              "action":"click_id",
+              "click_id":"cn.weli.story:id/iv_back",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+			  "text":"今日金币",
+            },
+			"sg4":{
+              "action":"click_text",
+              "click_text":"头条",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+			  "text":"发照片",
+            },
+          },
           "abnormal":{
            "ab1":{
                "featuremode":"id",
                "id":"cn.weli.story:id/iv_close",
+           },
+		   "ab2":{
+               "featuremode":"id",
+               "id":"cn.weli.story:id/text_open",
            },
          },  
 		"activitys":{
