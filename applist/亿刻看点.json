@@ -15,9 +15,8 @@
               "action":"click_boundary_path",
               "boundary":"android.widget.LinearLayout",
 			  "path":"0||0||2||3",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"已领",
+              "featuremode":"id",
+              "id":"com.cnode.blockchain:id/bage_wrapper",
             },
           },
           "abnormal":{
