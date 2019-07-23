@@ -47,6 +47,7 @@
                 "id":"image_tool_bar_menu1",
             },
             "ar2":{
+                "upcount":"40",
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
                 "deploydesc":"查看全文，奖励更多",

@@ -64,6 +64,10 @@
                "featuremode":"id",
                "id":"com.cnode.blockchain:id/tv_news_person_dialog_guest_ok",
            },
+            "ab12":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/tv_user_guide_bottom_close",
+           },
 		   },
 		"activitys":{
 			 "at1":"com.cnode.blockchain.MainActivity",
