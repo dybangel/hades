@@ -19,7 +19,8 @@
               "text":"余额账户",
             },
 			"sg2":{
-              "action":"click_id",
+              "action":"click_boundary_path",
+			  "boundary":"android.support.",
               "click_id":"c.l.a:id/red_pack_signed_btn",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
@@ -39,6 +40,14 @@
              "featuremode":"id",
              "id":"c.l.a:id/dialog_close",
                 },
+		   "ab4":{
+             "featuremode":"id",
+             "id":"c.l.a:id/close_sign_dialog_btn",
+                },
+			"ab5":{
+             "featuremode":"id",
+             "id":"c.l.a:id/image1",
+                },	
                 },  
 	    "activitys":{
             "at1":"c.l.a.views.AppBoxHomeActivity",
