@@ -22,8 +22,8 @@
               "action":"click_text",
               "click_text":"立即签到",
               "featuremode":"classname_text",
-              "classname":"android.view.View",
-              "text":"今日活跃值",
+              "classname":"android.widget.TextView",
+              "text":"视频",
             },
           },
          "abnormal":{
@@ -35,6 +35,11 @@
              "ab2":{
             "featuremode":"id",
             "id":"com.xike.yipai:id/img_hope_login_close",
+        },
+             "ab3":{
+            "featuremode":"classname_text",
+            "classname":"android.view.View",
+                 "text":"确认",
         },
          }, 
         "activitys":{
