@@ -1156,7 +1156,14 @@ function while_readnews(autoread_obj){
   
   
   try{
-    var maxupcount=autoread_obj["ar2"]["upcount"];  
+    var thisupcount=autoread_obj["ar2"]["upcount"];  
+    if(typeof(thisupcount)=="undefined"){
+        var o=10;//最大上滑次数
+        var p=5;//最小上滑次数
+        var maxupcount=Math.round(Math.random()*(o-p))+p;
+    }else{
+       var maxupcount=thisupcount; 
+    }
   }catch(e){
     var o=10;//最大上滑次数
     var p=5;//最小上滑次数
