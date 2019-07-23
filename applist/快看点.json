@@ -10,6 +10,64 @@
           "classname":"android.widget.TextView",
           "text":"小视频"
           },
+         "signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"福利",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"我的金币",
+            },
+            "sg2":{
+              "action":"click_xypercent",
+              "click_xypercent":"0.092||0.302",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"视频",
+            },
+               "sg3":{
+              "action":"click_xypercent",
+              "click_xypercent":"0.227||0.302",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"视频",
+            },
+               "sg4":{
+              "action":"click_xypercent",
+              "click_xypercent":"0.361||0.302",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"视频",
+            },
+               "sg5":{
+              "action":"click_xypercent",
+              "click_xypercent":"0.495||0.302",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"视频",
+            },
+               "sg6":{
+              "action":"click_xypercent",
+              "click_xypercent":"0.63||0.302",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"视频",
+            },
+               "sg7":{
+              "action":"click_xypercent",
+              "click_xypercent":"0.76||0.302",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"视频",
+            },
+               "sg8":{
+              "action":"click_xypercent",
+              "click_xypercent":"0.9||0.302",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"视频",
+            },
+          },
          "abnormal":{
            "ab1":{
                "featuremode":"id",
