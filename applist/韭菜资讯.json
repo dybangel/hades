@@ -54,8 +54,8 @@
                },
             "ar2":{
                 "deploymode":"click_boundary_path", 
-				"boundary":"android.widget.ListView",
-				"path":"2",
+				"deployboundary":"android.widget.ListView",
+				"deploypath":"2",
         }, 
 		},
         "durl":"http://js.xiazaicc.com/anzhuoyy/jiucaixixun_downcc.apk"
