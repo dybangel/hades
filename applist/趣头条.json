@@ -12,8 +12,9 @@
         },
 	  "signin":{
             "sg1":{
-              "action":"click_text",
-              "click_text":"任务",
+              "action":"click_boundary_path",
+              "boundary":"android.widget.RelativeLayout",
+			  "path":"2||3",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
               "text":"已签",

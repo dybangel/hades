@@ -53,8 +53,8 @@
                 "id":"com.zujikandian.android:id/left_btn",
                },
             "ar2":{
-                "deploymode":"click_boundary_path", 
-				"deployboundary":"android.widget.ListView",
+                "deploymode":"", 
+				"deployboundary":"",
 				"deploypath":"2",
         }, 
 		},
