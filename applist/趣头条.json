@@ -109,8 +109,9 @@
       },
       "autoread":{
 	      "ar1":{
-                "action":"click_text",
-                "click_text":"头条",
+                "action":"click_boundary_path",
+                "boundary":"android.widget.RelativeLayout",
+			    "path":"2||1",
                 "featuremode":"ids",
                 "ids":"com.jifen.qukan:id/aie||com.jifen.qukan:id/mq",
             },
