@@ -9,7 +9,6 @@ function finditem(){
                   try{
                       var gg1=main.child(i);              
                             if(gg1.childCount()==3){
-                       
                                 play("global",i);
                                 play("global","广告不点击");
                                 return false;
