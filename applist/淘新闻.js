@@ -19,7 +19,6 @@ function finditem(){
                   try{
                    var gg2=main.child(i);              
                          if(gg2.childCount()==4){
-                    
                              play("global",i);
                              play("global","广告不点击");
                              return false;
