@@ -16,7 +16,7 @@
               "click_text":"任务",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
-              "text":"签到",
+              "text":"任务中心",
             },
 			"sg2":{
               "action":"click_id",

@@ -24,6 +24,14 @@
                "featuremode":"id",
                "id":"com.block.factory:id/ivSkip",
            }, 
+		    "ab2":{
+               "featuremode":"id",
+               "id":"com.block.factory:id/ivClose",
+           }, 
+		     "ab3":{
+               "featuremode":"id",
+               "id":"com.block.factory:id/tvCancel",
+           }, 
          },  
         "activitys":{
             "at1":"com.block.factory.MainActivity",
