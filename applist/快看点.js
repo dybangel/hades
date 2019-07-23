@@ -10,11 +10,20 @@ function finditem(){
                        var gg1=main.child(i).child(0).child(0);
                         if(gg1.childCount()==1){
                                 play("global",i);
-                                play("global","点击");
-                                return main.child(i);
+                                play("global","广告不点击");
+                                return false;
                        }
                  }catch(e){
                   }
+                  try{
+                        var gg2=main.child(i);
+                         if(gg2.className()=="android.widget.FrameLayout"){
+                                 play("global",i);
+                                 play("global","广告不点击");
+                                 return false;
+                        }
+                  }catch(e){
+                   }
                   try{
                     play('global',i);
                     play('global','点击');
