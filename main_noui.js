@@ -1001,6 +1001,8 @@ if("undefined"==typeof(signin_obj)){
 //一级页面循环上滑找新闻线程
 function while_findnews(autoread_obj){
     Gworkthread="findnews_start";
+    //线程计数器
+    this_threadcount=0;
     toast("找新闻线程启动..."); play("global","正在检索");
    //取出新闻条目特征码 改用函数实现了，后续抽象特征码数据结构
   // var thisborderline=autoread_obj["ar1"]["borderline"];
@@ -1137,12 +1139,15 @@ try{
                      
                     }
                 }
+                this_threadcount+=1;
+                toast("线程计数器 findnews count is"+this_threadcount);
                 },2000);
         }
     );
 }
 
 //二级页面阅读线程??可以优化
+
 function while_readnews(autoread_obj){
  //toast("readnews启动。。。。");
     Gworkthread="readnews_start";
