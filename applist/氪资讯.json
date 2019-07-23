@@ -16,14 +16,14 @@
               "click_text":"任务",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
-              "text":"",
+              "text":"金币",
             },
             "sg2":{
               "action":"click_id",
-              "click_id":"com.zujikandian.android:id/qiandao_tv",
+              "click_id":"com.zujikandian.android:id/task_sign_click",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
-              "text":"",
+              "text":"任务",
             },
           },  
         "abnormal":{
