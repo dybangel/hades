@@ -1023,7 +1023,10 @@ try{
                 var text=autoread_obj["ar1"]["click_text"];
                 if("undefined"==typeof(text)){  alert(appname+":"+"autoread_obj[\"ar1\"][\"click_text\"]数据结构错误");}
                 //alert("click_text is:"+text);
+               try{
                 click(text);
+               }catch(e){}
+                
                 sleep(1000);
                
             }else if("click_boundary_path"==action){
@@ -1648,32 +1651,55 @@ function block_check(checktype,f1,f2,f3){
         }
         sleep(2000);
             if("classname_text"==checktype){
-             var ele=className(f1).text(f2).exists();
-           //  alert("f1 is"+f1+" f2 is:"+f2+"  "+ ele);
-             if(ele){
-                 return true;
-             }
+                try{
+                    var ele=className(f1).text(f2).exists();
+                            //  alert("f1 is"+f1+" f2 is:"+f2+"  "+ ele);
+                                if(ele){
+                                    return true;
+                                }
+                }catch(e){
+                    return false;
+
+                }
+            
 
             }else if("classname_desc"==checktype){
-             var ele=className(f1).desc(f2).exists();
-             if(ele){
-                 return true;
-             }
-            }else if("classname"==checktype){
-               
-                var ele=className(f1).exists();
-             //   alert("this is blockcheck ele is:"+ele);
-                if(ele){
-                    return true;
+                try{
+                                    var ele=className(f1).desc(f2).exists();
+                            if(ele){
+                                return true;
+                            }
+                }catch(e){
+                    return false;
+
                 }
+           
+            }else if("classname"==checktype){
+                try{
+                                var ele=className(f1).exists();
+                        //   alert("this is blockcheck ele is:"+ele);
+                            if(ele){
+                                return true;
+                            } 
+                }catch(e){
+                    return false;
+
+                }
+             
             }else if("id"==checktype){
-                mytoast("block_check checktype 执行 id is:"+f1);
-                var ele=id(f1).exists();
-                mytoast("block_check id checktype 执行 ele is："+ele);
+                try{
+                            mytoast("block_check checktype 执行 id is:"+f1);
+                        var ele=id(f1).exists();
+                        mytoast("block_check id checktype 执行 ele is："+ele);
                 if(ele){
                     
                     return true;
                 }
+                }catch(e){
+                    return false;
+                }
+               
+
             }    
     
     }
