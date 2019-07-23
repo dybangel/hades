@@ -943,6 +943,18 @@ if("undefined"==typeof(signin_obj)){
                             var path=signin_obj["sg"+i]["path"];;;
                          //   alert("boundary is:"+boundary+"  path is:"+path);
                             thiscommon.click_boundary_path(boundary,path);
+                        }else if("click_xypercent"==action){
+                            try{
+
+                                var xypercent=signin_obj["sg"+i]["click_xppercent"];
+                                var tmparr=xypercent.split("||");
+                                var xpercent=tmparr[0];
+                                var ypercent=tmparr[1];
+                                thiscommon.touchreal(device.width * xpercent,device.height *ypercent);
+                            }catch(e){
+
+                            }
+                           
                         }
                    
                     var result=false;
