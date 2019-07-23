@@ -927,8 +927,13 @@ if("undefined"==typeof(signin_obj)){
                     if("click_text"==action){
                          thiscommon.click_text(signin_obj["sg"+i]["click_text"]);      
                     } else if("click_id"==action){
+                        try{
                             var thisid=signin_obj["sg"+i]["click_id"];
-                             thiscommon.clickxy_for_ele(id(thisid).findOnce());
+                            thiscommon.clickxy_for_ele(id(thisid).findOnce());
+                        }catch(e){
+
+                        }
+                          
                     } else if("check_signin"==action){
                         //判断是否签过到
                         result=block_mode("while_signin",featuremode,signin_obj,i)
@@ -939,10 +944,15 @@ if("undefined"==typeof(signin_obj)){
                         }
             
                     }else if("click_boundary_path"==action){
+                        try{
                             var boundary=signin_obj["sg"+i]["boundary"];;
                             var path=signin_obj["sg"+i]["path"];;;
                          //   alert("boundary is:"+boundary+"  path is:"+path);
                             thiscommon.click_boundary_path(boundary,path);
+                        }catch(e){
+
+                        }
+                           
                         }else if("click_xypercent"==action){
                             try{
 
