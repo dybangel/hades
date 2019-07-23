@@ -645,16 +645,14 @@ if(Grunstate=="trainwechat"){
          //如果打开失败跳转到下一个app，如果成功则进行延迟等待，这样节约时间
         if(openstate){
             toast("阅读"+Gappinterval+"毫秒......................");
+            setlastapp("",appname);
             if("popupdebug"==Grunstate){
                 while_abnormal_overtime(activitys_obj); 
              }
             sleep(Gappinterval);
         }
             toast("准备开始下一个");
-        
-      
-        
-    
+ 
         //开启异常处理线程--通用
         Gfirstrun=false;
         sleep(1000)
@@ -2196,6 +2194,65 @@ while(1){
 }
 exit();
 
+}
+
+function setlastapp(appnum,appname){
+importClass('android.database.sqlite.SQLiteDatabase');
+importClass("android.content.ContentValues");
+importClass("android.content.Context");
+importClass("android.database.Cursor"); 
+//context.deleteDatabase("haiqu.db");  
+//打开或创建test.db数据库        
+db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null);   
+//创建person表
+db.execSQL("create table if not exists " +  "t_tag" + "(_id integer primary key,appnum,appname)");  
+//取出数据库内容
+//  查询  c 是 Cursor类
+//var c = db.query("t_tag", null, "", null, null, null, null, null);        
+lastappname="";
+//while  (c.moveToNext())  {              
+//    var  appnum  = c.getInt(c.getColumnIndex("appnum"));              
+//    var  appname  = c.getString(c.getColumnIndex("appname"));    
+  //  continue;          
+  // var  age  = c.getInt(c.getColumnIndex("age"));             
+//  lastappname=appname;
+ // toastLog("数据库 appnum="  +  appnum  +  " appname="  +  appname ); 
+          
+ //  continue;
+//} 
+// if(appname==null){
+//    alert("没有记录上次阅读的app");
+// }else{
+//     alert("上次阅读到了："+lastappname);
+// }
+//ok. 删除表内容
+ db.execSQL("DELETE FROM  t_tag");
+
+var t_tag = new Object;        
+t_tag.appnum  =  appnum;          
+t_tag.appname  =  appname;
+//ContentValues以键值对的形式存放数据       
+var  cv  =  new  ContentValues();          
+cv.put("appnum", t_tag.appnum);          
+//cv.put("appname",  java.lang.Integer(35));
+cv.put("appname", t_tag.appname);
+
+ //插入ContentValues中的数据        
+db.insert("t_tag",  null,  cv);
+//db.insert("t_tag",  null,  cv);
+                 
+
+         
+//删除表数据  ok
+//db.delete("person", null,null);  
+
+//ok. 删除表内容
+// db.execSQL("DELETE FROM  person  WHERE age>32");
+
+//关闭当前数据库      
+db.close();   
+ // alert("ok");     
+//exit();
 }
 
 
