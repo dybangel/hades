@@ -1148,14 +1148,22 @@ function while_readnews(autoread_obj){
     Gworkthread="readnews_start";
     play("global","开始阅读");
     var upcount=0;
+  
+  
+  try{
+    var maxupcount=autoread_obj["ar2"]["upcount"];  
+  }catch(e){
     var o=10;//最大上滑次数
     var p=5;//最小上滑次数
-
+    var maxupcount=Math.round(Math.random()*(o-p))+p;
+  }  
+  
     var thisdeploymode=autoread_obj["ar2"]["deploymode"];
     if("undefined"==typeof(thisdeploymode)){alert(appname+"autoread_obj[\"ar2\"][\"deploymode\"]数据结构错误");}
   
  //上滑次数
-    var maxupcount=Math.round(Math.random()*(o-p))+p;
+    
+ 
     toast("随机上滑："+maxupcount+"次");
     thread_readnews=threads.start(
         function(){
