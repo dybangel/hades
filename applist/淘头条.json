@@ -39,6 +39,14 @@
                "featuremode":"id",
                "id":"com.ly.taotoutiao:id/btn_double_reward_toast_start",
            },
+             "ab4":{
+               "featuremode":"id",
+               "id":"com.ly.taotoutiao:id/btn_sure",
+           },
+             "ab5":{
+               "featuremode":"id",
+               "id":"com.ly.taotoutiao:id/btn_back",
+           },
            
          },  
          "activitys":{
