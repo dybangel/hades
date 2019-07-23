@@ -10,6 +10,22 @@
           "classname":"android.widget.TextView",
           "text":"视频"
           },
+		   "signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"任务",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"",
+            },
+            "sg2":{
+              "action":"click_id",
+              "click_id":"com.zujikandian.android:id/qiandao_tv",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"",
+            },
+          },  
         "abnormal":{
            "ab1":{
                "featuremode":"id",
