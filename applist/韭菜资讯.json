@@ -11,14 +11,21 @@
           "text":"视频"
           },
         "signin":{
-            "sg1":{
+		   "sg1":{
+              "action":"click_xypercent",
+              "click_xypercent":"0.5||0.761",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务",
+            },
+            "sg2":{
               "action":"click_text",
               "click_text":"任务",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
               "text":"韭菜",
             },
-            "sg2":{
+            "sg3":{
               "action":"click_id",
               "click_id":"com.zujikandian.android:id/qiandao_tv",
               "featuremode":"classname_text",
