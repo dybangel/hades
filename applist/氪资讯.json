@@ -20,7 +20,7 @@
             },
             "sg2":{
               "action":"click_id",
-              "click_id":"com.zujikandian.android:id/task_sign_click",
+              "click_id":":zixun.digu.ke:id/task_sign_click",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
               "text":"任务",
