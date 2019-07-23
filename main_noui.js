@@ -1298,8 +1298,10 @@ function openAPP(appname,packagename,activityname,open_obj){
     var featuremode=open_obj["featuremode"];
     if("undefined"==typeof(featuremode)){alert(appname+"open_obj[\"featuremode\"]数据结构错误");}
  
-    thiscommon.openpackage(packagename+"/"+activityname);
-        var result=false;
+    var result= thiscommon.openpackage(packagename+"/"+activityname);
+        if(result['error'].indexOf('does not exist')>-1){
+            toast("手机还没有安装："+appname);
+        }
        var thisnum=0;
        while(1){
                 if(Number(thisnum) >6){ 
