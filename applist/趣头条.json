@@ -111,7 +111,7 @@
 	      "ar1":{
                 "action":"click_boundary_path",
                 "boundary":"android.widget.RelativeLayout",
-			    "path":"2||1",
+			    "path":"2||0",
                 "featuremode":"ids",
                 "ids":"com.jifen.qukan:id/aie||com.jifen.qukan:id/mq",
             },
