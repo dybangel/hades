@@ -48,7 +48,15 @@
                "featuremode":"id",
                "id":"com.knowworld.news:id/cannel",
            },
+		   "ab6":{
+               "featuremode":"id",
+               "id":"com.knowworld.news:id/cancle",
+           },
          },  
+		   "activitys":{
+            "at1":"cent.news.com.newscent.splash.SplashActivity",
+            "at2":"cent.news.com.newscent.webview.WebiewActivity",
+          } , 
         "bindwechat":{
             "bw1":{
             "action":"click_text",
@@ -74,8 +82,8 @@
         },
         "autoread":{
             "ar1":{
-                "action":"click_text",
-                "click_text":"首页",
+                "action":"click_id",
+                "click_id":"com.knowworld.news:id/homeBottomBar",
                 "featuremode":"id",
                 "id":"com.knowworld.news:id/OnBack",
             },
