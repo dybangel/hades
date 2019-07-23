@@ -946,7 +946,7 @@ if("undefined"==typeof(signin_obj)){
                         }else if("click_xypercent"==action){
                             try{
 
-                                var xypercent=signin_obj["sg"+i]["click_xppercent"];
+                                var xypercent=signin_obj["sg"+i]["click_xypercent"];
                                 var tmparr=xypercent.split("||");
                                 var xpercent=tmparr[0];
                                 var ypercent=tmparr[1];
