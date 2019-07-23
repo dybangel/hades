@@ -3,14 +3,14 @@
         "appname":"搜狐资讯", 
         "appver":"3.7.37",
         "interval":"3",
-         "packagename":"com.sohu.infonews",
+        "packagename":"com.sohu.infonews",
         "activityname":"com.sohu.quicknews.homeModel.activity.HomeActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"任务"
           },
-		  "signin":{
+        "signin":{
             "sg1":{
               "action":"click_text",
               "click_text":"任务",
@@ -25,10 +25,17 @@
               "classname":"android.widget.TextView",
               "text":"补签",
             },
+            "sg3":{
+              "action":"click_boundary_path",
+              "boundary":"android.view.ViewGroup",
+              "path":"0||0||0",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务中心",
+            },
 			},
-         "abnormal":{
-         
-           "ab1":{
+        "abnormal":{
+          "ab1":{
             "featuremode":"id",
             "id":"com.sohu.infonews:id/normaldlg_leftbtn",
             },
@@ -44,36 +51,36 @@
             "featuremode":"id",
             "id":"com.sohu.infonews:id/act_close_image",
         },
-             "ab5":{
+          "ab5":{
             "featuremode":"id",
             "id":"com.sohu.infonews:id/energy_open",
         },
-             "ab6":{
+          "ab6":{
             "featuremode":"id",
             "id":"com.sohu.infonews:id/btn_receive",
         },
          },
-         "activitys":{
+        "activitys":{
 			 "at1":"com.sohu.quicknews.homeModel.activity.HomeActivity",
 			 "at2":"com.sohu.quicknews.articleModel.activity.DetailActivity",
 
 		   } ,
         "bindwechat":{
-          "bw1":{
+           "bw1":{
             "action":"click_text",
             "click_text":"任务",
             "featuremode":"classname_text",
             "classname":"android.widget.TextView",
             "text":"任务中心",
         },
-        "bw2":{
+           "bw2":{
             "action":"click_id",
             "click_id":"com.sohu.infonews:id/task_head_layout",
             "featuremode":"classname_text",
             "classname":"android.widget.FrameLayout",
             "text":"微信登录",
         },
-        "bw3":{
+           "bw3":{
           "action":"click_text",
           "click_text":"微信登录",
           "featuremode":"classname_text",
@@ -88,7 +95,7 @@
             "featuremode":"id",
             "id":"com.sohu.infonews:id/comment_icon",
         },
-        "ar2":{
+          "ar2":{
             "deploymode":"classname_desc",
             "deployclassname":"android.view.View",
             "deploydesc":"展开全文",
