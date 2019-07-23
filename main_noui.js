@@ -1194,6 +1194,16 @@ function while_readnews(autoread_obj){
                             }
                             
                         }
+                    }else if("click_boundary_path"==thisdeploymode){
+                        // "deployclassname":"android.widget.TextView",
+                        // "deploytext":"查看全文",
+                        try{
+                            var deployboundary=autoread_obj["ar2"]["deployboundary"];
+                            var deploypath=autoread_obj["ar2"]["deploypath"];
+                            thiscommon.click_boundary_path(deployboundary,deploypath);
+                        }catch(e){
+            
+                        }
                     }
                     //处理方式结束
                                 upcount+=1;
