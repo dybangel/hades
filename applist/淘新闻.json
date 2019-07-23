@@ -10,6 +10,15 @@
           "classname":"android.widget.TextView",
           "text":"任务大厅"
           },
+         "signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"任务大厅",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务大厅",
+            },
+          },
          "abnormal":{
            "ab1":{
                "featuremode":"id",
@@ -22,6 +31,11 @@
              "ab3":{
             "featuremode":"id",
             "id":"com.coohua.xinwenzhuan:id/close",
+        },
+             "ab4":{
+            "featuremode":"click_boundary_path",
+            "boundary":"android.webkit.WebView",
+                 "path":"0||2||0||5",
         },
          },  
 		 "activitys":{
