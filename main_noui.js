@@ -423,10 +423,15 @@ if("Redmi Note 2"==devicestr){
 Gjsonloadstate="remote";
 //app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";
+//Gapplistpath_remote="http://192.168.31.89/haiqu/applist/";
 //Gapps,哪些app要刷的开关量json云端文件路径
 Gappspath_remote="http://download.dqu360.com:81/haiqu/gapps.json";
+//Gappspath_remote="http://192.168.31.89/haiqu/gapps.json";
 //api 接口文件路径
+
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json";
+//Gapi_json_url="http://192.168.31.89/api.json";
+
 Gdownloadpath="http://download.dqu360.com:81/haiqu/haiqu.apk"
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";
@@ -572,10 +577,10 @@ if(Grunstate=="trainwechat"){
     
             var enable=applist[i]['enable'];
              appname=applist[i]['appname'] 
-            var packagename=applist[i]['packagename']
-            var activityname=applist[i]['activityname'];
-            var open_obj=applist[i]["open"];
-            var bindwechat_obj=applist[i]['bindwechat']; 
+             packagename=applist[i]['packagename']
+             activityname=applist[i]['activityname'];
+             open_obj=applist[i]["open"];
+             bindwechat_obj=applist[i]['bindwechat']; 
             signin_obj=applist[i]['signin'];
 
             if("undefined"==typeof(signin_obj)){
@@ -583,10 +588,15 @@ if(Grunstate=="trainwechat"){
             }
             var autoread_obj=applist[i]["autoread"];
              abnormal_obj=applist[i]["abnormal"];
-             activitys_obj=applist[i]["activitys"];
-             if("undefined"==typeof(activitys_obj)){
-                toast(appname+".json activitys数据项缺失");
-            }
+             try{
+                activitys_obj=applist[i]["activitys"];
+                if("undefined"==typeof(activitys_obj)){
+                   toast(appname+".json activitys数据项缺失");
+               }
+             }catch(e){
+
+             }
+         
             //当开启app版本号输出时
             try{
                             if(ui.showappver.checked==true){
@@ -983,7 +993,7 @@ if("undefined"==typeof(signin_obj)){
                        
                     
                 }catch(e){
-                  alert(e);
+                  toast("signin error:"+e);
                 }
             
             }//for end;
@@ -1023,7 +1033,7 @@ try{
             //定位首页模块
             if("click_text"==action){
                 var text=autoread_obj["ar1"]["click_text"];
-                if("undefined"==typeof(text)){  alert(appname+":"+"autoread_obj[\"ar1\"][\"click_text\"]数据结构错误");}
+                if("undefined"==typeof(text)){  toast(appname+":"+"autoread_obj[\"ar1\"][\"click_text\"]数据结构错误");}
                 //alert("click_text is:"+text);
                try{
                 click(text);
@@ -1140,7 +1150,7 @@ try{
                     }
                 }
                 this_threadcount+=1;
-                toast("线程计数器 findnews count is"+this_threadcount);
+              //  toast("线程计数器 findnews count is"+this_threadcount);
                 },2000);
         }
     );
@@ -1494,7 +1504,11 @@ function demon_abnormal(abnormal_obj){
 //全局调度线程
 function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj){
     //appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj
-
+    var nowcurrentPackage="";
+    var nowcurrentActivity="";
+    var outsidecount=0;
+    var erroraocount=0;
+    var tmpflag=0;
     thread_control=threads.start( //bindwechat注释
         function(){//bindwechat注释
             setInterval(function(){//bindwechat注释
@@ -1528,6 +1542,79 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                 try{thread_readnews.interrupt();}catch(e){};
                 while_readnews(autoread_obj);
               }
+            
+              nowcurrentPackage=currentPackage();
+             nowcurrentActivity=currentActivity();
+             
+
+
+             //站外检测
+              if(nowcurrentPackage!=""){
+                     //这是跳转到站外的情况了
+                    if( nowcurrentPackage!=packagename){
+                                outsidecount+=1;
+                            if(outsidecount>10){
+                            //   alert("警告，跳出站外");
+                            // packagename,activityname
+                         //   play("global","拉回站内");
+
+                            toast("拉回站内......");
+                           // thiscommon.openpackage(packagename+"/"+activityname);
+                            try{    thread_findnews.interrupt();}catch(e){};
+                            try{    thread_readnews.interrupt();}catch(e){};
+                            try{    thread_signin.interrupt();}catch(e){};
+                            thiscommon.clean(Gdevicetype);
+                            var openstate=openAPP(appname,packagename,activityname,open_obj);
+                            if(openstate){
+                                while_findnews(autoread_obj);  
+                            }
+                            
+                                outsidecount=0;
+                            } 
+                    }else{
+                        //这是站内的情况，再做白名单检测
+                        try{
+                            var aocount=thiscommon.JSONLength(activitys_obj);
+                            for(var i=1;i<=aocount;i++){
+                               // alert(activitys_obj["at"+i]);
+                                //判断当前活动页面是否在白名单里
+                                if(nowcurrentActivity!=""){
+                                    if(nowcurrentActivity==activitys_obj["at"+i]){
+                                        //alert("正常 nocur is:"+nowcurrentActivity);
+                                        erroraocount=0;
+                                        break;
+                                    }else{
+                                        //alert("不正常 nocur is:"+nowcurrentActivity);
+                                        erroraocount+=1;
+                                        if(erroraocount>10){
+                                            //alert("拉回主线");
+                           //                 play("global","拉回主线");
+                                            toast("拉回主线......");
+                                           // try{    thread_abnormal.interrupt();}catch(e){};
+                                           // try{    thread_control.interrupt();}catch(e){};
+                                            try{    thread_findnews.interrupt();}catch(e){};
+                                            try{    thread_readnews.interrupt();}catch(e){};
+                                            try{    thread_signin.interrupt();}catch(e){};
+                                       //   autoread_obj
+                                             back();
+                                             thiscommon.openpackage(packagename+"/"+activityname);
+                                             while_findnews(autoread_obj);      
+                                            //back();
+                                            erroraocount=0;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                         }catch(e){
+                             toast("noaocount:"+e);
+                         }
+
+                    }
+
+
+              }//站外检测结束
+
            //   toast("while_control："+Gworkthread);
             },3000);//bindwechat注释
         }//bindwechat注释
