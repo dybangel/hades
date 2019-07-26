@@ -6,16 +6,18 @@
          "packagename":"com.cnode.blockchain",
         "activityname":"com.cnode.blockchain.MainActivity",
         "open":{
-          "featuremode":"id",
-          "id":"com.cnode.blockchain:id/bage_wrapper",
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"视频",
           },
 		"signin":{
             "sg1":{
               "action":"click_boundary_path",
               "boundary":"android.widget.LinearLayout", 
 			  "path":"0||0||2||3",
-              "featuremode":"id",
-              "id":"com.cnode.blockchain:id/bage_wrapper",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"日常任务",
             },
           },
         "abnormal":{
