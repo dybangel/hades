@@ -73,6 +73,10 @@
                "featuremode":"id",
                "id":"com.yuncheapp.android.pearl:id/tv_close",
            },
+             "ab2":{
+               "featuremode":"id",
+               "id":"com.yuncheapp.android.pearl:id/dialog_negative_button",
+           },
          },  
         "activitys":{
             "at1":"com.kuaishou.athena.MainActivity",
