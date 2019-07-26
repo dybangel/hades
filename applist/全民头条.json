@@ -16,7 +16,7 @@
               "click_text":"任务",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
-              "text":"任务大厅",
+              "text":"签到规则",
             },
             "sg2":{
               "action":"click_id",
