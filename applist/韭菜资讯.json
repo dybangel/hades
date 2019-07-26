@@ -54,8 +54,8 @@
                },
             "ar2":{
                 "deploymode":"", 
-				"deployboundary":"",
-				"deploypath":"2",
+				"deployboundary":"android.view.ViewGruop",
+				"deploypath":"",
         }, 
 		},
         "durl":"http://js.xiazaicc.com/anzhuoyy/jiucaixixun_downcc.apk"

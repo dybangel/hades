@@ -14,8 +14,9 @@
             "sg1":{
               "action":"click_text",
               "click_text":"任务",
-              "featuremode":"id",
-              "id":"com.kdlc.hnmcc:id/web_view",
+              "featuremode":"classneme_text",
+              "classname":"android.view.View",
+                "text":"邀请好友",
             },
             "sg2":{
               "action":"click_text",
