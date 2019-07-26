@@ -66,7 +66,9 @@ ui.layout(
                                     {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
                                     <radio  id="xiaomi4" text='小米4' color="{{textColor}}" checked="true"></radio>
                                     <radio id="xiaomi4s" text='小米4s' color="{{textColor}}"></radio>
-                                    <radio id="lnnl" text='LnnL' color="{{textColor}}"></radio>     
+                                    <radio id="lnnl" text='LnnL' color="{{textColor}}"></radio>  
+                                    <radio id="le" text='乐视' color="{{textColor}}"></radio>  
+
                                 </radiogroup>
                             </linear>
                         </linear>
@@ -234,7 +236,7 @@ ui.start.on("click", function(){
         toast("请先开启无障碍服务！");
         return;
     }
-    //Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl
+    //Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl le
     if(ui.xiaomi4.checked==true){
        // alert("xiaomi4");
         Gdevicetype="xiaomi4"
@@ -244,6 +246,8 @@ ui.start.on("click", function(){
     }else if(ui.lnnl.checked==true){
       //  alert("lnnl");
         Gdevicetype="lnnl"
+    }else if(ui.le.checked==true){
+        Gdevicetype="le"
     }
    // sleep(3000);
    // exit();
@@ -425,6 +429,8 @@ if("Redmi Note 2"==devicestr){
    Gdevicetype="xiaomi4"; 
 }if("R11 Plus"==devicestr){
    Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
+}if(devicestr=="Le X625" ||devicestr=="Le X820"){
+    Gdevicetype="le"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
 }
 
 //Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
@@ -895,7 +901,9 @@ function voice_devicetype(){
        play("global","note");
        play("global","2");
 
-   }
+   }else if("le"==Gdevicetype){
+    play("global","乐视");
+}
    
 
 }
@@ -1128,7 +1136,7 @@ try{
                function(){
               // thisswipe.swiperealup_custom();
                
-               if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype){
+               if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
                   thisswipe.swiperealup_custom_lnnl();
                }else{
                    thisswipe.swiperealup_custom();
@@ -1236,7 +1244,7 @@ function while_readnews(autoread_obj){
                var x=Math.round(Math.random()*(m-n))+n;
                setInterval(function(){
                  
-                   if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype){
+                   if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
                        thisswipe.swiperealup_custom_lnnl();
                     }else{
                         thisswipe.swiperealup_custom();
@@ -1942,7 +1950,7 @@ function while_findmoments(){
    thread_findmoments=threads.start(
        function(){
            setInterval(function(){
-               if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype){
+               if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
                    thisswipe.swiperealup_custom_lnnl();
                 }else{
                     thisswipe.swiperealup_custom();
