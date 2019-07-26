@@ -21,7 +21,7 @@
              "sg2":{
               "action":"click_boundary_path",
               "boundary":"android.webkit.WebView",
-                 "path":"0||0||0||0",
+                 "path":"0||1",
               "featuremode":"classname_desc",
               "classname":"android.view.View",
               "desc":"已完成",

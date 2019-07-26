@@ -52,9 +52,9 @@
                 "id":"com.cashtoutiao:id/iv_collection",
             },
             "ar2":{
-                "deploymode":"classname_text",
+                "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
-                "deploytext":"展开全文",
+                "deploydesc":"展开全文",
         }, 
         }, 
         "durl":"http://xzf.197946.com/com.cashtoutiao_4.0.3.8_56.apk"

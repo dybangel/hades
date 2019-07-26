@@ -22,8 +22,8 @@
               "action":"click_id",
               "click_id":"com.ly.taotoutiao:id/btn_sign",
               "featuremode":"classname_text",
-              "classname":"android.widget.Button",
-              "text":"红包雨",
+              "classname":"android.widget.TextView",
+              "text":"已领",
             },
           },
          "abnormal":{
