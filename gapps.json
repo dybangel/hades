@@ -14,6 +14,17 @@
              {"appnum":"072","appname":"全民头条","enable":"true"},
              {"appnum":"081","appname":"淘头条","enable":"true"},
              {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
+    
+              {"appnum":"087","appname":"赚钱小视频","enable":"true"},
+              {"appnum":"088","appname":"益头条","enable":"true"},
+             //{"appnum":"089","appname":"趣赚赚","enable":"true"},//root的手机无法登陆
+             //{"appnum":"090","appname":"火山极速版","enable":"true"},//签到
+             //{"appnum":"091","appname":"乐赚赚","enable":"true"},//未实现
+             {"appnum":"092","appname":"有看头","enable":"true"},
+             {"appnum":"093","appname":"红包头条","enable":"true"},
+             {"appnum":"094","appname":"每日一看","enable":"true"},
+             {"appnum":"095","appname":"烽火头条","enable":"true"},
+             {"appnum":"096","appname":"即趣","enable":"true"},
     //过往实现过的app如下19个
     // {"appnum":"","appname":"刷宝短视频","enable":"true"},
     // {"appnum":"","appname":"2345浏览器","enable":"true"},

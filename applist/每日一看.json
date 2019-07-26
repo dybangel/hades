@@ -1,0 +1,83 @@
+{
+      "enable":"true",  
+      "appname":"每日一看",
+      "appver":"3.3.0",
+      "interval":"3",
+      "packagename":"nsin.everydaywatch.com",
+      "activityname":"nsin.everydaywatch.com.ui.mainmodule.MainActivity",
+      "open":{
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"任 务"
+        },
+		 "signin":{
+             "sg1":{
+              "action":"click_text",
+              "click_text":"任 务",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"高佣任务",
+                    },
+             "sg2":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+                 "path":"0||0||0||0",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"已完成",
+                    },
+			},
+       "abnormal":{
+         "ab1":{
+             "featuremode":"id",
+             "id":"nsin.everydaywatch.com:id/iv_close",
+                },
+           "ab2":{
+             "featuremode":"id",
+             "id":"nsin.everydaywatch.com:id/iv_know",
+                },
+           "ab3":{
+             "featuremode":"id",
+             "id":"nsin.everydaywatch.com:id/btn_cancel",
+                },
+           "ab4":{
+             "featuremode":"id",
+             "id":"nsin.everydaywatch.com:id/tv_button",
+                },
+                },  
+	    "activitys":{
+            "at1":"nsin.everydaywatch.com.ui.mainmodule.MainActivity",
+            "at2":"nsin.everydaywatch.com.ui.activitys.MakeGoldDetailActivity",
+   
+          } , 
+      "bindwechat":{
+        "bw1":{
+          "action":"click_id",
+          "click_id":"nsin.everydaywatch.com:id/wechat_gif",
+          "featuremode":"classname_text",
+          "classname":"android.widget.Button",
+          "text":"同意",
+      },
+           "bw2":{
+       "action":"click_text",
+       "click_text":"同意",
+       "featuremode":"classname_text",
+       "classname":"android.widget.TextView",
+       "text":"任 务",
+       },
+       },
+      "autoread":{
+          "ar1":{
+                "action":"click_text",
+                "click_text":"阅 读",
+                "featuremode":"id",
+                "id":"nsin.everydaywatch.com:id/iv_common_back",
+                },
+            "ar2":{
+                "deploymode":"classname_desc",
+                "deployclassname":"android.widget.Image",
+                "deploydesc":"%E5%B1%95%E5%BC%80%E5%85%A8%E6%96%87",
+                 },
+          }, 
+      "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
+      }
