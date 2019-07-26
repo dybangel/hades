@@ -36,11 +36,13 @@ ui.layout(
                 <frame>
                 <vertical h="*">
                         {/* text label */}
-                        <button id="start" text="开始运行"/>
+                        <button id="downloadapp" text="下载新版本" style="Widget.AppCompat.Button.Borderless.Colored"/>
+                        <webview id="webview" w="*" h="*"/>
+                        <button id="start" text="开始运行" style="Widget.AppCompat.Button.Colored" textColor="#ffffff"/>
                        
 
                         {/* 空行 */}
-                        <Switch id="autoService" text="无障碍服务" checked="{{auto.service != null}}" padding="8 8 8 8" textSize="15sp"/>
+                        <Switch id="autoService" text="无障碍服务" textColor="{{textColor}}" checked="{{auto.service != null}}" padding="8 8 8 8" textSize="15sp"/>
                          {/* 勾选框 */}
                          <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="显示app版本" textSize="12sp" textColor="{{textColor}}" />
@@ -110,7 +112,7 @@ ui.layout(
                                 </radiogroup>
                             </linear>
                         </linear>     
-                    
+                        <button id="cancel_interval" text="取消倒计时"/>
 
                         {/* 分割线填充 */}
                         <vertical w="*" h="1" bg="{{textColor}}" ></vertical>
@@ -118,9 +120,10 @@ ui.layout(
                         {/* 其他功能区域相关配置 */}
                         <linear w="*" h="*" paddingLeft="8" gravity="left|center" >
                             <text text="软件列表" textSize="12sp" textColor="{{textColor}}" />
+                            <button id="appinfo" text="展开详情"   style="Widget.AppCompat.Button.Borderless.Colored" />
                         </linear>
-                        <button id="appinfo" text="详情"/>
-                        <vertical margin="0 20 0 20" id="applist">
+                       
+                        <vertical margin="0 0 0 0" id="applist">
                             {/* <linear layout_weight="1" >
                                 <checkbox id="str" text="脚本运行前开启录屏(功能未开发)" color="{{textColor}}" />
                             </linear> */}
@@ -306,6 +309,7 @@ ui.menu.on("item_click", item => {
 })
 //获取哪些要刷的app列表
 ui.appinfo.click(()=>{
+    ui.appinfo.setVisibility(8);
   //  alert(Gapps);
     try{
        
@@ -367,6 +371,31 @@ ui.longtime.on('check',(checked)=>{
         Gappinterval="1800000";
     }
 });
+ui.cancel_interval.click(()=>{
+
+    Guser_cancel=true;
+ui.cancel_interval.setVisibility(8);    
+});
+// ui.downloadapp.setVisibility(8);
+ui.downloadapp.click(()=>{
+//     var url = "http://download.dqu360.com/download/#/home";
+// //var url = "file:///storage/emulated/0/网页/试.html";
+// ui.webview.loadUrl(url);
+thread_checkver=threads.start(
+    function(){
+       var result=sysupdate_check();
+       if(result){
+        alert("已经是最新版本了");
+       } else{
+
+ urlStr = "http://download.dqu360.com/download/haiqu/#/home";//要访问的 URL
+ var result=shell("am start -a android.intent.action.VIEW -d " + urlStr, true);
+       }
+
+    }
+);
+
+});
 //ui.allrun.setText("123");
 
 //alert(ui.toolbar.getText());
@@ -407,6 +436,8 @@ Galready=false;
 Galready_loadjson=false;
 //用户是否点击了开始运行
 Guser_start=false;
+//用户是否手动取消了倒计时
+Guser_cancel=false;
 Gworkthread="";
 Gfirstrun=true;
 //是否开启调试打印  字典true false
@@ -490,6 +521,7 @@ if(Gcode_state=="ui"){
     var thisnum=10;
         UI_run_thread=threads.start(function(){
             setInterval(function(){
+               
                 if(Grunstate!="" && Galready==false){
                     Galready=true;
                     loadGapps();
@@ -498,16 +530,22 @@ if(Gcode_state=="ui"){
                 //  try{UI_run_thread.interrupt()}catch(e){};
                 };
                 if(Galready_loadjson==false){
-                    Galready_loadjson=true;            
+                    Galready_loadjson=true; 
+                    var result=sysupdate_check();
+                    if(result){  
+                    }else{
+                     play("global","发现新版本");
+                    }
                     loadGapps();
                  // alert("hahah");
 
                 }
-                if(thisnum>0){
+                if(thisnum>0 && Guser_cancel==false){
                    thisnum=thisnum-1;
                    toast("还有"+thisnum+"秒开始自动执行"); 
                 }else{
-                    if(Guser_start==false  && Galready==false){
+                    //如果用户没有点击开始运行，脚本本身也没有运行，而且用户也没有取消才进入倒计时
+                    if(Guser_start==false  && Galready==false && Guser_cancel==false){
                         Galready=true;
                         Grunstate="autoread"
                         loadGapps();
@@ -645,7 +683,8 @@ if(Grunstate=="trainwechat"){
            //当开启app版本号输出时
            try{
                            if(ui.showappver.checked==true){
-                               console.show();
+                           // 乐视不兼容console。hide
+                            //     console.show();
                            var appversion=thiscommon.getPackageVersion(packagename);
                            var appversion_server="未设置"; 
                            try{appversion_server=applist[i]["appver"];}catch(e){
@@ -653,9 +692,9 @@ if(Grunstate=="trainwechat"){
                            if("undefined"==typeof(appversion_server)){
                                var appversion_server="未设置";  
                            }
-                           log(appname+" ver: "+appversion+"\n服务器ver: "+appversion_server);
+                           toast(appname+" ver: "+appversion+"\n服务器ver: "+appversion_server);
                            sleep(5000); 
-                           console.hide();
+                        //   console.hide();
                    }
 
            }catch(e){
@@ -859,7 +898,7 @@ function ref_ui_list(){
    for(var i=0;i<Gapps.length;i++){
     var thisappname=Gapps[i]["appname"];
      appliststr='<linear id="aa" layout_weight="1" >';
-     appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'123" color="{{textColor}}" checked="true"/>'
+     appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'" color="{{textColor}}" checked="true"/>'
    //   appliststr+='<text text="次数:"';
    //   appliststr+='   marginLeft="10"';
    //   appliststr+='   marginRight="1"';
@@ -868,7 +907,7 @@ function ref_ui_list(){
    //   appliststr+='   />';
    //   appliststr+=' <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>';
      appliststr+='<linear layout_weight="1" gravity="right" >';
-     appliststr+='    <button id="android:id/open" text="" w="60" h="40" />';
+   //  appliststr+='    <button id="android:id/open" text="" w="60" h="40" />';
      appliststr+='</linear>';
      appliststr+='</linear>';
      ui.inflate( appliststr,ui.applist,true); 
@@ -2264,7 +2303,7 @@ try{
 function sysupdate_check()
 {
 // var Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json";
-http.__okhttp__.setTimeout(10000);
+//http.__okhttp__.setTimeout(10000);
 var r=http.get(Gapi_json_url);
 
 
@@ -2278,34 +2317,38 @@ if("200"==r.statusCode){
  //  alert(downloadurl);
    //如果下载json正常开始判断版本号和服务器版本号是否一致
     if(server_version!=now_version){
-               //如果版本不一致，则弹出升级弹窗
-                       var view=ui.inflate(
-                           <vertical padding="16 0">
-                               {/* <text>用户名</text>
-                               <input id="username" />
-                               <text>密码</text>
-                               <input id="password"/> */}
-                           </vertical>
-                       );
-                       dialogs.build({
-                           customView: view,
-                           title: "检测到新版本"+server_version+"，是否升级",
-                           positive: "确定升级",
-                           negative: "下次再说",
-                           wrapInScrollView: false,
-                           autoDismiss: false
-                       }).on("positive", (dialog) => {
+       return false;
+        //显示下载最新版按钮
+        
+     //   ui.downloadapp.setVisibility(3);
+            //    //如果版本不一致，则弹出升级弹窗
+            //            var view=ui.inflate(
+            //                <vertical padding="16 0">
+            //                    {/* <text>用户名</text>
+            //                    <input id="username" />
+            //                    <text>密码</text>
+            //                    <input id="password"/> */}
+            //                </vertical>
+            //            );
+            //            dialogs.build({
+            //                customView: view,
+            //                title: "检测到新版本"+server_version+"，是否升级",
+            //                positive: "确定升级",
+            //                negative: "下次再说",
+            //                wrapInScrollView: false,
+            //                autoDismiss: false
+            //            }).on("positive", (dialog) => {
                    
-                           dialog.dismiss();
-                           //用户确认升级，开始下载
-                          // alert(downloadurl);
-                           download_installapp(downloadurl);
-                          // downloadapp(downloadurl);
-                       }).on("negative", (dialog) => {
-                           dialog.dismiss();
-                       }).show();
+            //                dialog.dismiss();
+            //                //用户确认升级，开始下载
+            //               // alert(downloadurl);
+            //                download_installapp(downloadurl);
+            //               // downloadapp(downloadurl);
+            //            }).on("negative", (dialog) => {
+            //                dialog.dismiss();
+            //            }).show();
     }else{
-
+        return true;
     }
 
 }
