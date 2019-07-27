@@ -101,7 +101,12 @@ module.exports = {
         // ra.tap(535, 1687, 1);
         id('com.android.systemui:id/clear_recents').click();
     }else if("le"==devicetype){
-        thiscommon.touchreal(440,1820);
+       // thiscommon.touchreal(440,1820);
+       thiscommon.clickxy_for_ele(id("com.android.systemui:id/leui_recent_clear_all_txtview").findOnce());
+       sleep(500);
+       home();
+      // sleep(5000)
+
     }
     
 
