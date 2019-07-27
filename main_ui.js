@@ -460,7 +460,7 @@ if("Redmi Note 2"==devicestr){
    Gdevicetype="xiaomi4"; 
 }if("R11 Plus"==devicestr){
    Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
-}if(devicestr=="Le X625" ||devicestr=="Le X820"){
+}if(devicestr=="Le X625" ||devicestr=="Le X620"||devicestr=="Le X820"){
     Gdevicetype="le"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
 }
 
