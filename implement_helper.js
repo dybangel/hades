@@ -137,18 +137,64 @@ function setup_bd_while_list(){
 
     sleep(5000);
             //无障碍-Daemon
-          id("me.piebridge.prevent:id/filter_query").setText("无障碍-Daemon");
-            sleep(500);
-            className("android.widget.ListView").findOnce().child(0).click();
-            result=click("不再阻止");
-            if(result!=true){
-                back();
-            }
-            //XXXapp
-
-            //XXXapp
-
-            //XXXapp
+            try{
+                id("me.piebridge.prevent:id/filter_query").setText("无障碍-Daemon");
+                sleep(500);
+                className("android.widget.ListView").findOnce().child(0).click();
+                result=click("不再阻止");
+                if(result!=true){
+                    back();
+                }
+                }catch(e){
+                 }
+                 sleep(1000);
+                //海趣助手
+                try{
+                id("me.piebridge.prevent:id/filter_query").setText("海趣助手");
+                sleep(500); 
+                className("android.widget.ListView").findOnce().child(0).click();
+                result=click("不再阻止");
+                if(result!=true){
+                    back();
+                }
+                }catch(e){
+                }
+                sleep(1000);
+                //海趣守护
+                try{
+                id("me.piebridge.prevent:id/filter_query").setText("海趣守护1.1");
+                sleep(500);
+                className("android.widget.ListView").findOnce().child(0).click();
+                result=click("不再阻止");
+                if(result!=true){
+                    back();
+                }
+                }catch(e){
+                }
+                sleep(1000);
+                //Auto.js
+                try{
+                id("me.piebridge.prevent:id/filter_query").setText("Auto.js");
+                sleep(500);
+                className("android.widget.ListView").findOnce().child(0).click();
+                result=click("不再阻止");
+                if(result!=true){
+                    back();
+                }
+                }catch(e){
+                }
+                sleep(1000);
+                //钛备份
+                try{
+                id("me.piebridge.prevent:id/filter_query").setText("钛备份");
+                sleep(500);
+                className("android.widget.ListView").findOnce().child(0).click();
+                result=click("不再阻止");
+                if(result!=true){
+                    back();
+                }
+                }catch(e){
+                }
 
 
 }
