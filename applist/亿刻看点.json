@@ -108,6 +108,7 @@
             "ids":"com.cnode.blockchain:id/iv_common_topbar_back||com.cnode.blockchain:id/iv_detail_bottom_share",
         },
         "ar2":{
+            "upcount":"25",
             "deploymode":"classname_text",
             "deployclassname":"android.widget.TextView",
             "deploytext":"展开阅读全文",
