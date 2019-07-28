@@ -601,6 +601,7 @@ run();
 
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
+   
    ra = new RootAutomator();
 // //ra.setScreenMetrics(device.width, device.height);
 ra.setScreenMetrics(1080, 1920);
@@ -738,6 +739,28 @@ if(Grunstate=="trainwechat"){
       // alert(openstate);
         //如果打开失败跳转到下一个app，如果成功则进行延迟等待，这样节约时间
        if(openstate){
+      //测试代码开始
+      w="";
+      if(w){
+          w.setSize(100,100)
+        }else{
+            try{thread_appinfo.interrupt()}catch(e){};
+         thread_appinfo= threads.start(
+            function(){
+              w = floaty.rawWindow(
+                  <frame id="myfab" bg="#009688" radius="100" gravity="center" alpha="0.5">
+                      <text id="appname"></text>
+                  </frame>
+              );
+              w.setPosition(device.width/2-400,device.height/2);
+              w.setTouchable(false);
+              w.appname.setText("当前运行："+appname);
+      
+          
+            }
+          )
+      }
+      //测试代码结束
            toast("阅读"+Gappinterval+"毫秒......................");
           // setlastapp("",appname);
            if("popupdebug"==Grunstate){
