@@ -23,4 +23,8 @@ var r=http.get("https://raw.githubusercontent.com/dybangel/hades/master/appshow_
 var tmpstr=r.body.string();
 files.write("appshow_last.js",tmpstr);
 
-alert("老铁！同步成功！\n  main_noui.js \n myswipe.js \n mycommon.js \n appver_check.js \n app_clear_data.js \nappshow_last.js");
+var r=http.get("https://raw.githubusercontent.com/dybangel/hades/master/main_ui.js");
+var tmpstr=r.body.string();
+files.write("main_ui.js",tmpstr);
+
+alert("老铁！同步成功！\n  main_noui.js \n myswipe.js \n mycommon.js \n appver_check.js \n app_clear_data.js \nappshow_last.js \nmain_ui.js");
