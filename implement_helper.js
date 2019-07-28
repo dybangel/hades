@@ -35,7 +35,7 @@ function assist_close(){
  
 //权限设置
 function setup_secret_all(){
-  for(var k=5;k<=5;k++){
+  for(var k=1;k<=6;k++){
     clean();
     //打开设置
     var activity="com.letv.android.letvsafe/com.letv.android.letvsafe.HomeActivity"
@@ -54,6 +54,8 @@ function setup_secret_all(){
      click("通讯录")
     }else if(5==k){
      click("存储空间")
+    }else if(6==k){
+     click("相机")
     }
     sleep(5000);
     
