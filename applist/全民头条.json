@@ -23,7 +23,7 @@
               "click_id":"com.top.quanmin.app:id/tv_sign_in",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
-              "text":"签到成功",
+              "text":"已签到",
             },
 			"sg3":{
               "action":"click_id",

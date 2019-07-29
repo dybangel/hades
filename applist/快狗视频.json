@@ -41,6 +41,11 @@
             "classname":"android.view.View",
                  "text":"确认",
         },
+             "ab4":{
+            "featuremode":"classname_text",
+            "classname":"android.view.View",
+                 "text":"领取",
+        },
          }, 
         "activitys":{
             "at1":"com.xike.yipai.main.activity.MainActivityEx",

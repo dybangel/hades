@@ -14,7 +14,7 @@ function finditem(){
                  }
                  try{
                     var gg2=main.child(i).child(0).child(0).child(0).child(2).child(2);
-                    if(gg2.text()=='立即查看'){
+                    if(gg2.text()=="立即查看"){
                      play('global',i);
                      play('global','广告不点击'); 
                      return false;

@@ -53,6 +53,7 @@
                 "id":"com.zujikandian.android:id/left_btn",
                },
             "ar2":{
+                "upcount":"15",
                 "deploymode":"", 
 				"deployboundary":"android.view.ViewGruop",
 				"deploypath":"",

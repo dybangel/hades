@@ -35,6 +35,15 @@
                "featuremode":"id",
                "id":"com.cashtoutiao:id/img_close",
            },
+             "ab3":{
+               "featuremode":"classname_text",
+               "classname":"android.widget.TextView",
+                 "text":"忽略",
+           },
+            "ab4":{
+               "featuremode":"id",
+               "id":"com.cashtoutiao:id/iv_btn_cancel",
+           },
          },  
 		"activitys":{
             "at1":"com.cashtoutiao.account.ui.main.MainTabActivity",
@@ -46,8 +55,9 @@
         },
         "autoread":{
 		    "ar1":{
-                "action":"click_text",
-                "click_text":"头条",
+                "action":"click_boundary_path",
+                "boundary":"android.widget.FrameLayout",
+                "path":"0||0||0||0||2||0||0||0",
                 "featuremode":"id",
                 "id":"com.cashtoutiao:id/iv_collection",
             },
