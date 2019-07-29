@@ -14,6 +14,7 @@ importClass(android.app.AlertDialog);
 importClass(android.widget.EditText);
 importClass(java.io.File);
 
+
 var window = activity.getWindow();
 var decorView = window.getDecorView();
 var option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -47,14 +48,16 @@ ui.layout(
                          <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="显示app版本" textSize="12sp" textColor="{{textColor}}" />
                             <checkbox id="showappver" text="app版本输出" color="{{textColor}}" checked="true"/>
+                            <checkbox id="opendaemon" text="开启守护" color="{{textColor}}" checked="true"/>
+                            <checkbox id="readflag" text="阅读进度" color="{{textColor}}" checked="true"/>
                             {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
                         </linear>
                         <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="每APP阅读时间" textSize="12sp" textColor="{{textColor}}" />
                             <radiogroup id='fbName' orientation="horizontal">
                                     {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
-                                    <radio  id="shorttime" text='1分20秒' color="{{textColor}}" checked="true"></radio>
-                                    <radio id="longtime" text='30分钟' color="{{textColor}}"></radio>
+                                    <radio  id="shorttime" text='1分20秒' color="{{textColor}}" ></radio>
+                                    <radio id="longtime" text='30分钟' color="{{textColor}}" checked="true"></radio>
                                         
                                 </radiogroup>
                             {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
@@ -309,12 +312,14 @@ ui.menu.on("item_click", item => {
 })
 //获取哪些要刷的app列表
 ui.appinfo.click(()=>{
-    ui.appinfo.setVisibility(8);
+
   //  alert(Gapps);
     try{
        
         // setTimeout(() => {
-             ref_ui_list();  
+             if(ref_ui_list()){
+                ui.appinfo.setVisibility(8);
+             };  
         // }, 5000);
         
     }catch(e){
@@ -428,6 +433,10 @@ if(Gcode_state=="ui"){
 }
 //手机场景  包括室内 和户外 分别用indoor outdoor字典表示
 Genv="indoor";
+//是否根据本地于都标记，从下一个app开始阅读
+Greadflag=true;
+//是否开启守护
+Gopendaemon=true;
 //软件语音开关量 true false
 Gsoftvoice=true;
 //底层是否已经运行
@@ -442,6 +451,8 @@ Gworkthread="";
 Gfirstrun=true;
 //是否开启调试打印  字典true false
 Gdebug=false;
+//多少次找不到新闻执行一次back返回键
+Gnofindnews_countback=5;
 //所有要阅读那些app数据结构
 //30分钟=1800秒=1800000毫秒
 //1.3分钟=100000毫秒
@@ -456,12 +467,16 @@ if("Redmi Note 2"==devicestr){
    Gdevicetype="xiaominote2";
 }if("MI 4S"==devicestr){
    Gdevicetype="xiaomi4s"; 
+   try{if(Gcode_state=="ui"){ui.le.xiaomi4s=true}}catch(e){};
 }if("MI 4LTE"==devicestr){
    Gdevicetype="xiaomi4"; 
+   try{if(Gcode_state=="ui"){ui.xiaomi4.checked=true}}catch(e){};
 }if("R11 Plus"==devicestr){
    Gdevicetype="lnnl"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
+   try{if(Gcode_state=="ui"){ui.lnnl.checked=true}}catch(e){};
 }if(devicestr=="Le X625" ||devicestr=="Le X620"||devicestr=="Le X820"){
     Gdevicetype="le"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
+    try{if(Gcode_state=="ui"){ui.le.checked=true}}catch(e){};
 }
 
 //Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
@@ -523,8 +538,10 @@ if(Gcode_state=="ui"){
             setInterval(function(){
                
                 if(Grunstate!="" && Galready==false){
+                   
                     Galready=true;
                     loadGapps();
+                    init();
                     run();
                 
                 //  try{UI_run_thread.interrupt()}catch(e){};
@@ -549,6 +566,8 @@ if(Gcode_state=="ui"){
                         Galready=true;
                         Grunstate="autoread"
                         loadGapps();
+                        init();
+                       
                         run(); 
                     }
                   
@@ -594,11 +613,35 @@ function addTextView(parent) {
        
 //     }
 // );
-if(Grunstate=="noui"){
+if(Gcode_state=="noui"){
 loadGapps();
 run();
 }
-
+function init(){
+    if("ui"==Gcode_state){
+            try{
+                    if(ui.shorttime.checked){
+                        Gappinterval=100000;
+                    }
+                    if(ui.opendaemon.checked){
+                        Gopendaemon=true;
+                      //  alert("开启守护")
+                    }else{
+                        Gopendaemon=false;
+                    }
+                    if(ui.readflag.checked){
+                       // alert("阅读进度");
+                        Greadflag=true;
+                    }else{
+                        Greadflag=false;
+                    }
+                }catch(e){}
+                // "opendaemon" text="开启守护" color="{{textColor}}" checked="true"/>
+                // <checkbox id="readflag"
+        
+    }
+   
+}
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
    
@@ -611,9 +654,12 @@ events.observeKey();
 events.on("key", function(volume_down, event){
    //处理按键事件
    toast("脚本已停止运行");
+   try{
    threads.shutDownAll();
-  //ui.finish();
-   exit();
+   ui.finish();
+   exit();   
+   }catch(e){}
+  
 
 });
 });
@@ -625,6 +671,9 @@ events.on("key", function(volume_down, event){
 //读取配置文件
 
 loadappjson();
+if(Greadflag){//如果开关量打开，才根据本地app标志位确定下一个app
+    resort_applist();
+}
 //根据场景设置gps
 setgps_status();
 //如果是微信养号需要的操作
@@ -649,15 +698,20 @@ if(Grunstate=="trainwechat"){
         //拉起一次守护，保证相互守护
         // activity="com.example.linyuming.broadcasttest/com.example.linyuming.broadcasttest.MainActivity"
         // shell("am start -n " + activity, true);
-        //使用带参数的拉起
-        app.startActivity(
-            {
-            packageName:"com.example.linyuming.broadcasttest",
-            className:"com.example.linyuming.broadcasttest.MainActivity",
-            data: "start_thread",
-            root: true
-            }
-        );
+       if(Gopendaemon){//如果开关量开启，才拉起守护
+                //使用带参数的拉起守护进程
+                app.startActivity(
+                    {
+                    packageName:"com.example.linyuming.broadcasttest",
+                    className:"com.example.linyuming.broadcasttest.MainActivity",
+                    data: "start_thread",
+                    root: true
+                    }
+                );
+       }else{
+          // alert("未打开守护");
+       }
+
 
            var enable=applist[i]['enable'];
             appname=applist[i]['appname'] 
@@ -739,34 +793,37 @@ if(Grunstate=="trainwechat"){
       // alert(openstate);
         //如果打开失败跳转到下一个app，如果成功则进行延迟等待，这样节约时间
        if(openstate){
-      //测试代码开始
-      w="";
-      if(w){
-          w.setSize(100,100)
-        }else{
-            try{thread_appinfo.interrupt()}catch(e){};
-         thread_appinfo= threads.start(
-            function(){
-              w = floaty.rawWindow(
-                  <frame id="myfab" bg="#009688" radius="100" gravity="center" alpha="0.5">
-                      <text id="appname"></text>
-                  </frame>
-              );
-              w.setPosition(device.width/2-400,device.height/2);
-              w.setTouchable(false);
-              w.appname.setText("当前运行："+appname);
+    
+        try{setlastapp("1",appname); }catch(e){}
       
-          
-            }
-          )
-      }
-      //测试代码结束
-           toast("阅读"+Gappinterval+"毫秒......................");
-          // setlastapp("",appname);
-           if("popupdebug"==Grunstate){
-               while_abnormal_overtime(activitys_obj); 
-            }
-           sleep(Gappinterval);
+        //测试代码开始
+                    w="";
+                    if(w){
+                        w.setSize(100,100)
+                        }else{
+                            try{thread_appinfo.interrupt()}catch(e){};
+                        thread_appinfo= threads.start(
+                            function(){
+                            w = floaty.rawWindow(
+                                <frame id="myfab" bg="#009688" radius="100" gravity="center" alpha="0.5">
+                                    <text id="appname"></text>
+                                </frame>
+                            );
+                            w.setPosition(device.width/2-400,device.height/2);
+                            w.setTouchable(false);
+                            w.appname.setText("当前运行："+appname);
+                    
+                        
+                            }
+                        )
+                    }
+                    //测试代码结束
+                        toast("阅读"+Gappinterval+"毫秒......................");
+                        // setlastapp("",appname);
+                        if("popupdebug"==Grunstate){
+                            while_abnormal_overtime(activitys_obj); 
+                            }
+                        sleep(Gappinterval);
        }
            toast("准备开始下一个");
 
@@ -784,6 +841,7 @@ if(Grunstate=="trainwechat"){
 
 //function fun end
 /*************************以下是函数实现部分 *******************************************************************/ 
+//加载开关量
 function loadGapps(){
    if(Gjsonloadstate=="remote"){
       // alert("1");
@@ -807,7 +865,7 @@ function loadGapps(){
 
 
 }
-//加载特征码
+//根据开关量加载特征码
 function loadappjson(){
 var start='[]'
 applist=eval('(' + start + ')'); 
@@ -918,23 +976,30 @@ alert("eval error:"+e)
 //将app名称加载的UI界面上
 function ref_ui_list(){
   // alert(Gapps.length);
-   for(var i=0;i<Gapps.length;i++){
-    var thisappname=Gapps[i]["appname"];
-     appliststr='<linear id="aa" layout_weight="1" >';
-     appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'" color="{{textColor}}" checked="true"/>'
-   //   appliststr+='<text text="次数:"';
-   //   appliststr+='   marginLeft="10"';
-   //   appliststr+='   marginRight="1"';
-   //   appliststr+='   color="{{textColor}}"';
-   //   appliststr+='   size="16sp"';
-   //   appliststr+='   />';
-   //   appliststr+=' <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>';
-     appliststr+='<linear layout_weight="1" gravity="right" >';
-   //  appliststr+='    <button id="android:id/open" text="" w="60" h="40" />';
-     appliststr+='</linear>';
-     appliststr+='</linear>';
-     ui.inflate( appliststr,ui.applist,true); 
-     }
+  try{
+        for(var i=0;i<Gapps.length;i++){
+            var thisappname=Gapps[i]["appname"];
+            appliststr='<linear id="aa" layout_weight="1" >';
+            appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'" color="{{textColor}}" checked="true"/>'
+        //   appliststr+='<text text="次数:"';
+        //   appliststr+='   marginLeft="10"';
+        //   appliststr+='   marginRight="1"';
+        //   appliststr+='   color="{{textColor}}"';
+        //   appliststr+='   size="16sp"';
+        //   appliststr+='   />';
+        //   appliststr+=' <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>';
+            appliststr+='<linear layout_weight="1" gravity="right" >';
+        //  appliststr+='    <button id="android:id/open" text="" w="60" h="40" />';
+            appliststr+='</linear>';
+            appliststr+='</linear>';
+            ui.inflate( appliststr,ui.applist,true); 
+            }
+    return true;
+
+  }catch(e){
+    return false;
+  }
+
     
     
     
@@ -1188,8 +1253,8 @@ try{
 }catch(e){
    toast("this is findnews httpget and eval:"+e);
    }
-
-
+//线程执行前初始化一下没有找到新闻的次数为0；
+   var nofindnews_count=0;
    thread_findnews=threads.start(
        function(){
       // alert("this is finenew xinsheng");
@@ -1257,9 +1322,17 @@ try{
                            back();
                        }
                     
+                   }else{
+                            nofindnews_count+=1;
+                            if(nofindnews_count>Gnofindnews_countback){
+                                nofindnews_count=0;
+                                toast("初始化线程计数器");
+                                back();
+
+                            }
                    }
                }
-               this_threadcount+=1;
+              // this_threadcount+=1;
              //  toast("线程计数器 findnews count is"+this_threadcount);
                },2000);
        }
@@ -2450,31 +2523,20 @@ while(1){
 exit();
 
 }
-
+//写入标志位函数
 function setlastapp(appnum,appname){
-importClass('android.database.sqlite.SQLiteDatabase');
-importClass("android.content.ContentValues");
-importClass("android.content.Context");
-importClass("android.database.Cursor"); 
+
 //context.deleteDatabase("haiqu.db");  
-//打开或创建test.db数据库        
+//打开或创建haiqu.db数据库        
 db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null);   
-//创建person表
+//创建t_tag表
 db.execSQL("create table if not exists " +  "t_tag" + "(_id integer primary key,appnum,appname)");  
 //取出数据库内容
 //  查询  c 是 Cursor类
-//var c = db.query("t_tag", null, "", null, null, null, null, null);        
-lastappname="";
-//while  (c.moveToNext())  {              
-//    var  appnum  = c.getInt(c.getColumnIndex("appnum"));              
-//    var  appname  = c.getString(c.getColumnIndex("appname"));    
- //  continue;          
- // var  age  = c.getInt(c.getColumnIndex("age"));             
-//  lastappname=appname;
-// toastLog("数据库 appnum="  +  appnum  +  " appname="  +  appname ); 
-         
-//  continue;
-//} 
+//alert("abc");
+var c = db.query("t_tag", null, "", null, null, null, null, null);        
+// lastappname="";
+
 // if(appname==null){
 //    alert("没有记录上次阅读的app");
 // }else{
@@ -2482,7 +2544,7 @@ lastappname="";
 // }
 //ok. 删除表内容
 db.execSQL("DELETE FROM  t_tag");
-
+//alert("set 数据库 appnum="  +  appnum  +  " appname="  +  appname );
 var t_tag = new Object;        
 t_tag.appnum  =  appnum;          
 t_tag.appname  =  appname;
@@ -2494,21 +2556,78 @@ cv.put("appname", t_tag.appname);
 
  //插入ContentValues中的数据        
 db.insert("t_tag",  null,  cv);
-//db.insert("t_tag",  null,  cv);
-                 
-
-         
+//db.insert("t_tag",  null,  cv);  
 //删除表数据  ok
 //db.delete("person", null,null);  
-
 //ok. 删除表内容
 // db.execSQL("DELETE FROM  person  WHERE age>32");
-
 //关闭当前数据库      
-db.close();   
- // alert("ok");     
-//exit();
+db.close(); 
+}
+//读取本地标志位
+function readlastapp(){
+importClass('android.database.sqlite.SQLiteDatabase');
+//importClass("android.content.ContentValues");
+importClass("android.content.Context");
+importClass("android.database.Cursor"); 
+            //context.deleteDatabase("haiqu.db");  
+            //打开或创建haiqu.db数据库        
+            db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null);   
+            //创建t_tag表
+            db.execSQL("create table if not exists " +  "t_tag" + "(_id integer primary key,appnum,appname)");  
+            var c = db.query("t_tag", null, "", null, null, null, null, null);        
+            lastappname="";
+            while  (c.moveToNext())  {                         
+                var  appname  = c.getString(c.getColumnIndex("appname"));    
+            return appname;
+   
+            } 
 }
 
+//基于标志位的重新排序
+function resort_applist(){
+     
+localflag=readlastapp(); 
+newjson=[];
+Gindexof_flag="";
+
+
+//console.show();
+//查找本地标志位所述云端序列的位置
+for(var i=0;i<applist.length;i++){
+      log(applist[i]["appname"]);
+      if(localflag==applist[i]["appname"]){
+      Gindexof_flag=i;
+    //  break;
+    }else{
+    //如果标志位与云端不匹配
+    }
+}
+//如果本地标志位在云端不存在或者还没有标志位
+if(Gindexof_flag==""){
+  for(var i=0;i<applist.length;i++){
+    newjson.push(applist[i]);
+    }
+}else{
+      //从标志位后追加到新json
+      for(var i=Gindexof_flag+1;i<applist.length;i++){
+      newjson.push(applist[i]);
+      }
+      //把之前的也追加上
+      for(var i=0;i<=Gindexof_flag;i++){
+        newjson.push(applist[i]);
+      }
+      
+   
+}
+//log("------newjson-----");
+//log(newjson[0]["appname"]);
+//log("Gindexof_flag is:"+Gindexof_flag)
+   //打印新json顺序
+   for(var i=0;i<newjson.length;i++){
+    log(newjson[i]["appname"]);
+    }
+applist=newjson;
+}
 
 
