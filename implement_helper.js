@@ -36,7 +36,7 @@ function assist_close(){
 //权限设置
 function setup_secret_all(){
   for(var k=1;k<=6;k++){
-    clean();
+    clean(); 
     //打开设置
     var activity="com.letv.android.letvsafe/com.letv.android.letvsafe.HomeActivity"
      result=thiscommon.openpackage(activity);

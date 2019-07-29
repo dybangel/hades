@@ -8,7 +8,7 @@
       "open":{
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
-        "text":"小视频",
+        "text":"视频",
         },
       "abnormal":{
          "ab1":{
