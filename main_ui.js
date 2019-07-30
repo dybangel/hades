@@ -644,7 +644,10 @@ function init(){
 }
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
-   
+    if (!requestScreenCapture()) {
+        toast("权限失败");
+        exit();
+      };
    ra = new RootAutomator();
 // //ra.setScreenMetrics(device.width, device.height);
 ra.setScreenMetrics(1080, 1920);
