@@ -69,6 +69,11 @@
                "featuremode":"id",
                "id":"com.cnode.blockchain:id/tv_user_guide_bottom_close",
            },
+            "ab13":{
+               "featuremode":"classname_text",
+               "classname":"android.widget.TextView",
+                "text":"立即领取",
+           },
 		   },
 		"activitys":{
 			 "at1":"com.cnode.blockchain.MainActivity",
