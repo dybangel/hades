@@ -723,7 +723,23 @@ if(Grunstate=="trainwechat"){
             open_obj=applist[i]["open"];
             bindwechat_obj=applist[i]['bindwechat']; 
            signin_obj=applist[i]['signin'];
-
+           
+           try{
+            mulityback=applist[i]["mulityback"];
+            if("undefined"==typeof(mulityback)){
+                //如果没有声明mulityback 按照true来做 
+                mulityback=true;
+            }else{
+                //反之根据配置文件来做
+                if("false"==mulityback){
+                    mulityback=false;
+                }else if("true"==mulityback){
+                    mulityback=true;
+                }
+            }
+           }catch(e){
+                mulityback=true;
+           }
            if("undefined"==typeof(signin_obj)){
                toast(appname+".json signin数据项缺失");
            }
@@ -1219,6 +1235,12 @@ try{
                
                sleep(1000);
               
+           }else if("click_id"==action){
+           
+            try{
+                var click_id=autoread_obj["ar1"]["click_id"];
+                thiscommon.clickxy_for_ele(id(click_id).findOnce());
+            }catch(e){}
            }else if("click_boundary_path"==action){
                try{
                    var boundary=autoread_obj["ar1"]["boundary"];
@@ -1488,7 +1510,11 @@ function while_readnews(autoread_obj){
                                upcount+=1;
                                if(upcount>maxupcount){
                                    toast("返回首页...");
-                                   back();
+                                   if(mulityback){
+                                       mulityback();
+                                   }else{
+                                    back();
+                                   }
                                    Gworkthread="readnews_stop";
                                    sleep(1000);
                                    thread_readnews.interrupt();
@@ -1512,7 +1538,11 @@ function while_readnews(autoread_obj){
                                   firstcapture=false;
                                 toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
                                 toast("返回首页...");
-                                back();
+                                if(mulityback){
+                                  mulityback();
+                                }else{
+                                 back();
+                                }
                                 Gworkthread="readnews_stop";
                                 sleep(1000);
                                 thread_readnews.interrupt();
@@ -1522,7 +1552,11 @@ function while_readnews(autoread_obj){
                                 if(color!="#"+thiscolor){
                                     toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
                                     toast("返回首页...");
-                                    back();
+                                    if(mulityback){
+                                        mulityback();
+                                    }else{
+                                     back();
+                                    }
                                     Gworkthread="readnews_stop";
                                     sleep(1000);
                                     thread_readnews.interrupt();
@@ -1540,7 +1574,11 @@ function while_readnews(autoread_obj){
                                   backtrigger_maincount+=1;
                                   if(backtrigger_maincount>40){
                                     toast("滑动次数太多了，一直未获取到收益，返回一级页面")
-                                    back();
+                                    if(mulityback){
+                                        mulityback();
+                                    }else{
+                                     back();
+                                    }
                                     Gworkthread="readnews_stop";
                                     sleep(1000);
                                     thread_readnews.interrupt();
@@ -2732,6 +2770,14 @@ if(Gindexof_flag==""){
     log(newjson[i]["appname"]);
     }
 applist=newjson;
+}
+//多次返回
+function mulityback(){
+    back();
+    sleep(1000);
+    back();
+    sleep(1000);
+    back();
 }
 
 
