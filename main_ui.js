@@ -1481,6 +1481,7 @@ function while_readnews(autoread_obj){
                                 var thisx=thisxyarr[0];
                                 var thisy=thisxyarr[1];
                                 }else if("id_xyoffset_color_bool"==thisbacktrigger){
+                                    //alert("else if");
                                     //取出私有字段                                  
                                   var thisid=autoread_obj["ar2"]["id"];
                                   var thisxyoffset=autoread_obj["ar2"]["xyoffset"];
@@ -1490,10 +1491,18 @@ function while_readnews(autoread_obj){
                                                 var elex=id(thisid).findOnce().bounds().left;
                                                 var eley=id(thisid).findOnce().bounds().top;  
                                             }catch(e){
-
+                                                if(mulityback){
+                                                    funmulityback();
+                                                }else{
+                                                 back();
+                                                }
+                                                Gworkthread="readnews_stop";
+                                                sleep(1000);
+                                                thread_readnews.interrupt();
                                             }                  
-                                 var thisx=elex+thisxyoffsetarr[0];
-                                  var thisy=eley+thisxyoffsetarr[1];
+                                 var thisx=Number(elex)+Number(thisxyoffsetarr[0]);
+                                  var thisy=Number(eley)+Number(thisxyoffsetarr[1]);
+                                //  alert("else if end");
                                 }
                                     //取出共有字段
                                 var thiscolor=autoread_obj["ar2"]["color"];
@@ -1501,7 +1510,7 @@ function while_readnews(autoread_obj){
                                 var thisreswipe=autoread_obj["ar2"]["reswipe"];
                             }//else end
                    }catch(e){
-
+                       // alert("catch"+e);
                    } ///判断返回机制结束
                  
                    //执行返回机制验证
@@ -1511,7 +1520,7 @@ function while_readnews(autoread_obj){
                                if(upcount>maxupcount){
                                    toast("返回首页...");
                                    if(mulityback){
-                                       mulityback();
+                                       funmulityback();
                                    }else{
                                     back();
                                    }
@@ -1525,35 +1534,46 @@ function while_readnews(autoread_obj){
                    }else{
                        if("xy_color_bool"==thisbacktrigger||"id_xyoffset_color_bool"==thisbacktrigger){
                             //截屏
-                          var  img = captureScreen();
-                            //取出坐标值所属颜色值
-                            var color = images.pixel(img, thisx,thisy);
-                             color = colors.toString(color);
+                        
+                            try{
+                               
+                                      var  img = captureScreen();
+                                                    //取出坐标值所属颜色值
+                                                    var color = images.pixel(img, thisx,thisy);
+                                                     color= colors.toString(color);
+                                          //  alert("thisx is:"+thisx+" thisy is:"+thisy+" mcolor is:"+color+" jsoncolor is:"+thiscolor);
+                            }catch(e){ 
+
+                            }
+                         
+                         
                             //判断是否是第一次取值
                             if(firstcapture==true && thisbool==false){
+                               // alert("3");
                             //如果是第一次取值并且bool为false，那么当前坐标的值必须等于thiscolor,同时更新取值次数为2
                                 
                             //如果是第一次取值并且bool为false,但是当前坐标值不等于thiscolor，不可能这么快就有收益，这是非收益页面
                               if(color!="#"+thiscolor){
                                   firstcapture=false;
-                                toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
+                              //  toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
                                 toast("返回首页...");
                                 if(mulityback){
-                                  mulityback();
+                                  funmulityback();
                                 }else{
                                  back();
                                 }
                                 Gworkthread="readnews_stop";
                                 sleep(1000);
                                 thread_readnews.interrupt();
+                               // alert("4");
                               }
                             }else{
                                  //如果通过了上面判断，就判断当前坐标的值是不是不等于thiscolor了，如果不等于了，那么就是有收益了，返回一级页面
                                 if(color!="#"+thiscolor){
-                                    toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
+                                  //  toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
                                     toast("返回首页...");
                                     if(mulityback){
-                                        mulityback();
+                                        funmulityback();
                                     }else{
                                      back();
                                     }
@@ -1575,7 +1595,7 @@ function while_readnews(autoread_obj){
                                   if(backtrigger_maincount>40){
                                     toast("滑动次数太多了，一直未获取到收益，返回一级页面")
                                     if(mulityback){
-                                        mulityback();
+                                        funmulityback();
                                     }else{
                                      back();
                                     }
@@ -2772,7 +2792,7 @@ if(Gindexof_flag==""){
 applist=newjson;
 }
 //多次返回
-function mulityback(){
+function funmulityback(){
     back();
     sleep(1000);
     back();
