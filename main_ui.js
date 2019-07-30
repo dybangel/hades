@@ -1529,7 +1529,7 @@ function while_readnews(autoread_obj){
                                                      color= colors.toString(color);
                                           //  alert("thisx is:"+thisx+" thisy is:"+thisy+" mcolor is:"+color+" jsoncolor is:"+thiscolor);
                             }catch(e){ 
-
+                                    toast("截取图像失败...");
                             }
                          
                          
