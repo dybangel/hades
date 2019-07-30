@@ -460,6 +460,8 @@ Gnofindnews_countback=5;
 Gappinterval="1800000";
 //关闭弹窗线程的循环周期
 Gabinterval="3000";
+//block_mode阻塞验证超时秒数
+Gblock_mode_interval=5;
 //设备类型
 //自动判断
 devicestr=device.model
@@ -728,17 +730,10 @@ if(Grunstate=="trainwechat"){
             mulityback=applist[i]["mulityback"];
             if("undefined"==typeof(mulityback)){
                 //如果没有声明mulityback 按照true来做 
-                mulityback=true;
-            }else{
-                //反之根据配置文件来做
-                if("false"==mulityback){
-                    mulityback=false;
-                }else if("true"==mulityback){
-                    mulityback=true;
-                }
+                mulityback="back";
             }
            }catch(e){
-                mulityback=true;
+                mulityback="back";
            }
            if("undefined"==typeof(signin_obj)){
                toast(appname+".json signin数据项缺失");
@@ -1212,15 +1207,14 @@ function while_findnews(autoread_obj){
  // var thisborderline=autoread_obj["ar1"]["borderline"];
  // var thisitemsclassname=autoread_obj["ar1"]["itemsclassname"];
 //数据结构异常的处理 临时
-//try{
-try{
-   var action =autoread_obj["ar1"]["action"];
-}catch(e){
 
-}    
+//取出action的值
+    try{
+    var action =autoread_obj["ar1"]["action"];
+    }catch(e){
 
-
-  // alert("findnews action is"+action);
+    }    
+//根据action的值进行操作
    if("undefined"==typeof(action)){
          toast(appname+":"+"autoread_obj[\"ar1\"][\"action\"]数据结构错误");
    }else{
@@ -1253,9 +1247,6 @@ try{
            }
    }
 
-// }catch(e){
-// toast("检索"+e);
-// }
 
 try{
    var thisfeaturemode=autoread_obj["ar1"]["featuremode"];
@@ -1282,12 +1273,8 @@ try{
    var nofindnews_count=0;
    thread_findnews=threads.start(
        function(){
-      // alert("this is finenew xinsheng");
-
            setInterval(
-               function(){
-              // thisswipe.swiperealup_custom();
-               
+               function(){               
                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
                   thisswipe.swiperealup_custom_lnnl();
                }else{
@@ -1312,16 +1299,10 @@ try{
                    ele=false;
                   }
                   
-                
-                   // alert(ele);
-                  
                    if(ele){
-                      // alert(ele.bounds().centerX()+"::"+ele.bounds().centerY());
                        //如果存在，点击新闻
                       play("global","打开新闻");
                      // alert(appname);
-                    
-
                      thiscommon.clickxy_for_ele(ele);
                     // alert(ele);
                     //波波视频的处理方式，需要调试
@@ -1338,7 +1319,7 @@ try{
                            thread_findnews.interrupt();
                        }else{
                            play("global","打开失败");
-                           back();
+                           funmulityback();
                        }
                     
                    }else{
@@ -1346,7 +1327,7 @@ try{
                             if(nofindnews_count>Gnofindnews_countback){
                                 nofindnews_count=0;
                                 toast("初始化线程计数器");
-                                back();
+                                funmulityback();
 
                             }
                    }
@@ -1355,7 +1336,7 @@ try{
              //  toast("线程计数器 findnews count is"+this_threadcount);
                },2000);
        }
-   );
+   );//thread_findnews end
 }
 
 //二级页面阅读线程??可以优化
@@ -1491,11 +1472,9 @@ function while_readnews(autoread_obj){
                                                 var elex=id(thisid).findOnce().bounds().left;
                                                 var eley=id(thisid).findOnce().bounds().top;  
                                             }catch(e){
-                                                if(mulityback){
+                                                
                                                     funmulityback();
-                                                }else{
-                                                 back();
-                                                }
+                                               
                                                 Gworkthread="readnews_stop";
                                                 sleep(1000);
                                                 thread_readnews.interrupt();
@@ -1519,11 +1498,9 @@ function while_readnews(autoread_obj){
                                upcount+=1;
                                if(upcount>maxupcount){
                                    toast("返回首页...");
-                                   if(mulityback){
+                                  
                                        funmulityback();
-                                   }else{
-                                    back();
-                                   }
+                                  
                                    Gworkthread="readnews_stop";
                                    sleep(1000);
                                    thread_readnews.interrupt();
@@ -1557,11 +1534,9 @@ function while_readnews(autoread_obj){
                                   firstcapture=false;
                               //  toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
                                 toast("返回首页...");
-                                if(mulityback){
+                             
                                   funmulityback();
-                                }else{
-                                 back();
-                                }
+                               
                                 Gworkthread="readnews_stop";
                                 sleep(1000);
                                 thread_readnews.interrupt();
@@ -1572,11 +1547,9 @@ function while_readnews(autoread_obj){
                                 if(color!="#"+thiscolor){
                                   //  toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
                                     toast("返回首页...");
-                                    if(mulityback){
+                                  
                                         funmulityback();
-                                    }else{
-                                     back();
-                                    }
+                                   
                                     Gworkthread="readnews_stop";
                                     sleep(1000);
                                     thread_readnews.interrupt();
@@ -1594,11 +1567,9 @@ function while_readnews(autoread_obj){
                                   backtrigger_maincount+=1;
                                   if(backtrigger_maincount>40){
                                     toast("滑动次数太多了，一直未获取到收益，返回一级页面")
-                                    if(mulityback){
+                                   
                                         funmulityback();
-                                    }else{
-                                     back();
-                                    }
+                                  
                                     Gworkthread="readnews_stop";
                                     sleep(1000);
                                     thread_readnews.interrupt();
@@ -1939,7 +1910,8 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                                            try{    thread_readnews.interrupt();}catch(e){};
                                            try{    thread_signin.interrupt();}catch(e){};
                                       //   autoread_obj
-                                            back();
+                                            //back();
+                                            funmulityback();
                                             thiscommon.openpackage(packagename+"/"+activityname);
                                             while_findnews(autoread_obj);      
                                            //back();
@@ -2077,7 +2049,7 @@ if("classname_desc"==featuremode){
    ids_arr=thisid.split("||");
    var num=0;
    while(true){
-       if(num>15){
+       if(num>Gblock_mode_interval){
            return false;
        }
        try{
@@ -2106,10 +2078,10 @@ function block_check(checktype,f1,f2,f3){
 var num=0;
    while(1){
        num+=1;
-       if(num>15){
+       if(num>Gblock_mode_interval){
            return false;
        }
-       sleep(2000);
+       sleep(1000);
            if("classname_text"==checktype){
                try{
                    var ele=className(f1).text(f2).exists();
@@ -2793,11 +2765,33 @@ applist=newjson;
 }
 //多次返回
 function funmulityback(){
-    back();
-    sleep(1000);
-    back();
-    sleep(1000);
-    back();
+    if("false"==mulityback){
+        back();
+    }else if(mulityback.indexOf("true")>-1){
+        back();
+        var marr=mulityback.split("||");
+        sleep(marr[1]);
+        back();
+    }else{
+        //纯坐标返回方法
+        marr=mulityback.split("||");
+                breakid="";
+                for(var i=0;i<marr.length;i++){
+                    if(breakid==""){
+                        thiscommon.touchreal(marr[i],marr[i+1]);
+                          breakid=i+1;
+                    }else{
+                        if(i!=breakid){
+                            thiscommon.touchreal(marr[i],marr[i+1]);
+                            breakid=i+1;    
+                        }
+                    }
+
+                }//for end
+        back();
+    }//else end
+
+
 }
 
 
