@@ -2774,32 +2774,37 @@ applist=newjson;
 }
 //多次返回
 function funmulityback(){
-    if("false"==mulityback){
-        back();
-    }else if(mulityback.indexOf("true")>-1){
-        back();
-        var marr=mulityback.split("||");
-        sleep(marr[1]);
-        back();
-    }else{
-        //纯坐标返回方法
-        marr=mulityback.split("||");
-                breakid="";
-                for(var i=0;i<marr.length;i++){
-                    if(breakid==""){
-                        thiscommon.touchreal(marr[i],marr[i+1]);
-                          breakid=i+1;
-                    }else{
-                        if(i!=breakid){
+    try{
+        if("false"==mulityback){
+            back();
+        }else if(mulityback.indexOf("true")>-1){
+            back();
+            var marr=mulityback.split("||");
+            sleep(marr[1]);
+            back();
+        }else{
+            //纯坐标返回方法
+            marr=mulityback.split("||");
+                    breakid="";
+                    for(var i=0;i<marr.length;i++){
+                        if(breakid==""){
                             thiscommon.touchreal(marr[i],marr[i+1]);
-                            breakid=i+1;    
+                              breakid=i+1;
+                        }else{
+                            if(i!=breakid){
+                                thiscommon.touchreal(marr[i],marr[i+1]);
+                                breakid=i+1;    
+                            }
                         }
-                    }
+    
+                    }//for end
+            back();
+        }//else end
+    
+    }catch(e){
 
-                }//for end
-        back();
-    }//else end
-
+    }
+  
 
 }
 
