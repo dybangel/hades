@@ -1,6 +1,7 @@
 {
       "enable":"false",
       "appname":"趣头条", 
+      "mulityback":"109||231",
       "appver":"3.9.27.000.0529.1101",
       "interval":"3",
       "packagename":"com.jifen.qukan",
@@ -119,6 +120,12 @@
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
                 "deploydesc":"展开全文",
+                "backtrigger":"id_xyoffset_color_bool",
+                "id":"com.jifen.qukan:id/ak7",
+                "xyoffset":"75||11",
+                "color":"ffffffff",
+                "bool":"false",
+                "reswipe":"false",
 
       }, 
 	  },

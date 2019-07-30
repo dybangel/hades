@@ -1,6 +1,7 @@
 {
         "enable":"false",
         "appname":"蜜蜂看看", 
+        "mulityback":"110||193",
         "appver":"3.3.0",
         "interval":"3",
          "packagename":"com.block.factory",
@@ -58,6 +59,11 @@
                 "deploymode":"classname_text",
                 "deployclassname":"android.widget.TextView",
                 "deploytext":"展开查看全文",
+                "backtrigger":"xy_color_bool",
+                "xy":"1274||2105",
+                "color":"fff2f2f2",
+                "bool":"false",
+                "reswipe":"true",
 
         }, 
         "durl":""

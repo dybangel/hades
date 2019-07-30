@@ -1,6 +1,7 @@
 {
         "enable":"false",
         "appname":"淘头条",
+        "mulityback":"110||193",
         "appver":"3.1.6",
         "interval":"3",
          "packagename":"com.ly.taotoutiao",
@@ -16,7 +17,7 @@
               "click_text":"任务",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
-              "text":"幸运任务",
+              "text":"邀请好友",
             },
             "sg2":{
               "action":"click_id",
@@ -93,9 +94,14 @@
             "id":"com.ly.taotoutiao:id/im_item_back",
         },
         "ar2":{
-            "deploymode":"classname_desc",
+            "deploymode":"",
             "deployclassname":"android.view.View",
             "deploydesc":"展开阅读全文",
+            "backtrigger":"xy_color_bool",
+            "xy":"195||2038",
+            "color":"fffff6a7",
+            "bool":"false",
+            "reswipe":"true",
 
         },
         }, 

@@ -1,6 +1,7 @@
 {
       "enable":"true",  
       "appname":"每日一看",
+      "mulityback":"81||170",
       "appver":"3.3.0",
       "interval":"3",
       "packagename":"nsin.everydaywatch.com",
@@ -21,7 +22,7 @@
              "sg2":{
               "action":"click_boundary_path",
               "boundary":"android.webkit.WebView",
-                 "path":"0||1",
+              "path":"0||1",
               "featuremode":"classname_desc",
               "classname":"android.view.View",
               "desc":"已完成",
@@ -77,6 +78,11 @@
                 "deploymode":"classname_desc",
                 "deployclassname":"android.widget.Image",
                 "deploydesc":"%E5%B1%95%E5%BC%80%E5%85%A8%E6%96%87",
+                "backtrigger":"xy_color_bool",
+                "xy":"139||1957",
+                "color":"ffebcbcb",
+                "bool":"false",
+                "reswipe":"true",
                  },
           }, 
       "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"

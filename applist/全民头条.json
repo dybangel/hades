@@ -1,6 +1,7 @@
 {
       "enable":"false",  
       "appname":"全民头条",
+      "mulityback":"113||243",
       "appver":"2.2.1",
       "interval":"3",
          "packagename":"com.top.quanmin.app",
@@ -86,6 +87,11 @@
           "deploymode":"classname_text",
           "deployclassname":"android.widget.TextView",
           "deploytext":"展开全文",
+          "backtrigger":"xy_color_bool",
+          "xy":"190||2096",
+          "color":"fff9f6a7",
+          "bool":"false",
+          "reswipe":"true",
 
       },
       }, 

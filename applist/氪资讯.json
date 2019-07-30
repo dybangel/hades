@@ -1,7 +1,8 @@
 {
         "enable":"false",
-        "appname":"氪资讯", 
-		 "appver":"1.0.6",
+        "appname":"氪资讯",
+        "mulityback":"75||209",
+        "appver":"1.0.6",
         "interval":"3",
          "packagename":"zixun.digu.ke",
         "activityname":"zixun.digu.ke.main.HomeActivity",
@@ -80,6 +81,11 @@
                 "deploymode":"classname_text",
                 "deployclassname":"android.widget.TextView",
                 "deploytext":"展开查看全文",
+                "backtrigger":"xy_color_bool",
+                "xy":"1241||1214",
+                "color":"fffaf3f3",
+                "bool":"false",
+                "reswipe":"false",
 
         }, 
 		},

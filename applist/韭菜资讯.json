@@ -1,9 +1,10 @@
  {
         "enable":"false",
         "appname":"韭菜资讯",
+        "mulityback":"73||180",
         "appver":"2.0.7",
         "interval":"3",
-         "packagename":"com.zujikandian.android",
+        "packagename":"com.zujikandian.android",
         "activityname":"com.zujikandian.android.home.HomeActivity",
         "open":{
           "featuremode":"classname_text",
@@ -57,6 +58,11 @@
                 "deploymode":"", 
 				"deployboundary":"android.view.ViewGruop",
 				"deploypath":"",
+                "backtrigger":"xy_color_bool",
+                "xy":"1299||1817",
+                "color":"ffd6d6d6",
+                "bool":"false",
+                "reswipe":"true",
         }, 
 		},
         "durl":"http://js.xiazaicc.com/anzhuoyy/jiucaixixun_downcc.apk"

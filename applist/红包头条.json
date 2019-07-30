@@ -1,6 +1,7 @@
 {
       "enable":"true",  
       "appname":"红包头条",
+      "mulityback":"96||180",
       "appver":"1.9.9.2",
       "interval":"3",
       "packagename":"com.martian.hbnews",
@@ -89,9 +90,14 @@
                 "id":"com.martian.hbnews:id/news_detail_title",
                 },
             "ar2":{
-                "deploymode":"classname_desc",
+                "deploymode":"",
                 "deployclassname":"android.view.View",
                 "deploydesc":"查看全文",
+                "backtrigger":"xy_color_bool",
+                "xy":"1268||2315",
+                "color":"ffe84505",
+                "bool":"false",
+                "reswipe":"true",
                  },
           }, 
       "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
