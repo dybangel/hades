@@ -1280,13 +1280,7 @@ try{
                   // var ele=thisfinditem.finditem(appname);
                  
                   try{
-                 //  loadappjs();
-                   //var ele=thisfinditem();
-                   
-                      //不行 var ele=window['thisfinditem'].call(this,'param');
-                      
-                   // 没反应 var ele=eval(+'thisfinditem()');
-                   
+                   //调用finditem方式获取element进行点击
                    var ele=finditem();
                }catch(e){
                    toast("finditem error :"+e);
@@ -1346,8 +1340,12 @@ function while_readnews(autoread_obj){
    Gworkthread="readnews_start";
    play("global","开始阅读");
    var upcount=0;
+   //初始化第一次截屏为是
+   var firstcapture=true;
+   var backtrigger_maincount=0;
+   var backtrigger_subcount=0;
  
- 
+//初始化本页面随机上滑次数，如果配置文件中有有upcount则按其初始化，否则随机初始化5到10次
  try{
    var thisupcount=autoread_obj["ar2"]["upcount"];  
    if(typeof(thisupcount)=="undefined"){
@@ -1362,7 +1360,7 @@ function while_readnews(autoread_obj){
    var p=5;//最小上滑次数
    var maxupcount=Math.round(Math.random()*(o-p))+p;
  }  
- 
+ //从配置文件中取出展开更多的特征码
    var thisdeploymode=autoread_obj["ar2"]["deploymode"];
    if("undefined"==typeof(thisdeploymode)){alert(appname+"autoread_obj[\"ar2\"][\"deploymode\"]数据结构错误");}
  
@@ -1441,16 +1439,120 @@ function while_readnews(autoread_obj){
            
                        }
                    }
-                   //处理方式结束
+                   //展开更多处理方式结束
+                 
+                   //判断返回机制
+                   var thisbacktrigger="normal"
+                   try{
+                       var thisbacktrigger=autoread_obj["ar2"]["backtrigger"];
+                            if(typeof(thisbacktrigger)=="undefined"){
+                                // var thisbacktrigger="normal"
+                            }else{
+                            // 如果有特殊返回机制的情况的各种情况处理
+                                if("xy_color_bool"==thisbacktrigger){
+                                    //取出私有字段
+                                var thisxy=autoread_obj["ar2"]["xy"];
+                                var thisxyarr=thisxy.split("||");
+                                var thisx=thisxyarr[0];
+                                var thisy=thisxyarr[1];
+                                }else if("id_xypercent_color_bool"==thisbacktrigger){
+                                    //取出私有字段                                  
+                                  var thisid=autoread_obj["ar2"]["id"];
+                                  var thisxypercent=autoread_obj["ar2"]["xypercent"];
+                                }
+                                    //取出共有字段
+                                var thiscolor=autoread_obj["ar2"]["color"];
+                                var thisbool=autoread_obj["ar2"]["bool"];
+                            }//else end
+                   }catch(e){
+
+                   } ///判断返回机制结束
+                 
+                   //执行返回机制验证
+                   if("normal"==thisbacktrigger){
+                               //采用计数器方式判断是否返回一级页面
                                upcount+=1;
                                if(upcount>maxupcount){
                                    toast("返回首页...");
+                                   back();
+                                   sleep(800);
+                                   back();
+                                   sleep(800);
                                    back();
                                    Gworkthread="readnews_stop";
                                    sleep(1000);
                                    thread_readnews.interrupt();
                                }
+                            //采用坐标取色法判断是否得到收益并赶回一级页面
                                toast("间隔："+x+"毫秒");
+                   }else{
+                       if("xy_color_bool"==thisbacktrigger){
+                            //截屏
+                          var  img = captureScreen();
+                            //取出坐标值所属颜色值
+                            var color = images.pixel(img, thisx,thisy);
+                            //判断是否是第一次取值
+                            if(firstcapture==true && thisbool==false){
+                            //如果是第一次取值并且bool为false，那么当前坐标的值必须等于thiscolor,同时更新取值次数为2
+                                
+                            //如果是第一次取值并且bool为false,但是当前坐标值不等于thiscolor，不可能这么快就有收益，这是非收益页面
+                              if(color!="#"+thiscolor){
+                                  firstcapture=false;
+                                toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
+                                toast("返回首页...");
+                                back();
+                                sleep(800);
+                                back();
+                                sleep(800);
+                                back();
+                                Gworkthread="readnews_stop";
+                                sleep(1000);
+                                thread_readnews.interrupt();
+                              }
+                            }else{
+                                 //如果通过了上面判断，就判断当前坐标的值是不是不等于thiscolor了，如果不等于了，那么就是有收益了，返回一级页面
+                                if(color!="#"+thiscolor){
+                                    toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
+                                    toast("返回首页...");
+                                    back();
+                                    sleep(800);
+                                    back();
+                                    sleep(800);
+                                    back();
+                                    Gworkthread="readnews_stop";
+                                    sleep(1000);
+                                    thread_readnews.interrupt();
+                                }
+                                  //更新backtrigger子计数器+1，如果3次计数后，圆圈还没有闭合，有可能没有阅读完，也有可能是二级页面已经到底，需要触发一次下滑
+                                  backtrigger_subcount+=1;
+                                  if(backtrigger_subcount>3){
+                                    Swipe(300,500,200,1200,500);
+                                    backtrigger_subcount=0;
+                                    toast("反向滑动一次")
+                                  }
+                                  //当然也要更新backtrigger总计数器，总集数器超过50次则返回一级页面
+                                  backtrigger_maincount+=1;
+                                  if(backtrigger_maincount>40){
+                                    toast("滑动次数太多了，一直未获取到收益，返回一级页面")
+                                    back();
+                                    sleep(800);
+                                    back();
+                                    sleep(800);
+                                    back();
+                                    Gworkthread="readnews_stop";
+                                    sleep(1000);
+                                    thread_readnews.interrupt();
+                                  }
+                            }
+
+                           
+                          
+                            
+                       }//xy_color_bool end
+                    
+                   }//执行返回机制验证结束
+
+                        
                },x);
        }
    );
