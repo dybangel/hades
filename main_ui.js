@@ -1458,10 +1458,20 @@ function while_readnews(autoread_obj){
                                 var thisxyarr=thisxy.split("||");
                                 var thisx=thisxyarr[0];
                                 var thisy=thisxyarr[1];
-                                }else if("id_xypercent_color_bool"==thisbacktrigger){
+                                }else if("id_xyoffset_color_bool"==thisbacktrigger){
                                     //取出私有字段                                  
                                   var thisid=autoread_obj["ar2"]["id"];
-                                  var thisxypercent=autoread_obj["ar2"]["xypercent"];
+                                  var thisxyoffset=autoread_obj["ar2"]["xyoffset"];
+                                  var thisxyoffsetarr=thisxyoffset.split("||");
+                               
+                                            try{
+                                                var elex=id(thisid).findOnce().bounds().left;
+                                                var eley=id(thisid).findOnce().bounds().top;  
+                                            }catch(e){
+
+                                            }                  
+                                 var thisx=elex+thisxyoffsetarr[0];
+                                  var thisy=eley+thisxyoffsetarr[1];
                                 }
                                     //取出共有字段
                                 var thiscolor=autoread_obj["ar2"]["color"];
@@ -1487,7 +1497,7 @@ function while_readnews(autoread_obj){
                               // toast("间隔："+x+"毫秒");
                                toast("上滑："+upcount+"/"+maxupcount+"次");
                    }else{
-                       if("xy_color_bool"==thisbacktrigger){
+                       if("xy_color_bool"==thisbacktrigger||"id_xyoffset_color_bool"==thisbacktrigger){
                             //截屏
                           var  img = captureScreen();
                             //取出坐标值所属颜色值
