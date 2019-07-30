@@ -87,7 +87,8 @@ ui.layout(
                                     {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
                                     <radio  id="autoread" text='自动阅读' color="{{textColor}}" checked="true"></radio>
                                     <radio id="bindwechat" text='微信绑定' color="{{textColor}}"></radio>
-                                    <radio id="trainwechat" text='微信养号' color="{{textColor}}"></radio>     
+                                    <radio id="trainwechat" text='微信养号' color="{{textColor}}"></radio>    
+                                    {/* <radio id="analy" text='统计' color="{{textColor}}"></radio>   */}
                                 </radiogroup>
                             </linear>
                         </linear>
@@ -266,6 +267,9 @@ ui.start.on("click", function(){
     }else if(ui.trainwechat.checked==true){
         Grunstate="trainwechat";
       //  alert("train");
+    }else if(ui.analy.checked==true){
+        //统计收益
+        Grunstate="analy"
     }
 });
 
@@ -625,18 +629,21 @@ function init(){
                     if(ui.shorttime.checked){
                         Gappinterval=100000;
                     }
+                    
                     if(ui.opendaemon.checked){
                         Gopendaemon=true;
                       //  alert("开启守护")
                     }else{
                         Gopendaemon=false;
                     }
+
                     if(ui.readflag.checked){
                        // alert("阅读进度");
                         Greadflag=true;
                     }else{
                         Greadflag=false;
                     }
+
                 }catch(e){}
                 // "opendaemon" text="开启守护" color="{{textColor}}" checked="true"/>
                 // <checkbox id="readflag"
@@ -1077,6 +1084,8 @@ function voice_runstate(){
        runstate_voicename="广告不点击"; 
    }else if("popupdebug"==Grunstate){
        runstate_voicename="弹窗跟踪调试";
+   }else if("analy"==Grunstate){
+       runstate_voicename="统计收益"
    }
    play("global","当前工作模式");
    play("global",runstate_voicename);
@@ -1842,9 +1851,9 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                        
                    }else if("popupdebug"==Grunstate){
                        toast("弹窗跟踪调试");
-                    
-                       //这个线程不需要
-                      // sleep(5000);
+                   }else if("analy"==Grunstate){
+                     //  alert("统计收益");
+
                    }
              }
              //2如果是签到完成后要执行的工作   //3如果阅读完成后要做的工作
