@@ -1370,7 +1370,7 @@ function while_readnews(autoread_obj){
 //上滑次数
    
 
-   toast("随机上滑："+maxupcount+"次");
+ 
    thread_readnews=threads.start(
        function(){
           // while(1){
@@ -1466,6 +1466,7 @@ function while_readnews(autoread_obj){
                                     //取出共有字段
                                 var thiscolor=autoread_obj["ar2"]["color"];
                                 var thisbool=autoread_obj["ar2"]["bool"];
+                                var thisreswipe=autoread_obj["ar2"]["reswipe"];
                             }//else end
                    }catch(e){
 
@@ -1478,16 +1479,13 @@ function while_readnews(autoread_obj){
                                if(upcount>maxupcount){
                                    toast("返回首页...");
                                    back();
-                                   sleep(800);
-                                   back();
-                                   sleep(800);
-                                   back();
                                    Gworkthread="readnews_stop";
                                    sleep(1000);
                                    thread_readnews.interrupt();
                                }
                             //采用坐标取色法判断是否得到收益并赶回一级页面
-                               toast("间隔："+x+"毫秒");
+                              // toast("间隔："+x+"毫秒");
+                               toast("上滑："+upcount+"/"+maxupcount+"次");
                    }else{
                        if("xy_color_bool"==thisbacktrigger){
                             //截屏
@@ -1505,10 +1503,6 @@ function while_readnews(autoread_obj){
                                 toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
                                 toast("返回首页...");
                                 back();
-                                sleep(800);
-                                back();
-                                sleep(800);
-                                back();
                                 Gworkthread="readnews_stop";
                                 sleep(1000);
                                 thread_readnews.interrupt();
@@ -1519,10 +1513,6 @@ function while_readnews(autoread_obj){
                                     toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
                                     toast("返回首页...");
                                     back();
-                                    sleep(800);
-                                    back();
-                                    sleep(800);
-                                    back();
                                     Gworkthread="readnews_stop";
                                     sleep(1000);
                                     thread_readnews.interrupt();
@@ -1530,18 +1520,16 @@ function while_readnews(autoread_obj){
                                   //更新backtrigger子计数器+1，如果3次计数后，圆圈还没有闭合，有可能没有阅读完，也有可能是二级页面已经到底，需要触发一次下滑
                                   backtrigger_subcount+=1;
                                   if(backtrigger_subcount>3){
-                                    Swipe(300,500,200,1200,500);
+                                    if(thisreswipe=="true"){
+                                               Swipe(300,500,200,1200,500);
+                                               toast("反向滑动一次")
+                                     }
                                     backtrigger_subcount=0;
-                                    toast("反向滑动一次")
                                   }
                                   //当然也要更新backtrigger总计数器，总集数器超过50次则返回一级页面
                                   backtrigger_maincount+=1;
                                   if(backtrigger_maincount>40){
                                     toast("滑动次数太多了，一直未获取到收益，返回一级页面")
-                                    back();
-                                    sleep(800);
-                                    back();
-                                    sleep(800);
                                     back();
                                     Gworkthread="readnews_stop";
                                     sleep(1000);
