@@ -1494,6 +1494,7 @@ function while_readnews(autoread_obj){
                           var  img = captureScreen();
                             //取出坐标值所属颜色值
                             var color = images.pixel(img, thisx,thisy);
+                             color = colors.toString(color);
                             //判断是否是第一次取值
                             if(firstcapture==true && thisbool==false){
                             //如果是第一次取值并且bool为false，那么当前坐标的值必须等于thiscolor,同时更新取值次数为2
