@@ -1752,6 +1752,23 @@ function  while_abnormal(abnormal_obj){
           }
            
            
+       }else if("id_depth"){
+           try{
+                var thisid=abnormal_obj["ab"+i]["id"];
+                var thisdepth=abnormal_obj["ab"+i]["depth"];
+                
+                var elestr=id(thisid);
+                var result=elestr.exists();
+            if(result){
+                    var eledepth=elestr.findOnce().depth();
+                    if(eledepth==thisdepth){
+                        thiscommon.clickxy_for_ele(id(thisid).findOnce());
+                        }
+                    }
+           }catch(e){
+            toast("id_depth:"+e);
+           }
+         
        }else if("classname_text"==featuremode){
 
            try{
@@ -1851,7 +1868,6 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
    var outsidecount=0;
    var erroraocount=0;
    var tmpflag=0;
-   console.show();
    thread_control=threads.start( //bindwechat注释
        function(){//bindwechat注释
            setInterval(function(){//bindwechat注释
@@ -1888,7 +1904,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
            
              nowcurrentPackage=currentPackage();
             nowcurrentActivity=currentActivity();
-             log("nowcurrentActivity is:"+nowcurrentActivity);
+            
             //站外检测
              if(nowcurrentPackage!=""){
                     //这是跳转到站外的情况了
