@@ -2,7 +2,7 @@ function  finditem(){
         var ele=className(v7feature);
         var subcount=ele.findOnce(0).childCount();
         var main=ele.findOnce(0);
-        for(var i=0;i<subcount;i++){
+        for(var i=1;i<subcount;i++){
             try{
                 var gg1=main.child(i).child(0).child(0).child(1);
                 if(gg1.text()=='广告'){

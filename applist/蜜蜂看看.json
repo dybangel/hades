@@ -37,6 +37,10 @@
         "activitys":{
             "at1":"com.block.factory.MainActivity",
             "at2":"com.block.factory.yidian.StaticNewsDetailActivity",
+            "at3":"com.block.factory.video.VideoDetailActivity",
+            
+            "at4":"com.block.factory.activity.LoginActivity",
+            "at5":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
           } , 
         "bindwechat":{
         "bw1":{
@@ -50,8 +54,8 @@
         },
         "autoread":{
 		 "ar1":{
-                "action":"click_text",
-                "click_text":"资讯",
+                "action":"click_id",
+                "click_id":"com.block.factory:id/tabNews",
                 "featuremode":"id",
                 "id":"com.block.factory:id/back",
             },

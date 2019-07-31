@@ -1,7 +1,7 @@
 {
         "enable":"false",
         "appname":"惠头条",
-        "mulityback":"84||170||55||80",
+        "mulityback":"true||2000",
         "appver":"4.1.1.0",		
         "interval":"3",
          "packagename":"com.cashtoutiao",
@@ -56,6 +56,10 @@
 		"activitys":{
             "at1":"com.cashtoutiao.account.ui.main.MainTabActivity",
             "at2":"com.cashtoutiao.news.ui.NewsDetailActivity",
+            "at3":"com.cashtoutiao.alivideodetail.AliVideoDetailActivity",
+            
+            "at4":"com.cashtoutiao.account.ui.LoginActivity",
+            "at5":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
           } , 
         "bindwechat":{
        

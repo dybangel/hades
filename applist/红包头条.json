@@ -49,6 +49,9 @@
 	    "activitys":{
             "at1":"com.martian.hbnews.activity.MainActivity",
             "at2":"com.martian.hbnews.libnews.activity.MartianNewsWebViewActivity",
+            
+            "at3":"com.martian.rpcard.activity.MartianPhonePopupLoginActivity",
+            "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
    
           } , 
       "bindwechat":{

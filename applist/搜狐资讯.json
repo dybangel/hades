@@ -1,6 +1,7 @@
 {
         "enable":"false",
         "appname":"搜狐资讯", 
+        "mulityback":"67||161",
         "appver":"3.7.37",
         "interval":"3",
         "packagename":"com.sohu.infonews",
@@ -59,10 +60,19 @@
             "featuremode":"id",
             "id":"com.sohu.infonews:id/btn_receive",
         },
+            "ab7":{
+            "featuremode":"id",
+            "id":"com.sohu.infonews:id/tv_replay",
+        },
          },
         "activitys":{
 			 "at1":"com.sohu.quicknews.homeModel.activity.HomeActivity",
 			 "at2":"com.sohu.quicknews.articleModel.activity.DetailActivity",
+             "at3":"com.sohu.quicknews.articleModel.activity.VideoDetailActivity",
+             
+             "at4":"com.sohu.quicknews.userModel.activity.ChoiceLoginTypeActivity",
+             "at5":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+            
 
 		   } ,
         "bindwechat":{
@@ -99,6 +109,12 @@
             "deploymode":"classname_desc",
             "deployclassname":"android.view.View",
             "deploydesc":"展开全文",
+            "backtrigger":"id_xyoffset_color_bool",
+            "id":"com.sohu.infonews:id/counting_img",
+            "xyoffset":"91||16",
+            "color":"ffe5e5e5",
+            "bool":"false",
+            "reswipe":"true",
 
         },
         }, 

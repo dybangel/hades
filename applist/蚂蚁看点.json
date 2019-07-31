@@ -1,7 +1,8 @@
 {
         "enable":"false",
         "appname":"蚂蚁看点",
-        "appver":"5.5.2.1",
+        "mulityback":"25||152",
+        "appver":"5.4.6",
         "interval":"3",
         "packagename":"com.ldzs.zhangxin",
         "activityname":"com.weishang.wxrd.activity.MainActivity",
@@ -32,10 +33,19 @@
             "featuremode":"id",
             "id":"com.ldzs.zhangxin:id/iv_close",
            },
+            "ab4":{
+            "featuremode":"classname_text",
+            "classname":"android.widget.TextView",
+            "text":"下次再说",
+           },
          },  
         "activitys":{
             "at1":"com.weishang.wxrd.activity.MainActivity",
             "at2":"com.weishang.wxrd.activity.WebViewActivity",
+            
+            "at3":"com.weishang.wxrd.activity.LoginActivity",
+            "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+            
           } , 
         "bindwechat":{
           "bw1":{
@@ -71,6 +81,12 @@
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
                 "deploydesc":"点击查看全文",
+                "backtrigger":"id_xyoffset_color_bool",
+                "id":"com.ldzs.zhangxin:id/news_income_container",
+                "xyoffset":"101||36",
+                "color":"ffeeecec",
+                "bool":"false",
+                "reswipe":"true",
 
         }, 
         },

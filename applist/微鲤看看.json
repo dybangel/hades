@@ -1,6 +1,7 @@
      {
         "enable":"false",
         "appname":"微鲤看看", 
+         "mulityback":"true||2000",
 		 "appver":"1.5.0",
         "interval":"3",
          "packagename":"cn.weli.story",
@@ -47,16 +48,14 @@
            },
 		   "ab2":{
                "featuremode":"id",
-               "id":"cn.weli.story:id/text_open",
-           },
-		   "ab3":{
-               "featuremode":"id",
                "id":"cn.weli.story:id/text_ok",
            },
          },  
 		"activitys":{
             "at1":"cn.etouch.ecalendar.MainActivity",
             "at2":"cn.etouch.ecalendar.tools.life.LifeDetailsActivity",
+            
+            "at3":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
    
           } , 
         "bindwechat":{
@@ -100,6 +99,11 @@
             "deploymode":"classname_text",
             "deployclassname":"android.widget.TextView",
             "deploytext":"展开查看全文",
+            "backtrigger":"xy_color_bool",
+            "xy":"1258||2164",
+            "color":"ffffd412",
+            "bool":"false",
+            "reswipe":"true",
 
         },
         }, 

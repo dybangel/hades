@@ -1,6 +1,7 @@
 {
       "enable":"true", 
-      "appname":"头条来了", 
+      "appname":"头条来了",
+      "mulityback":"true||2000",
 	  "appver":"3.0.6.1",
       "interval":"3",
       "packagename":"toutiao.yiimuu.appone",
@@ -28,10 +29,22 @@
              "featuremode":"id",
              "id":"toutiao.yiimuu.appone:id/iv_close",
          },
+          "ab3":{
+             "featuremode":"id",
+             "id":"toutiao.yiimuu.appone:id/reading_close",
+         },
+          "ab4":{
+             "featuremode":"id",
+             "id":"toutiao.yiimuu.appone:id/interaction_close",
+         },
        },  
 	  "activitys":{
             "at1":"toutiao.yiimuu.appone.main.HomeActivity",
             "at2":"toutiao.yiimuu.appone.main.home.third.content.detail.article.ThirdArticleDetailActivity",
+            "at3":"toutiao.yiimuu.appone.main.home.third.content.detail.video.ThirdVideoDetailActivity",
+          
+            "at4":"toutiao.yiimuu.appone.main.login2.Login2Activity",
+            "at5":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
           } , 
       "bindwechat":{
       },
@@ -46,7 +59,14 @@
                 "deploymode":"classname_text",
                 "deployclassname":"android.widget.TextView",
                 "deploytext":"展开查看全文",
+                "backtrigger":"xy_color_bool",
+                "xy":"1237||1215",
+                "color":"fffff7f7",
+                "bool":"false",
+                "reswipe":"false",
+      
+      },
       }, 
       "durl":""
-      }
+      
     }

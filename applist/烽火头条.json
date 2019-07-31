@@ -37,6 +37,9 @@
 	    "activitys":{
             "at1":"com.tianfeng.fenghuotoutiao.ui.activity.other.MainActivity",
             "at2":"com.tianfeng.fenghuotoutiao.ui.activity.news.NewsDetailActivity2",
+            
+            "at3":"com.tianfeng.fenghuotoutiao.ui.activity.other.LoginActivityFirst",
+            "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
    
           } , 
       "bindwechat":{
@@ -57,8 +60,8 @@
        },
       "autoread":{
           "ar1":{
-                "action":"click_text",
-                "click_text":"看点",
+                "action":"click_id",
+                "click_id":"com.tianfeng.fenghuotoutiao:id/tv_tab_text",
                 "featuremode":"id",
                 "id":"com.tianfeng.fenghuotoutiao:id/ivBack",
                 },

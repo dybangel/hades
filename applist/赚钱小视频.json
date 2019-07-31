@@ -1,6 +1,7 @@
 {
       "enable":"true",  
       "appname":"赚钱小视频",
+      "mulityback":"118||2473||68||174",
       "appver":"1.3.0",
       "interval":"3",
       "packagename":"com.sljh.zqxsp",
@@ -41,6 +42,9 @@
 	    "activitys":{
             "at1":"com.cy.browser.BrowserActivity",
             "at2":"com.cy.browser.money.activity.VideoPlaysActivity",
+            
+            "at3":"com.cy.browser.money.activity.LoginActivity",
+            "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
    
           } , 
       "bindwechat":{
@@ -77,6 +81,11 @@
                 "deploymode":"",
                 "deployclassname":"android.widget.TextView",
                 "deploytext":"展开全文",
+                "backtrigger":"xy_color_bool",
+                "xy":"111||2044",
+                "color":"ffffffff",
+                "bool":"false",
+                "reswipe":"true",
                  },
           }, 
       "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"

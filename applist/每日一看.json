@@ -2,7 +2,7 @@
       "enable":"true",  
       "appname":"每日一看",
       "mulityback":"81||170",
-      "appver":"3.3.0",
+      "appver":"3.4.0",
       "interval":"3",
       "packagename":"nsin.everydaywatch.com",
       "activityname":"nsin.everydaywatch.com.ui.mainmodule.MainActivity",
@@ -49,6 +49,9 @@
 	    "activitys":{
             "at1":"nsin.everydaywatch.com.ui.mainmodule.MainActivity",
             "at2":"nsin.everydaywatch.com.ui.activitys.MakeGoldDetailActivity",
+            
+            "at3":"nsin.everydaywatch.com.ui.login.LoginActivity",
+            "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
    
           } , 
       "bindwechat":{
@@ -69,8 +72,8 @@
        },
       "autoread":{
           "ar1":{
-                "action":"click_text",
-                "click_text":"阅 读",
+                "action":"click_id",
+                "click_id":"nsin.everydaywatch.com:id/tv_tab_title",
                 "featuremode":"id",
                 "id":"nsin.everydaywatch.com:id/iv_common_back",
                 },

@@ -1,7 +1,8 @@
  {
         "enable":"false",
-        "appname":"北京知天下", 
-		 "appver":"1.8.5",
+        "appname":"北京知天下",
+        "mulityback":"true||1000",
+        "appver":"1.8.5",
         "interval":"3",
          "packagename":"com.knowworld.news",
         "activityname":"cent.news.com.newscent.splash.SplashActivity",
@@ -55,7 +56,13 @@
          },  
 		   "activitys":{
             "at1":"cent.news.com.newscent.splash.SplashActivity",
-            "at2":"cent.news.com.newscent.webview.WebiewActivity",
+            "at2":"cent.news.com.newscent.webview.WebViewActivity",
+            "at3":"cent.news.com.newscent.webview.VideoWebViewActivity",
+               
+            "at4":"cent.news.com.newscent.MainActivity",
+            "at5":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+            "at6":"cent.news.com.newscent.login.LoginActivity",
+               
           } , 
         "bindwechat":{
             "bw1":{
@@ -89,8 +96,13 @@
             },
             "ar2":{
                 "deploymode":"classname_desc",
-                "deployclassname":"android.widget.Image",
-                "deploydesc":"a9a923db9fd610a7281fcf8f32c5f3077fa44bdb",
+                "deployclassname":"android.view.View",
+                "deploydesc":"展开全文",
+                "backtrigger":"xy_color_bool",
+                "xy":"1270||2196",
+                "color":"ffff6249",
+                "bool":"false",
+                "reswipe":"true",
 
             },
         }, 

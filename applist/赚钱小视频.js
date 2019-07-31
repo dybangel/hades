@@ -14,7 +14,15 @@ function finditem(){
                         return false;
                }  
            }catch(e){
-           }
+           }try{
+            var gg2=main.child(i).child(2).child(0);
+            if(gg2.text()=="游戏任务"){
+                     play("global",i);
+                     play("global","广告不点击");
+                     return false;
+            }  
+        }catch(e){
+        }
            try{
             play('global',i);
             play('global','点击');

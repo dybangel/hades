@@ -1,7 +1,8 @@
 {
       "enable":"true",  
       "appname":"闪电盒子",
-      "appver":"5.3.0.8",
+      "mulityback":"",
+      "appver":"5.3.3.5",
       "interval":"3",
       "packagename":"c.l.a",
       "activityname":"c.l.a.views.AppBoxHomeActivity",
@@ -19,8 +20,7 @@
               "text":"余额账户",
             },
 			"sg2":{
-              "action":"click_boundary_path",
-			  "boundary":"android.support.",
+              "action":"click_id",
               "click_id":"c.l.a:id/red_pack_signed_btn",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
@@ -44,14 +44,29 @@
              "featuremode":"id",
              "id":"c.l.a:id/close_sign_dialog_btn",
                 },
-			"ab5":{
+           "ab5":{
+             "featuremode":"click_boundary_path",
+             "boundary":"android.support.v4.view.ViewPager",
+               "path":"3||0||0||0||4",
+                },
+           "ab6":{
              "featuremode":"id",
+             "id":"c.l.a:id/img_close",
+                },
+           "ab7":{
+             "featuremode":"id_depth",
              "id":"c.l.a:id/image1",
+             "depth":"11",
                 },	
                 },  
 	    "activitys":{
             "at1":"c.l.a.views.AppBoxHomeActivity",
             "at2":"c.l.a.feed.wyyl.FeedArticleDetailActivitySub2",
+            "at3":"c.l.a.views.x5webkit.X5WebViewActivity",
+            "at4":"c.l.a.feed.wyyl.FeedVideoDetailActivitySub1",
+            
+            "at5":"c.l.a.views.AppBoxLoginWithWeChatActivity",
+            "at6":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
    
           } , 
       "bindwechat":{

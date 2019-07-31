@@ -1,6 +1,7 @@
 {
   "enable":"false",
-  "appname":"东方头条", 
+  "appname":"东方头条",
+  "mulityback":"false",
   "appver":"2.4.1",
   "interval":"3",
    "packagename":"com.songheng.eastnews",
@@ -21,7 +22,7 @@
 		"sg2":{
 		  "action":"click_boundary_path",
 		  "boundary":"android.webkit.WebView",
-          "path":"0||0||1||1",
+          "path":"0||0||5",
 		  "featuremode":"classname_desc",
 		  "classname":"android.widget.TextView",
 		  "desc":"sign_active_okSign",
@@ -38,39 +39,39 @@
          "featuremode":"id",
          "id":"com.songheng.eastnews:id/iv_close",
      },
-   "ab2":{
+ "ab2":{
          "featuremode":"id",
-         "id":"com.songheng.eastnews:id/w3",
+         "id":"com.songheng.eastnews:id/a_v1",
      },
  "ab3":{
-         "featuremode":"id",
-         "id":"com.songheng.eastnews:id/a_v1"
-     },
-  "ab4":{
 	 "featuremode":"id",
-	 "id":"com.songheng.eastnews:id/wb"
+	 "id":"com.songheng.eastnews:id/xu",
+ },
+ "ab4":{
+	 "featuremode":"id",
+	 "id":"com.songheng.eastnews:id/wz",
  },
  "ab5":{
 	 "featuremode":"id",
-	 "id":"com.songheng.eastnews:id/xu"
+	 "id":"com.songheng.eastnews:id/u9",
  },
  "ab6":{
 	 "featuremode":"id",
-	 "id":"com.songheng.eastnews:id/wz"
+	 "id":"com.songheng.eastnews:id/wt",
  },
- "ab7":{
-	 "featuremode":"id",
-	 "id":"com.songheng.eastnews:id/u9"
- },
- "ab8":{
-	 "featuremode":"id",
-	 "id":"com.songheng.eastnews:id/wt"
+    "ab7":{
+	 "featuremode":"id_depth",
+	 "id":"com.songheng.eastnews:id/wb",
+     "depth":"4",
  },
  },
   "activitys":{
       "at1":"com.songheng.eastfirst.common.view.activity.MainActivity",
-      "at2":"com.songheng.eastfirst.business.newsdetail.viewactivity.NewsDetailH5Activity",
-
+      "at2":"com.songheng.eastfirst.business.newsdetail.view.activity.NewsDetailH5Activity",
+      "at3":"com.songheng.eastfirst.business.video.view.activity.VideoDetailActivity",
+      
+      "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+      "at5":"com.songheng.eastfirst.business.login.view.activity.LoginActivity",
     } , 
   "bindwechat":{
 
@@ -86,6 +87,12 @@
           "deploymode":"classname_desc",
           "deployclassname":"android.view.View",
           "deploydesc":"点击查看全文",
+          "backtrigger":"id_xyoffset_color_bool",
+          "id":"com.songheng.eastnews:id/ar2",
+          "xyoffset":"118||46",
+          "color":"fffff4f0",
+          "bool":"false",
+          "reswipe":"true",
 
   }, 
 },

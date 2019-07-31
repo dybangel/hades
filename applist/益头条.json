@@ -44,6 +44,11 @@
             "at1":"com.huanxi.renrentoutiao.ui.activity.other.MainActivity",
             "at2":"com.huanxi.renrentoutiao.ui.activity.news.NewsDetailActivity2",
             "at3":"com.huanxi.renrentoutiao.ui.activity.video.VideoItemDetailActivity",
+            "at4":"com.huanxi.renrentoutiao.ui.activity.user.UserTaskActivity",
+            
+            "at5":"com.huanxi.renrentoutiao.ui.activity.other.LoginActivity",
+            "at6":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+            
    
           } , 
         "bindwechat":{
@@ -78,8 +83,8 @@
         },
         "autoread":{
 		 "ar1":{
-                "action":"click_text",
-                "click_text":"看点",
+                "action":"click_id",
+                "click_id":"com.company.ytt:id/tv_tab_icon",
                 "featuremode":"id",
                 "id":"com.company.ytt:id/iv_back",
             },

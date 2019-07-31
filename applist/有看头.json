@@ -1,6 +1,7 @@
 {
       "enable":"true",  
       "appname":"有看头",
+      "mulityback":"57||165",
       "appver":"3.6.3",
       "interval":"3",
       "packagename":"com.kuaima.kuailai",
@@ -37,10 +38,20 @@
              "classname":"android.widget.Button",
               "desc":"播放 开始播放",
                  },
+          "ab5":{
+             "featuremode":"id",
+             "id":"com.kuaima.kuailai:id/red_packet_close",
+                 },
+          "ab6":{
+             "featuremode":"id",
+             "id":"com.kuaima.kuailai:id/lead_close",
+                 },
                  },  
       "activitys":{
             "at1":"com.kuaima.kuailai.MainInterfaceActivity",
             "at2":"com.kuaima.kuailai.news.ui.activity.NewsDetailActivity",
+          
+            "at3":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
           } , 
       "bindwechat":{
         "bw1":{
@@ -60,8 +71,8 @@
                    },
       "autoread":{
            "ar1":{
-                "action":"click_text",
-                "click_text":"内容",
+                "action":"click_id",
+                "click_id":"com.kuaima.kuailai:id/tab_item_icon",
                 "featuremode":"id",
                 "id":"com.kuaima.kuailai:id/head_bar_left_button",
                   },
@@ -69,6 +80,11 @@
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
                 "deploydesc":"查看全文",
+                "backtrigger":"xy_color_bool",
+                "xy":"1289||2027",
+                "color":"ffffdc58",
+                "bool":"false",
+                "reswipe":"true",
                  },
                  }, 
       "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
