@@ -125,6 +125,7 @@ ui.layout(
                         <linear w="*" h="*" paddingLeft="8" gravity="left|center" >
                             <text text="软件列表" textSize="12sp" textColor="{{textColor}}" />
                             <button id="appinfo" text="展开详情"   style="Widget.AppCompat.Button.Borderless.Colored" />
+                            <button id="checklocalapp" text="执行app检测 (请允许浏览器访问)"   style="Widget.AppCompat.Button.Borderless.Colored" />
                         </linear>
                        
                         <vertical margin="0 0 0 0" id="applist">
@@ -333,6 +334,18 @@ ui.appinfo.click(()=>{
   
  
 });
+ui.checklocalapp.click(()=>{
+    try{
+        try{thread_checklocalapp.interrupt()}catch(e){}
+        thread_checklocalapp=threads.start(
+            function(){
+                checklocalapp();
+            }
+        );
+    }catch(e){
+
+    }
+});
 
 
 ui.indoor.on('check',(checked)=>{
@@ -495,7 +508,8 @@ Gjsonloadstate="remote";
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";
 //Gapplistpath_remote="http://192.168.31.89/haiqu/applist/";
 //Gapps,哪些app要刷的开关量json云端文件路径
-Gappspath_remote="http://download.dqu360.com:81/haiqu/gapps.json";
+//Gappspath_remote="http://download.dqu360.com:81/haiqu/gapps.json";
+Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps";
 //Gappspath_remote="http://192.168.31.89/haiqu/gapps.json";
 //api 接口文件路径
 
@@ -553,12 +567,14 @@ if(Gcode_state=="ui"){
                 //  try{UI_run_thread.interrupt()}catch(e){};
                 };
                 if(Galready_loadjson==false){
+                    //这里在app弹出界面后自动执行
                     Galready_loadjson=true; 
                     var result=sysupdate_check();
                     if(result){  
                     }else{
                      play("global","发现新版本");
                     }
+                
                     loadGapps();
                  // alert("hahah");
 
@@ -667,6 +683,7 @@ events.on("key", function(volume_down, event){
    //处理按键事件
    toast("脚本已停止运行");
    try{
+    try{thread_appinfo.interrupt()}catch(e){};
    threads.shutDownAll();
    ui.finish();
    exit();   
@@ -869,7 +886,7 @@ function loadGapps(){
        http.__okhttp__.setTimeout(10000);
        var r=http.get(Gappspath_remote);
        if("200"==r.statusCode){
-         //  alert(r.body.string());
+          // alert(r.body.string());
            var tmpstr=r.body.string();
            Gapps=eval('('+tmpstr+')');
           // alert(Gapps);
@@ -1542,7 +1559,7 @@ function while_readnews(autoread_obj){
                               if(color!="#"+thiscolor){
                                   firstcapture=false;
                               //  toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
-                                toast("返回首页...");
+                                toast("非收益页面，返回首页...");
                              
                                   funmulityback();
                                
@@ -1834,6 +1851,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
    var outsidecount=0;
    var erroraocount=0;
    var tmpflag=0;
+   console.show();
    thread_control=threads.start( //bindwechat注释
        function(){//bindwechat注释
            setInterval(function(){//bindwechat注释
@@ -1870,7 +1888,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
            
              nowcurrentPackage=currentPackage();
             nowcurrentActivity=currentActivity();
-
+             log("nowcurrentActivity is:"+nowcurrentActivity);
             //站外检测
              if(nowcurrentPackage!=""){
                     //这是跳转到站外的情况了
@@ -1909,7 +1927,9 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                                    }else{
                                        //alert("不正常 nocur is:"+nowcurrentActivity);
                                        erroraocount+=1;
+                                       log("erroraocount is:"+erroraocount);
                                        if(erroraocount>10){
+                                          
                                            //alert("拉回主线");
                           //                 play("global","拉回主线");
                                            toast("拉回主线......");
@@ -2807,5 +2827,87 @@ function funmulityback(){
   
 
 }
+//检测本地手机app是否符合要求
+//加载特征码
+function checklocalapp(){
 
+    var start='[]'
+    var tempstr="";
+    var appname="";
+    var voiceplaynum=0;
+    var thisjsonstr="";
+    for(var i=0;i<Gapps.length;i++){
+    
+        appname=Gapps[i]["appname"];
+        appnum=Gapps[i]["appnum"];
+        if("true"==Gapps[i]['enable']){
+            //如果是云端特征码机制
+            if(Gjsonloadstate=="remote"){
+                if(voiceplaynum==0){
+                  play("global","加载");
+              //    play("global","云端");
+                  play("global","特征码");
+                  voiceplaynum+=1;
+                }
+              
+                http.__okhttp__.setTimeout(10000);
+                var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+             
+                if(r.statusCode=="200"){  
+                    var jsonstr=r.body.string();
+               
+                    try{
+                        tempjson=eval('(' + jsonstr + ')');
+                        var pname=tempjson['packagename'];
+                        var appname=tempjson['appname'];
+                        var appver=tempjson['appver'];
+                        var result=app.getAppName(pname);
+    
+                        if(result==null){
+                            thisjsonstr+='{"appnum":"'+appnum+'","appname":"'+appname+'","state":"您未安装该APP，请安装"},';
+                        }else{
+                            var localappver=thiscommon.getPackageVersion(pname);
+                         
+                            if(localappver!=appver){
+                        
+                          thisjsonstr+='{"appnum":"'+appnum+'","appname":"'+appname+'","state":"您的版本'+localappver+' 与云端版本'+appver+'不匹配"},';
+                
+                            }
+    
+    
+                        
+                        }
+             
+                    }catch(e){
+                        alert(appname+" 远程数据结构错误");
+                    }
+                  
+                }else{
+                    alert("没有找到远程"+appname+".json");
+                }
+               
+    
+            //如果是本地特征码机制
+            }
+       
+    
+             
+    
+        }else{
+    
+        }
+    
+    }
+
+    if(""!=thisjsonstr){
+        thisjsonstr='['+thisjsonstr+']';
+        log(thisjsonstr);
+       urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showdiffapplist&jsonstr='+thisjsonstr;
+
+         var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
+    }else{
+        alert("您手机上的APP与云端一致，请定期检测");
+    }
+     
+    }
 
