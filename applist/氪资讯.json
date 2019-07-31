@@ -44,6 +44,9 @@
 		"activitys":{
             "at1":"zixun.digu.ke.main.HomeActivity",
             "at2":"zixun.digu.ke.main.home.details.news.NewDetailsActivity",
+			"at3":"zixun.digu.ke.main.home.details.video.VideoDetail2Activity",
+			
+	        "at4":"zixun.digu.ke.main.login2.Login2Activity",
           } , 
         "bindwechat":{
           "bw1":{
@@ -71,8 +74,9 @@
         },
         "autoread":{
 		 "ar1":{
-                "action":"click_text",
-                "click_text":"首页",
+                "action":"click_boundary_path",
+                "boundary":"android.widget.RelativeLayout",
+				"path":"3||0",
                 "featuremode":"id",
                 "id":"zixun.digu.ke:id/back",
             },

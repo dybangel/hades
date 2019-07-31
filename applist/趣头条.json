@@ -76,6 +76,8 @@
             "at1":"com.jifen.qkbase.main.MainActivity",
             "at2":"com.jifen.qukan.content.newsdetail.news.NewsDetailNewActivity",
             "at3":"com.jifen.qukan.content.newsdetail.video.VideoNewsDetailNewActivity",
+			
+			"at4":"com.jifen.qukan.login.V2MainLoginActivity",
           } , 
       "bindwechat":{
         "bw1":{

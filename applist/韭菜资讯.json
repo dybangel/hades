@@ -40,16 +40,18 @@
          },  
 		"activitys":{
             "at1":"com.zujikandian.android.home.HomeActivity",
-            "at2":"com.zuijikandian.android.article.ArticleActivity",
-   
+            "at2":"com.zujikandian.android.article.ArticleActivity",
+			
+            "at3":"com.zujikandian.android.user.LoginActivity",
           } , 
         "bindwechat":{
     
         },
         "autoread":{
 		 "ar1":{
-                "action":"click_text",
-                "click_text":"头条",
+                "action":"click_boundary_path",
+                "boundary":"android.widget.TabHost",
+				"path":"1||0||0",
                 "featuremode":"id",
                 "id":"com.zujikandian.android:id/left_btn",
                },

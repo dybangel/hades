@@ -10,7 +10,7 @@
           "classname":"android.widget.TextView",
           "text":"任务"
           },
-		   "signin":{
+		"signin":{
             "sg1":{
               "action":"click_text",
               "click_text":"任务",
@@ -49,8 +49,8 @@
          }, 
         "activitys":{
             "at1":"com.xike.yipai.main.activity.MainActivityEx",
-            
-   
+			
+            "at2":"com.xike.yipai.view.activity.LoginActivity",
           } , 
         "bindwechat":{
           "bw1":{
@@ -78,8 +78,8 @@
         },
         "autoread":{
 		 "ar1":{
-                "action":"click_text",
-                "click_text":"首页",
+                "action":"click_id",
+                "click_id":"com.xike.yipai:id/fl_bottom_nav_home",
                 "featuremode":"id",
                 "id":"com.xike.yipai:id/rl_bottom_nav_wide_video",
             },

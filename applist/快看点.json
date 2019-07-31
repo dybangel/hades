@@ -81,6 +81,7 @@
         "activitys":{
             "at1":"com.kuaishou.athena.MainActivity",
             "at2":"com.kuaishou.athena.business.detail2.FeedDetailActivity",
+			"at3":"com.kuaishou.athena.business.smallvideo.ui.SmallVideoDetailActivity",
           } , 
         "bindwechat":{
           "bw1":{
@@ -107,8 +108,9 @@
         },
         "autoread":{
 		 "ar1":{
-                "action":"click_text",
-                "click_text":"首页",
+                "action":"click_boundary_path",
+                "boundary":"android.support.v4.widget.DrawerLayout",
+				"path":"0||2||0",
                 "featuremode":"ids",
                 "ids":"com.yuncheapp.android.pearl:id/back||com.yuncheapp.android.pearl:id/video_back",
             },

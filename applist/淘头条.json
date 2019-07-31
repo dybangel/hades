@@ -88,8 +88,8 @@
         },
         "autoread":{
           "ar1":{
-            "action":"click_text",
-            "click_text":"头条",
+            "action":"click_id",
+            "click_id":"com.ly.taotoutiao:id/tv_tab",
             "featuremode":"id",
             "id":"com.ly.taotoutiao:id/im_item_back",
         },

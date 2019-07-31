@@ -11,7 +11,7 @@
         "classname":"android.widget.TextView",
         "text":"任务"
         },
-		 "signin":{
+	  "signin":{
             "sg1":{
               "action":"click_text",
               "click_text":"任务",
@@ -34,13 +34,17 @@
               "text":"已签到",
             },
           },
-       "abnormal":{
+      "abnormal":{
          "ab1":{
              "featuremode":"id",
              "id":"com.top.quanmin.app:id/iv_red_picket_close",
          },
+		  "ab2":{
+             "featuremode":"id",
+             "id":"com.top.quanmin.app:id/iv_dismiss",
+         },
        },  
-         "activitys":{
+      "activitys":{
             "at1":"com.top.quanmin.app.ui.activity.HomeActivity",
             "at2":"com.top.quanmin.app.ui.activity.ArticleDetailActivity",
    
@@ -78,8 +82,8 @@
       },
       "autoread":{
         "ar1":{
-          "action":"click_text",
-          "click_text":"头条",
+          "action":"click_id",
+          "click_id":"com.top.quanmin.app:id/seal_pandect",
           "featuremode":"id",
           "id":"com.top.quanmin.app:id/ll_title_back",
       },

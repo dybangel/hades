@@ -1,30 +1,30 @@
 [
             //  {"appnum":"016","appname":"掌上热点","enable":"true"},
-              {"appnum":"028","appname":"微鲤看看","enable":"true"},
-             {"appnum":"035","appname":"东方头条","enable":"true"},
-             {"appnum":"043","appname":"红包视频","enable":"true"},
-            // {"appnum":"050","appname":"亿刻看点","enable":"true"},
+             // {"appnum":"028","appname":"微鲤看看","enable":"true"},
+            // {"appnum":"035","appname":"东方头条","enable":"true"},
+                {"appnum":"050","appname":"亿刻看点","enable":"true"},
+			{"appnum":"043","appname":"红包视频","enable":"true"},
             {"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
              {"appnum":"054","appname":"氪资讯","enable":"true"},
              {"appnum":"055","appname":"快狗视频","enable":"true"},
-             {"appnum":"056","appname":"快看点","enable":"true"},
-             {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
-             {"appnum":"066","appname":"趣故事","enable":"true"},  
+             //{"appnum":"056","appname":"快看点","enable":"true"},
+           //  {"appnum":"061","appname":"蚂蚁看点","enable":"true"},
+            // {"appnum":"066","appname":"趣故事","enable":"true"},  
              {"appnum":"069","appname":"趣头条","enable":"true"},//已经实现
              {"appnum":"072","appname":"全民头条","enable":"true"},
              {"appnum":"081","appname":"淘头条","enable":"true"},
-             {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
+            // {"appnum":"082","appname":"淘新闻","enable":"true"},//已经实现
     
-              {"appnum":"087","appname":"赚钱小视频","enable":"true"},
+             // {"appnum":"087","appname":"赚钱小视频","enable":"true"},
               {"appnum":"088","appname":"益头条","enable":"true"},
              //{"appnum":"089","appname":"趣赚赚","enable":"true"},//root的手机无法登陆
              //{"appnum":"090","appname":"火山极速版","enable":"true"},//签到
              //{"appnum":"091","appname":"乐赚赚","enable":"true"},//未实现
-             {"appnum":"092","appname":"有看头","enable":"true"},
+           //  {"appnum":"092","appname":"有看头","enable":"true"},
              {"appnum":"093","appname":"红包头条","enable":"true"},
              {"appnum":"094","appname":"每日一看","enable":"true"},
              {"appnum":"095","appname":"烽火头条","enable":"true"},
-             {"appnum":"096","appname":"即趣","enable":"true"},
+           //  {"appnum":"096","appname":"即趣","enable":"true"},
     //过往实现过的app如下19个
     // {"appnum":"","appname":"刷宝短视频","enable":"true"},
     // {"appnum":"","appname":"2345浏览器","enable":"true"},
