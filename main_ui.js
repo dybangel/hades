@@ -479,6 +479,8 @@ Gappinterval="1800000";
 Gabinterval="3000";
 //block_mode阻塞验证超时秒数
 Gblock_mode_interval=5;
+//用户试图退出外挂计数器
+Guser_close_myself_count=0;
 //设备类型
 //自动判断
 devicestr=device.model
@@ -669,6 +671,7 @@ function init(){
 }
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
+
     if (!requestScreenCapture()) {
         toast("权限失败");
         exit();
@@ -680,14 +683,22 @@ events.setKeyInterceptionEnabled("volume_down", true);
 threads.start(function(){
 events.observeKey();
 events.on("key", function(volume_down, event){
-   //处理按键事件
-   toast("脚本已停止运行");
+    Guser_close_myself_count+=1;
+    //处理按键事件
+   toast("连续按5次音量下退出海趣助手!!!");
    try{
-    try{thread_appinfo.interrupt()}catch(e){};
-   threads.shutDownAll();
-   ui.finish();
-   exit();   
-   }catch(e){}
+    //shell("am force-stop org.autojs.autojs", true);
+   // alert("123");
+    //try{thread_appinfo.interrupt()}catch(e){ };
+    //alert("关闭提示条"+e);    
+   
+   // alert("关闭脚本");
+   //threads.shutDownAll();
+   //ui.finish();
+  // exit();   
+   }catch(e){
+       alert("关闭脚本："+e);
+   }
   
 
 });
@@ -724,6 +735,7 @@ if(Grunstate=="trainwechat"){
 }else{
    while(true){
        for(var i=0;i<applist.length;i++){
+
         //拉起一次守护，保证相互守护
         // activity="com.example.linyuming.broadcasttest/com.example.linyuming.broadcasttest.MainActivity"
         // shell("am start -n " + activity, true);
@@ -749,7 +761,20 @@ if(Grunstate=="trainwechat"){
             open_obj=applist[i]["open"];
             bindwechat_obj=applist[i]['bindwechat']; 
            signin_obj=applist[i]['signin'];
-           
+
+
+                            //从云端获取特征码js
+                try{
+                http.__okhttp__.setTimeout(10000);
+                var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+                
+                Gfinditemstr=r.body.string();
+                eval(Gfinditemstr);
+                }catch(e){
+                toast("this is findnews httpget and eval:"+e);
+                }
+
+
            try{
             mulityback=applist[i]["mulityback"];
             if("undefined"==typeof(mulityback)){
@@ -1203,7 +1228,7 @@ if("undefined"==typeof(signin_obj)){
                                }
                            
                            }else{
-                               play("global","执行失败");
+                               play("global","检查");
                            }
                       
                    
@@ -1229,6 +1254,7 @@ function while_findnews(autoread_obj){
    //线程计数器
    this_threadcount=0;
    toast("找新闻线程启动..."); play("global","正在检索");
+   
   //取出新闻条目特征码 改用函数实现了，后续抽象特征码数据结构
  // var thisborderline=autoread_obj["ar1"]["borderline"];
  // var thisitemsclassname=autoread_obj["ar1"]["itemsclassname"];
@@ -1286,21 +1312,23 @@ try{
  
    var upcount=0;
    //从云端获取特征码js
-   try{
-   http.__okhttp__.setTimeout(10000);
-   var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+//    try{
+//    http.__okhttp__.setTimeout(10000);
+//    var r=http.get(Gapplistpath_remote+"/"+appname+".js")
   
-   tmpstr=r.body.string();
-   eval(tmpstr);
-}catch(e){
-   toast("this is findnews httpget and eval:"+e);
-   }
+//    tmpstr=r.body.string();
+//    eval(tmpstr);
+// }catch(e){
+//    toast("this is findnews httpget and eval:"+e);
+//    }
 //线程执行前初始化一下没有找到新闻的次数为0；
    var nofindnews_count=0;
    thread_findnews=threads.start(
        function(){
+           //把finditem字符串变成函数
+        eval(Gfinditemstr);  
            setInterval(
-               function(){               
+               function(){ 
                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
                   thisswipe.swiperealup_custom_lnnl();
                }else{
@@ -1752,7 +1780,7 @@ function  while_abnormal(abnormal_obj){
           }
            
            
-       }else if("id_depth"){
+       }else if("id_depth"==featuremode){
            try{
                 var thisid=abnormal_obj["ab"+i]["id"];
                 var thisdepth=abnormal_obj["ab"+i]["depth"];
@@ -1984,7 +2012,14 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                         }
                         );
                  
-
+            //判断退出
+            if(Guser_close_myself_count>6){
+                shell("am force-stop org.autojs.autojs", true);
+                shell("am force-stop com.haiqu.autoread", true);
+            }else{
+                Guser_close_myself_count=0;
+            }
+            
           //   toast("while_control："+Gworkthread);
            },3000);//bindwechat注释
        }//bindwechat注释
