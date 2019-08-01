@@ -1,33 +1,70 @@
  {
         "enable":"false",
-        "appname":"新闻赚", 
+        "appname":"新闻赚",
+        "mulityback":"87||160",
+        "appver":"3.7.1",
         "interval":"3",
-         "packagename":"cc.zuitoutiao",
+        "packagename":"cc.zuitoutiao",
         "activityname":"cc.zuitoutiao.MainActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"视频"
           },
+        "signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"任务",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"每日签到",
+            },
+			"sg2":{
+              "action":"click_text",
+              "click_text":"每日签到",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"每日签到",
+            },
+            "sg3":{
+              "action":"click_id",
+              "click_id":"cc.zuitoutiao:id/ll_sign_submit",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"每日签到",
+            },
+            "sg4":{
+              "action":"click_id",
+              "click_id":"cc.zuitoutiao:id/ll_back",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务",
+            },
+			},
         "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"iv_close",
+               "id":"cc.zuitoutiao:id/iv_close",
            },
            "ab2":{
             "featuremode":"classname_text",
             "classname":"android.widget.Button",
             "text":"暂不升级",
           },
-          
-        
+           "ab3":{
+            "featuremode":"classname_desc",
+            "classname":"android.widget.Button",
+            "desc":"Play  Play Video",
+          },
       },  
 		"activitys":{
 			 "at1":"cc.zuitoutiao.MainActivity",
 			 "at2":"cc.zuitoutiao.DetailAct",
-
+            
+             "at3":"cc.zuitoutiao.LoginAct",
+             "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
 		   } ,
-     "bindwechat":{
+        "bindwechat":{
        "bw1":{
          "action":"click_text",
          "click_text":"我的",
@@ -55,15 +92,20 @@
           "ar1":{
             "action":"click_text",
             "click_text":"资讯",
-            "featuremode":"classname",
-            "classname":"android.widget.ImageView",
+            "featuremode":"id",
+            "id":"cc.zuitoutiao:id/ll_back",
         },
-        "ar2":{
+          "ar2":{
             "deploymode":"classname_desc",
             "deployclassname":"android.view.View",
             "deploydesc":"点击阅读全文",
+            "backtrigger":"xy_color_bool",
+            "xy":"228||2239",
+            "color":"ffe84505",
+            "bool":"false",
+            "reswipe":"false",
 
         },
         }, 
-         "durl":"http://xze.197946.com/xinwenzhuana.apk"
+        "durl":"http://xze.197946.com/xinwenzhuana.apk"
        }
