@@ -1,6 +1,7 @@
 {
       "enable":"true", 
-      "appname":"趣看天下", 
+      "appname":"趣看天下",
+      "mulityback":"23||228",	  
 	  "appver":"3.0.6.1",
       "interval":"3",
       "packagename":"com.yanhui.qktx",
@@ -57,13 +58,13 @@
       },
       "autoread":{
 	   "ar1":{
-                "action":"click_text",
-                "click_text":"首页",
+                "action":"click_id",
+                "click_id":"com.yanhui.qktx:id/iv_icon",
                 "featuremode":"id",
                 "id":"com.yanhui.qktx:id/img_back",
             },
             "ar2":{
-                "deploymode":"classname_desc",
+                "deploymode":"",
                 "deployclassname":"android.view.View",
                 "deploydesc":"展开查看全文",
 

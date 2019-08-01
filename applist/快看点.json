@@ -1,6 +1,7 @@
 {
         "enable":"false",
         "appname":"快看点", 
+		"mulityback":"32||158",
         "appver":"1.4.1.51",
         "interval":"3",
          "packagename":"com.yuncheapp.android.pearl",

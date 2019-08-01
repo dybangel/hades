@@ -1,6 +1,7 @@
 {
         "enable":"false",
-        "appname":"淘新闻", 
+        "appname":"淘新闻",
+        "mulityback":"23||228",		
         "appver":"3.4.6.2",
         "interval":"3",
          "packagename":"com.coohua.xinwenzhuan",
@@ -68,8 +69,8 @@
         },
         "autoread":{
              "ar1":{
-                "action":"click_text",
-                "click_text":"新闻",
+                "action":"click_id",
+                "click_id":"com.coohua.xinwenzhuan:id/home_tab_text",
                 "featuremode":"id",
                 "id":"com.coohua.xinwenzhuan:id/comment",
             },
