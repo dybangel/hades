@@ -75,6 +75,11 @@
                "classname":"android.widget.TextView",
                 "text":"立即领取",
            },
+            "ab14":{
+               "featuremode":"click_boundary_path",
+               "boundary":"android.webkit.WebView",
+			   "path":"0||0||18||1||0||0",
+           },
 		   },
 		"activitys":{
 			 "at1":"com.cnode.blockchain.MainActivity",
