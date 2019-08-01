@@ -88,20 +88,20 @@
         },
         "autoread":{
           "ar1":{
-            "action":"click_id",
-            "click_id":"com.ly.taotoutiao:id/tv_tab",
+            "action":"click_text",
+            "click_text":"头条",
             "featuremode":"id",
             "id":"com.ly.taotoutiao:id/im_item_back",
         },
         "ar2":{
-            "deploymode":"",
+            "deploymode":"classname_desc",
             "deployclassname":"android.view.View",
             "deploydesc":"展开阅读全文",
             "backtrigger":"xy_color_bool",
             "xy":"195||2038",
             "color":"fffff6a7",
             "bool":"false",
-            "reswipe":"true",
+            "reswipe":"false",
 
         },
         }, 
