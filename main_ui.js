@@ -2013,12 +2013,12 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
    var nowcurrentActivity="";
    var outsidecount=0;
    var erroraocount=0;
+   var workthread_errorcount=0;
    var tmpflag=0;
-   thread_control=threads.start( //bindwechat注释
-       function(){//bindwechat注释
-           setInterval(function(){//bindwechat注释
+   thread_control=threads.start(
+       function(){
+           setInterval(function(){
            //1如果打开app完成后要做的工作  
-         //  toast("Gworkthread is"+Gworkthread);
            if("openapp_stop"==Gworkthread){
                      //如果工作模式是绑定微信runstate
                      if("bindwechat"==Grunstate){
@@ -2047,9 +2047,11 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                try{thread_readnews.interrupt();}catch(e){};
                while_readnews(autoread_obj);
              }
-           
-             nowcurrentPackage=currentPackage();
+           try{
+            nowcurrentPackage=currentPackage();
             nowcurrentActivity=currentActivity();
+           }catch(e){}
+          
             
             //站外检测
              if(nowcurrentPackage!=""){
@@ -2116,13 +2118,47 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
 
 
              }//站外检测结束
+             //其它线程检测
+             if("findnews_start"==Gworkthread){
+                try{
+                    var result=thread_findnews.isAlive();
+                    if(result==false){
+                        workthread_errorcount+=1;
+                    }
+                }catch(e){};
+             }else if("readnews_start"==Gworkthread){
+                try{
+                    var result=thread_readnews.isAlive();
+                    if(result==false){
+                        workthread_errorcount+=1;
+                    }
+                }catch(e){};
+             }else if("signin_start"==Gworkthread){
+                try{
+                    var result=thread_signin.isAlive();
+                    if(result==false){
+                        workthread_errorcount+=1;
+                    }
+                }catch(e){};
+             }
+             if(workthread_errorcount>10){
+                toast("重新激活线程......");
+                try{    thread_findnews.interrupt();}catch(e){};
+                try{    thread_readnews.interrupt();}catch(e){};
+                try{    thread_signin.interrupt();}catch(e){};
+                 funmulityback();
+                 try{thiscommon.openpackage(packagename+"/"+activityname)}catch(e){};
+                 while_findnews(autoread_obj);      
+                 workthread_errorcount=0;
+             }
+             //其它线程检测结束
+
                 //发送心跳广播
                    var action="com.example.broadcasttest.MY_BROADCAST"
                       //  while(1){
                         app.sendBroadcast(
                         {
-                            action:action,
-                          
+                            action:action,  
                         }
                         );
                  
@@ -2134,7 +2170,6 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                 Guser_close_myself_count=0;
             }
             
-          //   toast("while_control："+Gworkthread);
            },3000);//bindwechat注释
        }//bindwechat注释
    );//bindwechat注释
