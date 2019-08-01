@@ -61,13 +61,14 @@
                 },  
 	    "activitys":{
             "at1":"c.l.a.views.AppBoxHomeActivity",
-            "at2":"c.l.a.feed.wyyl.FeedArticleDetailActivitySub2",
-            "at3":"c.l.a.views.x5webkit.X5WebViewActivity",
+            "at2":"c.l.a.feed.wyyl.FeedArticleDetailActivitySub1",
+            "at3":"c.l.a.feed.wyyl.FeedArticleDetailActivitySub2",
             "at4":"c.l.a.feed.wyyl.FeedVideoDetailActivitySub1",
+            "at5":"c.l.a.feed.wyyl.FeedVideoDetailActivitySub2",
+            "at6":"c.l.a.views.x5webkit.X5WebViewActivity",
             
-            "at5":"c.l.a.views.AppBoxLoginWithWeChatActivity",
-            "at6":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
-   
+            "at7":"c.l.a.views.AppBoxLoginWithWeChatActivity",
+            "at8":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI", 
           } , 
       "bindwechat":{
         "bw1":{
