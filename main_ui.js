@@ -120,6 +120,7 @@ ui.layout(
                         <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="激活码" textSize="12sp" textColor="{{textColor}}" />
                             <input id="fsn" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>   
+                            <button id="licence_activate" w="80" text="激活" style="Widget.AppCompat.Button.Colored" textColor="#ffffff"/>
                         </linear>
                         <button id="cancel_interval" text="取消倒计时"/>
 
@@ -243,8 +244,10 @@ ui.emitter.on("resume", function() {
 });
 //开始运行脚本
 ui.start.on("click", function(){
-    Guser_start=true;
-    //程序开始运行之前判断无障碍服务
+    //如果licence是激活状态才更新开关量
+    if(Glicence==true){
+        Guser_start=true;
+            //程序开始运行之前判断无障碍服务
     if(auto.service == null) {
         toast("请先开启无障碍服务！");
         return;
@@ -277,6 +280,10 @@ ui.start.on("click", function(){
         //统计收益
         Grunstate="analy"
     }
+    }else{
+        toast("请先激活");
+    }
+
 });
 
 activity.setSupportActionBar(ui.toolbar);
@@ -403,7 +410,7 @@ ui.cancel_interval.click(()=>{
     Guser_cancel=true;
 ui.cancel_interval.setVisibility(8);    
 });
-// ui.downloadapp.setVisibility(8);
+// 下载新版本按钮事件
 ui.downloadapp.click(()=>{
 //     var url = "http://download.dqu360.com/download/#/home";
 // //var url = "file:///storage/emulated/0/网页/试.html";
@@ -421,6 +428,38 @@ thread_checkver=threads.start(
 
     }
 );
+
+});
+ui.licence_activate.click(()=>{
+    //alert("123");
+    var fsn=ui.fsn.text();
+    if(fsn==""){
+    toast("请输入激活码");
+    }else{
+        var session=device.getAndroidId();
+        thread_licence_activate=threads.start(function(){
+            var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);
+            if(r.statusCode=="200"){  
+                var result=r.body.string();
+                var resultobj=eval('('+result+')');
+                if("ok"==resultobj[0]["status"]){
+                    initlicence(fsn);
+                    toast("已经激活");
+                    
+                   Guser_cancel=true;
+                   Glicence=true;
+                        
+                }else if("error1"==resultobj[0]["status"]){
+                   toast("激活码不正确");
+                }else if("error2"==resultobj[0]["status"]){
+                   toast("您的设备信息与云端不一致，24小时后自动解锁");
+                }
+             }
+        });
+       
+
+    }
+  
 
 });
 //ui.allrun.setText("123");
@@ -444,6 +483,7 @@ thread_checkver=threads.start(
 //     e.consumed = true;
 // });
 /************************************* UI结束**********************************************************************/ 
+Glicence=false;
 Gcode_state="ui";//noui ui;
 //当前工作模式，如果有UI界面，则该变量需要在UI的启动按钮中声明
 //运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat popupdebug
@@ -507,14 +547,50 @@ if("Redmi Note 2"==devicestr){
 //显示序列号
 try{thread_upfsn.interrupt();
 }catch(e){}
-
+//调用initlicence，看本地数据库有无激活码并到云端验证
 thread_upfsn=threads.start(
     function(){
-        var fsn=initlicence();
+        Guser_cancel=true;
+        Glicence=false;
+        var fsn=initlicence('');
         if(fsn==null||fsn==''){
-            alert("请输入激活码");
+            toast("请输入激活码");
+            //取消倒计时
+          
         }else{
-           ui.fsn.setText(fsn);
+           // alert("有激活码："+fsn);
+             //到云端验证，更新Glicence状态
+         //  Glicence=true;
+
+         try{thread_setvisi.interrupt();}catch(e){}
+                        //跟新界面
+                        thread_setvisi=threads.start(function(){
+                            ui.fsn.setText(fsn);
+                            ui.licence_activate.setVisibility(7);
+                        });
+
+         var session=device.getAndroidId();
+      //   alert("fsn is:"+fsn+" aid is:"+session);
+         var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);
+             
+         if(r.statusCode=="200"){  
+             var result=r.body.string();
+             var resultobj=eval('('+result+')');
+             if("ok"==resultobj[0]["status"]){
+                 toast("已经激活");
+                 
+                Guser_cancel=false;
+                Glicence=true;
+                     
+             }else if("error1"==resultobj[0]["status"]){
+                toast("激活码不正确");
+             }else if("error2"==resultobj[0]["status"]){
+                toast("您的设备信息与云端不一致，24小时后自动解锁");
+             }
+          }
+        
+       
+         
         }
     }
 );
@@ -530,6 +606,7 @@ Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";
 //Gapps,哪些app要刷的开关量json云端文件路径
 //Gappspath_remote="http://download.dqu360.com:81/haiqu/gapps.json";
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps";
+Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"
 //Gappspath_remote="http://192.168.31.89/haiqu/gapps.json";
 //api 接口文件路径
 
@@ -924,6 +1001,27 @@ if(Grunstate=="trainwechat"){
 
 //function fun end
 /*************************以下是函数实现部分 *******************************************************************/ 
+//序列号验证
+//加载开关量
+function checklicence(fsn){
+  
+        http.__okhttp__.setTimeout(10000);
+        var r=http.get(Gappspath_remote);
+        if("200"==r.statusCode){
+           // alert(r.body.string());
+            var tmpstr=r.body.string();
+            Gapps=eval('('+tmpstr+')');
+          
+            
+ 
+        }else{
+            toast("加载云端gapps列表出错");
+        }
+ 
+    
+ 
+ 
+ }
 //加载开关量
 function loadGapps(){
    if(Gjsonloadstate=="remote"){
@@ -2242,8 +2340,13 @@ function play(subpath,appname){
            if(!result){
                toast("没有找到语音包"+voicefile);
            }else{
-               media.playMusic(Gvoicepath+"/"+subpath+"/"+appname+".mp3");  
-               sleep(media.getMusicDuration());     
+               try{
+                media.playMusic(Gvoicepath+"/"+subpath+"/"+appname+".mp3");  
+                sleep(media.getMusicDuration()); 
+               }catch(e){
+
+               }
+                  
            }   
    }
 }
@@ -2977,10 +3080,10 @@ function checklocalapp(){
     }
      
     }
-//初始化licence
-function initlicence(){
-    importClass('android.database.sqlite.SQLiteDatabase');
-//importClass("android.content.ContentValues");
+//初始化licence 当传入空值时执行本地查询并返回本地fsn，传入fsn激活码时，只写入本地
+function initlicence(fsn){
+importClass('android.database.sqlite.SQLiteDatabase');
+importClass("android.content.ContentValues");
 importClass("android.content.Context");
 importClass("android.database.Cursor"); 
             //context.deleteDatabase("haiqu.db");  
@@ -2988,12 +3091,25 @@ importClass("android.database.Cursor"); 
             db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null);   
             //创建t_tag表
             db.execSQL("create table if not exists " +  "t_licence" + "(fsn,fsession,fvar1,fvar2,fvar3)");  
-            var c = db.query("t_licence", null, "", null, null, null, null, null);        
-           // lastappname="";
+       //      db.execSQL("DELETE FROM  t_licence");
+                        if(fsn!=""){
+                            var t_tag = new Object;        
+                            t_tag.fsn = fsn;          
+                                //ContentValues以键值对的形式存放数据       
+                            var  cv  =  new  ContentValues();          
+                            cv.put("fsn", t_tag.fsn);          
+                             //插入ContentValues中的数据        
+                        db.insert("t_licence",  null,  cv);  
+                        }
+             
+               
+                var c = db.query("t_licence", null, "", null, null, null, null, null);   
             while  (c.moveToNext())  {                         
                 var  fsn = c.getString(c.getColumnIndex("fsn"));    
+              
             return fsn;
    
-            } 
+            }
+            db.close();  
 }
 
