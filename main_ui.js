@@ -115,7 +115,12 @@ ui.layout(
                                     <checkbox id="softvoice" text="软件语音" color="{{textColor}}" checked="true"/>
                                 </radiogroup>
                             </linear>
-                        </linear>     
+                        </linear>  
+                       
+                        <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="激活码" textSize="12sp" textColor="{{textColor}}" />
+                            <input id="fsn" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>   
+                        </linear>
                         <button id="cancel_interval" text="取消倒计时"/>
 
                         {/* 分割线填充 */}
@@ -488,7 +493,7 @@ if("Redmi Note 2"==devicestr){
    Gdevicetype="xiaominote2";
 }if("MI 4S"==devicestr){
    Gdevicetype="xiaomi4s"; 
-   try{if(Gcode_state=="ui"){ui.le.xiaomi4s=true}}catch(e){};
+   try{if(Gcode_state=="ui"){ui.xiaomi4s.checked=true}}catch(e){};
 }if("MI 4LTE"==devicestr){
    Gdevicetype="xiaomi4"; 
    try{if(Gcode_state=="ui"){ui.xiaomi4.checked=true}}catch(e){};
@@ -499,7 +504,20 @@ if("Redmi Note 2"==devicestr){
     Gdevicetype="le"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
     try{if(Gcode_state=="ui"){ui.le.checked=true}}catch(e){};
 }
+//显示序列号
+try{thread_upfsn.interrupt();
+}catch(e){}
 
+thread_upfsn=threads.start(
+    function(){
+        var fsn=initlicence();
+        if(fsn==null||fsn==''){
+            alert("请输入激活码");
+        }else{
+           ui.fsn.setText(fsn);
+        }
+    }
+);
 //Gdevicetype="xiaomi4"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
 
 //json特征码加载方式 remote local 
@@ -572,6 +590,8 @@ if(Gcode_state=="ui"){
                     //这里在app弹出界面后自动执行
                     Galready_loadjson=true; 
                     var result=sysupdate_check();
+                 
+                   
                     if(result){  
                     }else{
                      play("global","发现新版本");
@@ -1506,7 +1526,7 @@ function while_readnews(autoread_obj){
                    try{
                        var thisbacktrigger=autoread_obj["ar2"]["backtrigger"];
                             if(typeof(thisbacktrigger)=="undefined"){
-                                // var thisbacktrigger="normal"
+                                thisbacktrigger="normal"
                             }else{
                             // 如果有特殊返回机制的情况的各种情况处理
                                 if("xy_color_bool"==thisbacktrigger){
@@ -1543,7 +1563,7 @@ function while_readnews(autoread_obj){
                                 var thisreswipe=autoread_obj["ar2"]["reswipe"];
                             }//else end
                    }catch(e){
-                       // alert("catch"+e);
+                    thisbacktrigger="normal";
                    } ///判断返回机制结束
                  
                    //执行返回机制验证
@@ -1960,6 +1980,23 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                        //这是站内的情况，再做白名单检测
                        try{
                            var aocount=thiscommon.JSONLength(activitys_obj);
+                           erroraocount+=1;
+                           //如果一直没有匹配到白名单
+                                     if(erroraocount>10){
+                                        log("erroraocount is:"+erroraocount);                                        
+                                         toast("拉回主线......");
+                                         try{    thread_findnews.interrupt();}catch(e){};
+                                         try{    thread_readnews.interrupt();}catch(e){};
+                                         try{    thread_signin.interrupt();}catch(e){};
+                                   
+                                          funmulityback();
+                                          thiscommon.openpackage(packagename+"/"+activityname);
+                                          while_findnews(autoread_obj);      
+                                      
+                                         erroraocount=0;
+                                  
+                                     }
+                           //
                            for(var i=1;i<=aocount;i++){
                               // alert(activitys_obj["at"+i]);
                                //判断当前活动页面是否在白名单里
@@ -1969,31 +2006,10 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                                        erroraocount=0;
                                        break;
                                    }else{
-                                       //alert("不正常 nocur is:"+nowcurrentActivity);
-                                       erroraocount+=1;
-                                       log("erroraocount is:"+erroraocount);
-                                       if(erroraocount>10){
-                                          
-                                           //alert("拉回主线");
-                          //                 play("global","拉回主线");
-                                           toast("拉回主线......");
-                                          // try{    thread_abnormal.interrupt();}catch(e){};
-                                          // try{    thread_control.interrupt();}catch(e){};
-                                           try{    thread_findnews.interrupt();}catch(e){};
-                                           try{    thread_readnews.interrupt();}catch(e){};
-                                           try{    thread_signin.interrupt();}catch(e){};
-                                      //   autoread_obj
-                                            //back();
-                                            funmulityback();
-                                            thiscommon.openpackage(packagename+"/"+activityname);
-                                            while_findnews(autoread_obj);      
-                                           //back();
-                                           erroraocount=0;
-                                           break;
-                                       }
+                                    
                                    }
                                }
-                           }
+                           }//for end
                         }catch(e){
                             toast("noaocount:"+e);
                         }
@@ -2961,4 +2977,23 @@ function checklocalapp(){
     }
      
     }
+//初始化licence
+function initlicence(){
+    importClass('android.database.sqlite.SQLiteDatabase');
+//importClass("android.content.ContentValues");
+importClass("android.content.Context");
+importClass("android.database.Cursor"); 
+            //context.deleteDatabase("haiqu.db");  
+            //打开或创建haiqu.db数据库        
+            db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null);   
+            //创建t_tag表
+            db.execSQL("create table if not exists " +  "t_licence" + "(fsn,fsession,fvar1,fvar2,fvar3)");  
+            var c = db.query("t_licence", null, "", null, null, null, null, null);        
+           // lastappname="";
+            while  (c.moveToNext())  {                         
+                var  fsn = c.getString(c.getColumnIndex("fsn"));    
+            return fsn;
+   
+            } 
+}
 
