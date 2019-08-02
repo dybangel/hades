@@ -33,6 +33,10 @@
                "featuremode":"id",
                "id":"com.block.factory:id/tvCancel",
            }, 
+             "ab4":{
+               "featuremode":"id",
+               "id":"com.block.factory:id/start",
+           }, 
          },  
         "activitys":{
             "at1":"com.block.factory.MainActivity",
@@ -63,8 +67,9 @@
                 "deploymode":"classname_text",
                 "deployclassname":"android.widget.TextView",
                 "deploytext":"展开查看全文",
-                "backtrigger":"xy_color_bool",
-                "xy":"1274||2105",
+                "backtrigger":"id_xyoffset_color_bool",
+                "id":"com.block.factory:id/readProgressContainer",
+                "xyoffset":"101||37",
                 "color":"fff2f2f2",
                 "bool":"false",
                 "reswipe":"true",

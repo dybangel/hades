@@ -102,8 +102,8 @@
           "ar1":{
             "action":"click_text",
             "click_text":"首页",
-            "featuremode":"id",
-            "id":"com.sohu.infonews:id/comment_icon",
+            "featuremode":"ids",
+            "ids":"com.sohu.infonews:id/comment_icon||com.sohu.infonews:id/more",
         },
           "ar2":{
             "deploymode":"classname_desc",
