@@ -11,7 +11,16 @@ function finditem(){
                 return false;
             }
             }catch(e){    
-            }          
+            }
+            try{
+                var gg2=main.child(i).child(1).child(1).child(1);
+                if("com.jifen.qukan:id/a5m"==gg2.id()){
+                    play('global',i);
+                    play('global','广告不点击'); 
+                    return false;
+                }
+                }catch(e){    
+                }                  
             try{
             play('global',i);
             play('global','点击');
