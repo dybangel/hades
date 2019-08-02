@@ -1,26 +1,50 @@
  {
         "enable":"false",
         "appname":"盈贝头条", 
+		"mulityback":"36||163||192||165",
+        "appver":"3.0.3",
         "interval":"3",
-         "packagename":"com.aimotech.yingbeitt",
+        "packagename":"com.aimotech.yingbeitt",
         "activityname":"com.huanxi.toutiao.ui.activity.other.MainActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"视频"
           },
-          "abnormal":{
-           "ab1":{
+		"signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"任务大厅",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务大厅",
+            },
+			"sg2":{
+              "action":"click_id",
+              "click_id":"com.aimotech.yingbeitt:id/tv_sign",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务大厅",
+            },
+			},
+        "abnormal":{
+              "ab1":{
                "featuremode":"id",
-               "id":"iv_close",
-           },
-         
-         },
-		 "activitys":{
-			 "at1":"com.huanxi.toutiao.ui.activity.other.MainActivity",
-			 "at2":"com.huanxi.toutiao.ui.activity.news.NewsDetailActivity",
-
-		   } ,
+               "id":"com.block.factory:id/ivSkip",
+           }, 
+		    "ab2":{
+               "featuremode":"id",
+               "id":"com.block.factory:id/ivClose",
+           }, 
+		     "ab3":{
+               "featuremode":"id",
+               "id":"com.block.factory:id/tvCancel",
+           }, 
+         },  
+        "activitys":{
+            "at1":"com.huanxi.toutiao.ui.activity.other.MainActivity",
+            "at2":"com.huanxi.toutiao.ui.activity.news.NewsDetailActivity",
+          } , 
         "bindwechat":{
           "bw1":{
             "action":"click_text",
@@ -50,14 +74,19 @@
             "action":"click_text",
             "click_text":"首页",
             "featuremode":"id",
-            "id":"rl_back",
+            "id":"com.aimotech.yingbeitt:id/iv_collection",
         },
         "ar2":{
             "deploymode":"classname_desc",
             "deployclassname":"android.view.View",
             "deploydesc":"查看全文",
-
+            "backtrigger":"xy_color_bool",
+			"xy":"1422||2394",
+			"color":"fff8efed",
+			"bool":"false",
+			"reswipe":"true",
            },
-        }, 
-       "durl":"http://b.xiazaicc.com/apk2/yingbeitoutiaov2.3.3_downcc.com.apk"
+        
+        "durl":""
+             },
        }
