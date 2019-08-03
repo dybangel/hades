@@ -41,7 +41,10 @@
               "ab3":{
                "featuremode":"id",
                "id":"com.oppo.cameracom.android.ctsxinwen:id/gl",
-          
+         }, 
+             "ab4":{
+               "featuremode":"id",
+               "id":"com.oppo.cameracom.android.ctsxinwen:id/fr",
          }, 
           },
         "activitys":{
