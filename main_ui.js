@@ -532,6 +532,8 @@ Gabinterval="3000";
 Gblock_mode_interval=5;
 //用户试图退出外挂计数器
 Guser_close_myself_count=0;
+//Gincome_flag 统计收益时服务器下发的统计标记
+Gincome_flag="";
 //设备类型
 //自动判断
 devicestr=device.model
@@ -608,16 +610,16 @@ thread_upfsn=threads.start(
 Gjsonloadstate="remote";
 //app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";
-//Gapplistpath_remote="http://192.168.31.89/haiqu/applist/";
+//Gapplistpath_remote="http://192.168.3.97/hades/applist/";
 //Gapps,哪些app要刷的开关量json云端文件路径
 //Gappspath_remote="http://download.dqu360.com:81/haiqu/gapps.json";
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps";
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"
-//Gappspath_remote="http://192.168.31.89/haiqu/gapps.json";
+//Gappspath_remote="http://192.168.3.97/hades/gapps.json";
 //api 接口文件路径
 
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json";
-//Gapi_json_url="http://192.168.31.89/api.json";
+//Gapi_json_url="http://192.168.3.97/hades/api.json";
 
 Gdownloadpath="http://download.dqu360.com:81/haiqu/haiqu.apk"
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
@@ -806,7 +808,8 @@ events.on("key", function(volume_down, event){
 
 });
 });
-
+//取出安卓ID作为session
+ Gsession=device.getAndroidId();
    voice_runstate();
    voice_devicetype();
    //voice_env();
@@ -992,8 +995,20 @@ if(Grunstate=="trainwechat"){
                             }
                         //当前app驻留时间
                         if(Grunstate=="analy"){
-                            //如果是统计收益，走blockanalay阻塞函数
-                            block_analay(incomeanaly_obj);
+                           //income_getflag  获取标志位
+                           var tmpurl="http://download.dqu360.com:81/haiqu/api.aspx?&action=income_getflag";
+                           var r=http.get(tmpurl);
+                                 if("200"==r.statusCode){
+                                    //[{"fincome_flag":17756134}]
+                                    var tmpstr=r.body.string();
+                                    var jsonstr=eval('('+tmpstr+')');
+                                    Gincome_flag=jsonstr[0]['fincome_flag'];
+                                    
+                                   // alert(Gincome_flag);exit();
+                                        //如果是统计收益，走blockanalay阻塞函数
+                                        block_analay(incomeanaly_obj);
+                                 }
+                           
                         }else{
                             sleep(Gappinterval);
                         }
@@ -2382,6 +2397,7 @@ var num=0;
 }
 //阻塞统计收益
 function block_analay(incomeanaly_obj){
+    console.show();
     var Ganalymoney="";
     var Ganaycoin="";
     //是否从app中取出过money
@@ -2392,11 +2408,13 @@ function block_analay(incomeanaly_obj){
       for(var i=1;i<=thiscommon.JSONLength(incomeanaly_obj);i++){
         log("this is in"+i);
         var thisaction=incomeanaly_obj['in'+i]["action"];
+        log("acton is:"+thisaction);
         if("click_xy"==thisaction){
           var thisclick_xy=incomeanaly_obj['in'+i]["click_xy"];
           var thisclick_xyarr=thisclick_xy.split("||");
           var thisclick_x=thisclick_xyarr[0];
           var thisclick_y=thisclick_xyarr[1];
+          log("x is:"+thisclick_x+" y is:"+thisclick_y);
           thiscommon.touchreal(thisclick_x,thisclick_y);
           sleep(1500);
         }else if("getdesc_id_index"==thisaction){
@@ -2429,9 +2447,19 @@ function block_analay(incomeanaly_obj){
     
         //log("action is:"+thisaction);
         
-        //上报数据
-       //http://download.dqu360.com:81/haiqu/api.aspx?&action=income_upload&income_flag=15074909&session=123123123&appname=今日头条&money=1.11&coin=40056 
+       
     }// for end;
+ 
+     //上报数据
+     var tmpurl="http://download.dqu360.com:81/haiqu/api.aspx?&action=income_upload&income_flag="+Gincome_flag+"&session="+Gsession+"&appname="+appname+"&money="+Ganalymoney+"&coin="+Ganaycoin
+     var r=http.get(tmpurl);
+           if("200"==r.statusCode){
+               alert("统计完成");
+               // var tmpstr=r.body.string();
+               // tmpjson=eval('(' + tmpstr + ')'); 
+           }
+  //http://download.dqu360.com:81/haiqu/api.aspx?&action=income_upload&income_flag=15074909&session=123123123&appname=今日头条&money=1.11&coin=40056 
+
     log("money is:"+Ganalymoney+" coin is"+Ganaycoin);
 }
 //播放声音
