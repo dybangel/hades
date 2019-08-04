@@ -3,7 +3,8 @@
         "appname":"淘最热点", 
 		"mulityback":"true||2000",
         "appver":"2.2.8",
-        "interval":"3",
+        "interval":"30",
+		"speed":"normal",
         "packagename":"com.maihan.tredian",
         "activityname":"com.maihan.tredian.activity.MainActivity",
         "open":{

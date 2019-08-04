@@ -3,7 +3,8 @@
       "appname":"趣头条", 
       "mulityback":"109||231",
       "appver":"3.9.27.000.0529.1101",
-      "interval":"3",
+      "interval":"30",
+	  "speed":"normal",
       "packagename":"com.jifen.qukan",
       "activityname":"com.jifen.qkbase.main.MainActivity",
       "open":{

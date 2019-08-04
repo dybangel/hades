@@ -3,7 +3,8 @@
       "appname":"全民头条",
       "mulityback":"113||243",
       "appver":"2.2.1",
-      "interval":"3",
+      "interval":"30",
+	  "speed":"normal",
          "packagename":"com.top.quanmin.app",
       "activityname":"com.top.quanmin.app.ui.activity.HomeActivity",
       "open":{

@@ -3,7 +3,8 @@
         "appname":"掌上热点",
         "mulityback":"true||1000",
         "appver":"1.7.0",
-        "interval":"3",
+        "interval":"30",
+		"speed":"normal",
          "packagename":"com.kdlc.hnmcc",
         "activityname":"com.kdlc.hnmcc.MainActivity",
         "open":{

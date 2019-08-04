@@ -3,7 +3,8 @@
       "appname":"烽火头条",
       "mulityback":"78||190",
       "appver":"4.0.2",
-      "interval":"3",
+      "interval":"30",
+	  "speed":"normal",
       "packagename":"com.tianfeng.fenghuotoutiao",
       "activityname":"com.tianfeng.fenghuotoutiao.ui.activity.other.MainActivity",
       "open":{

@@ -2,7 +2,8 @@
         "enable":"false",
         "appname":"快狗视频", 
         "appver":"5.0.1.0",
-        "interval":"3",
+        "interval":"30",
+		"speed":"normal",
          "packagename":"com.xike.yipai",
         "activityname":"com.xike.yipai.view.activity.StartActivity",
         "open":{

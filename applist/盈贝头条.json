@@ -3,7 +3,8 @@
         "appname":"盈贝头条", 
 		"mulityback":"36||163||192||165",
         "appver":"3.0.3",
-        "interval":"3",
+        "interval":"30",
+		"speed":"normal",
         "packagename":"com.aimotech.yingbeitt",
         "activityname":"com.huanxi.toutiao.ui.activity.other.MainActivity",
         "open":{

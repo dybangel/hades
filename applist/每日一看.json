@@ -3,7 +3,8 @@
       "appname":"每日一看",
       "mulityback":"81||170",
       "appver":"3.4.0",
-      "interval":"3",
+      "interval":"30",
+	  "speed":"normal",
       "packagename":"nsin.everydaywatch.com",
       "activityname":"nsin.everydaywatch.com.ui.mainmodule.MainActivity",
       "open":{
