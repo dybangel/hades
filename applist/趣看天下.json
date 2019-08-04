@@ -3,7 +3,8 @@
       "appname":"趣看天下",
       "mulityback":"23||228",	  
 	  "appver":"3.0.6.1",
-      "interval":"3",
+      "interval":"30",
+      "speed":"normal",
       "packagename":"com.yanhui.qktx",
       "activityname":"com.yanhui.qktx.activity.MainActivity",
       "open":{

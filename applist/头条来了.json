@@ -3,7 +3,8 @@
       "appname":"头条来了",
       "mulityback":"true||2000",
 	  "appver":"2.0.1.17",
-      "interval":"3",
+      "interval":"30",
+      "speed":"normal",
       "packagename":"toutiao.yiimuu.appone",
       "activityname":"toutiao.yiimuu.appone.main.HomeActivity",
       "open":{

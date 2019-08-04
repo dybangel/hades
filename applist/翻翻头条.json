@@ -3,7 +3,8 @@
         "appname":"翻翻头条", 
 		"mulityback":"90||2478",
         "appver":"3.7.6",
-        "interval":"3",
+        "interval":"30",
+        "speed":"normal",
         "packagename":"com.fanfan.cangshu",
         "activityname":"com.fanfan.cangshu.ui.activity.other.MainActivity",
         "open":{

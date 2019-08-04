@@ -3,7 +3,8 @@
       "appname":"有看头",
       "mulityback":"55||235||116||2470",
       "appver":"3.6.3",
-      "interval":"3",
+      "interval":"30",
+      "speed":"normal",
       "packagename":"com.kuaima.kuailai",
       "activityname":"com.kuaima.kuailai.MainInterfaceActivity",
       "open":{

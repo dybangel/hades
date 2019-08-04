@@ -3,7 +3,8 @@
       "appname":"赚钱小视频",
       "mulityback":"118||2473||68||174",
       "appver":"1.3.0",
-      "interval":"3",
+      "interval":"30",
+      "speed":"normal",
       "packagename":"com.sljh.zqxsp",
       "activityname":"com.cy.browser.BrowserActivity",
       "open":{

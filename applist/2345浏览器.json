@@ -3,7 +3,8 @@
         "appname":"2345浏览器",
         "mulityback":"93||2475",
         "appver":"10.4.2",
-        "interval":"3",
+        "interval":"30",
+        "speed":"normal",
         "packagename":"com.browser2345",
         "activityname":"com.browser2345.StartBrowserActivity",
         "open":{

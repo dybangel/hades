@@ -3,8 +3,9 @@
   "appname":"东方头条",
   "mulityback":"false",
   "appver":"2.4.1",
-  "interval":"3",
-   "packagename":"com.songheng.eastnews",
+  "interval":"30",
+  "speed":"normal",
+  "packagename":"com.songheng.eastnews",
   "activityname":"com.songheng.eastfirst.common.view.activity.MainActivity",
   "open":{
     "featuremode":"classname_text",

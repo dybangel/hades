@@ -1,10 +1,11 @@
      {
         "enable":"false",
         "appname":"微鲤看看", 
-         "mulityback":"true||2000",
-		 "appver":"1.5.0",
-        "interval":"3",
-         "packagename":"cn.weli.story",
+        "mulityback":"true||2000",
+        "appver":"1.5.0",
+        "interval":"30",
+        "speed":"normal",
+        "packagename":"cn.weli.story",
         "activityname":"cn.etouch.ecalendar.MainActivity",
         "open":{
           "featuremode":"classname_text",
