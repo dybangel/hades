@@ -48,7 +48,7 @@
 			
 	        "at4":"zixun.digu.ke.main.login2.Login2Activity",
           } , 
-        "bindwechat":{
+    "bindwechat":{
           "bw1":{
             "action":"click_text",
             "click_text":"我的",
@@ -72,7 +72,29 @@
         },
     
         },
-        "autoread":{
+    "incomeanaly":{
+          "in1":{
+            "action":"click_xy",
+            "click_xy":"1000|1000",
+            },
+          "in2":{
+              "action":"click_xy",
+                "click_xy":"1000|1000",
+            },
+          "in3":{
+            "action":"getdesc_id_index",
+               "id":"xxxxxx:id/xxxxxx",
+            "index":"0",
+            "type":"money",
+            },
+          "in4":{
+            "action":"gettext_id_index",
+            "id":"xxxxxx:id/xxxxxx",
+            "index":"1",
+            "type":"coin",
+            },
+          },
+    "autoread":{
 		 "ar1":{
                 "action":"click_boundary_path",
                 "boundary":"android.widget.RelativeLayout",
