@@ -1,49 +1,136 @@
 {
         "enable":"false",
-        "appname":"2345浏览器", 
+        "appname":"2345浏览器",
+        "mulityback":"93||2475",
+        "appver":"10.4.2",
         "interval":"3",
-         "packagename":"com.browser2345",
+        "packagename":"com.browser2345",
         "activityname":"com.browser2345.StartBrowserActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"小视频"
           },
-          "abnormal":{
+        "signin":{
+            "sg1":{
+              "action":"click_text",
+              "click_text":"领现金",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务中心",
+            },
+			"sg2":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+              "path":"0||0||16||2",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"今天",
+            },
+            "sg3":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+              "path":"0||0||16||5",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"今天",
+            },
+             "sg4":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+              "path":"0||0||16||8",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"今天",
+            },
+             "sg5":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+              "path":"0||0||16||11",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"今天",
+            },
+             "sg6":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+              "path":"0||0||16||14",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"今天",
+            },
+             "sg7":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+              "path":"0||0||16||17",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"今天",
+            },
+             "sg8":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+              "path":"0||0||16||20",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"今天",
+            },
+             "sg9":{
+              "action":"click_id",
+              "click_id":"com.browser2345:id/task_center_h5_back",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"菜单",
+            },
+			},
+        "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"iv_close",
+               "id":"com.browser2345:id/iv_close",
            },
-          
           "ab2":{
             "featuremode":"id",
-            "id":"a_y",
-        },
+            "id":"com.browser2345:id/a_y",
+          },
          "ab3":{
             "featuremode":"id",
-            "id":"gu",
-        },
+            "id":"com.browser2345:id/gu",
+          },
+        "ab4":{
+            "featuremode":"id",
+            "id":"com.browser2345:id/star_red_package_delete",
+          },
+        "ab5":{
+            "featuremode":"id",
+            "id":"com.browser2345:id/star_guide_page_delete",
+          },
          }, 
-         "activitys":{
+        "activitys":{
             "at1":"com.browser2345.BrowserActivity",
             "at2":"com.browser2345.module.news.NewsDetailActivity",
+            
+            "at3":"com.browser2345.starunion.taskcenter.StarTaskCenterActivity",
    
           } , 
         "bindwechat":{
-         
-    
         },
         "autoread":{
 		 "ar1":{
-                "action":"click_text",
-                "click_text":"头条",
-                "featuremode":"ids",
-                "ids":"zh||en||tw",
+                "action":"click_id",
+                "click_id":"com.browser2345:id/top_btn",
+                "featuremode":"id",
+                "id":"com.browser2345:id/btn_back",
             },
             "ar2":{
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
                 "deploydesc":"展开全文",
+                "backtrigger":"id_xyoffset_color_bool",
+                "id":"com.browser2345:id/layout_packet",
+                "xyoffset":"90||65",
+                "color":"ffffec4a",
+                "bool":"false",
+                "reswipe":"true",
 
             },
         }, 
