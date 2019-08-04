@@ -53,6 +53,19 @@ ui.layout(
                             {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
                         </linear>
                         <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+                            <text text="运行速度" textSize="12sp" textColor="{{textColor}}" />
+                            {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
+                            <linear h="40" paddingTop="1" >
+                                <radiogroup id='fbName' orientation="horizontal">
+                                    {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
+                                    <radio  id="slow" text='慢速' color="{{textColor}}" checked="true"></radio>
+                                    <radio id="normal" text='普通' color="{{textColor}}"></radio>
+                                    <radio id="fast" text='快速（不支持语音）' color="{{textColor}}"></radio>    
+                                </radiogroup>
+                            </linear>
+                        </linear>
+
+                        <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="每APP阅读时间" textSize="12sp" textColor="{{textColor}}" />
                             <radiogroup id='fbName' orientation="horizontal">
                                     {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
@@ -491,6 +504,9 @@ ui.licence_activate.click(()=>{
 /************************************* UI结束**********************************************************************/ 
 Glicence=false;
 Gcode_state="ui";//noui ui;
+
+//脚本运行速度
+Grunspeed="slow";//fast normal slow;
 //当前工作模式，如果有UI界面，则该变量需要在UI的启动按钮中声明
 //运行模式变量 自动阅读，绑定微信，微信养号 // 对应字典autoread bindwechat trainwechat popupdebug
 if(Gcode_state=="ui"){
@@ -517,6 +533,8 @@ Guser_start=false;
 Guser_cancel=false;
 Gworkthread="";
 Gfirstrun=true;
+ //签到之后定位首页模块是否操作过
+ Gisaction=false;
 //是否开启调试打印  字典true false
 Gdebug=false;
 //多少次找不到新闻执行一次back返回键
@@ -767,6 +785,15 @@ function init(){
                         Greadflag=false;
                     }
 
+                    //运行速度判断
+                    if(ui.slow.checked){
+                        Grunspeed="slow";
+                    }else if(ui.normal.checked){
+                        Grunspeed="normal"
+                    }else if(ui.fast.checked){
+                        Grunspeed="fast";
+                    }
+                    toast("当前速度："+Grunspeed);
                 }catch(e){}
                 // "opendaemon" text="开启守护" color="{{textColor}}" checked="true"/>
                 // <checkbox id="readflag"
@@ -810,6 +837,29 @@ events.on("key", function(volume_down, event){
 });
 //取出安卓ID作为session
  Gsession=device.getAndroidId();
+
+ //根据设置的速断设置滑动量速度
+    //判断当前运行速度是快速，普通还是慢
+    if("fast"==Grunspeed){
+        //两次滑动之间最大等待多少毫秒
+         Gmax=300;
+        //两次滑动之间最小等待多少毫秒
+         Gmin=200;
+        //单次滑动时两点间用的时间
+         Gppinterval=200;
+    }else if("normal"==Grunspeed){
+         Gmax=800;
+         Gmin=501;
+         Gppinterval=250;
+    }else if("slow"==Grunspeed){
+         Gmax=4000;
+         Gmin=1000;
+         Gppinterval=500;
+    }else{
+       Gmin=4000;
+       Gmin=1000;  
+    }
+
    voice_runstate();
    voice_devicetype();
    //voice_env();
@@ -1003,8 +1053,6 @@ if(Grunstate=="trainwechat"){
                                     var tmpstr=r.body.string();
                                     var jsonstr=eval('('+tmpstr+')');
                                     Gincome_flag=jsonstr[0]['fincome_flag'];
-                                    
-                                   // alert(Gincome_flag);exit();
                                         //如果是统计收益，走blockanalay阻塞函数
                                         block_analay(incomeanaly_obj);
                                  }
@@ -1020,11 +1068,18 @@ if(Grunstate=="trainwechat"){
        sleep(1000)
        }
          //for end
+         //如果是统计收益，就不要用到外层的while了，只统计一轮就好
+         if(Grunstate=="analy"){
+            alert("统计完成，请到服务器上查看统计标记为:"+Gincome_flag+"，手机标识为:"+Gsession+"的相关记录"); 
+            break;
+
+         }
    }
    //while end
  
 }
 //if end
+
 } //while end
 
 //function fun end
@@ -1399,11 +1454,10 @@ function while_findnews(autoread_obj){
    Gworkthread="findnews_start";
    //线程计数器
    this_threadcount=0;
+  
    toast("找新闻线程启动..."); play("global","正在检索");
    
-  //取出新闻条目特征码 改用函数实现了，后续抽象特征码数据结构
- // var thisborderline=autoread_obj["ar1"]["borderline"];
- // var thisitemsclassname=autoread_obj["ar1"]["itemsclassname"];
+
 //数据结构异常的处理 临时
 
 //取出action的值
@@ -1416,33 +1470,39 @@ function while_findnews(autoread_obj){
    if("undefined"==typeof(action)){
          toast(appname+":"+"autoread_obj[\"ar1\"][\"action\"]数据结构错误");
    }else{
+       if(Gisaction==false){
+           //如果没有定位过首页模块，则开始定位，并且把标志位改为true，这样以后二级页面读完后返回一级页面时无需再次出发，避免首页刷新到top10，导致一直读重复新闻
+           Gisaction=true;
            //定位首页模块
-           if("click_text"==action){
-               var text=autoread_obj["ar1"]["click_text"];
-               if("undefined"==typeof(text)){  toast(appname+":"+"autoread_obj[\"ar1\"][\"click_text\"]数据结构错误");}
-               //alert("click_text is:"+text);
-              try{
-               click(text);
-              }catch(e){}
-               
-               sleep(1000);
-              
-           }else if("click_id"==action){
-           
-            try{
-                var click_id=autoread_obj["ar1"]["click_id"];
-                thiscommon.clickxy_for_ele(id(click_id).findOnce());
-            }catch(e){}
-           }else if("click_boundary_path"==action){
-               try{
-                   var boundary=autoread_obj["ar1"]["boundary"];
-                   var path=autoread_obj["ar1"]["path"];
-                   thiscommon.click_boundary_path(boundary,path);
-               }catch(e){
+                    if("click_text"==action){
+                        var text=autoread_obj["ar1"]["click_text"];
+                        if("undefined"==typeof(text)){  toast(appname+":"+"autoread_obj[\"ar1\"][\"click_text\"]数据结构错误");}
+                        //alert("click_text is:"+text);
+                    try{
+                        click(text);
+                    }catch(e){}
+                        
+                        sleep(1000);
+                    
+                    }else if("click_id"==action){
+                    
+                    try{
+                        var click_id=autoread_obj["ar1"]["click_id"];
+                        thiscommon.clickxy_for_ele(id(click_id).findOnce());
+                    }catch(e){}
+                    }else if("click_boundary_path"==action){
+                        try{
+                            var boundary=autoread_obj["ar1"]["boundary"];
+                            var path=autoread_obj["ar1"]["path"];
+                            thiscommon.click_boundary_path(boundary,path);
+                        }catch(e){
 
-               }
-              
-           }
+                        }
+                    
+                    }
+                    //定位首页模块结束
+       }
+ 
    }
 
 
@@ -1457,37 +1517,31 @@ try{
    }
  
    var upcount=0;
-   //从云端获取特征码js
-//    try{
-//    http.__okhttp__.setTimeout(10000);
-//    var r=http.get(Gapplistpath_remote+"/"+appname+".js")
-  
-//    tmpstr=r.body.string();
-//    eval(tmpstr);
-// }catch(e){
-//    toast("this is findnews httpget and eval:"+e);
-//    }
+
 //线程执行前初始化一下没有找到新闻的次数为0；
    var nofindnews_count=0;
    thread_findnews=threads.start(
        function(){
            //把finditem字符串变成函数
         eval(Gfinditemstr);  
+         //两次上滑之间的间隔
+         var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
+         toast("findnews 滑动间隔"+x+"毫秒");
            setInterval(
                function(){ 
                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
-                  thisswipe.swiperealup_custom_lnnl();
+                  thisswipe.swiperealup_custom_lnnl(Gppinterval);
                }else{
                    thisswipe.swiperealup_custom();
                }
                sleep(1500);
                upcount+=1;
-               var m=2;
-               var n=1;
+               var maxswipecount=2;
+               var minswipecount=1;
                //x 为向上滑动多少次后打开新闻
-               var x=Math.round(Math.random()*(m-n))+n;
+               var swipecount=Math.round(Math.random()*(maxswipecount-minswipecount))+minswipecount;
                //当upcount大于了x次数后，开始打开当前发现的新闻条目
-               if(upcount>x){
+               if(upcount>=swipecount){
                    //判断新闻条目是否存在
                   // var ele=thisfinditem.finditem(appname);
                  
@@ -1534,7 +1588,7 @@ try{
                }
               // this_threadcount+=1;
              //  toast("线程计数器 findnews count is"+this_threadcount);
-               },2000);
+               },x);
        }
    );//thread_findnews end
 }
@@ -1576,15 +1630,15 @@ function while_readnews(autoread_obj){
  
    thread_readnews=threads.start(
        function(){
-          // while(1){
-               var m=4000;
-               var n=1000;
+             
+              
               //两次上滑之间的间隔
-               var x=Math.round(Math.random()*(m-n))+n;
+               var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
+               toast("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");
                setInterval(function(){
                  
                    if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
-                       thisswipe.swiperealup_custom_lnnl();
+                       thisswipe.swiperealup_custom_lnnl(Gppinterval);
                     }else{
                         thisswipe.swiperealup_custom();
                     }
@@ -2464,7 +2518,7 @@ function block_analay(incomeanaly_obj){
 }
 //播放声音
 function play(subpath,appname){
-   if(Gsoftvoice==true){
+   if(Gsoftvoice==true && "fast"!=Grunspeed){
            var voicefile=Gvoicepath+"/"+subpath+"/"+appname+".mp3";
            var result=files.exists(voicefile);
            if(!result){
@@ -2478,6 +2532,8 @@ function play(subpath,appname){
                }
                   
            }   
+   }else{
+       // toast(appname);
    }
 }
 //打开微信并判断状态
@@ -2549,7 +2605,7 @@ function while_findmoments(){
        function(){
            setInterval(function(){
                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
-                   thisswipe.swiperealup_custom_lnnl();
+                   thisswipe.swiperealup_custom_lnnl(Gppinterval);
                 }else{
                     thisswipe.swiperealup_custom();
                 }

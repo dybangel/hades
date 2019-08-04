@@ -1,9 +1,9 @@
 module.exports = {
-swiperealup_custom_lnnl:function(){
+swiperealup_custom_lnnl:function(ppinterval){
     m=600;
     n=300;
     x=Math.round(Math.random()*(m-n))+n; 
-    Swipe(x,device.height * 0.625,x,device.height *0.25,500);
+    Swipe(x,device.height * 0.625,x,device.height *0.25,ppinterval);
 },
 swiperealup_custom_xy:function (y){
         m=800;
