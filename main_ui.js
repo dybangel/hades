@@ -52,18 +52,17 @@ ui.layout(
                             <checkbox id="readflag" text="阅读进度" color="{{textColor}}" checked="true"/>
                             {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
                         </linear>
-                        <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
+
+                        {/* <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="运行速度" textSize="12sp" textColor="{{textColor}}" />
-                            {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
                             <linear h="40" paddingTop="1" >
                                 <radiogroup id='fbName' orientation="horizontal">
-                                    {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
                                     <radio  id="slow" text='慢速' color="{{textColor}}" checked="true"></radio>
                                     <radio id="normal" text='普通' color="{{textColor}}"></radio>
                                     <radio id="fast" text='快速（不支持语音）' color="{{textColor}}"></radio>    
                                 </radiogroup>
                             </linear>
-                        </linear>
+                        </linear> */}
 
                         <linear w="*" h="40" paddingLeft="8" gravity="left|center" >
                             <text text="每APP阅读时间" textSize="12sp" textColor="{{textColor}}" />
@@ -785,15 +784,15 @@ function init(){
                         Greadflag=false;
                     }
 
-                    //运行速度判断
-                    if(ui.slow.checked){
-                        Grunspeed="slow";
-                    }else if(ui.normal.checked){
-                        Grunspeed="normal"
-                    }else if(ui.fast.checked){
-                        Grunspeed="fast";
-                    }
-                    toast("当前速度："+Grunspeed);
+                    // //运行速度判断
+                    // if(ui.slow.checked){
+                    //     Grunspeed="slow";
+                    // }else if(ui.normal.checked){
+                    //     Grunspeed="normal"
+                    // }else if(ui.fast.checked){
+                    //     Grunspeed="fast";
+                    // }
+                    // toast("当前速度："+Grunspeed);
                 }catch(e){}
                 // "opendaemon" text="开启守护" color="{{textColor}}" checked="true"/>
                 // <checkbox id="readflag"
@@ -838,27 +837,7 @@ events.on("key", function(volume_down, event){
 //取出安卓ID作为session
  Gsession=device.getAndroidId();
 
- //根据设置的速断设置滑动量速度
-    //判断当前运行速度是快速，普通还是慢
-    if("fast"==Grunspeed){
-        //两次滑动之间最大等待多少毫秒
-         Gmax=300;
-        //两次滑动之间最小等待多少毫秒
-         Gmin=200;
-        //单次滑动时两点间用的时间
-         Gppinterval=200;
-    }else if("normal"==Grunspeed){
-         Gmax=800;
-         Gmin=501;
-         Gppinterval=250;
-    }else if("slow"==Grunspeed){
-         Gmax=4000;
-         Gmin=1000;
-         Gppinterval=500;
-    }else{
-       Gmin=4000;
-       Gmin=1000;  
-    }
+
 
    voice_runstate();
    voice_devicetype();
@@ -918,8 +897,41 @@ if(Grunstate=="trainwechat"){
             bindwechat_obj=applist[i]['bindwechat']; 
            signin_obj=applist[i]['signin'];
            incomeanaly_obj=applist[i]["incomeanaly"];
+           try{
+                  Grunspeed=applist[i]["speed"];
+                if("undefined"==typeof(Grunspeed)){
+                    Grunspeed="normal";
+                }
+           }catch(e){
+                    Grunspeed="normal";
+           }
+          
+           Gappinterval=applist[i]["interval"]
+           Gappinterval=Number(Gappinterval)*60*1000;
 
 
+                //根据设置的速断设置滑动量速度
+                    //判断当前运行速度是快速，普通还是慢
+                    if("fast"==Grunspeed){
+                        //两次滑动之间最大等待多少毫秒
+                        Gmax=300;
+                        //两次滑动之间最小等待多少毫秒
+                        Gmin=200;
+                        //单次滑动时两点间用的时间
+                        Gppinterval=200;
+                    }else if("normal"==Grunspeed){
+                        Gmax=800;
+                        Gmin=501;
+                        Gppinterval=250;
+                    }else if("slow"==Grunspeed){
+                        Gmax=4000;
+                        Gmin=1000;
+                        Gppinterval=500;
+                    }else{
+                    Gmin=4000;
+                    Gmin=1000;  
+                    }
+                    toast("当前速度"+Grunspeed);
                             //从云端获取特征码js
                 try{
                 http.__okhttp__.setTimeout(10000);
@@ -1581,7 +1593,14 @@ try{
                             if(nofindnews_count>Gnofindnews_countback){
                                 nofindnews_count=0;
                                 toast("初始化线程计数器");
-                                funmulityback();
+                               // toast("拉回主线......");
+                                try{    thread_findnews.interrupt();}catch(e){};
+                                try{    thread_readnews.interrupt();}catch(e){};
+                                try{    thread_signin.interrupt();}catch(e){};
+                          
+                                 funmulityback();
+                                 thiscommon.openpackage(packagename+"/"+activityname);
+                                 while_findnews(autoread_obj);      
 
                             }
                    }
@@ -2518,7 +2537,7 @@ function block_analay(incomeanaly_obj){
 }
 //播放声音
 function play(subpath,appname){
-   if(Gsoftvoice==true && "fast"!=Grunspeed){
+   if(Gsoftvoice==true && "fast"!=Grunspeed && "normal"!=Grunspeed){
            var voicefile=Gvoicepath+"/"+subpath+"/"+appname+".mp3";
            var result=files.exists(voicefile);
            if(!result){
@@ -3174,7 +3193,7 @@ function funmulityback(){
                         }
     
                     }//for end
-            back();
+          //  back();
         }//else end
     
     }catch(e){
