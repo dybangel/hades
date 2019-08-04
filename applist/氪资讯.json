@@ -75,22 +75,18 @@
     "incomeanaly":{
           "in1":{
             "action":"click_xy",
-            "click_xy":"1000|1000",
+            "click_xy":"1291|2482",
             },
           "in2":{
-              "action":"click_xy",
-                "click_xy":"1000|1000",
-            },
-          "in3":{
-            "action":"getdesc_id_index",
-               "id":"xxxxxx:id/xxxxxx",
+            "action":"gettext_id_index",
+             "id":"zixun.digu.ke:id/tv_income",
             "index":"0",
             "type":"money",
             },
-          "in4":{
+          "in3":{
             "action":"gettext_id_index",
-            "id":"xxxxxx:id/xxxxxx",
-            "index":"1",
+            "id":"zixun.digu.ke:id/tv_glod",
+            "index":"0",
             "type":"coin",
             },
           },

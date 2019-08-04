@@ -1,7 +1,7 @@
 [
             //  {"appnum":"016","appname":"掌上热点","enable":"true"},
              // {"appnum":"028","appname":"微鲤看看","enable":"true"},
-            // {"appnum":"035","appname":"东方头条","enable":"true"},
+           {"appnum":"035","appname":"东方头条","enable":"true"},
                 {"appnum":"050","appname":"亿刻看点","enable":"true"},
 			{"appnum":"043","appname":"红包视频","enable":"true"},
             {"appnum":"051","appname":"韭菜资讯","enable":"true"},//已经实现
