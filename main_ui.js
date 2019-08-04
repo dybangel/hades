@@ -88,7 +88,7 @@ ui.layout(
                                     <radio  id="autoread" text='自动阅读' color="{{textColor}}" checked="true"></radio>
                                     <radio id="bindwechat" text='微信绑定' color="{{textColor}}"></radio>
                                     <radio id="trainwechat" text='微信养号' color="{{textColor}}"></radio>    
-                                    {/* <radio id="analy" text='统计' color="{{textColor}}"></radio>   */}
+                                     <radio id="analy" text='统计' color="{{textColor}}"></radio> 
                                 </radiogroup>
                             </linear>
                         </linear>
@@ -135,6 +135,12 @@ ui.layout(
                         </linear>
                        
                         <vertical margin="0 0 0 0" id="applist">
+                     {/* <list id="menu0">
+                        <horizontal bg="?selectableItemBackground" w="*">
+                            <img w="50" h="50" padding="16" src="{{this.icon}}" tint="{{color}}"/>
+                            <text textColor="black" textSize="15sp" text="{{this.title}}" layout_gravity="center"/>
+                        </horizontal>
+                    </list> */}
                             {/* <linear layout_weight="1" >
                                 <checkbox id="str" text="脚本运行前开启录屏(功能未开发)" color="{{textColor}}" />
                             </linear> */}
@@ -858,6 +864,7 @@ if(Grunstate=="trainwechat"){
             open_obj=applist[i]["open"];
             bindwechat_obj=applist[i]['bindwechat']; 
            signin_obj=applist[i]['signin'];
+           incomeanaly_obj=applist[i]["incomeanaly"];
 
 
                             //从云端获取特征码js
@@ -983,7 +990,13 @@ if(Grunstate=="trainwechat"){
                         if("popupdebug"==Grunstate){
                             while_abnormal_overtime(activitys_obj); 
                             }
-                        sleep(Gappinterval);
+                        //当前app驻留时间
+                        if(Grunstate=="analy"){
+                            //如果是统计收益，走blockanalay阻塞函数
+                            block_analay(incomeanaly_obj);
+                        }else{
+                            sleep(Gappinterval);
+                        }
        }
            toast("准备开始下一个");
 
@@ -2032,7 +2045,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                    }else if("popupdebug"==Grunstate){
                        toast("弹窗跟踪调试");
                    }else if("analy"==Grunstate){
-                     //  alert("统计收益");
+                    toast("while_contorl...统计收益");
 
                    }
              }
@@ -2366,6 +2379,60 @@ var num=0;
    }
 
 
+}
+//阻塞统计收益
+function block_analay(incomeanaly_obj){
+    var Ganalymoney="";
+    var Ganaycoin="";
+    //是否从app中取出过money
+    //是否从app中取出过coin
+    var findmoney=false;
+    var findcoin=false;
+
+      for(var i=1;i<=thiscommon.JSONLength(incomeanaly_obj);i++){
+        log("this is in"+i);
+        var thisaction=incomeanaly_obj['in'+i]["action"];
+        if("click_xy"==thisaction){
+          var thisclick_xy=incomeanaly_obj['in'+i]["click_xy"];
+          var thisclick_xyarr=thisclick_xy.split("||");
+          var thisclick_x=thisclick_xyarr[0];
+          var thisclick_y=thisclick_xyarr[1];
+          thiscommon.touchreal(thisclick_x,thisclick_y);
+          sleep(1500);
+        }else if("getdesc_id_index"==thisaction){
+          var thisid=incomeanaly_obj['in'+i]["id"];
+          var thisindex=incomeanaly_obj['in'+i]["index"];
+          var thistype=incomeanaly_obj['in'+i]["type"];
+          var appdesc=id(thisid).findOnce(thisindex).desc();
+          if(thistype=="money"){
+            Ganalymoney=appdesc;
+          }else if(thistype=="coin"){
+            Ganaycoin=appdesc;
+          }else{
+            //alert();
+          };
+            
+    
+        }else if("gettext_id_index"==thisaction){
+          var thisid=incomeanaly_obj['in'+i]["id"];
+          var thisindex=incomeanaly_obj['in'+i]["index"];
+          var thistype=incomeanaly_obj['in'+i]["type"];
+          var apptext=id(thisid).findOnce(thisindex).text();
+          if(thistype=="money"){
+            Ganalymoney=apptext;
+          }else if(thistype=="coin"){
+            Ganaycoin=apptext;
+          }else{
+            //alert();
+          };
+        }
+    
+        //log("action is:"+thisaction);
+        
+        //上报数据
+       //http://download.dqu360.com:81/haiqu/api.aspx?&action=income_upload&income_flag=15074909&session=123123123&appname=今日头条&money=1.11&coin=40056 
+    }// for end;
+    log("money is:"+Ganalymoney+" coin is"+Ganaycoin);
 }
 //播放声音
 function play(subpath,appname){
