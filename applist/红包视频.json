@@ -2,7 +2,7 @@
         "enable":"false",
         "appname":"红包视频",
 		 "appver":"2.4.2",
-        "interval":"3",
+        "interval":"30",
          "packagename":"com.sanmiao.sound",
         "activityname":"com.sanmiao.sound.activity.MainActivity",
         "open":{
@@ -69,6 +69,24 @@
 			  "text":"我的钱包",
 			 },
         },
+		 "incomeanaly":{
+          "in1":{
+            "action":"click_xy",
+            "click_xy":"1291||2482",
+            },
+          "in2":{
+            "action":"gettext_id_index",
+             "id":"com.sanmiao.sound:id/tv_mine_balance",
+            "index":"0",
+            "type":"money",
+            },
+          "in3":{
+            "action":"gettext_id_index",
+            "id":"com.sanmiao.sound:id/tv_mine_gold",
+            "index":"0",
+            "type":"coin",
+            },
+          },
         "autoread":{
 		 "ar1":{
                 "action":"click_id",

@@ -110,6 +110,24 @@
           "text":"个人主页",
         },
         },
+		 "incomeanaly":{
+          "in1":{
+            "action":"click_xy",
+            "click_xy":"1291||2482",
+            },
+          "in2":{
+            "action":"gettext_id_index",
+             "id":"com.cnode.blockchain:id/text_user_money",
+            "index":"0",
+            "type":"money",
+            },
+          "in3":{
+            "action":"gettext_id_index",
+            "id":"com.cnode.blockchain:id/text_user_coin",
+            "index":"0",
+            "type":"coin",
+            },
+          },
         "autoread":{
           "ar1":{
             "action":"click_boundary_path",

@@ -75,7 +75,7 @@
     "incomeanaly":{
           "in1":{
             "action":"click_xy",
-            "click_xy":"1291|2482",
+            "click_xy":"1291||2482",
             },
           "in2":{
             "action":"gettext_id_index",
@@ -92,6 +92,7 @@
           },
     "autoread":{
 		 "ar1":{
+		        "swipecount":"2",
                 "action":"click_boundary_path",
                 "boundary":"android.widget.RelativeLayout",
 				"path":"3||0",
@@ -99,6 +100,7 @@
                 "id":"zixun.digu.ke:id/back",
             },
             "ar2":{
+			    "swipeintervals":"4",
                 "upcount":"40",
                 "deploymode":"classname_text",
                 "deployclassname":"android.widget.TextView",
