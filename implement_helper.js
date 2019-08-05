@@ -282,6 +282,7 @@ function setup_screen_always_light(){
               }
 toast("已经打开屏幕常亮");  
 }
+//设置白名单
 function setup_bd_while_list(){
     json_while_list=[
         {"appname":"无障碍-Daemon"},
@@ -344,7 +345,7 @@ function openpackage(packagestr) {
     var result=shell("am start -n " + activity, true);
     return result;
 }
-
+//激活海趣
 function reg_haiquzhushou(){
    clean();
     activitys="io.dcloud.H58689B59/io.dcloud.PandoraEntryActivity"

@@ -52,7 +52,10 @@ ui.layout(
                 <tabs id="tabs"/>
             </appbar>
             <viewpager id="viewpager" background="{{frameColor}}">
+        
+                 
                 <frame> {/** 第一屏布局*/}
+              
                     <vertical>
                         {/* <android.support.v4.widget.SwipeRefreshLayout> */}
                         {/* 启动时网络不好等待加载的动画效果 */}
@@ -125,17 +128,36 @@ ui.layout(
                         </list>
                         {/* </android.support.v4.widget.SwipeRefreshLayout> */}
                     </vertical>
+                 
                 </frame>
 
                 <frame> {/** 第二屏布局*/}
                     <vertical>
-                        <linear w="*" h="24" paddingLeft="8" gravity="left|center" >
+                    <linear w="*" h="*"  paddingTop="10" paddingLeft="8" gravity="left|center" >
+                            <text text="配置检测单步设置"  paddingTop="1" textSize="12sp" textColor="{{textColor}}" />
+                            {/* <text autoLink="all" text="恢复默认" marginLeft="10sp" /> */}
+                            <linear h="*" paddingTop="1" >
+                                <radiogroup id='fbName' orientation="vertical">
+                                    {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
+                                    <radio  id="all" text='执行所有步骤' color="{{textColor}}" checked="true"></radio>
+                                    <radio  id="a0" text='0白名单' color="{{textColor}}" ></radio>                                   
+                                    <radio id="a1" text='1拷贝还原' color="{{textColor}}"></radio>
+                                    <radio id="a2" text='2设置屏幕常亮' color="{{textColor}}"></radio>  
+                                    <radio id="a3" text='3关闭辅助自动优化' color="{{textColor}}"></radio>  
+                                    <radio id="a4" text='4设置开机运行' color="{{textColor}}"></radio>  
+                                    <radio id="a5" text='5设置阅读app权限' color="{{textColor}}"></radio>  
+                                    <radio id="a6" text='6激活海趣助手' color="{{textColor}}"></radio>  
+
+                                </radiogroup>
+                            </linear>
+                        </linear>
+                        {/* <linear w="*" h="24" paddingLeft="8" gravity="left|center" >
                             <text text="基础设置" textSize="12sp" textColor="{{textColor}}" />
                         </linear>
 
                         <linear h="40" paddingTop="10">
                         <linear w="*" margin="0 20 0 20" layout_gravity="center" >
-                            {/* 微信号 Text控件 */}
+                          
                             <linear layout_weight="1" gravity="center" h="*">
                                 <text text="微信号:"
                                     color="{{textColor}}"
@@ -143,7 +165,7 @@ ui.layout(
                                      />
                             </linear>
 
-                            {/* 微信号输入框控件 */}
+                           
                             <linear layout_weight="3" h="*">
                                 <input id="wechaNum"
                                     inputType="textVisiblePassword"
@@ -159,7 +181,7 @@ ui.layout(
                                     layout_gravity="left|center" />
                             </linear>
 
-                            {/* 执行次数 Text控件 */}
+                           
                             <linear layout_weight="1" gravity="center" h="*">
                                 <text text="次数:"
                                     marginLeft="1"
@@ -169,7 +191,7 @@ ui.layout(
                                      />
                             </linear>
 
-                            {/* 执行次数输入框控件 */}
+                          
                             <linear layout_weight="2" h="*">
                                 <input id="Loops"
                                     inputType="number"
@@ -190,7 +212,7 @@ ui.layout(
                         <vertical>
                             <linear w="*" h="40" margin="0 20 0 20" >
                                 <linear layout_weight="1" h="30" layout_gravity="left|center" >
-                                    {/* 脚本速度 Text控件 */}
+                                  
                                     <linear gravity="right|center" w="80" h="*">
                                         <text text="当前速度: "
                                             textColor="{{textColor}}"
@@ -198,7 +220,7 @@ ui.layout(
                                             textSize="16sp" />
                                     </linear>
 
-                                    {/* 当前速度值 Text控件 */}
+                                  
                                     <linear gravity="center" w="30" h="*">
                                     <text id="speedtext"
                                         text=""
@@ -210,14 +232,14 @@ ui.layout(
                             </linear>
 
                             <linear w="*" h="24" margin="0 20 0 20" gravity="center" >
-                                {/** 慢 Text控件 */}
+                              
                                 <linear layout_weight="1" gravity="right" >
                                 <text text="慢"
                                     textColor="{{textColor}}"
                                     textSize="14sp" />
                                 </linear>
 
-                                {/** 进度条控件 */}
+                            
                                 <linear layout_weight="8" >
                                 <seekbar id="speed"
                                     max="99"
@@ -226,7 +248,7 @@ ui.layout(
                                     w="*" />
                                 </linear>
 
-                                {/** 快 Text控件 */}
+                           
                                 <linear layout_weight="1" gravity="left" >
                                 <text text="快"
                                     textColor="{{textColor}}"
@@ -235,26 +257,24 @@ ui.layout(
                             </linear>
                         </vertical>
 
-                        {/* 分割线填充 */}
+                     
                         <vertical w="*" h="1" bg="{{color}}" ></vertical>
 
-                        {/* 其他功能区域相关配置 */}
+                    
                         <linear w="*" h="24" paddingLeft="8" gravity="left|center" >
                             <text text="附加功能" textSize="12sp" textColor="{{textColor}}" />
                         </linear>
                         <vertical margin="0 20 0 20">
-                            {/* <linear layout_weight="1" >
-                                <checkbox id="str" text="脚本运行前开启录屏(功能未开发)" color="{{textColor}}" />
-                            </linear> */}
+                       
                             <linear layout_weight="1" >
                                 <checkbox id="sendMsgOption" text="脚本出错时发送相关日志给开发者(需安装QQ)" color="{{textColor}}" />
                             </linear>
                         </vertical>
 
-                        {/* 分割线填充 */}
+                     
                         <vertical w="*" h="1" bg="{{color}}" ></vertical>
 
-                        {/* 垃圾清理区域相关配置 */}
+                      
                         <linear w="*" h="24" paddingLeft="8" gravity="left|center" >
                             <text text="清理相关" textSize="12sp" textColor="{{textColor}}" />
                         </linear>
@@ -276,18 +296,17 @@ ui.layout(
 
                         </vertical>
 
-                        {/* 分割线填充 */}
-                        <vertical w="*" h="1" bg="{{color}}" ></vertical>
+                      
+                        <vertical w="*" h="1" bg="{{color}}" ></vertical> */}
                         
-                        {/* <linear gravity="center" margin="0 0 0 0">
-                            <button id="reset" w="85" h="40" style="Widget.AppCompat.Button.Colored" bg="#E1E4E5" textSize="16sp" textStyle="bold" textColor="#000000" text="清除缓存" margin="12"></button>
-                            <button id="start" w="85" h="40" style="Widget.AppCompat.Button.Colored" bg="#3CCA3C" textSize="16sp" textStyle="bold" textColor="#FFFFFF" text="开  始" margin="12"></button>
-                        </linear> */}
+                    
                     </vertical>
                 </frame>
 
                 <frame> {/** 第三屏布局*/}
-                    <text text="暂时还没想好内容" textColor="{{textColor}}" textSize="16sp"/>
+          
+               
+                  
                 </frame>
             </viewpager>
         </vertical>
@@ -339,7 +358,7 @@ var beforeStartUp_Thread = threads.start(function() {
 })
 ui.noData.setVisibility(View.GONE);
 //设置滑动页面的标题
-ui.viewpager.setTitles(["脚本列表"]);//, "相关设置", "关于"
+ui.viewpager.setTitles(["脚本列表", "单步执行", "关于"]);
 //让滑动页面和标签栏联动
 ui.tabs.setupWithViewPager(ui.viewpager);
 //去除viewpager的光晕效果
@@ -430,7 +449,17 @@ ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐�
             //开始执行脚本
             var script_x = files.read(item.path, encoding = 'utf-8');
             try {
-                eval(script_x);
+                if(ui.all.checked){runstate_str="Grunstate='all';\n";}
+                else if(ui.a0.checked){runstate_str="Grunstate='a0';\n";}
+                else if(ui.a1.checked){runstate_str="Grunstate='a1';\n";}
+                else if(ui.a2.checked){runstate_str="Grunstate='a2';\n";}
+                else if(ui.a3.checked){runstate_str="Grunstate='a3';\n";}
+                else if(ui.a4.checked){runstate_str="Grunstate='a4';\n";}
+                else if(ui.a5.checked){runstate_str="Grunstate='a5';\n";}
+                else if(ui.a6.checked){runstate_str="Grunstate='a6';\n";}
+               
+
+                eval(runstate_str+script_x);
                 writeLog("脚本执行完毕.");
             } catch (e) {
                 alert("e is:"+e);
