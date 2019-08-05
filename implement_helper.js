@@ -3,13 +3,114 @@ var thiswipe=require("myswipe.js");
 ra = new RootAutomator();
 
 
-toast("start...");
+toast("开始自动配置");
 
-setup_screen_always_light();
-setup_bd_while_list();
-assist_close();
-setup_secret_all();
-alert("全部执行完成");
+ toast("1设置屏幕常亮");
+ setup_screen_always_light();
+ toast("2设置白名单");
+ setup_bd_while_list();
+ toast("3关闭服务自动优化");
+ assist_close();
+ toast("4设置阅读app权限");
+ setup_secret_all();
+ toast("5设置开机运行");
+setup_autorun();
+ alert("全部执行完成");
+
+//设置开机自启动
+function setup_autorun(){
+     clean();
+    var activity="com.jozein.xedgepro/com.jozein.xedgepro.ui.ActivityMain"
+    result=thiscommon.openpackage(activity);   
+   if(result){
+       //alert("打开成功");
+       Swipe(400,1700,400,200,500);
+       sleep(1500);
+       ele=className("android.widget.TextView").text("更多触发器").findOnce();//.exists();//;.findOnce().click();
+       thiscommon.clickxy_for_ele(ele); 
+       sleep(1500);
+       ele=className("android.widget.TextView").text("启动完成").findOnce();
+       thiscommon.clickxy_for_ele(ele);
+
+  }
+            for(var i=0;i<6;i++){
+                Swipe(400,1700,400,200,200);
+                sleep(500);
+            }
+            var ele=className("android.widget.TextView").text("多重动作").findOnce();
+            thiscommon.clickxy_for_ele(ele);
+            sleep(1000);
+           ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
+           thiscommon.clickxy_for_ele(ele);
+         
+            for(var i=0;i<2;i++){
+                Swipe(400,1800,400,100,500);
+                sleep(1000);
+            }
+            sleep(3000);
+            ////设置屏幕常亮
+
+             var ele= className("android.widget.TextView").text("保持亮屏").findOnce();
+            thiscommon.clickxy_for_ele(ele);
+             sleep(1000);
+            var ele=className("android.widget.TextView").text("开关").findOnce();
+            thiscommon.clickxy_for_ele(ele);
+
+            sleep(1000);
+             //延迟
+            ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
+             thiscommon.clickxy_for_ele(ele);
+          sleep(1000);
+            for(var i=0;i<4;i++){
+                            Swipe(400,1800,400,100,200);
+                            sleep(1000);
+                        }
+           sleep(1000);
+            var ele=className("android.widget.TextView").text("延时").findOnce();
+             thiscommon.clickxy_for_ele(ele);
+             sleep(1000);
+
+             setText("15000");
+             sleep(1000);
+             click("确定");
+            sleep(3000);
+           // 设置自动解锁
+            ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
+           thiscommon.clickxy_for_ele(ele);
+           sleep(1000);
+           ele=className("android.widget.TextView").textContains("解锁").findOnce();//.findOnce();
+           thiscommon.clickxy_for_ele(ele);
+            
+           sleep(3000)
+              //添加海趣自动启动
+            ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
+           thiscommon.clickxy_for_ele(ele);
+           sleep(1000);
+        for(var i=0;i<4;i++){
+                            Swipe(400,2200,400,100,200);
+                            sleep(1000);
+          }
+       
+            Swipe(400,400,400,1200,500);
+            sleep(3000);
+            ele=className("android.widget.TextView").text("应用").findOnce();//.findOnce();
+            thiscommon.clickxy_for_ele(ele);
+            sleep(5000);
+           var ele= className("android.widget.SearchView").findOnce();
+           thiscommon.clickxy_for_ele(ele);
+           //alert(result);
+            sleep(1000);
+            setText("海趣助手");
+            sleep(1000);
+            ele=className("android.widget.TextView").text("海趣助手").findOnce();
+            thiscommon.clickxy_for_ele(ele);
+            sleep(1000);
+
+            ele=className("android.widget.ImageView").depth(5).findOnce();
+            thiscommon.clickxy_for_ele(ele);
+
+        }
+       
 //关闭辅助优化
 function assist_close(){
     clean();
@@ -45,16 +146,22 @@ function setup_secret_all(){
      sleep(1500); 
     
     if(1==k){
+    toast(k+"位置信息设置");
     click("位置信息")  
     }else if(2==k){
+    toast(k+"电话设置");
     click("电话")
     }else if(3==k){
+    toast(k+"短信设置");
     click("短信")
     }else if(4==k){
+    toast(k+"通讯录设置");
      click("通讯录")
     }else if(5==k){
+    toast(k+"存储空间设置");
      click("存储空间")
     }else if(6==k){
+    toast(k+"相机设置");
      click("相机")
     }
     sleep(5000);
@@ -63,32 +170,33 @@ function setup_secret_all(){
     
     }//for end;  
 }
+//设置隐私权限
 function setup_secret(){
     var result=className("com.letv.shared.widget.slide.LeSlidePager").exists();
     //上滑11次
     var swipeupcount=13
     for(var j=1;j<=swipeupcount;j++){
-      
+      toast("正在识别...");
         //sleep(1500);
         try{
             var main=className("com.letv.shared.widget.slide.LeSlidePager").findOnce().child(0).child(0).child(0).child(0);
             for(var i=0;i<main.childCount();i++){
-                sleep(500);
+                sleep(1000);
             //   var switchtext=main.child(i).child(2).child(0).text();
                var checked=main.child(i).child(2).child(0).checked();
             
                 if(checked==false){
-                    sleep(400);
+                    sleep(800);
                    // main.child(i).checked=true;
                   //toast("exit.....");
                     //exit();
                     thiscommon.clickxy_for_ele(main.child(i));
-                    sleep(500)
-                    try{
-                        click("拒绝");
-                    }catch(e){
+                    // sleep(500)
+                    // try{
+                    //     click("拒绝");
+                    // }catch(e){
     
-                    }
+                    // }
                 }
             }
     
@@ -164,7 +272,7 @@ function setup_bd_while_list(){
                 sleep(1000);
                 //海趣守护
                 try{
-                id("me.piebridge.prevent:id/filter_query").setText("海趣守护1.1");
+                id("me.piebridge.prevent:id/filter_query").setText("海趣守护");
                 sleep(500);
                 className("android.widget.ListView").findOnce().child(0).click();
                 result=click("不再阻止");
