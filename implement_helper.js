@@ -4,21 +4,20 @@ ra = new RootAutomator();
 
 toast("开始自动配置");
 
-  toast("1设置屏幕常亮");
-  setup_screen_always_light();
-  toast("2设置白名单");
-  setup_bd_while_list();
-  toast("3关闭辅助自动优化，初始化虚拟键盘");
-  assist_close();
+//   toast("1设置屏幕常亮");
+//   setup_screen_always_light();
+//   toast("2设置白名单");
+//   setup_bd_while_list();
+//   toast("3关闭辅助自动优化，初始化虚拟键盘");
+//   assist_close();
 
-  toast("4设置开机运行");
- setup_autorun();
-//  toast("激活海趣助手");
- function reg_haiquzhushou(){
-     activitys="io.dcloud.H58"
- }
- toast("6设置阅读app权限");
- setup_secret_all();
+//   toast("4设置开机运行");
+//  setup_autorun();
+  toast("激活海趣助手");
+reg_haiquzhushou();
+
+//  toast("6设置阅读app权限");
+//  setup_secret_all();
   alert("全部执行完成");
 
 //设置开机自启动
@@ -300,19 +299,22 @@ function setup_bd_while_list(){
     sleep(5000);
    // alert(json_while_list.length);
   for(var i=0;i<json_while_list.length;i++){
+            try{
 
-    id("me.piebridge.prevent:id/filter_query").setText(json_while_list[i]["appname"]);
-    sleep(500);
-    className("android.widget.ListView").findOnce().child(0).click();
-    sleep(500);
-    result=click("不再阻止");
-    if(result!=true){
-        back();
-    }
+                id("me.piebridge.prevent:id/filter_query").setText(json_while_list[i]["appname"]);
+                sleep(500);
+                className("android.widget.ListView").findOnce().child(0).click();
+                sleep(500);
+                result=click("不再阻止");
+                if(result!=true){
+                    back();
+                }
 
-     sleep(1000);
+            }catch(e){}
+            
+                sleep(1000);
   }
-exit();
+//exit();
           
 
 
@@ -343,4 +345,11 @@ function openpackage(packagestr) {
     return result;
 }
 
+function reg_haiquzhushou(){
+    //activitys="io.dcloud.H58689B59/io.dcloud.PandoraEntryActivity"
+   // openpackage(activitys);
+   // sleep("4500");
+    var ele=class("serial").exists();//.findOnce();
+    alert(ele);
+}
 
