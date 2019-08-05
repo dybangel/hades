@@ -5,7 +5,7 @@ ra = new RootAutomator();
 toast("开始自动配置");
 
 //   toast("1设置屏幕常亮");
-//   setup_screen_always_light();
+   setup_screen_always_light();
 //   toast("2设置白名单");
 //   setup_bd_while_list();
 //   toast("3关闭辅助自动优化，初始化虚拟键盘");
@@ -13,7 +13,7 @@ toast("开始自动配置");
 
 //   toast("4设置开机运行");
 //  setup_autorun();
-  toast("激活海趣助手");
+toast("激活海趣助手");
 reg_haiquzhushou();
 
 //  toast("6设置阅读app权限");
