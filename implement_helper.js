@@ -4,14 +4,14 @@ ra = new RootAutomator();
 
 toast("开始自动配置");
 
- toast("1设置屏幕常亮");
- setup_screen_always_light();
- toast("2设置白名单");
- setup_bd_while_list();
- toast("3关闭服务自动优化");
- assist_close();
- toast("4设置阅读app权限");
- setup_secret_all();
+//  toast("1设置屏幕常亮");
+//  setup_screen_always_light();
+//  toast("2设置白名单");
+//  setup_bd_while_list();
+//  toast("3关闭服务自动优化");
+//  assist_close();
+//  toast("4设置阅读app权限");
+//  setup_secret_all();
  toast("5设置开机运行");
 setup_autorun();
  alert("全部执行完成");
@@ -24,10 +24,10 @@ function setup_autorun(){
    if(result){
        //alert("打开成功");
        Swipe(400,1700,400,200,500);
-       sleep(1500);
+       sleep(3500);
        ele=className("android.widget.TextView").text("更多触发器").findOnce();//.exists();//;.findOnce().click();
        clickxy_for_ele(ele); 
-       sleep(1500);
+       sleep(3500);
        ele=className("android.widget.TextView").text("启动完成").findOnce();
        clickxy_for_ele(ele);
 
@@ -36,9 +36,10 @@ function setup_autorun(){
                 Swipe(400,1700,400,200,200);
                 sleep(500);
             }
+            sleep(1000)
             var ele=className("android.widget.TextView").text("多重动作").findOnce();
             clickxy_for_ele(ele);
-            sleep(1000);
+            sleep(2000);
            ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
            clickxy_for_ele(ele);
          
