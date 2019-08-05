@@ -44,7 +44,7 @@ function setup_autorun(){
            clickxy_for_ele(ele);
          
             for(var i=0;i<2;i++){
-                Swipe(400,1800,400,100,500);
+                Swipe(400,2000,400,100,800);
                 sleep(1000);
             }
             sleep(3000);
