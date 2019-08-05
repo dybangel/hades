@@ -20,7 +20,7 @@ setup_autorun();
 function setup_autorun(){
      clean();
     var activity="com.jozein.xedgepro/com.jozein.xedgepro.ui.ActivityMain"
-    result=thiscommon.openpackage(activity);   
+    result=openpackage(activity);   
    if(result){
        //alert("打开成功");
        Swipe(400,1700,400,200,500);
@@ -114,7 +114,7 @@ function setup_autorun(){
 function assist_close(){
     clean();
     var activity="com.android.settings/com.letv.leui.settings.LeUIMainSettings"
-     result=thiscommon.openpackage(activity);
+     result=openpackage(activity);
      sleep(1500);
      Swipe(400,1700,400,200,500);
      sleep(1500);
@@ -139,7 +139,7 @@ function setup_secret_all(){
     clean(); 
     //打开设置
     var activity="com.letv.android.letvsafe/com.letv.android.letvsafe.HomeActivity"
-     result=thiscommon.openpackage(activity);
+     result=openpackage(activity);
      sleep(1500);
      click("应用权限管理");
      sleep(1500); 
@@ -212,7 +212,7 @@ function setup_secret(){
 function setup_screen_always_light(){
     clean();
     var activity="com.android.settings/com.letv.leui.settings.LeUIMainSettings"
-     result=thiscommon.openpackage(activity);
+     result=openpackage(activity);
      sleep(1500);
      Swipe(400,1700,400,200,500);
      sleep(1500);
@@ -242,7 +242,7 @@ toast("已经打开屏幕常亮");
 function setup_bd_while_list(){
     clean();
     var activity="me.piebridge.prevent/me.piebridge.prevent.ui.PreventActivity"
-    result=thiscommon.openpackage(activity);
+    result=openpackage(activity);
 
     sleep(5000);
             //无障碍-Daemon
@@ -326,6 +326,11 @@ function touchreal(x,y){
      //根据控件所在的坐标坐标点击
  function clickxy_for_ele(ele){
         touchreal(ele.bounds().centerX(),ele.bounds().centerY());
+}
+function openpackage(packagestr) {
+    activity = packagestr;
+    var result=shell("am start -n " + activity, true);
+    return result;
 }
 
 
