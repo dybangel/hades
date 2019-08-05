@@ -1121,12 +1121,22 @@ function checklicence(fsn){
 function loadGapps(){
    if(Gjsonloadstate=="remote"){
       // alert("1");
+      try{
        http.__okhttp__.setTimeout(10000);
        var r=http.get(Gappspath_remote);
+      }catch(e){
+
+      }
+    
        if("200"==r.statusCode){
           // alert(r.body.string());
-           var tmpstr=r.body.string();
-           Gapps=eval('('+tmpstr+')');
+          try{
+             var tmpstr=r.body.string();
+           Gapps=eval('('+tmpstr+')'); 
+          }catch(e){
+              toast("加载云端开关量延迟");
+          }
+           
           // alert(Gapps);
         //   ref_ui_list();
            
@@ -1162,14 +1172,18 @@ for(var i=0;i<Gapps.length;i++){
              play("global","特征码");
              voiceplaynum+=1;
            }
-         
-           http.__okhttp__.setTimeout(10000);
+         try{
+
+            http.__okhttp__.setTimeout(10000);
            var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+         }catch(e){};
+           
          //  toast('code=',r.statusCode)
            if(r.statusCode=="200"){  
-               var jsonstr=r.body.string();
+              
             //   log(jsonstr);
-               try{
+               try{ 
+                   var jsonstr=r.body.string();
                    tempjson=eval('(' + jsonstr + ')');
                            //将json添加到applist中
                     applist.push(tempjson); 
