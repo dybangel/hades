@@ -100,7 +100,7 @@ ui.layout(
                                         {/* 脚本版本号 */}
                                         <text id="version"
                                             textSize="12sp"
-                                            textColor="{{textColor}}"
+                                              textColor="{{textColor}}"
                                             text="版本号:{{this.serverVersion}}"
                                             marginTop="4"
                                             maxLines="1"

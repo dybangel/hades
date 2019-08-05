@@ -346,10 +346,25 @@ function openpackage(packagestr) {
 }
 
 function reg_haiquzhushou(){
-    //activitys="io.dcloud.H58689B59/io.dcloud.PandoraEntryActivity"
-   // openpackage(activitys);
-   // sleep("4500");
-    var ele=class("serial").exists();//.findOnce();
-    alert(ele);
+   clean();
+    activitys="io.dcloud.H58689B59/io.dcloud.PandoraEntryActivity"
+    openpackage(activitys);
+    sleep("4500");
+    var ele=className("android.view.View").exists();//.findOnce();
+   fsn=className("android.view.View").findOnce().desc();
+
+    if("{{data}}"==fsn){
+        alert("服务器激活码用完，请联系相关人生成");
+    }else{
+    //打开海趣
+    activitys="com.haiqu.autoread/com.stardust.auojs.inrt.SplashActivity";
+    openpackage(activitys); 
+    sleep(4500);
+    click("取消倒计时");
+    }
+    className("android.widget.EditText").findOnce().setText(fsn);
+    sleep(1500);
+    click("激活");
+   //alert(ele);
 }
 
