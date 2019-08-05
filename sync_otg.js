@@ -1,39 +1,39 @@
-
+alert("运行模式"+Grunstate);
  toast("开始同步");
 var ra = new RootAutomator();
  device.keepScreenOn(100000000);
  //设置配置检测助手白名单
-//  toast("设置白名单");
-//  setup_bd_while_list();
+ toast("设置白名单");
+ setup_bd_while_list();
 
  //拷贝 还原数据
-//toast("1拷贝还原数据");
-// copydata_tolocal();
+toast("1拷贝还原数据");
+copydata_tolocal();
 
-// restore();
+restore();
 
-// home();
-// toast("等待桌面加载");
-// sleep(25000);
+home();
+toast("等待桌面加载");
+sleep(25000);
 
 
-// toast("2设置屏幕常亮");
-// setup_screen_always_light();
+toast("2设置屏幕常亮");
+setup_screen_always_light();
 
-// toast("3设置白名单");
-// setup_bd_while_list();
+toast("3设置白名单");
+setup_bd_while_list();
 
-// toast("4关闭辅助自动优化，初始化虚拟键盘");
-// assist_close();
+toast("4关闭辅助自动优化，初始化虚拟键盘");
+assist_close();
 
-// toast("5设置开机运行");
-// setup_autorun();
+toast("5设置开机运行");
+setup_autorun();
  
-// toast("6设置阅读app权限");
-// setup_secret_all();
+toast("6设置阅读app权限");
+setup_secret_all();
 
-// toast("7激活海趣助手");
-// reg_haiquzhushou();
+toast("7激活海趣助手");
+reg_haiquzhushou();
 
 toast("8清除激活助手")
 uninstallapp("io.dcloud.H58689B59");
