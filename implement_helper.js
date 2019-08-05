@@ -32,22 +32,35 @@ function setup_autorun(){
        clickxy_for_ele(ele);
 
   }
-            for(var i=0;i<6;i++){
-                Swipe(400,1700,400,200,200);
-                sleep(500);
-            }
-            sleep(1000)
+  sleep(500)
+            // for(var i=0;i<6;i++){
+            //     Swipe(400,1700,400,200,200);
+            //     sleep(500);
+            // }
+            var ele=className("android.widget.SearchView").findOnce();
+           clickxy_for_ele(ele); 
+           sleep(500);
+           setText("多重动作");
+           sleep(1000);
+
+         
             var ele=className("android.widget.TextView").text("多重动作").findOnce();
             clickxy_for_ele(ele);
             sleep(2000);
            ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
            clickxy_for_ele(ele);
-         
-            for(var i=0;i<2;i++){
-                Swipe(400,2000,400,100,800);
-                sleep(1000);
-            }
-            sleep(3000);
+            sleep(1000);
+
+           var ele=className("android.widget.SearchView").findOnce();
+           clickxy_for_ele(ele); 
+           sleep(500);
+           setText("保持");
+           sleep(1000);
+           // for(var i=0;i<2;i++){
+            //     Swipe(400,2000,400,100,800);
+            //     sleep(1000);
+            // }
+            // sleep(3000);
             ////设置屏幕常亮
 
              var ele= className("android.widget.TextView").text("保持亮屏").findOnce();
@@ -61,10 +74,16 @@ function setup_autorun(){
             ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
              clickxy_for_ele(ele);
           sleep(1000);
-            for(var i=0;i<4;i++){
-                            Swipe(400,1800,400,100,200);
-                            sleep(1000);
-                        }
+            // for(var i=0;i<4;i++){
+            //                 Swipe(400,1800,400,100,200);
+            //                 sleep(1000);
+            //             }
+            
+           var ele=className("android.widget.SearchView").findOnce();
+           clickxy_for_ele(ele); 
+           sleep(500);
+           setText("延时");
+           sleep(1000);
            sleep(1000);
             var ele=className("android.widget.TextView").text("延时").findOnce();
              clickxy_for_ele(ele);
@@ -92,6 +111,10 @@ function setup_autorun(){
           }
        
             Swipe(400,400,400,1200,500);
+        // var ele=className("android.widget.SearchView").findOnce();
+        // clickxy_for_ele(ele); 
+        // sleep(500);
+        // setText("应用");
             sleep(3000);
             ele=className("android.widget.TextView").text("应用").findOnce();//.findOnce();
             clickxy_for_ele(ele);
