@@ -4,17 +4,22 @@ ra = new RootAutomator();
 
 toast("开始自动配置");
 
-//  toast("1设置屏幕常亮");
-//  setup_screen_always_light();
-//  toast("2设置白名单");
-//  setup_bd_while_list();
-//  toast("3关闭服务自动优化");
-//  assist_close();
-//  toast("4设置阅读app权限");
-//  setup_secret_all();
- toast("5设置开机运行");
-setup_autorun();
- alert("全部执行完成");
+  toast("1设置屏幕常亮");
+  setup_screen_always_light();
+  toast("2设置白名单");
+  setup_bd_while_list();
+  toast("3关闭辅助自动优化，初始化虚拟键盘");
+  assist_close();
+
+  toast("4设置开机运行");
+ setup_autorun();
+//  toast("激活海趣助手");
+ function reg_haiquzhushou(){
+     activitys="io.dcloud.H58"
+ }
+ toast("6设置阅读app权限");
+ setup_secret_all();
+  alert("全部执行完成");
 
 //设置开机自启动
 function setup_autorun(){
@@ -153,6 +158,21 @@ function assist_close(){
     clickxy_for_ele(id("android:id/switchWidget").findOnce());
      }
      toast("已经关闭辅助功能");
+    Swipe(400,1200,400,200,500);
+    sleep(2000);
+    json_str=[{"item":"多任务键"},
+    {"item":"主屏幕键"},
+    {"item":"返回键"},
+]
+for(var i=0;i<json_str.length;i++){
+        click(json_str[i]["item"]);
+        sleep(800);
+        click("无");
+        back();
+        sleep(500);
+
+}
+   // click("多任务键");
 }
 //com.android.setings/com.letv.leui.settings.LeUIMainSettings;
 
@@ -264,70 +284,36 @@ function setup_screen_always_light(){
 toast("已经打开屏幕常亮");  
 }
 function setup_bd_while_list(){
+    json_while_list=[
+        {"appname":"无障碍-Daemon"},
+        {"appname":"海趣助手"},
+        {"appname":"海趣守护"},
+        {"appname":"Auto.js"},
+        {"appname":"配置检测工具"},
+        {"appname":"一键root权限获取"},
+
+    ];
     clean();
     var activity="me.piebridge.prevent/me.piebridge.prevent.ui.PreventActivity"
     result=openpackage(activity);
 
     sleep(5000);
-            //无障碍-Daemon
-            try{
-                id("me.piebridge.prevent:id/filter_query").setText("无障碍-Daemon");
-                sleep(500);
-                className("android.widget.ListView").findOnce().child(0).click();
-                result=click("不再阻止");
-                if(result!=true){
-                    back();
-                }
-                }catch(e){
-                 }
-                 sleep(1000);
-                //海趣助手
-                try{
-                id("me.piebridge.prevent:id/filter_query").setText("海趣助手");
-                sleep(500); 
-                className("android.widget.ListView").findOnce().child(0).click();
-                result=click("不再阻止");
-                if(result!=true){
-                    back();
-                }
-                }catch(e){
-                }
-                sleep(1000);
-                //海趣守护
-                try{
-                id("me.piebridge.prevent:id/filter_query").setText("海趣守护");
-                sleep(500);
-                className("android.widget.ListView").findOnce().child(0).click();
-                result=click("不再阻止");
-                if(result!=true){
-                    back();
-                }
-                }catch(e){
-                }
-                sleep(1000);
-                //Auto.js
-                try{
-                id("me.piebridge.prevent:id/filter_query").setText("Auto.js");
-                sleep(500);
-                className("android.widget.ListView").findOnce().child(0).click();
-                result=click("不再阻止");
-                if(result!=true){
-                    back();
-                }
-                }catch(e){
-                }
-                sleep(1000);
-                //钛备份
-                try{
-                id("me.piebridge.prevent:id/filter_query").setText("钛备份");
-                sleep(500);
-                className("android.widget.ListView").findOnce().child(0).click();
-                result=click("不再阻止");
-                if(result!=true){
-                    back();
-                }
-                }catch(e){
-                }
+   // alert(json_while_list.length);
+  for(var i=0;i<json_while_list.length;i++){
+
+    id("me.piebridge.prevent:id/filter_query").setText(json_while_list[i]["appname"]);
+    sleep(500);
+    className("android.widget.ListView").findOnce().child(0).click();
+    sleep(500);
+    result=click("不再阻止");
+    if(result!=true){
+        back();
+    }
+
+     sleep(1000);
+  }
+exit();
+          
 
 
 }
