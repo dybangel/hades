@@ -923,7 +923,12 @@ if(Grunstate=="trainwechat"){
                         Gmax=800;
                         Gmin=501;
                         Gppinterval=250;
-                    }else if("slow"==Grunspeed){
+                    }else if("normal+"==Grunspeed){
+                        Gmax=800;
+                        Gmin=501;
+                        Gppinterval=300;
+                    }
+                    else if("slow"==Grunspeed){
                         Gmax=4000;
                         Gmin=1000;
                         Gppinterval=500;
