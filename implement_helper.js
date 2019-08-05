@@ -1,4 +1,4 @@
-var thiscommon=require("mycommon.js");
+//var thiscommon=require("mycommon.js");
 ra = new RootAutomator();
 
 

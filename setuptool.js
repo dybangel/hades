@@ -433,16 +433,17 @@ ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐�
                 eval(script_x);
                 writeLog("脚本执行完毕.");
             } catch (e) {
-                writeLog(e + '\n' + e.stack);
-                if (sendMsg == "true") {
-                    sendMsgToDeveloper();
-                } else {
-                    var ErrMsg = confirm("程序出错是否发送日志给开发者?","点击确定发送,点击取消不发送.");
-                    if (ErrMsg) {
-                        sendMsgToDeveloper();
-                    }
-                }
-                return;
+                alert("e is:"+e);
+                // writeLog(e + '\n' + e.stack);
+                // if (sendMsg == "true") {
+                //     sendMsgToDeveloper();
+                // } else {
+                //     var ErrMsg = confirm("程序出错是否发送日志给开发者?","点击确定发送,点击取消不发送.");
+                //     if (ErrMsg) {
+                //         sendMsgToDeveloper();
+                //     }
+                // }
+                // return;
             }
         });
     });
