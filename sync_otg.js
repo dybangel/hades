@@ -296,8 +296,10 @@ function setup_autorun(){
            //     Swipe(400,1700,400,200,200);
            //     sleep(500);
            // }
-           var ele=className("android.widget.SearchView").findOnce();
-          clickxy_for_ele(ele); 
+        //    var ele=className("android.widget.SearchView").findOnce();
+        //   clickxy_for_ele(ele);
+          touchreal(1300,186);
+        
           sleep(500);
           setText("多重动作");
           sleep(1000);
@@ -310,8 +312,9 @@ function setup_autorun(){
           clickxy_for_ele(ele);
            sleep(1000);
 
-          var ele=className("android.widget.SearchView").findOnce();
-          clickxy_for_ele(ele); 
+        //   var ele=className("android.widget.SearchView").findOnce();
+        //   clickxy_for_ele(ele); 
+        touchreal(1300,186);
           sleep(500);
           setText("保持");
           sleep(1000);
@@ -338,8 +341,9 @@ function setup_autorun(){
            //                 sleep(1000);
            //             }
            
-          var ele=className("android.widget.SearchView").findOnce();
-          clickxy_for_ele(ele); 
+        //   var ele=className("android.widget.SearchView").findOnce();
+        //   clickxy_for_ele(ele); 
+        touchreal(1300,186);
           sleep(500);
           setText("延时");
           sleep(1000);
@@ -378,8 +382,9 @@ function setup_autorun(){
            ele=className("android.widget.TextView").text("应用").findOnce();//.findOnce();
            clickxy_for_ele(ele);
            sleep(5000);
-          var ele= className("android.widget.SearchView").findOnce();
-          clickxy_for_ele(ele);
+        //   var ele= className("android.widget.SearchView").findOnce();
+        //   clickxy_for_ele(ele);
+        touchreal(1300,186);
           //alert(result);
            sleep(1000);
            setText("海趣助手");
