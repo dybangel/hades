@@ -105,9 +105,9 @@ function setup_autorun(){
             ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
            clickxy_for_ele(ele);
            sleep(1000);
-        for(var i=0;i<4;i++){
-                            Swipe(400,2200,400,100,200);
-                            sleep(1000);
+        for(var i=0;i<6;i++){
+                            Swipe(400,1200,400,100,200);
+                            sleep(1500);
           }
        
             Swipe(400,400,400,1200,500);
