@@ -1,7 +1,7 @@
 {
         "enable":"false",
         "appname":"掌上热点",
-        "mulityback":"true||1000",
+        "mulityback":"72||162",
         "appver":"1.7.0",
         "interval":"30",
 		"speed":"normal",

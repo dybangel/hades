@@ -27,7 +27,7 @@
               "classname":"android.widget.TextView",
               "text":"一",
             },
-               "sg3":{
+           "sg3":{
               "action":"click_id",
               "click_id":"com.cashtoutiao:id/iv_back",
               "featuremode":"classname_text",
