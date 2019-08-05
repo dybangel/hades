@@ -1,5 +1,4 @@
 var thiscommon=require("mycommon.js");
-var thiswipe=require("myswipe.js");
 ra = new RootAutomator();
 
 
@@ -27,10 +26,10 @@ function setup_autorun(){
        Swipe(400,1700,400,200,500);
        sleep(1500);
        ele=className("android.widget.TextView").text("更多触发器").findOnce();//.exists();//;.findOnce().click();
-       thiscommon.clickxy_for_ele(ele); 
+       clickxy_for_ele(ele); 
        sleep(1500);
        ele=className("android.widget.TextView").text("启动完成").findOnce();
-       thiscommon.clickxy_for_ele(ele);
+       clickxy_for_ele(ele);
 
   }
             for(var i=0;i<6;i++){
@@ -38,10 +37,10 @@ function setup_autorun(){
                 sleep(500);
             }
             var ele=className("android.widget.TextView").text("多重动作").findOnce();
-            thiscommon.clickxy_for_ele(ele);
+            clickxy_for_ele(ele);
             sleep(1000);
            ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
-           thiscommon.clickxy_for_ele(ele);
+           clickxy_for_ele(ele);
          
             for(var i=0;i<2;i++){
                 Swipe(400,1800,400,100,500);
@@ -51,15 +50,15 @@ function setup_autorun(){
             ////设置屏幕常亮
 
              var ele= className("android.widget.TextView").text("保持亮屏").findOnce();
-            thiscommon.clickxy_for_ele(ele);
+            clickxy_for_ele(ele);
              sleep(1000);
             var ele=className("android.widget.TextView").text("开关").findOnce();
-            thiscommon.clickxy_for_ele(ele);
+            clickxy_for_ele(ele);
 
             sleep(1000);
              //延迟
             ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
-             thiscommon.clickxy_for_ele(ele);
+             clickxy_for_ele(ele);
           sleep(1000);
             for(var i=0;i<4;i++){
                             Swipe(400,1800,400,100,200);
@@ -67,7 +66,7 @@ function setup_autorun(){
                         }
            sleep(1000);
             var ele=className("android.widget.TextView").text("延时").findOnce();
-             thiscommon.clickxy_for_ele(ele);
+             clickxy_for_ele(ele);
              sleep(1000);
 
              setText("15000");
@@ -76,15 +75,15 @@ function setup_autorun(){
             sleep(3000);
            // 设置自动解锁
             ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
-           thiscommon.clickxy_for_ele(ele);
+           clickxy_for_ele(ele);
            sleep(1000);
            ele=className("android.widget.TextView").textContains("解锁").findOnce();//.findOnce();
-           thiscommon.clickxy_for_ele(ele);
+           clickxy_for_ele(ele);
             
            sleep(3000)
               //添加海趣自动启动
             ele=className("android.widget.TextView").textContains("添加").findOnce();//.findOnce();
-           thiscommon.clickxy_for_ele(ele);
+           clickxy_for_ele(ele);
            sleep(1000);
         for(var i=0;i<4;i++){
                             Swipe(400,2200,400,100,200);
@@ -94,20 +93,20 @@ function setup_autorun(){
             Swipe(400,400,400,1200,500);
             sleep(3000);
             ele=className("android.widget.TextView").text("应用").findOnce();//.findOnce();
-            thiscommon.clickxy_for_ele(ele);
+            clickxy_for_ele(ele);
             sleep(5000);
            var ele= className("android.widget.SearchView").findOnce();
-           thiscommon.clickxy_for_ele(ele);
+           clickxy_for_ele(ele);
            //alert(result);
             sleep(1000);
             setText("海趣助手");
             sleep(1000);
             ele=className("android.widget.TextView").text("海趣助手").findOnce();
-            thiscommon.clickxy_for_ele(ele);
+            clickxy_for_ele(ele);
             sleep(1000);
 
             ele=className("android.widget.ImageView").depth(5).findOnce();
-            thiscommon.clickxy_for_ele(ele);
+            clickxy_for_ele(ele);
 
         }
        
@@ -127,7 +126,7 @@ function assist_close(){
      sleep(1500);
      var switch_state=id("android:id/switchWidget").findOnce().checked();
      if(switch_state){
-    thiscommon.clickxy_for_ele(id("android:id/switchWidget").findOnce());
+    clickxy_for_ele(id("android:id/switchWidget").findOnce());
      }
      toast("已经关闭辅助功能");
 }
@@ -190,7 +189,7 @@ function setup_secret(){
                    // main.child(i).checked=true;
                   //toast("exit.....");
                     //exit();
-                    thiscommon.clickxy_for_ele(main.child(i));
+                    clickxy_for_ele(main.child(i));
                     // sleep(500)
                     // try{
                     //     click("拒绝");
@@ -236,7 +235,7 @@ function setup_screen_always_light(){
               thisparent=ele.parent().parent().parent();
               switch_state=thisparent.child(1).child(0).checked();
               if(switch_state==false){
-              thiscommon.clickxy_for_ele(thisparent);
+              clickxy_for_ele(thisparent);
               }
 toast("已经打开屏幕常亮");  
 }
@@ -314,10 +313,19 @@ function clean(){
     sleep(1500);
     recents();//最近任务
     sleep(1500);
-    thiscommon.clickxy_for_ele(id("com.android.systemui:id/leui_recent_clear_all_txtview").findOnce());
+    clickxy_for_ele(id("com.android.systemui:id/leui_recent_clear_all_txtview").findOnce());
     sleep(500);
     home();
 }
-
+function touchreal(x,y){
+    // var ra = new RootAutomator();
+     ra.setScreenMetrics(device.width, device.height);
+     ra.tap(x, y, 1);
+    // ra.tap(x, y, 1);
+  }
+     //根据控件所在的坐标坐标点击
+ function clickxy_for_ele(ele){
+        touchreal(ele.bounds().centerX(),ele.bounds().centerY());
+}
 
 
