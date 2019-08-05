@@ -83,6 +83,13 @@
               "classname":"android.widget.TextView",
               "text":"菜单",
             },
+            "sg10":{
+              "action":"click_id",
+              "click_id":"com.browser2345:id/task_center_h5_back",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"菜单",
+            },
 			},
         "abnormal":{
            "ab1":{
