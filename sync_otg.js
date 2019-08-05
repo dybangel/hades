@@ -291,7 +291,7 @@ function setup_autorun(){
       clickxy_for_ele(ele);
 
  }
- sleep(500)
+ sleep(1500)
            // for(var i=0;i<6;i++){
            //     Swipe(400,1700,400,200,200);
            //     sleep(500);
