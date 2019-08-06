@@ -125,12 +125,16 @@ function restore(){
     sleep(5000)
     // var elestr=className("android.widget.Button").text("运行");
     // clickxy_for_ele(elestr.findOnce(9));
+    
+    //文字匹配法
+    var ele=className("android.widget.TextView").text("恢复所有程序及其数据");
+    ele.findOnce().parent().parent().child(0).click();
 
-                elestr=className("android.widget.TextView").text(Gtaicount);
-            if(elestr.exists()){
-            elestr.findOnce().parent().child(0).click();
-            //alert("true");
-            }
+            //     elestr=className("android.widget.TextView").text(Gtaicount);
+            // if(elestr.exists()){
+            // elestr.findOnce().parent().child(0).click();
+            // //alert("true");
+            // }
 
     sleep(5000);
         //处理弹窗
