@@ -633,6 +633,7 @@ function setup_bd_while_list(){
        {"appname":"海趣守护"},
        {"appname":"Auto.js"},
        {"appname":"配置检测工具"},
+       {"appname":"对话框取消"},
        {"appname":"一键root权限获取"},
 
    ];
