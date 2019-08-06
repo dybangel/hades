@@ -93,12 +93,12 @@ function restore(){
     var activitys="com.keramidas.TitaniumBackup/com.keramidas.TitaniumBackup.MainActivity";
     openpackage(activitys);
     sleep(2000);
-    click("确定");
-    sleep(2000);
-    click("确定");
-    sleep(2000);
-    click("确定");
-    sleep(1500);
+   toast("开始关闭弹窗");
+    for(var i=0;i<5;i++){
+        click("确定");
+        sleep(2000);
+    }
+   
    
     var elestr=className("android.widget.TextView").desc("批处理");
   
@@ -213,6 +213,12 @@ function copydata_tolocal(){
             }
          sleep(2000);
         // back();
+        try{thread_close_window.interrupt()}catch(e){};
+        thread_close_window=threads.start(function(){
+            setInterval(function(){
+                    click("允许");
+            },1000)
+        });
         toast("安装钛备份");
         installapp("/sdcard/tool/Titanium.apk");
         sleep(15000);
@@ -220,7 +226,7 @@ function copydata_tolocal(){
         installapp("/sdcard/tool/haiqu.apk");
 
         sleep(15000);
-
+        try{thread_close_window.interrupt()}catch(e){};
         toast("拷贝和安装钛备份、海趣助手完成")
       
 
