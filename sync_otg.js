@@ -570,7 +570,7 @@ function setup_access_backupinstall(){
      sleep(2000);
      elestr=className("android.widget.TextView").text("允许");
      clickxy_for_ele(elestr.findOnce());
-     exit();
+   //  exit();
 
 }
 //设置屏幕常亮
