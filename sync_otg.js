@@ -479,7 +479,7 @@ for(var i=0;i<json_str.length;i++){
        sleep(1000);
        click("无");
        back();
-       sleep(100);
+       sleep(1000);
 
 }
   // click("多任务键");
