@@ -2159,8 +2159,17 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
              //2如果是签到完成后要执行的工作   //3如果阅读完成后要做的工作
              else if("signin_stop"==Gworkthread||"readnews_stop"==Gworkthread){
                //  alert("findnews start");
-               try{thread_findnews.interrupt();}catch(e){};
-                while_findnews(autoread_obj);
+            //    try{thread_findnews.interrupt();}catch(e){};
+            //     while_findnews(autoread_obj);
+                    try{    thread_findnews.interrupt();}catch(e){};
+                    try{    thread_readnews.interrupt();}catch(e){};
+                    try{    thread_signin.interrupt();}catch(e){};
+                    thiscommon.clean(Gdevicetype);
+                    var openstate=openAPP(appname,packagename,activityname,open_obj);
+                    if(openstate){
+                        while_findnews(autoread_obj);  
+                    }
+
              }            
              //4如果找到新闻后要做的工作    
              else if("findnews_stop"==Gworkthread){
