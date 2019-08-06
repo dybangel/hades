@@ -452,18 +452,18 @@ function assist_close(){
    clickxy_for_ele(id("android:id/switchWidget").findOnce());
     }
     toast("已经关闭辅助功能");
-   Swipe(400,1200,400,200,500);
-   sleep(2000);
+   Swipe(400,1000,400,200,500);
+   sleep(3000);
    json_str=[{"item":"多任务键"},
    {"item":"主屏幕键"},
    {"item":"返回键"},
 ]
 for(var i=0;i<json_str.length;i++){
        click(json_str[i]["item"]);
-       sleep(800);
+       sleep(1000);
        click("无");
        back();
-       sleep(500);
+       sleep(100);
 
 }
   // click("多任务键");
