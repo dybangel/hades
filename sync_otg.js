@@ -571,15 +571,15 @@ function setup_access_backupinstall(){
     clean();
     var activity="com.android.settings/com.letv.leui.settings.LeUIMainSettings"
      result=openpackage(activity);
-     sleep(1500);
+     sleep(2500);
      //1139 160
      touchreal(1139,160);
-     sleep(1000);
+     sleep(2000);
      setText("密码与安全");
-     sleep(1000);
+     sleep(2000);
      elestr=className("android.widget.TextView").text("密码与安全");
      elestr.findOnce().click();
-     sleep(1000);
+     sleep(2000);
      Swipe(400,1200,400,200,500);
      sleep(3000)
      elestr=className("android.widget.TextView").text("其他安全选项");
@@ -590,7 +590,8 @@ function setup_access_backupinstall(){
      sleep(2000);
      elestr=className("android.widget.TextView").text("允许");
      clickxy_for_ele(elestr.findOnce());
-   //  exit();
+   sleep(2000);
+     //  exit();
 
 }
 //设置屏幕常亮
