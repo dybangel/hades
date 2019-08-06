@@ -41,7 +41,7 @@ if(ui.all.checked){//设置配置检测助手白名单
    
    toast("6激活海趣助手");
    reg_haiquzhushou();
-   uninstallapp("io.dcloud.H58689B59");
+  
    }
 else if(ui.a0.checked){//设置配置检测助手白名单
     toast("0设置白名单");
@@ -293,7 +293,7 @@ function reg_haiquzhushou(){
      var ele=className("android.view.View").exists();//.findOnce();
     fsn=className("android.view.View").findOnce().desc();
  
-     if("{{data}}"==fsn){
+     if("empty"==fsn){
          alert("服务器激活码用完，请联系相关人生成");
      }else{
      //打开海趣
@@ -318,7 +318,7 @@ function reg_haiquzhushou(){
         className("android.widget.EditText").findOnce().setText(fsn);
      sleep(1500);
      click("激活");  
-   
+     uninstallapp("io.dcloud.H58689B59");
      }catch(e){
         toast("激活失败")
 
