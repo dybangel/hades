@@ -1,6 +1,8 @@
 //alert("运行模式"+Grunstate);
  
 toast("开始配置");
+//备份包里的文件数量
+Gtaicount=55;
 var ra = new RootAutomator();
 device.keepScreenOn(100000000);
 if(ui.all.checked){//设置配置检测助手白名单
@@ -115,8 +117,15 @@ function restore(){
     sleep(3000);
     Swipe(400,1000,400,400,500);
     sleep(5000)
-    var elestr=className("android.widget.Button").text("运行");
-    clickxy_for_ele(elestr.findOnce(9));
+    // var elestr=className("android.widget.Button").text("运行");
+    // clickxy_for_ele(elestr.findOnce(9));
+
+                elestr=className("android.widget.TextView").text(Gtaicount);
+            if(elestr.exists()){
+            elestr.findOnce().parent().child(0).click();
+            //alert("true");
+            }
+
     sleep(5000);
         //处理弹窗
         try{
