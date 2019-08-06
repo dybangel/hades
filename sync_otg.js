@@ -2,7 +2,7 @@
 
 toast("开始配置");
 //备份包里的文件数量
-Gtaicount=55;
+Gtaicount=48;
 var ra = new RootAutomator();
 device.keepScreenOn(100000000);
 
