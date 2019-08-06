@@ -99,11 +99,14 @@ function restore(){
     thread_close_window_for_tai=threads.start(
         function(){
             setInterval(function(){
-                click("确定");
+                elestr=className("android.widget.Button").text("确定");
+                if(elestr.exists()){
+                  elestr.findOnce().click();
+                }
             },1000);
         }
     );
- 
+    sleep(25000);
    
    
     var elestr=className("android.widget.TextView").desc("批处理");
