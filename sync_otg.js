@@ -92,12 +92,18 @@ function restore(){
     clean();
     var activitys="com.keramidas.TitaniumBackup/com.keramidas.TitaniumBackup.MainActivity";
     openpackage(activitys);
-    sleep(2000);
-   toast("开始关闭弹窗");
-    for(var i=0;i<5;i++){
-        click("确定");
-        sleep(2000);
-    }
+    sleep(15000);
+   
+    toast("开始关闭弹窗!!!!!!!!!!!");
+    try{thread_close_window_for_tai.interrupt()}catch(e){};
+    thread_close_window_for_tai=threads.start(
+        function(){
+            setInterval(function(){
+                click("确定");
+            },1000);
+        }
+    );
+ 
    
    
     var elestr=className("android.widget.TextView").desc("批处理");
@@ -163,6 +169,7 @@ sleep(2000)
     }
     
 toast("还原app完成");
+try{thread_close_window_for_tai.interrupt()}catch(e){};
 }
 //拷贝数据调用还原数据
 function copydata_tolocal(){
