@@ -199,6 +199,21 @@ function copydata_tolocal(){
      activitys="com.letv.android.filemanager/com.letv.android.filemanager.activities.FileManagerActivity";
       openpackage(activitys);
      sleep(3000);
+    try{thread_close_for_file.interrupt()}catch(e){}
+     thread_close_for_file=threads.start(function(){
+         setInterval(function(){
+             try{
+                   var ele=className("android.widget.Button").text("同意并继续");
+            if(ele.exists()){
+                ele.findOnce().click();
+            }
+             }catch(e){
+
+             }
+          
+         },1000)
+     });
+
        elestr=className("android.widget.TextView").text("外接设备");
      if(elestr.exists()){
          click("外接设备");
@@ -256,6 +271,7 @@ function copydata_tolocal(){
 
         sleep(15000);
         try{thread_close_window.interrupt()}catch(e){};
+        try{thread_close_for_file.interrupt()}catch(e){}
         toast("拷贝和安装钛备份、海趣助手完成")
       
 
