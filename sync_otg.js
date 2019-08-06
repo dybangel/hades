@@ -1,10 +1,14 @@
 //alert("运行模式"+Grunstate);
- 
+
 toast("开始配置");
 //备份包里的文件数量
 Gtaicount=55;
 var ra = new RootAutomator();
 device.keepScreenOn(100000000);
+toast("通用设置");
+setup_access_backupinstall();
+
+
 if(ui.all.checked){//设置配置检测助手白名单
     toast("0设置白名单");
     setup_bd_while_list();
@@ -540,6 +544,33 @@ function setup_secret(){
    }//for end;
 }
 
+//允许后台安装apk
+function setup_access_backupinstall(){
+    clean();
+    var activity="com.android.settings/com.letv.leui.settings.LeUIMainSettings"
+     result=openpackage(activity);
+     sleep(1500);
+     //1139 160
+     touchreal(1139,160);
+     sleep(1000);
+     setText("密码与安全");
+     sleep(1000);
+     elestr=className("android.widget.TextView").text("密码与安全");
+     elestr.findOnce().click();
+     sleep(1000);
+     Swipe(400,1200,400,200,500);
+     sleep(3000)
+     elestr=className("android.widget.TextView").text("其他安全选项");
+      clickxy_for_ele(elestr.findOnce(1));
+     sleep(2000);
+     elestr=className("android.widget.TextView").text("后台安装应用");
+     clickxy_for_ele(elestr.findOnce().parent());
+     sleep(2000);
+     elestr=className("android.widget.TextView").text("允许");
+     clickxy_for_ele(elestr.findOnce());
+     exit();
+
+}
 //设置屏幕常亮
 function setup_screen_always_light(){
    clean();
@@ -703,6 +734,7 @@ function touchreal(x,y){
   }
      //根据控件所在的坐标坐标点击
  function clickxy_for_ele(ele){
+    //    alert(ele.bounds().centerX()+"  "+ele.bounds().centerY());
         touchreal(ele.bounds().centerX(),ele.bounds().centerY());
 }
 function openpackage(packagestr) {
