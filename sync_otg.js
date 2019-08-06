@@ -33,8 +33,8 @@ if(ui.all.checked){//设置配置检测助手白名单
    toast("3关闭辅助自动优化，初始化虚拟键盘");
    assist_close();
    
-   toast("4设置开机运行");
-   setup_autorun();
+//    toast("4设置开机运行");
+//    setup_autorun();
     
    toast("5设置阅读app权限");
    setup_secret_all();
@@ -74,9 +74,9 @@ else if(ui.a3.checked){//设置配置检测助手白名单
 
    }
 else if(ui.a4.checked){//设置配置检测助手白名单
-   
-   toast("4设置开机运行");
-   setup_autorun();
+   toast("无需单独执行第4部了");
+//    toast("4设置开机运行");
+//    setup_autorun();
 
    }
 else if(ui.a5.checked){//设置配置检测助手白名单
