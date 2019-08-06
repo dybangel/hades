@@ -5,14 +5,14 @@ toast("开始配置");
 Gtaicount=55;
 var ra = new RootAutomator();
 device.keepScreenOn(100000000);
-toast("通用设置");
-setup_access_backupinstall();
+
 
 
 if(ui.all.checked){//设置配置检测助手白名单
     toast("0设置白名单");
     setup_bd_while_list();
-   
+    toast("通用设置");
+    setup_access_backupinstall();
     //拷贝 还原数据
    toast("1拷贝还原数据");
    copydata_tolocal();
@@ -46,6 +46,8 @@ if(ui.all.checked){//设置配置检测助手白名单
 else if(ui.a0.checked){//设置配置检测助手白名单
     toast("0设置白名单");
     setup_bd_while_list();
+    toast("通用设置");
+   setup_access_backupinstall();
    }
 else if(ui.a1.checked){//设置配置检测助手白名单
 
