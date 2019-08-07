@@ -1845,6 +1845,7 @@ function while_readnews(autoread_obj){
                    if("normal"==thisbacktrigger){
                                //采用计数器方式判断是否返回一级页面
                                upcount+=1;
+                               toast("上滑："+upcount+"/"+maxupcount+"次");
                                if(upcount>maxupcount){
                                    toast("返回首页...");
                                   
@@ -1856,7 +1857,7 @@ function while_readnews(autoread_obj){
                                }
                             //采用坐标取色法判断是否得到收益并赶回一级页面
                               // toast("间隔："+x+"毫秒");
-                               toast("上滑："+upcount+"/"+maxupcount+"次");
+                             
                    }else{
                        if("xy_color_bool"==thisbacktrigger||"id_xyoffset_color_bool"==thisbacktrigger){
                             //截屏
