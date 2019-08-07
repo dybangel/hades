@@ -627,16 +627,17 @@ thread_upfsn=threads.start(
 Gjsonloadstate="remote";
 //app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";
-//Gapplistpath_remote="http://192.168.3.97/hades/applist/";
+Gapplistpath_remote="http://192.168.3.137/haiqu/applist/";
 //Gapps,哪些app要刷的开关量json云端文件路径
 //Gappspath_remote="http://download.dqu360.com:81/haiqu/gapps.json";
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps";
+Gappspath_remote="http://192.168.3.137/haiqu/gapps.json";
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"
-//Gappspath_remote="http://192.168.3.97/hades/gapps.json";
+
 //api 接口文件路径
 
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json";
-//Gapi_json_url="http://192.168.3.97/hades/api.json";
+Gapi_json_url="http://192.168.3.137/haiqu/api.json";
 
 Gdownloadpath="http://download.dqu360.com:81/haiqu/haiqu.apk"
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
@@ -870,7 +871,8 @@ if(Grunstate=="trainwechat"){
 }else{
    while(true){
        for(var i=0;i<applist.length;i++){
-
+         //签到之后定位首页模块是否操作过
+         Gisaction=false;
         //拉起一次守护，保证相互守护
         // activity="com.example.linyuming.broadcasttest/com.example.linyuming.broadcasttest.MainActivity"
         // shell("am start -n " + activity, true);
@@ -1034,26 +1036,26 @@ if(Grunstate=="trainwechat"){
         try{setlastapp("1",appname); }catch(e){}
       
         //测试代码开始
-                    w="";
-                    if(w){
-                        w.setSize(100,100)
-                        }else{
-                            try{thread_appinfo.interrupt()}catch(e){};
-                        thread_appinfo= threads.start(
-                            function(){
-                            w = floaty.rawWindow(
-                                <frame id="myfab" bg="#009688" radius="100" gravity="center" alpha="0.5">
-                                    <text id="appname"></text>
-                                </frame>
-                            );
-                            w.setPosition(device.width/2-400,device.height/2);
-                            w.setTouchable(false);
-                            w.appname.setText("当前运行："+appname);
+                    // w="";
+                    // if(w){
+                    //     w.setSize(100,100)
+                    //     }else{
+                    //         try{thread_appinfo.interrupt()}catch(e){};
+                    //     thread_appinfo= threads.start(
+                    //         function(){
+                    //         w = floaty.rawWindow(
+                    //             <frame id="myfab" bg="#009688" radius="100" gravity="center" alpha="0.5">
+                    //                 <text id="appname"></text>
+                    //             </frame>
+                    //         );
+                    //         w.setPosition(device.width/2-400,device.height/2);
+                    //         w.setTouchable(false);
+                    //         w.appname.setText("当前运行："+appname);
                     
                         
-                            }
-                        )
-                    }
+                    //         }
+                    //     )
+                    // }
                     //测试代码结束
                         toast("阅读"+Gappinterval+"毫秒......................");
                         // setlastapp("",appname);
@@ -1642,7 +1644,10 @@ function while_readnews(autoread_obj){
    var firstcapture=true;
    var backtrigger_maincount=0;
    var backtrigger_subcount=0;
- 
+   //是否发现了展开更多
+   var deployfind=false;
+   //是否错过了展开更多
+   var deploypass=false;
 //初始化本页面随机上滑次数，如果配置文件中有有upcount则按其初始化，否则随机初始化5到10次
  try{
    var thisupcount=autoread_obj["ar2"]["upcount"];  
@@ -1672,16 +1677,19 @@ function while_readnews(autoread_obj){
               
               //两次上滑之间的间隔
                var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
-               toast("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");
+               toastAt("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");
                setInterval(function(){
-                 
-                   if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
-                       thisswipe.swiperealup_custom_lnnl(Gppinterval);
-                    }else{
-                        thisswipe.swiperealup_custom();
+                    if(deployfind==false && deploypass==false){
+                        //如果没有发现展开更多，才允许滑动，否则不滑动，等待展开更多发送过来的信号量false
+                                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
+                            thisswipe.swiperealup_custom_lnnl(Gppinterval);
+                            }else{
+                                thisswipe.swiperealup_custom();
+                            }
                     }
                 
-                   sleep(3000);
+                    var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
+                   sleep(x);
                    //展开更多处理方式
                    if("classname_desc"==thisdeploymode){
                        var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
@@ -1689,22 +1697,46 @@ function while_readnews(autoread_obj){
                        var thisdeploydesc=autoread_obj["ar2"]["deploydesc"];
                         if("undefined"==typeof(thisdeploydesc)){alert(appname+"autoread_obj[\"ar2\"][\"deploydesc\"]数据结构错误");}
                       var ele=className(thisdeployclassname).desc(thisdeploydesc);
-                       if(ele.exists()){
-                           if(ele.findOnce().bounds().top<1770){
-                       //alert( "top is:"+ele.findOnce().bounds().top+"::"+"bottom is"+ele.findOnce().bounds().bottom);
-                          play("global","展开更多");
-                          //sleep(1000);
-                           try{
-                               //ele.findOne(1000).click();
-                                 thiscommon.clickxy_for_ele(ele.findOne(1000)); 
-                           }catch(e){
-
-                           }
-                       
-
-                       }
+                     
+                     
+                       if(ele.exists() && ele.findOnce().bounds().top <device.height ){
+                      
+                        var deploy_top=ele.findOnce().bounds().top;
+                        //如果展开更多的top值小于0，那么就是滑动过了
+                        if( deploy_top<0){
+                                   deployfind=true;
+                                    deploypass=true;
+                                    Swipe(300,500,200,1200,500);
+                                    toastAt("错过了展开更多\n,反向滑动一次")
+                                }
+                          //如果在屏幕可视区
+                          else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>0){
+                             //  toastAt("gg deploy_top："+deploy_top);
+                                     //设置找到展开更多标记为true
+                                      deployfind=true; 
+                                        toastAt("发现展开更多desc方式")
+                                        play("global","展开更多");
                         
-                           //ele.findOne(1000).click();
+                                        
+                                    try{
+                                        //再次验证
+                                        if(ele.findOnce().bounds().centerY()<0){
+                                            deploypass=true;
+                                            Swipe(300,500,200,1200,500);
+                                        }else{
+                                                     toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
+                                                    thiscommon.clickxy_for_ele(ele.findOnce()); 
+                                                    deployfind=false;
+                                                    deploypass=false;
+                                        }
+                                          
+                                        }catch(e){
+                                                deployfind=false;
+                                                deploypass=false;
+                                        }
+                           }
+                        
+                
                        }
                    }else if("classname_text"==thisdeploymode){
                        var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
@@ -1712,23 +1744,48 @@ function while_readnews(autoread_obj){
                        var thistext=autoread_obj["ar2"]["deploytext"];
                         if("undefined"==typeof(thistext)){alert(appname+"autoread_obj[\"ar2\"][\"deploytext\"]数据结构错误");}
                        var ele=className(thisdeployclassname).text(thistext);
-                       if(ele.exists()){
-                           if(ele.findOnce().bounds().top<1770){
-                               play("global","展开更多");
-                           //    sleep(1000);
-                          try{
-                              // ele.findOne(1000).click();
-                               thiscommon.clickxy_for_ele(ele.findOne(1000));
-                           }catch(e){
-                              
-                          }
-                               
+                     
+                       if(ele.exists() && ele.findOnce().bounds().top <device.height ){
+                      
+                        var deploy_top=ele.findOnce().bounds().top;
+                        //如果展开更多的top值小于0，那么就是滑动过了
+                        if( deploy_top<0){
+                                   deployfind=true;
+                                    deploypass=true;
+                                    Swipe(300,500,200,1200,500);
+                                    toastAt("错过了展开更多\n,反向滑动一次")
+                                }
+                          //如果在屏幕可视区
+                          else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>0){
+                             //  toastAt("gg deploy_top："+deploy_top);
+                                     //设置找到展开更多标记为true
+                                      deployfind=true; 
+                                        toastAt("发现展开更多desc方式")
+                                        play("global","展开更多");
+                        
+                                        
+                                    try{
+                                        //再次验证
+                                        if(ele.findOnce().bounds().centerY()<0){
+                                            deploypass=true;
+                                            Swipe(300,500,200,1200,500);
+                                        }else{
+                                                     toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
+                                                    thiscommon.clickxy_for_ele(ele.findOnce()); 
+                                                    deployfind=false;
+                                                    deploypass=false;
+                                        }
+                                          
+                                        }catch(e){
+                                                deployfind=false;
+                                                deploypass=false;
+                                        }
                            }
-                           
+                        
+                
                        }
                    }else if("click_boundary_path"==thisdeploymode){
-                       // "deployclassname":"android.widget.TextView",
-                       // "deploytext":"查看全文",
+                       
                        try{
                            var deployboundary=autoread_obj["ar2"]["deployboundary"];
                            var deploypath=autoread_obj["ar2"]["deploypath"];
@@ -1838,7 +1895,7 @@ function while_readnews(autoread_obj){
                                  //如果通过了上面判断，就判断当前坐标的值是不是不等于thiscolor了，如果不等于了，那么就是有收益了，返回一级页面
                                 if(color!="#"+thiscolor){
                                   //  toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
-                                    toast("返回首页...");
+                                  //  toast("返回首页...");
                                   
                                         funmulityback();
                                    
@@ -1851,7 +1908,7 @@ function while_readnews(autoread_obj){
                                   if(backtrigger_subcount>3){
                                     if(thisreswipe=="true"){
                                                Swipe(300,500,200,1200,500);
-                                               toast("反向滑动一次")
+                                          //     toast("反向滑动一次")
                                      }
                                     backtrigger_subcount=0;
                                   }
@@ -2135,6 +2192,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
    var erroraocount=0;
    var workthread_errorcount=0;
    var tmpflag=0;
+   var showpacount=0;
    thread_control=threads.start(
        function(){
            setInterval(function(){
@@ -2157,10 +2215,9 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                    }
              }
              //2如果是签到完成后要执行的工作   //3如果阅读完成后要做的工作
-             else if("signin_stop"==Gworkthread||"readnews_stop"==Gworkthread){
+             else if("signin_stop"==Gworkthread){
                //  alert("findnews start");
-            //    try{thread_findnews.interrupt();}catch(e){};
-            //     while_findnews(autoread_obj);
+           
                     try{    thread_findnews.interrupt();}catch(e){};
                     try{    thread_readnews.interrupt();}catch(e){};
                     try{    thread_signin.interrupt();}catch(e){};
@@ -2170,7 +2227,10 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                         while_findnews(autoread_obj);  
                     }
 
-             }            
+             }else if("readnews_stop"==Gworkthread){
+                    try{thread_findnews.interrupt();}catch(e){};
+                    while_findnews(autoread_obj);
+             }           
              //4如果找到新闻后要做的工作    
              else if("findnews_stop"==Gworkthread){
                try{thread_readnews.interrupt();}catch(e){};
@@ -2179,6 +2239,11 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
            try{
             nowcurrentPackage=currentPackage();
             nowcurrentActivity=currentActivity();
+            showpacount+=1;
+            if(showpacount>5){
+            toastAt("当前app:"+appname+"\n包名："+nowcurrentPackage+"\n"+"当前窗体名："+nowcurrentActivity);
+                showpacount=0;
+            }
            }catch(e){}
           
             
@@ -3239,6 +3304,7 @@ function checklocalapp(){
     var appname="";
     var voiceplaynum=0;
     var thisjsonstr="";
+
     for(var i=0;i<Gapps.length;i++){
     
         appname=Gapps[i]["appname"];
@@ -3265,10 +3331,11 @@ function checklocalapp(){
                         var appname=tempjson['appname'];
                         var appver=tempjson['appver'];
                         var result=app.getAppName(pname);
-    
+                     //   alert(result)
                         if(result==null){
                             thisjsonstr+='{"appnum":"'+appnum+'","appname":"'+appname+'","state":"您未安装该APP，请安装"},';
                         }else{
+
                             var localappver=thiscommon.getPackageVersion(pname);
                          
                             if(localappver!=appver){
@@ -3304,9 +3371,10 @@ function checklocalapp(){
 
     if(""!=thisjsonstr){
         thisjsonstr='['+thisjsonstr+']';
-        log(thisjsonstr);
+       // log(thisjsonstr);
        urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showdiffapplist&jsonstr='+thisjsonstr;
-
+      //  console.show();
+    //log(thisjsonstr);
          var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
     }else{
         alert("您手机上的APP与云端一致，请定期检测");
@@ -3346,3 +3414,16 @@ importClass("android.database.Cursor"); 
             db.close();  
 }
 
+function toastAt0(msg, x, y) {
+    importClass(android.widget.Toast);
+    importClass(android.view.Gravity);
+    var toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+    toast.setGravity(Gravity.TOP | Gravity.LEFT, x, y);
+    toast.show();
+  }
+  
+  function toastAt(msg) {
+      var x=500;
+      var y=300;
+    ui.run(() => toastAt0(msg, x, y));
+  }

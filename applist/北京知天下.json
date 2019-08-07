@@ -54,6 +54,10 @@
                "featuremode":"id",
                "id":"com.knowworld.news:id/cancle",
            },
+           "ab7":{
+               "featuremode":"id",
+               "id":"com.knowworld.news:id/replay",
+           }
          },  
 		   "activitys":{
             "at1":"cent.news.com.newscent.splash.SplashActivity",

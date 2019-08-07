@@ -6,7 +6,7 @@
   "interval":"30",
   "speed":"normal",
   "packagename":"com.songheng.eastnews",
-  "activityname":"com.songheng.eastfirst.common.view.activity.MainActivity",
+  "activityname":"com.oa.eastfirst.activity.WelcomeActivity",
   "open":{
     "featuremode":"classname_text",
     "classname":"android.widget.RadioButton",
