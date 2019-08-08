@@ -2,13 +2,9 @@ Gcodebaseurl = "http://raw.githubusercontent.com/dybangel/hades/master/"
 Gserver_ver_url="http://download.dqu360.com:81/haiqu/api.json";
 
 toast("开始自动打包");
-//className("android.widget.TextView").text("海趣助手").findOnce().parent().parent().click();
-//sleep(2000);
-//id("org.autojs.autojs:id/build").click();
-//sleep(2000);
-id("org.autojs.autojs:id/fab").click();
-exit();
 //className("android.widget.TextView").text("打包中")
+//className("android.widget.TextView").text("打包成功")
+
 console.show(); 
 
 var script_download_path = "/sdcard/脚本/";
@@ -42,25 +38,25 @@ if(result){
 
  if(jsoncreate){
      //下载js文件
-    //  log("下载js脚本----------");
-    // for(var i=1;i<=JSONLength(json[0]["script"]);i++){
+     log("下载js脚本----------");
+    for(var i=1;i<=JSONLength(json[0]["script"]);i++){
     
-    //     scriptname=json[0]["script"]["s"+i];
-    //     log(scriptname);
-    //      getScriptFromServer(scriptname,script_download_path+"海趣助手/")
-    // }
+        scriptname=json[0]["script"]["s"+i];
+        log(scriptname);
+         getScriptFromServer(scriptname,script_download_path+"海趣助手/")
+    }
 
-    // //下载音频文件
-    // log("下载语音包----------");
-    // for(var i=0;i<json[0]["voice"].length;i++){
-    //     voicename=json[0]["voice"][i]["name"];
-    //     log(voicename);
-    //     getScriptFromServer("voice/global/"+voicename,script_download_path+"海趣助手/")
-    // }
-    // //下载图片文件
-    // log("下载打包图标----------");    
-    // getScriptFromServer("res/logo.png",script_download_path+"海趣助手/")
-    // //下载project.json文件
+    //下载音频文件
+    log("下载语音包----------");
+    for(var i=0;i<json[0]["voice"].length;i++){
+        voicename=json[0]["voice"][i]["name"];
+        log(voicename);
+        getScriptFromServer("voice/global/"+voicename,script_download_path+"海趣助手/")
+    }
+    //下载图片文件
+    log("下载打包图标----------");    
+    getScriptFromServer("res/logo.png",script_download_path+"海趣助手/")
+    //下载project.json文件
     log("下载项目配置----------");    
     getScriptFromServer("project.json",script_download_path+"海趣助手/")
     var str=files.read(script_download_path+"海趣助手/project.json");
@@ -75,18 +71,23 @@ if(result){
   //  alert(str);
     files.write(script_download_path+"海趣助手/project.json", str);
     Swipe(400,700,400,1400,600);
-  
-
+    sleep(3000);
+    className("android.widget.TextView").text("海趣助手").findOnce().parent().parent().click();
+    sleep(2000);
+    id("org.autojs.autojs:id/build").click();
+    sleep(2000);
+    id("org.autojs.autojs:id/fab").click();
+    //exit();
 
   }
- alert("ok");
+ alert("打包完成");
  //download
 
   // alert(json);
    //alert(str);
 
 }else{
-    alert("下载build.json");
+    alert("下载build.json失败");
 };
 
 //json =eval('('+script_download_path+buildjson+')');

@@ -1031,6 +1031,8 @@ if(Grunstate=="trainwechat"){
            try{    thread_readnews.interrupt();}catch(e){};
            try{    thread_signin.interrupt();}catch(e){};
            try{    thread_abnormal_overtime.interrupt();}catch(e){};
+           try{    thread_closewindow.interrupt();}catch(e){};
+
     
            sleep(2000);
            //根据设备类型优化内存
@@ -1039,6 +1041,7 @@ if(Grunstate=="trainwechat"){
        //开启异常处理弹窗线程
        while_abnormal(abnormal_obj);
        //demon_abnormal(abnormal_obj);
+       while_closewindow(Gdevicetype);
            
        //开启控制线程--通用 该函数感知Grunstate的变化，调用对应的线程
        while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj);
@@ -1946,7 +1949,7 @@ function while_readnews(autoread_obj){
                                   }
                                   //当然也要更新backtrigger总计数器，总集数器超过50次则返回一级页面
                                   backtrigger_maincount+=1;
-                                  if(backtrigger_maincount>40){
+                                  if(backtrigger_maincount>50){
                                     toast("滑动次数太多了，一直未获取到收益，返回一级页面")
                                    
                                         funmulityback();
@@ -2402,15 +2405,19 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
 }
 //关闭操作系统弹窗
 function while_closewindow(devicetype){
-   if("xiaomi4"==devicetype){
+   if("le"==devicetype){
        thread_closewindow=threads.start(
            function(){
                setInterval(function(){
-               var ele=className('android.widget.Button').text("允许").packageName("com.lbe.security.miui");
-              // alert(ele);
-               if(ele.exists()){
-                   ele.findOne(1000).click();
-               }
+                //判断关闭 app申请授权的弹窗
+                try{
+                    var elestr=id('com.android.packageinstaller:id/permission_deny_button');
+                    if(elestr.exists()){
+                      elestr.click();
+                    }
+                }catch(e){}
+            
+
                },1000);
            }
        );
@@ -3346,7 +3353,7 @@ function checklocalapp(){
     var appname="";
     var voiceplaynum=0;
     var thisjsonstr="";
-
+    var diffcount=0;
     for(var i=0;i<Gapps.length;i++){
     
         appname=Gapps[i]["appname"];
@@ -3375,13 +3382,14 @@ function checklocalapp(){
                         var result=app.getAppName(pname);
                      //   alert(result)
                         if(result==null){
+                            diffcount+=1;
                             thisjsonstr+='{"appnum":"'+appnum+'","appname":"'+appname+'","state":"您未安装该APP，请安装"},';
                         }else{
 
                             var localappver=thiscommon.getPackageVersion(pname);
                          
                             if(localappver!=appver){
-                        
+                                diffcount+=1;
                           thisjsonstr+='{"appnum":"'+appnum+'","appname":"'+appname+'","state":"您的版本'+localappver+' 与云端版本'+appver+'不匹配"},';
                 
                             }
@@ -3414,7 +3422,12 @@ function checklocalapp(){
     if(""!=thisjsonstr){
         thisjsonstr='['+thisjsonstr+']';
        // log(thisjsonstr);
-       urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showdiffapplist&jsonstr='+thisjsonstr;
+       if(diffcount>10){
+        urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showapplist';
+
+       }else{
+        urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showdiffapplist&jsonstr='+thisjsonstr;
+       }
       //  console.show();
     //log(thisjsonstr);
          var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
