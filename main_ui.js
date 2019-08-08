@@ -651,15 +651,15 @@ Gjsonloadstate="remote";
 /**************************研发常用开关量 ******************************************************/
 //1 app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
-//Gapplistpath_remote="http://192.168.3.137/haiqu/applist/";       //私有云
+//Gapplistpath_remote="http://192.168.3.97/hades/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps"; //公有云
-//Gappspath_remote="http://192.168.3.137/haiqu/gapps.json";                                         //私有云
+//Gappspath_remote="http://192.168.3.97/hades/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json"; //公有云
-//Gapi_json_url="http://192.168.3.137/haiqu/api.json";        //私有云
+//Gapi_json_url="http://192.168.3.97/hades/api.json";        //私有云
 
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
 
@@ -1711,6 +1711,13 @@ function while_readnews(autoread_obj){
  
    thread_readnews=threads.start(
        function(){
+
+              
+              //两次上滑之间的间隔
+               var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
+               toastAt("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");
+               setInterval(function(){
+
                 //展开更多处理方式
                 if("classname_desc"==thisdeploymode){
                     var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
@@ -1721,41 +1728,43 @@ function while_readnews(autoread_obj){
                   
                   
                     if(ele.exists() && ele.findOnce().bounds().top <device.height ){
-                   
-                     var deploy_top=ele.findOnce().bounds().top;
-                     //如果展开更多的top值小于0，那么就是滑动过了
-                     if( deploy_top<0){
-                                deployfind=true;
-                                 deploypass=true;
-                                 Swipe(300,500,200,1200,500);
-                                 toastAt("错过了展开更多\n,反向滑动一次")
-                             }
-                       //如果在屏幕可视区
-                       else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>280){
-                          //  toastAt("gg deploy_top："+deploy_top);
-                                  //设置找到展开更多标记为true
-                                   deployfind=true; 
-                                     toastAt("发现展开更多desc方式")
-                                     play("global","展开更多");
-                     
-                                     
-                                 try{
-                                     //再次验证
-                                     if(ele.findOnce().bounds().centerY()<0){
-                                         deploypass=true;
-                                         Swipe(300,500,200,1200,500);
-                                     }else{
-                                                  toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
-                                                 thiscommon.clickxy_for_ele(ele.findOnce()); 
-                                                 deployfind=false;
-                                                 deploypass=false;
-                                     }
-                                       
-                                     }catch(e){
-                                             deployfind=false;
-                                             deploypass=false;
-                                     }
-                        }
+                       // if( ele.findOnce().bounds().top <device.height){
+                            var deploy_top=ele.findOnce().bounds().top;
+                            //如果展开更多的top值小于0，那么就是滑动过了
+                            if( deploy_top<0){
+                                       deployfind=true;
+                                        deploypass=true;
+                                        Swipe(300,500,200,1200,500);
+                                        toastAt("错过了展开更多\n,反向滑动一次")
+                                    }
+                              //如果在屏幕可视区
+                              else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>280){
+                                 //  toastAt("gg deploy_top："+deploy_top);
+                                         //设置找到展开更多标记为true
+                                          deployfind=true; 
+                                            toastAt("发现展开更多desc方式")
+                                            play("global","展开更多");
+                            
+                                            
+                                        try{
+                                            //再次验证
+                                            if(ele.findOnce().bounds().centerY()<0){
+                                                deploypass=true;
+                                                Swipe(300,500,200,1200,500);
+                                            }else{
+                                                         toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
+                                                        thiscommon.clickxy_for_ele(ele.findOnce()); 
+                                                        deployfind=false;
+                                                        deploypass=false;
+                                            }
+                                              
+                                            }catch(e){
+                                                    deployfind=false;
+                                                    deploypass=false;
+                                            }
+                               }
+                      //  }//if end
+                  
                      
              
                     }
@@ -1816,11 +1825,8 @@ function while_readnews(autoread_obj){
                     }
                 }
                 //展开更多处理方式结束
-              
-              //两次上滑之间的间隔
-               var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
-               toastAt("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");
-               setInterval(function(){
+
+
                     if(deployfind==false && deploypass==false){
                         //如果没有发现展开更多，才允许滑动，否则不滑动，等待展开更多发送过来的信号量false
                                 if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
