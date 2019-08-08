@@ -2994,7 +2994,7 @@ function download_installapp(){
    importClass("java.util.ArrayList")
 downloadthread=threads.start(
    function(){
-var myPath = "/storage/emulated/0/脚本//update.apk";
+var myPath = "/storage/emulated/0/脚本/haiqu.apk";
 //console.show();
 //log('im alive')
 var myUrl = "http://download.dqu360.com:81/haiqu/haiqu.apk";
