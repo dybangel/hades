@@ -13,8 +13,17 @@ function finditem(){
         }catch(e){
         }
         try{
-            var gg2=main.child(i).child(1).child(3).child(1).child(2);
-            if(gg2.text()=="广告"){
+            var gg2=main.child(i).child(1);
+            if(gg2.id()=="com.block.factory:id/redPacketIc"){
+                        play("global",i);
+                        play("global","广告不点击");
+                          return false;
+            }
+        }catch(e){
+        }
+        try{
+            var gg3=main.child(i).child(1).child(3).child(1).child(2);
+            if(gg3.text()=="广告"){
                         play("global",i);
                         play("global","广告不点击");
                           return false;
