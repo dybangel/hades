@@ -89,7 +89,7 @@
                 "id":"com.zx.mj.wztt:id/ivBack",
             },
             "ar2":{
-                "upcount":"9",
+                "upcount":"38",
                 "deploymode":"click_boundary_path",
                 "deployboundary":"android.support.v7.widget.RecyclerView",
                 "deploypath":"0||2||0||1||0",

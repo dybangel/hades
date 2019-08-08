@@ -117,6 +117,7 @@
                 "ids":"com.yuncheapp.android.pearl:id/back||com.yuncheapp.android.pearl:id/video_back",
             },
             "ar2":{
+                "upcount":"15",
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
                 "deploydesc":"展开全文",

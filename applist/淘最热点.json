@@ -78,7 +78,7 @@
             "id":"title_back_img",
 			},
 		  "ar2":{
-		       "upcount":"15",
+		       "upcount":"18",
 				"deploymode":"classname_text",
 				"deployclassname":"android.view.View",
 				"deploytext":"查看全文",

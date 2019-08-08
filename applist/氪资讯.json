@@ -3,9 +3,9 @@
         "appname":"氪资讯",
         "mulityback":"75||209",
         "appver":"1.0.6",
-        "interval":"3",
-		
-         "packagename":"zixun.digu.ke",
+        "interval":"30",
+		"speed":"normal",
+        "packagename":"zixun.digu.ke",
         "activityname":"zixun.digu.ke.main.HomeActivity",
         "open":{
           "featuremode":"classname_text",
