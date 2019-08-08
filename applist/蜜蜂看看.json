@@ -1,7 +1,7 @@
 {
         "enable":"false",
         "appname":"蜜蜂看看", 
-        "mulityback":"78||156",
+        "mulityback":"78||156||78||156||78||156",
         "appver":"3.3.0",
         "interval":"30",
 		"speed":"normal",
@@ -76,6 +76,7 @@
                 "reswipe":"true",
 
         }, 
+        },
         "durl":""
-      }
+      
     }
