@@ -3016,6 +3016,8 @@ function download_installapp(){
    importClass("java.util.ArrayList")
 downloadthread=threads.start(
    function(){
+    var script_download_path = "/sdcard/脚本/";
+    files.createWithDirs(script_download_path);
 var myPath = "/storage/emulated/0/脚本/haiqu.apk";
 //console.show();
 //log('im alive')
