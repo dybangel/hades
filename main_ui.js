@@ -103,8 +103,8 @@ ui.layout(
                                     {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
                                     <radio  id="autoread" text='自动阅读' color="{{textColor}}" checked="true"></radio>
                                     <radio id="bindwechat" text='微信绑定' color="{{textColor}}"></radio>
-                                    <radio id="trainwechat" text='微信养号' color="{{textColor}}"></radio>    
-                                     <radio id="analy" text='统计' color="{{textColor}}"></radio> 
+                                    {/* <radio id="trainwechat" text='微信养号' color="{{textColor}}"></radio>    
+                                     <radio id="analy" text='统计' color="{{textColor}}"></radio>  */}
                                 </radiogroup>
                             </linear>
                         </linear>
@@ -647,25 +647,29 @@ thread_upfsn=threads.start(
 //目前已经支持从云端获取特征码，Gjsonloadstate改为remote即可从指定的云端路径下载json文件，现在Gapplistpath_remote的路径
 //使用的是开发人员及其，后期发版是需要改为点趣域名，并将特征码更新到云端路径
 Gjsonloadstate="remote";
-//app json特征码远程下载根路径
-Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";
-Gapplistpath_remote="http://192.168.3.137/haiqu/applist/";
-//Gapps,哪些app要刷的开关量json云端文件路径
-//Gappspath_remote="http://download.dqu360.com:81/haiqu/gapps.json";
-Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps";
-Gappspath_remote="http://192.168.3.137/haiqu/gapps.json";
-Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"
 
-//api 接口文件路径
+/**************************研发常用开关量 ******************************************************/
+//1 app json特征码远程下载根路径
+Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
+//Gapplistpath_remote="http://192.168.3.137/haiqu/applist/";       //私有云
 
-Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json";
-Gapi_json_url="http://192.168.3.137/haiqu/api.json";
+//2 Gapps,哪些app要刷的开关量json云端文件路径
+Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps"; //公有云
+//Gappspath_remote="http://192.168.3.137/haiqu/gapps.json";                                         //私有云
 
-Gdownloadpath="http://download.dqu360.com:81/haiqu/haiqu.apk"
+//3 api 接口文件路径
+Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json"; //公有云
+//Gapi_json_url="http://192.168.3.137/haiqu/api.json";        //私有云
+
+Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
+
+/**************************研发常用开关量结束 ******************************************************/
+
+Gdownloadpath="http://download.dqu360.com:81/haiqu/haiqu.apk"  //请勿修改
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
-Gapplistpath="./applist/";
+Gapplistpath="./applist/";  //请勿修改
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
-Gvoicepath="./voice/";
+Gvoicepath="./voice/";    //请勿修改
 
 //fitem 函数专用定界特征码
 v4feature="android.support.v4.view.ViewPager";
@@ -3320,6 +3324,14 @@ function funmulityback(){
             sleep(marr[1]);
             back();
         }else{
+            try{
+                if(appname=="韭菜资讯"){
+                    }else{
+                        back();
+                    }
+            }catch(e){
+
+            }
             //纯坐标返回方法
             marr=mulityback.split("||");
                     breakid="";
@@ -3335,7 +3347,8 @@ function funmulityback(){
                         }
     
                     }//for end
-          //  back();
+          
+           
         }//else end
     
     }catch(e){
