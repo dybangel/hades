@@ -8,7 +8,7 @@ function finditem(){
             for(var i=1;i<subcount;i++){
                   try{
                       var gg1=main.child(i);              
-                            if(gg1.childCount()==3){
+                            if(gg1.child(2).id()=="com.coohua.xinwenzhuan:id/tab_feed_item_img_multi_ad_right"){
                                 play("global",i);
                                 play("global","广告不点击");
                                 return false;
@@ -17,7 +17,7 @@ function finditem(){
                   }
                   try{
                    var gg2=main.child(i);              
-                         if(gg2.childCount()==4){
+                         if(gg2.child(1).child(1).id()=="com.coohua.xinwenzhuan:id/tab_feed_item_img_large_ad_right"){
                              play("global",i);
                              play("global","广告不点击");
                              return false;
