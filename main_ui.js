@@ -38,6 +38,10 @@ ui.layout(
                 <vertical h="*">
                         {/* text label */}
                         <button id="downloadapp" text="下载新版本" style="Widget.AppCompat.Button.Borderless.Colored"/>
+                 <horizontal id="progressw" gravity="center" marginTop="0">
+                    {/* <text id="progress_value" textColor="black" textSize="16sp" margin="0" text=""/> */}
+                    <progressbar id="progress" w="*" h="3" style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+                </horizontal>
                         <webview id="webview" w="*" h="*"/>
                         <button id="start" text="开始运行" style="Widget.AppCompat.Button.Colored" textColor="#ffffff"/>
                        
@@ -242,6 +246,9 @@ ui.layout(
         </vertical>
     </drawer>
 );
+
+//ui.downloadapp.setVisibility(6);
+//ui.progress.setVisibility(6);
 //检测无障碍服务
 ui.autoService.on("check", function(checked) {
     // 用户勾选无障碍服务的选项时，跳转到页面让用户去开启
@@ -430,22 +437,37 @@ ui.cancel_interval.setVisibility(8);
 });
 // 下载新版本按钮事件
 ui.downloadapp.click(()=>{
-//     var url = "http://download.dqu360.com/download/#/home";
-// //var url = "file:///storage/emulated/0/网页/试.html";
-// ui.webview.loadUrl(url);
-thread_checkver=threads.start(
-    function(){
-       var result=sysupdate_check();
-       if(result){
-        alert("已经是最新版本了");
-       } else{
+// //     var url = "http://download.dqu360.com/download/#/home";
+// // //var url = "file:///storage/emulated/0/网页/试.html";
+// // ui.webview.loadUrl(url);
+try{thread_checkver.interrupt()}catch(e){}
+ thread_checkver=threads.start(
+     function(){
+        var result=sysupdate_check();
+        if(result){
+            toastAt("已经是最新版本了");
+        } else{
+           
+             download_installapp();
+            
+//  urlStr = "http://download.dqu360.com/download/haiqu/#/home";//要访问的 URL
+//  var result=shell("am start -a android.intent.action.VIEW -d " + urlStr, true);
+        }
 
- urlStr = "http://download.dqu360.com/download/haiqu/#/home";//要访问的 URL
- var result=shell("am start -a android.intent.action.VIEW -d " + urlStr, true);
-       }
+     }
+ );
+// if(result){
+   
+// }else{
+//     thread_checkver=threads.start(
+//         function(){
+//             toast("下载中....请稍等")
+//                 download_installapp();
+//                 clearInterval(interval);
+//         }
+//     );
+// }
 
-    }
-);
 
 });
 ui.licence_activate.click(()=>{
@@ -696,7 +718,11 @@ if(Gcode_state=="ui"){
                  
                    
                     if(result){  
+
                     }else{
+                      //  alert("123")
+                     //   ui.downloadapp.setVisibility(3);
+                      //  ui.progress.setVisibility(3);
                      play("global","发现新版本");
                     }
                 
@@ -2968,9 +2994,9 @@ function download_installapp(){
    importClass("java.util.ArrayList")
 downloadthread=threads.start(
    function(){
-var myPath = "/storage/emulated/0/脚本/applist/update.apk";
-console.show();
-log('im alive')
+var myPath = "/storage/emulated/0/脚本//update.apk";
+//console.show();
+//log('im alive')
 var myUrl = "http://download.dqu360.com:81/haiqu/haiqu.apk";
 var url = new URL(myUrl);
 var conn = url.openConnection(); //URLConnection
@@ -2984,13 +3010,19 @@ var prevTime = java.lang.System.currentTimeMillis();
 var bytePrev = 0; //前一次记录的文件大小
 var byteSum = 0; //总共读取的文件大小
 var byteRead; //每次读取的byte数
-log('要下载的文件大小=')
-log(connLength)
+//log('要下载的文件大小=')
+//log(connLength)
 threads.start(
  function () {
    while (1) {
      var 当前写入的文件大小 = byteSum
      var 百分比 = 当前写入的文件大小 / connLength * 100
+     log(百分比);
+     var arr=百分比.toString().split(".");
+     
+     ui.progress.setProgress(arr[0]);
+    // ui.progress_value.setText(p.toString());
+
      var 要显示的内容 = util.format('下载了%s%', 百分比)
      log(要显示的内容)
      if (当前写入的文件大小 >= connLength) {
@@ -3007,26 +3039,30 @@ while ((byteRead = inStream.read(buffer)) != -1) {
  fs.write(buffer, 0, byteRead); //读取
 }
 //开始安装
-installapp();
+toast("下载完成，正在安装")
+result=installapp('/sdcard/脚本/haiqu.apk');
+if(result){
+    toast("安装成功");
+}
    }
 );
 
 }
 //安装海趣助手app
-function installapp(path){
-path = '/storage/emulated/0/脚本/applist/update.apk'
-app.startActivity({
- data: "file://" + path,
- type: "application/vnd.android.package-archive",
- action: "VIEW",
- flags: ["grant_read_uri_permission", "grant_write_uri_permission"]
-});
-try{
-   update_thread.interrupt();
-}catch(e){
+// function installapp(path){
+// path = '/storage/emulated/0/脚本/applist/update.apk'
+// app.startActivity({
+//  data: "file://" + path,
+//  type: "application/vnd.android.package-archive",
+//  action: "VIEW",
+//  flags: ["grant_read_uri_permission", "grant_write_uri_permission"]
+// });
+// try{
+//    update_thread.interrupt();
+// }catch(e){
 
-}
-}
+// }
+// }
 //软件升级检测
 function sysupdate_check()
 {
@@ -3427,4 +3463,26 @@ function toastAt0(msg, x, y) {
       var x=500;
       var y=300;
     ui.run(() => toastAt0(msg, x, y));
+  }
+
+  function installapp(path){  
+      var result=shell(" pm install -r -d " + path, true);
+      return result;
+
+  }
+  //穿入文件名 和本地要保存的路径
+function getScriptFromServer() { //从服务器获取脚本
+    // var i, download_res, script_file_url = "https://script.iqqclub.com/Script/" + FILE;
+    var i, download_res
+   //  console.show();
+    for (i = 0; 10 > i; i++) try {
+         if (download_res = http.get(Gdownloadpath), 200 == download_res.statusCode) break;
+         log("res:"+download_res.statusCode);
+         if(i>8) return !1;
+     } catch (e) {
+       log("error res:"+download_res);
+         if (sleep(500), 9 == i) return !1;
+     }
+     //alert("1")
+     return files.writeBytes("/sdcard/脚本/haiqu.apk", download_res.body.bytes()),!0;
   }
