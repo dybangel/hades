@@ -1636,7 +1636,12 @@ try{
                        }
                     
                    }else{
+                       //视频类的不需要线程计数器
+                          if("快狗视频"==appname||"红包视频"==appname){
+
+                          }else{
                             nofindnews_count+=1;
+                          }
                             if(nofindnews_count>Gnofindnews_countback){
                                 nofindnews_count=0;
                                 toast("初始化线程计数器");
@@ -1699,7 +1704,111 @@ function while_readnews(autoread_obj){
  
    thread_readnews=threads.start(
        function(){
+                //展开更多处理方式
+                if("classname_desc"==thisdeploymode){
+                    var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
+                     if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
+                    var thisdeploydesc=autoread_obj["ar2"]["deploydesc"];
+                     if("undefined"==typeof(thisdeploydesc)){alert(appname+"autoread_obj[\"ar2\"][\"deploydesc\"]数据结构错误");}
+                   var ele=className(thisdeployclassname).desc(thisdeploydesc);
+                  
+                  
+                    if(ele.exists() && ele.findOnce().bounds().top <device.height ){
+                   
+                     var deploy_top=ele.findOnce().bounds().top;
+                     //如果展开更多的top值小于0，那么就是滑动过了
+                     if( deploy_top<0){
+                                deployfind=true;
+                                 deploypass=true;
+                                 Swipe(300,500,200,1200,500);
+                                 toastAt("错过了展开更多\n,反向滑动一次")
+                             }
+                       //如果在屏幕可视区
+                       else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>280){
+                          //  toastAt("gg deploy_top："+deploy_top);
+                                  //设置找到展开更多标记为true
+                                   deployfind=true; 
+                                     toastAt("发现展开更多desc方式")
+                                     play("global","展开更多");
+                     
+                                     
+                                 try{
+                                     //再次验证
+                                     if(ele.findOnce().bounds().centerY()<0){
+                                         deploypass=true;
+                                         Swipe(300,500,200,1200,500);
+                                     }else{
+                                                  toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
+                                                 thiscommon.clickxy_for_ele(ele.findOnce()); 
+                                                 deployfind=false;
+                                                 deploypass=false;
+                                     }
+                                       
+                                     }catch(e){
+                                             deployfind=false;
+                                             deploypass=false;
+                                     }
+                        }
+                     
              
+                    }
+                }else if("classname_text"==thisdeploymode){
+                    var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
+                    if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
+                    var thistext=autoread_obj["ar2"]["deploytext"];
+                     if("undefined"==typeof(thistext)){alert(appname+"autoread_obj[\"ar2\"][\"deploytext\"]数据结构错误");}
+                    var ele=className(thisdeployclassname).text(thistext);
+                  
+                    if(ele.exists() && ele.findOnce().bounds().top <device.height ){
+                   
+                     var deploy_top=ele.findOnce().bounds().top;
+                     //如果展开更多的top值小于0，那么就是滑动过了
+                     if( deploy_top<0){
+                                deployfind=true;
+                                 deploypass=true;
+                                 Swipe(300,500,200,1200,500);
+                                 toastAt("错过了展开更多\n,反向滑动一次")
+                             }
+                       //如果在屏幕可视区
+                       else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>280){
+                          //  toastAt("gg deploy_top："+deploy_top);
+                                  //设置找到展开更多标记为true
+                                   deployfind=true; 
+                                     toastAt("发现展开更多text方式")
+                                     play("global","展开更多");
+                     
+                                     
+                                 try{
+                                     //再次验证
+                                     if(ele.findOnce().bounds().centerY()<0){
+                                         deploypass=true;
+                                         Swipe(300,500,200,1200,500);
+                                     }else{
+                                                  toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
+                                                 thiscommon.clickxy_for_ele(ele.findOnce()); 
+                                                 deployfind=false;
+                                                 deploypass=false;
+                                     }
+                                       
+                                     }catch(e){
+                                             deployfind=false;
+                                             deploypass=false;
+                                     }
+                        }
+                     
+             
+                    }
+                }else if("click_boundary_path"==thisdeploymode){
+                    
+                    try{
+                        var deployboundary=autoread_obj["ar2"]["deployboundary"];
+                        var deploypath=autoread_obj["ar2"]["deploypath"];
+                        thiscommon.click_boundary_path(deployboundary,deploypath);
+                    }catch(e){
+        
+                    }
+                }
+                //展开更多处理方式结束
               
               //两次上滑之间的间隔
                var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
@@ -1716,111 +1825,7 @@ function while_readnews(autoread_obj){
                 
                     var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
                    sleep(x);
-                   //展开更多处理方式
-                   if("classname_desc"==thisdeploymode){
-                       var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
-                        if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
-                       var thisdeploydesc=autoread_obj["ar2"]["deploydesc"];
-                        if("undefined"==typeof(thisdeploydesc)){alert(appname+"autoread_obj[\"ar2\"][\"deploydesc\"]数据结构错误");}
-                      var ele=className(thisdeployclassname).desc(thisdeploydesc);
-                     
-                     
-                       if(ele.exists() && ele.findOnce().bounds().top <device.height ){
-                      
-                        var deploy_top=ele.findOnce().bounds().top;
-                        //如果展开更多的top值小于0，那么就是滑动过了
-                        if( deploy_top<0){
-                                   deployfind=true;
-                                    deploypass=true;
-                                    Swipe(300,500,200,1200,500);
-                                    toastAt("错过了展开更多\n,反向滑动一次")
-                                }
-                          //如果在屏幕可视区
-                          else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>0){
-                             //  toastAt("gg deploy_top："+deploy_top);
-                                     //设置找到展开更多标记为true
-                                      deployfind=true; 
-                                        toastAt("发现展开更多desc方式")
-                                        play("global","展开更多");
-                        
-                                        
-                                    try{
-                                        //再次验证
-                                        if(ele.findOnce().bounds().centerY()<0){
-                                            deploypass=true;
-                                            Swipe(300,500,200,1200,500);
-                                        }else{
-                                                     toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
-                                                    thiscommon.clickxy_for_ele(ele.findOnce()); 
-                                                    deployfind=false;
-                                                    deploypass=false;
-                                        }
-                                          
-                                        }catch(e){
-                                                deployfind=false;
-                                                deploypass=false;
-                                        }
-                           }
-                        
                 
-                       }
-                   }else if("classname_text"==thisdeploymode){
-                       var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
-                       if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
-                       var thistext=autoread_obj["ar2"]["deploytext"];
-                        if("undefined"==typeof(thistext)){alert(appname+"autoread_obj[\"ar2\"][\"deploytext\"]数据结构错误");}
-                       var ele=className(thisdeployclassname).text(thistext);
-                     
-                       if(ele.exists() && ele.findOnce().bounds().top <device.height ){
-                      
-                        var deploy_top=ele.findOnce().bounds().top;
-                        //如果展开更多的top值小于0，那么就是滑动过了
-                        if( deploy_top<0){
-                                   deployfind=true;
-                                    deploypass=true;
-                                    Swipe(300,500,200,1200,500);
-                                    toastAt("错过了展开更多\n,反向滑动一次")
-                                }
-                          //如果在屏幕可视区
-                          else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>0){
-                             //  toastAt("gg deploy_top："+deploy_top);
-                                     //设置找到展开更多标记为true
-                                      deployfind=true; 
-                                        toastAt("发现展开更多desc方式")
-                                        play("global","展开更多");
-                        
-                                        
-                                    try{
-                                        //再次验证
-                                        if(ele.findOnce().bounds().centerY()<0){
-                                            deploypass=true;
-                                            Swipe(300,500,200,1200,500);
-                                        }else{
-                                                     toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
-                                                    thiscommon.clickxy_for_ele(ele.findOnce()); 
-                                                    deployfind=false;
-                                                    deploypass=false;
-                                        }
-                                          
-                                        }catch(e){
-                                                deployfind=false;
-                                                deploypass=false;
-                                        }
-                           }
-                        
-                
-                       }
-                   }else if("click_boundary_path"==thisdeploymode){
-                       
-                       try{
-                           var deployboundary=autoread_obj["ar2"]["deployboundary"];
-                           var deploypath=autoread_obj["ar2"]["deploypath"];
-                           thiscommon.click_boundary_path(deployboundary,deploypath);
-                       }catch(e){
-           
-                       }
-                   }
-                   //展开更多处理方式结束
                  
                    //判断返回机制
                    var thisbacktrigger="normal"
