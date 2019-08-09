@@ -29,7 +29,16 @@ function  finditem(){
                     return false;
                         }
                     }catch(e){
-                        }    
+                        } 
+                try{
+                    var gg4=main.child(i).child(1).child(0).child(2).child(0).child(3);
+                    if(gg4.text()=="立即下载"){
+                    play('global',i);
+                    play('global','广告不点击'); 
+                    return false;
+                        }
+                    }catch(e){
+                        }   
                 try{
                 play('global',i);
                 play('global','点击');
