@@ -18,7 +18,7 @@
               "click_text":"任务大厅",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
-              "text":"任务大厅",
+              "text":"今日还未签到",
             },
 			"sg2":{
               "action":"click_id",
