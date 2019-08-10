@@ -49,6 +49,15 @@ function finditem(){
                  }catch(e){
                  }
                  try{
+                    var gg6=main.child(i).child(2).child(4);
+                    if(gg6.text()=='立即下载'){
+                     play('global',i);
+                     play('global','广告不点击'); 
+                     return false;
+                     }
+                 }catch(e){
+                 }
+                 try{
                     play('global',i);
                     play('global','点击');
                     return main.child(i);
