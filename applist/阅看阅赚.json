@@ -1,12 +1,12 @@
 {
       "enable":"false",  
-      "appname":"全民头条",
-      "mulityback":"113||238",
-      "appver":"2.2.1",
+      "appname":"阅看阅赚",
+      "mulityback":"41||168",
+      "appver":"ver:2.2.1",
       "interval":"30",
 	  "speed":"normal",
-      "packagename":"com.top.quanmin.app",
-      "activityname":"com.top.quanmin.app.ui.activity.HomeActivity",
+      "packagename":"com.zhuantoutiao",
+      "activityname":"com.top.quanmin.app.ui.activity.SplashNewTopActivity",
       "open":{
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
@@ -14,22 +14,15 @@
         },
 	  "signin":{
             "sg1":{
-              "action":"click_text",
-              "click_text":"任务",
+              "action":"click_id",
+              "click_id":"com.zhuantoutiao:id/tab_img_task",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
               "text":"签到规则",
             },
             "sg2":{
               "action":"click_id",
-              "click_id":"com.top.quanmin.app:id/tv_sign_in",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"已签到",
-            },
-			"sg3":{
-              "action":"click_id",
-              "click_id":"com.top.quanmin.app:id/tv_detail",
+              "click_id":"com.zhuantoutiao:id/tv_sign_in",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
               "text":"已签到",
@@ -38,11 +31,11 @@
       "abnormal":{
          "ab1":{
              "featuremode":"id",
-             "id":"com.top.quanmin.app:id/iv_red_picket_close",
+             "id":"com.zhuantoutiao:id/iv_red_picket_close",
          },
 		  "ab2":{
              "featuremode":"id",
-             "id":"com.top.quanmin.app:id/iv_dismiss",
+             "id":"com.zhuantoutiao:id/iv_dismiss",
          },
        },  
       "activitys":{
@@ -84,22 +77,22 @@
       "autoread":{
         "ar1":{
           "action":"click_id",
-          "click_id":"com.top.quanmin.app:id/seal_pandect",
+          "click_id":"com.zhuantoutiao:id/seal_pandect",
           "featuremode":"id",
-          "id":"com.top.quanmin.app:id/ll_title_back",
+          "id":"com.zhuantoutiao:id/ll_title_back",
       },
       "ar2":{
           "deploymode":"classname_text",
           "deployclassname":"android.widget.TextView",
           "deploytext":"展开全文",
           "backtrigger":"xy_color_bool",
-          "xy":"190||2096",
+          "xy":"189||2088",
           "color":"fff9f6a7",
           "bool":"false",
           "reswipe":"true",
 
       },
       }, 
-      "durl":"http://b.xiazaicc.com/apk3/quanmintoutiaov2.5.0_downcc.com.apk"
+      "durl":""
       }
     
