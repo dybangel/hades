@@ -4,7 +4,7 @@
         "mulityback":"75||209||1337||109",
         "appver":"1.8.4",
         "interval":"30",
-		"speed":"normal",
+		"speed":"normal+",
          "packagename":"com.cnode.blockchain",
         "activityname":"com.cnode.blockchain.MainActivity",
         "open":{

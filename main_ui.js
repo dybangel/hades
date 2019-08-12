@@ -651,15 +651,15 @@ Gjsonloadstate="remote";
 /**************************研发常用开关量 ******************************************************/
 //1 app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
-//Gapplistpath_remote="http://192.168.3.97/hades/applist/";       //私有云
+//Gapplistpath_remote="http://192.168.3.105/haiqu/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps"; //公有云
-//Gappspath_remote="http://192.168.3.97/hades/gapps.json";                                         //私有云
+//Gappspath_remote="http://192.168.3.105/haiqu/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json"; //公有云
-//Gapi_json_url="http://192.168.3.97/hades/api.json";        //私有云
+//Gapi_json_url="http://192.168.3.105/haiqu/api.json";        //私有云
 
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
 
@@ -1520,6 +1520,8 @@ function while_findnews(autoread_obj){
    Gworkthread="findnews_start";
    //线程计数器
    this_threadcount=0;
+   //正在找新闻状态
+   findnews_state=false;
   
    toast("找新闻线程启动..."); play("global","正在检索");
    
@@ -1586,86 +1588,118 @@ try{
 
 //线程执行前初始化一下没有找到新闻的次数为0；
    var nofindnews_count=0;
+   try{console.hide()}catch(e){}
+  // console.show();
    thread_findnews=threads.start(
        function(){
            //把finditem字符串变成函数
-        eval(Gfinditemstr);  
+        try{eval(Gfinditemstr)}catch(e){toast("finditem eval error")};  
+
          //两次上滑之间的间隔
          var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
-         toast("findnews 滑动间隔"+x+"毫秒");
            setInterval(
+       
                function(){ 
-               if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
-                  thisswipe.swiperealup_custom_lnnl(Gppinterval);
-               }else{
-                   thisswipe.swiperealup_custom();
-               }
-               sleep(1500);
-               upcount+=1;
-               var maxswipecount=2;
-               var minswipecount=1;
-               //x 为向上滑动多少次后打开新闻
-               var swipecount=Math.round(Math.random()*(maxswipecount-minswipecount))+minswipecount;
-               //当upcount大于了x次数后，开始打开当前发现的新闻条目
-               if(upcount>=swipecount){
-                   //判断新闻条目是否存在
-                  // var ele=thisfinditem.finditem(appname);
-                 
-                  try{
-                   //调用finditem方式获取element进行点击
-                   var ele=finditem();
-               }catch(e){
-                   toast("finditem error :"+e);
-                   ele=false;
-                  }
-                  
-                   if(ele){
-                       //如果存在，点击新闻
-                      play("global","打开新闻");
-                     // alert(appname);
-                     thiscommon.clickxy_for_ele(ele);
-                    // alert(ele);
-                    //波波视频的处理方式，需要调试
-                   //  callback_boboshipin("",ele);
-                      //等待2秒，否则线程关闭，点击事件会无效
-                       sleep(2000);
-                       var result=false;
-                       //最后判断二级页面特定控件是否存在，来确定是否打开成功
-                       result=block_mode("while_findnews",thisfeaturemode,autoread_obj,'');
-                       mytoast("判断二级页面打开结果为:"+result);         
-                       if(result){
-                           play("global","打开成功");
-                           Gworkthread="findnews_stop";
-                           thread_findnews.interrupt();
-                       }else{
-                           play("global","打开失败");
-                           funmulityback();
+                toast("findnews 滑动间隔"+x+"毫秒");
+           
+                       try{
+                                        if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
+                                            try{   thisswipe.swiperealup_custom_lnnl(Gppinterval);}catch(e){toast("e2:"+e)};
+                                        }else{
+                                            thisswipe.swiperealup_custom();
+                                        }
+                                        sleep(1500);
+                                        upcount+=1;
+                                        var maxswipecount=2;
+                                        var minswipecount=1;
+                                        //x 为向上滑动多少次后打开新闻
+                                        var swipecount=Math.round(Math.random()*(maxswipecount-minswipecount))+minswipecount;
+                                        //当upcount大于了x次数后，开始打开当前发现的新闻条目
+                                        if(upcount>=swipecount){
+                                            //判断新闻条目是否存在
+                                        // var ele=thisfinditem.finditem(appname);
+                                        
+                                        try{
+                                            //调用finditem方式获取element进行点击
+                                      //      findnews_state=true;
+                                            var ele=finditem();
+                                        }catch(e){
+                                       //     findnews_state=false;
+                                           
+                                            ele=false;
+                                            toast("findnews e3 :"+e);
+                                            try{    thread_findnews.interrupt();}catch(e){};
+                                            try{    thread_readnews.interrupt();}catch(e){};
+                                            try{    thread_signin.interrupt();}catch(e){};
+                                            while_readnews(autoread_obj);
+                                           
+                                        }
+                                        
+                                            if(ele){
+                                                //如果存在，点击新闻
+                                            play("global","打开新闻");
+                                           // findnews_state=false;
+                                            // alert(appname);
+                                           try{thiscommon.clickxy_for_ele(ele);}catch(e){toast("findnews e4 "+e)} 
+                                            // alert(ele);
+                                            //波波视频的处理方式，需要调试
+                                            //  callback_boboshipin("",ele);
+                                            //等待2秒，否则线程关闭，点击事件会无效
+                                                sleep(2000);
+                                                var result=false;
+                                                //最后判断二级页面特定控件是否存在，来确定是否打开成功
+                                                
+                                                try{result=block_mode("while_findnews",thisfeaturemode,autoread_obj,'');}catch(e){result=false;toast("findnews e5:"+e)};
+                                                mytoast("判断二级页面打开结果为:"+result);         
+                                                if(result){
+                                                    play("global","打开成功");
+                                                   // findnews_state=false;
+                                                    Gworkthread="findnews_stop";
+                                                    thread_findnews.interrupt();
+                                                }else{
+                                                    play("global","打开失败");
+                                                //    findnews_state=false;
+                                                    funmulityback();
+                                                }
+                                            
+                                            }else{
+
+                                               // findnews_state=false;
+                                                //视频类的不需要线程计数器
+                                                if("快狗视频"==appname||"红包视频"==appname){
+                        
+                                                }else{
+                                                    nofindnews_count+=1;
+                                                }
+                                                    if(nofindnews_count>Gnofindnews_countback){
+                                                        nofindnews_count=0;
+                                                        toast("初始化线程计数器");
+                                                        // toast("拉回主线......");
+                                                        try{    thread_findnews.interrupt();}catch(e){};
+                                                        try{    thread_readnews.interrupt();}catch(e){};
+                                                        try{    thread_signin.interrupt();}catch(e){};
+                                                
+                                                        funmulityback();
+                                                        thiscommon.openpackage(packagename+"/"+activityname);
+                                                       // while_findnews(autoread_obj);    
+                                                        
+                                                        try{    thread_findnews.interrupt();}catch(e){};
+                                                        try{    thread_readnews.interrupt();}catch(e){};
+                                                        try{    thread_signin.interrupt();}catch(e){};
+                                                         funmulityback();
+                                                         try{thiscommon.openpackage(packagename+"/"+activityname)}catch(e){};
+                                                         while_findnews(autoread_obj);      
+                                                       //  workthread_errorcount=0;
+                        
+                                                    }
+                                            }
+                                        }
+                       }catch(e){
+                           toast("findnews error "+e)
+                           findnews_state=false;
                        }
-                    
-                   }else{
-                       //视频类的不需要线程计数器
-                          if("快狗视频"==appname||"红包视频"==appname){
-
-                          }else{
-                            nofindnews_count+=1;
-                          }
-                            if(nofindnews_count>Gnofindnews_countback){
-                                nofindnews_count=0;
-                                toast("初始化线程计数器");
-                               // toast("拉回主线......");
-                                try{    thread_findnews.interrupt();}catch(e){};
-                                try{    thread_readnews.interrupt();}catch(e){};
-                                try{    thread_signin.interrupt();}catch(e){};
-                          
-                                 funmulityback();
-                                 thiscommon.openpackage(packagename+"/"+activityname);
-                                 while_findnews(autoread_obj);      
-
-                            }
-                   }
-               }
-              // this_threadcount+=1;
-             //  toast("线程计数器 findnews count is"+this_threadcount);
+                      
+           
                },x);
        }
    );//thread_findnews end
@@ -2267,6 +2301,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                     try{    thread_readnews.interrupt();}catch(e){};
                     try{    thread_signin.interrupt();}catch(e){};
                     thiscommon.clean(Gdevicetype);
+                    sleep(1000);
                     var openstate=openAPP(appname,packagename,activityname,open_obj);
                     if(openstate){
                         while_findnews(autoread_obj);  
@@ -2679,7 +2714,7 @@ function block_analay(incomeanaly_obj){
 }
 //播放声音
 function play(subpath,appname){
-   if(Gsoftvoice==true && "fast"!=Grunspeed && "normal"!=Grunspeed){
+   if(Gsoftvoice==true && "fast"!=Grunspeed && "normal"!=Grunspeed &&"normal+"!=Grunspeed){
            var voicefile=Gvoicepath+"/"+subpath+"/"+appname+".mp3";
            var result=files.exists(voicefile);
            if(!result){
@@ -3016,8 +3051,13 @@ function download_installapp(){
    importClass("java.util.ArrayList")
 downloadthread=threads.start(
    function(){
-    var script_download_path = "/sdcard/脚本/";
-    files.createWithDirs(script_download_path);
+       try{
+        var script_download_path = "/sdcard/脚本/";
+        files.createWithDirs(script_download_path);
+        files.remove(script_download_path+"haiqu.apk");
+
+       }catch(e){}
+   
 var myPath = "/storage/emulated/0/脚本/haiqu.apk";
 //console.show();
 //log('im alive')
@@ -3333,7 +3373,7 @@ function funmulityback(){
             back();
         }else{
             try{
-                if(appname=="韭菜资讯"){
+                if(appname=="韭菜资讯"|| appname=="亿刻看点"){
                     }else{
                         back();
                     }
