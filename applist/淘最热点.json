@@ -3,8 +3,8 @@
         "appname":"淘最热点", 
 		"mulityback":"true||2000",
         "appver":"2.3.5",
-        "interval":"30",
-		"speed":"normal",
+        "interval":"50",
+		"speed":"normal+",
         "packagename":"com.maihan.tredian",
         "activityname":"com.maihan.tredian.activity.MainActivity",
         "open":{
@@ -16,6 +16,10 @@
            "ab1":{
                "featuremode":"id",
                "id":"com.maihan.tredian:id/dialog_close_tv",
+           },
+		     "ab2":{
+               "featuremode":"id",
+               "id":"com.maihan.tredian:id/dialog_close_img",
            },
          },  
 		"signin":{

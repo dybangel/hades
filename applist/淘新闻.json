@@ -1,10 +1,10 @@
 {
         "enable":"false",
         "appname":"淘新闻",
-        "mulityback":"23||228",		
+        "mulityback":"15||208",		
         "appver":"3.4.6.2",
-        "interval":"30",
-        "speed":"normal",
+        "interval":"5",
+        "speed":"normal+",
         "packagename":"com.coohua.xinwenzhuan",
         "activityname":"com.coohua.xinwenzhuan.controller.MainActivity",
         "open":{
@@ -17,8 +17,8 @@
               "action":"click_text",
               "click_text":"任务大厅",
               "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"任务大厅",
+              "classname":"android.view.View",
+              "text":"有补签机会",
             },
           },
          "abnormal":{
@@ -38,6 +38,10 @@
             "featuremode":"click_boundary_path",
             "boundary":"android.webkit.WebView",
                  "path":"0||2||0||5",
+        },
+		 "ab5":{
+            "featuremode":"id",
+            "id":"com.coohua.xinwenzhuan:id/home_feed_recomend_tip_close",
         },
          },  
 		 "activitys":{
@@ -76,6 +80,7 @@
                 "id":"com.coohua.xinwenzhuan:id/comment",
             },
             "ar2":{
+			    "upcount":"20",
                 "deploymode":"classname_desc", 
                 "deployclassname":"android.view.View",
                 "deploydesc":"展开全文 ",

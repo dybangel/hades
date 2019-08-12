@@ -21,6 +21,15 @@ function finditem(){
             }
         }catch(e){
             }
+            try{
+                var gg1=main.child(i).child(0).child(1).child(0).child(3);
+                if(gg1.id()=='com.maihan.tredian:id/start_layout'){
+                    play('global',i);
+                    play('global','广告不点击'); 
+                    return false;
+                }
+            }catch(e){
+                }
         try{
             play('global',i);
             play('global','点击');
