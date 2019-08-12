@@ -2,7 +2,7 @@
       "enable":"true",  
       "appname":"趣看视界",
       "mulityback":"62||167",
-      "appver":"v2.9.8.6",
+      "appver":"2.9.8.6",
       "interval":"30",
       "speed":"normal",
       "packagename":"com.zhangku.qukandian",
@@ -41,6 +41,14 @@
           "ab3":{
              "featuremode":"id",
              "id":"com.zhangku.qukandian:id/cancleTV",
+                 },
+          "ab4":{
+             "featuremode":"id",
+             "id":"com.zhangku.qukandian:id/dialog_sign_cancel",
+                 },
+          "ab5":{
+             "featuremode":"id",
+             "id":"com.zhangku.qukandian:id/getGoldTV",
                  },
                  },  
       "activitys":{
