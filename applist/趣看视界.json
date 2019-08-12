@@ -38,6 +38,10 @@
              "classname":"android.widget.TextView",
              "text":"继续赚钱",
                  },
+          "ab3":{
+             "featuremode":"id",
+             "id":"com.zhangku.qukandian:id/cancleTV",
+                 },
                  },  
       "activitys":{
             "at1":"com.zhangku.qukandian.activitys.MainActivity",
