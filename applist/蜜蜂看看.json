@@ -38,10 +38,6 @@
                "featuremode":"id",
                "id":"com.block.factory:id/start",
            }, 
-             "ab5":{
-               "featuremode":"id",
-               "id":"com.block.factory:id/redPacketBtn",
-           }, 
          },  
         "activitys":{
             "at1":"com.block.factory.MainActivity",
