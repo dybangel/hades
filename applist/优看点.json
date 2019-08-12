@@ -1,39 +1,33 @@
 {
       "enable":"true", 
-      "appname":"趣看天下",
-      "mulityback":"23||228",	  
-	  "appver":"3.0.6.1",
+      "appname":"优看点",
+      "mulityback":"20||165",	  
+	  "appver":"3.3.1",
       "interval":"30",
       "speed":"normal",
-      "packagename":"com.yanhui.qktx",
-      "activityname":"com.yanhui.qktx.activity.MainActivity",
+      "packagename":"com.memory.online",
+      "activityname":"com.memory.online.activity.WelcomeActivity",
       "open":{
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
         "text":"视频",
         },
 	  "signin":{
-             "sg1":{
-              "action":"click_text",
-              "click_text":"任务",
-              "featuremode":"classname_text",
-              "classname":"android.view.View",
-              "text":"1天",
-                    },
+   
 					},
       "abnormal":{
          "ab1":{
              "featuremode":"id",
-             "id":"com.yanhui.qktx:id/img_close",
+             "id":"com.memory.online:id/tv_confim",
          },
 		 "ab2":{
              "featuremode":"id",
-             "id":"com.yanhui.qktx:id/bt_open_push_cancle",
+             "id":"com.memory.online:id/tv_retain",
          },
        },  
 	  "activitys":{
-            "at1":"com.yanhui.qktx.activity.MainActivity",
-            "at2":"com.yanhui.qktx.refactor.NewsArticleActivity",
+            "at1":"com.memory.online.activity.HomePageActivity",
+            "at2":"com.memory.online.activity.ShowWebActivity",
           } , 
       "bindwechat":{
         "bw1":{
@@ -68,17 +62,20 @@
       },
       "autoread":{
 	   "ar1":{
-                "action":"click_id",
+                "action":"",
                 "click_id":"com.yanhui.qktx:id/iv_icon",
                 "featuremode":"id",
-                "id":"com.yanhui.qktx:id/img_back",
+                "id":"com.memory.online:id/iv_back",
             },
        "ar2":{
-			   "upcount":"16",
-                "deploymode":"",
+                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
-                "deploydesc":"展开查看全文",
-
+                "deploydesc":"展开全文 ",
+			    "backtrigger":"xy_color_bool",
+			    "xy":"1246||2032",
+			    "color":"ffefefef",
+			    "bool":"false",
+			    "reswipe":"true",
       }, 
       "durl":""
       }
