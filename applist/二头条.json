@@ -21,8 +21,8 @@
               "desc":"邀请好友",
                     },
             "sg2":{
-              "action":"click_text",
-              "click_text":"签到",
+              "action":"click_xypercent",
+              "click_xypercent":"0.855||0.147",
               "featuremode":"classname_desc",
               "classname":"android.view.View",
               "desc":"已签到",
