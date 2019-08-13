@@ -4,7 +4,7 @@
       "mulityback":"20||165",	  
 	  "appver":"3.3.1",
       "interval":"30",
-      "speed":"normal",
+      "speed":"normal+",
       "packagename":"com.memory.online",
       "activityname":"com.memory.online.activity.WelcomeActivity",
       "open":{

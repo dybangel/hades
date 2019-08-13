@@ -651,15 +651,15 @@ Gjsonloadstate="remote";
 /**************************研发常用开关量 ******************************************************/
 //1 app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
-//Gapplistpath_remote="http://192.168.3.105/haiqu/applist/";       //私有云
+//Gapplistpath_remote="http://192.168.3.180/hades/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps"; //公有云
-//Gappspath_remote="http://192.168.3.105/haiqu/gapps.json";                                         //私有云
+//Gappspath_remote="http://192.168.3.180/hades/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json"; //公有云
-//Gapi_json_url="http://192.168.3.105/haiqu/api.json";        //私有云
+//Gapi_json_url="http://192.168.3.180/hades/api.json";        //私有云
 
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
 
