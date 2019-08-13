@@ -1673,7 +1673,7 @@ try{
                                                 }
                                                     if(nofindnews_count>Gnofindnews_countback){
                                                         nofindnews_count=0;
-                                                        toast("初始化线程计数器");
+                                                        toast("初始化线程计数器findnews");
                                                         // toast("拉回主线......");
                                                         try{    thread_findnews.interrupt();}catch(e){};
                                                         try{    thread_readnews.interrupt();}catch(e){};
@@ -1710,10 +1710,14 @@ try{
 function while_readnews(autoread_obj){
 //toast("readnews启动。。。。");
    Gworkthread="readnews_start";
+   //线程执行前初始化一下没有找到新闻的次数为0；
+  
+   
    play("global","开始阅读");
    var upcount=0;
    //初始化第一次截屏为是
    var firstcapture=true;
+   var readnews_count=0;
    var backtrigger_maincount=0;
    var backtrigger_subcount=0;
    //是否发现了展开更多
@@ -1730,14 +1734,15 @@ function while_readnews(autoread_obj){
    }else{
       var maxupcount=thisupcount; 
    }
+        //从配置文件中取出展开更多的特征码
+        var thisdeploymode=autoread_obj["ar2"]["deploymode"];
+        if("undefined"==typeof(thisdeploymode)){alert(appname+"autoread_obj[\"ar2\"][\"deploymode\"]数据结构错误");}
+
  }catch(e){
    var o=10;//最大上滑次数
    var p=5;//最小上滑次数
    var maxupcount=Math.round(Math.random()*(o-p))+p;
  }  
- //从配置文件中取出展开更多的特征码
-   var thisdeploymode=autoread_obj["ar2"]["deploymode"];
-   if("undefined"==typeof(thisdeploymode)){alert(appname+"autoread_obj[\"ar2\"][\"deploymode\"]数据结构错误");}
  
 //上滑次数
    
@@ -1746,270 +1751,287 @@ function while_readnews(autoread_obj){
    thread_readnews=threads.start(
        function(){
 
-              
+            
               //两次上滑之间的间隔
                var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
-               toastAt("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");
+              try{toastAt("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");}catch(e){}
                setInterval(function(){
-
-                //展开更多处理方式
-                if("classname_desc"==thisdeploymode){
-                    var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
-                     if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
-                    var thisdeploydesc=autoread_obj["ar2"]["deploydesc"];
-                     if("undefined"==typeof(thisdeploydesc)){alert(appname+"autoread_obj[\"ar2\"][\"deploydesc\"]数据结构错误");}
-                   var ele=className(thisdeployclassname).desc(thisdeploydesc);
-                  
-                  
-                    if(ele.exists() && ele.findOnce().bounds().top <device.height ){
-                       // if( ele.findOnce().bounds().top <device.height){
-                            var deploy_top=ele.findOnce().bounds().top;
-                            //如果展开更多的top值小于0，那么就是滑动过了
-                            if( deploy_top<0){
-                                       deployfind=true;
-                                        deploypass=true;
-                                        Swipe(300,500,200,1200,500);
-                                        toastAt("错过了展开更多\n,反向滑动一次")
-                                    }
-                              //如果在屏幕可视区
-                              else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>280){
-                                 //  toastAt("gg deploy_top："+deploy_top);
-                                         //设置找到展开更多标记为true
-                                          deployfind=true; 
-                                            toastAt("发现展开更多desc方式")
-                                            play("global","展开更多");
-                            
+              readnews_count+=1;
+              if(readnews_count>90){
+                  try{
+                       toast("初始化线程计数器readnews");
+                try{    thread_findnews.interrupt();}catch(e){};
+                try{    thread_readnews.interrupt();}catch(e){};
+                try{    thread_signin.interrupt();}catch(e){};
+                 funmulityback();
+                 try{thiscommon.openpackage(packagename+"/"+activityname)}catch(e){};
+                 while_findnews(autoread_obj);    
+                  }catch(e){toast("初始化线程计数器readnews 异常")}
+               
+              }
+                try{
+                                //展开更多处理方式
+                                if("classname_desc"==thisdeploymode){
+                                    var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
+                                    if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
+                                    var thisdeploydesc=autoread_obj["ar2"]["deploydesc"];
+                                    if("undefined"==typeof(thisdeploydesc)){alert(appname+"autoread_obj[\"ar2\"][\"deploydesc\"]数据结构错误");}
+                                var ele=className(thisdeployclassname).desc(thisdeploydesc);
+                                
+                                
+                                    if(ele.exists() && ele.findOnce().bounds().top <device.height ){
+                                    // if( ele.findOnce().bounds().top <device.height){
+                                            var deploy_top=ele.findOnce().bounds().top;
+                                            //如果展开更多的top值小于0，那么就是滑动过了
+                                            if( deploy_top<0){
+                                                    deployfind=true;
+                                                        deploypass=true;
+                                                        Swipe(300,500,200,1200,500);
+                                                        toastAt("错过了展开更多\n,反向滑动一次")
+                                                    }
+                                            //如果在屏幕可视区
+                                            else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>280){
+                                                //  toastAt("gg deploy_top："+deploy_top);
+                                                        //设置找到展开更多标记为true
+                                                        deployfind=true; 
+                                                            toastAt("发现展开更多desc方式")
+                                                            play("global","展开更多");
                                             
-                                        try{
-                                            //再次验证
-                                            if(ele.findOnce().bounds().centerY()<0){
+                                                            
+                                                        try{
+                                                            //再次验证
+                                                            if(ele.findOnce().bounds().centerY()<0){
+                                                                deploypass=true;
+                                                                Swipe(300,500,200,1200,500);
+                                                            }else{
+                                                                        toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
+                                                                        thiscommon.clickxy_for_ele(ele.findOnce()); 
+                                                                        deployfind=false;
+                                                                        deploypass=false;
+                                                            }
+                                                            
+                                                            }catch(e){
+                                                                    deployfind=false;
+                                                                    deploypass=false;
+                                                            }
+                                            }
+                                    //  }//if end
+                                
+                                    
+
+                                    }
+                                }else if("classname_text"==thisdeploymode){
+                                    var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
+                                    if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
+                                    var thistext=autoread_obj["ar2"]["deploytext"];
+                                    if("undefined"==typeof(thistext)){alert(appname+"autoread_obj[\"ar2\"][\"deploytext\"]数据结构错误");}
+                                    var ele=className(thisdeployclassname).text(thistext);
+                                
+                                    if(ele.exists() && ele.findOnce().bounds().top <device.height ){
+                                
+                                    var deploy_top=ele.findOnce().bounds().top;
+                                    //如果展开更多的top值小于0，那么就是滑动过了
+                                    if( deploy_top<0){
+                                                deployfind=true;
                                                 deploypass=true;
                                                 Swipe(300,500,200,1200,500);
+                                                toastAt("错过了展开更多\n,反向滑动一次")
+                                            }
+                                    //如果在屏幕可视区
+                                    else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>280){
+                                        //  toastAt("gg deploy_top："+deploy_top);
+                                                //设置找到展开更多标记为true
+                                                deployfind=true; 
+                                                    toastAt("发现展开更多text方式")
+                                                    play("global","展开更多");
+                                    
+                                                    
+                                                try{
+                                                    //再次验证
+                                                    if(ele.findOnce().bounds().centerY()<0){
+                                                        deploypass=true;
+                                                        Swipe(300,500,200,1200,500);
+                                                    }else{
+                                                                toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
+                                                                thiscommon.clickxy_for_ele(ele.findOnce()); 
+                                                                deployfind=false;
+                                                                deploypass=false;
+                                                    }
+                                                    
+                                                    }catch(e){
+                                                            deployfind=false;
+                                                            deploypass=false;
+                                                    }
+                                        }
+                                    
+
+                                    }
+                                }else if("click_boundary_path"==thisdeploymode){
+                                    
+                                    try{
+                                        var deployboundary=autoread_obj["ar2"]["deployboundary"];
+                                        var deploypath=autoread_obj["ar2"]["deploypath"];
+                                        thiscommon.click_boundary_path(deployboundary,deploypath);
+                                    }catch(e){
+
+                                    }
+                                }
+                                //展开更多处理方式结束
+
+
+                                    if(deployfind==false && deploypass==false){
+                                        //如果没有发现展开更多，才允许滑动，否则不滑动，等待展开更多发送过来的信号量false
+                                                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
+                                            thisswipe.swiperealup_custom_lnnl(Gppinterval);
                                             }else{
-                                                         toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
-                                                        thiscommon.clickxy_for_ele(ele.findOnce()); 
-                                                        deployfind=false;
-                                                        deploypass=false;
+                                                thisswipe.swiperealup_custom();
                                             }
-                                              
-                                            }catch(e){
-                                                    deployfind=false;
-                                                    deploypass=false;
-                                            }
-                               }
-                      //  }//if end
-                  
-                     
-             
-                    }
-                }else if("classname_text"==thisdeploymode){
-                    var thisdeployclassname=autoread_obj["ar2"]["deployclassname"];
-                    if("undefined"==typeof(thisdeployclassname)){alert(appname+"autoread_obj[\"ar2\"][\"deployclassname\"]数据结构错误");}
-                    var thistext=autoread_obj["ar2"]["deploytext"];
-                     if("undefined"==typeof(thistext)){alert(appname+"autoread_obj[\"ar2\"][\"deploytext\"]数据结构错误");}
-                    var ele=className(thisdeployclassname).text(thistext);
-                  
-                    if(ele.exists() && ele.findOnce().bounds().top <device.height ){
-                   
-                     var deploy_top=ele.findOnce().bounds().top;
-                     //如果展开更多的top值小于0，那么就是滑动过了
-                     if( deploy_top<0){
-                                deployfind=true;
-                                 deploypass=true;
-                                 Swipe(300,500,200,1200,500);
-                                 toastAt("错过了展开更多\n,反向滑动一次")
-                             }
-                       //如果在屏幕可视区
-                       else if(  Number(deploy_top)<Number(device.height) && Number(deploy_top)>280){
-                          //  toastAt("gg deploy_top："+deploy_top);
-                                  //设置找到展开更多标记为true
-                                   deployfind=true; 
-                                     toastAt("发现展开更多text方式")
-                                     play("global","展开更多");
-                     
-                                     
-                                 try{
-                                     //再次验证
-                                     if(ele.findOnce().bounds().centerY()<0){
-                                         deploypass=true;
-                                         Swipe(300,500,200,1200,500);
-                                     }else{
-                                                  toastAt("点击展开更多x:"+ele.findOnce().bounds().centerX()+" y:"+ele.findOnce().bounds().centerY())
-                                                 thiscommon.clickxy_for_ele(ele.findOnce()); 
-                                                 deployfind=false;
-                                                 deploypass=false;
-                                     }
-                                       
-                                     }catch(e){
-                                             deployfind=false;
-                                             deploypass=false;
-                                     }
-                        }
-                     
-             
-                    }
-                }else if("click_boundary_path"==thisdeploymode){
-                    
-                    try{
-                        var deployboundary=autoread_obj["ar2"]["deployboundary"];
-                        var deploypath=autoread_obj["ar2"]["deploypath"];
-                        thiscommon.click_boundary_path(deployboundary,deploypath);
-                    }catch(e){
-        
-                    }
-                }
-                //展开更多处理方式结束
+                                    }
 
+                                    var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
+                                    sleep(x);
 
-                    if(deployfind==false && deploypass==false){
-                        //如果没有发现展开更多，才允许滑动，否则不滑动，等待展开更多发送过来的信号量false
-                                if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
-                            thisswipe.swiperealup_custom_lnnl(Gppinterval);
-                            }else{
-                                thisswipe.swiperealup_custom();
-                            }
-                    }
-                
-                    var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
-                   sleep(x);
-                
-                 
-                   //判断返回机制
-                   var thisbacktrigger="normal"
-                   try{
-                       var thisbacktrigger=autoread_obj["ar2"]["backtrigger"];
-                            if(typeof(thisbacktrigger)=="undefined"){
-                                thisbacktrigger="normal"
-                            }else{
-                            // 如果有特殊返回机制的情况的各种情况处理
-                                if("xy_color_bool"==thisbacktrigger){
-                                    //取出私有字段
-                                var thisxy=autoread_obj["ar2"]["xy"];
-                                var thisxyarr=thisxy.split("||");
-                                var thisx=thisxyarr[0];
-                                var thisy=thisxyarr[1];
-                                }else if("id_xyoffset_color_bool"==thisbacktrigger){
-                                    //alert("else if");
-                                    //取出私有字段                                  
-                                  var thisid=autoread_obj["ar2"]["id"];
-                                  var thisxyoffset=autoread_obj["ar2"]["xyoffset"];
-                                  var thisxyoffsetarr=thisxyoffset.split("||");
-                               
-                                            try{
-                                                var elex=id(thisid).findOnce().bounds().left;
-                                                var eley=id(thisid).findOnce().bounds().top;  
-                                            }catch(e){
+                                
+                                //判断返回机制
+                                var thisbacktrigger="normal"
+                                try{
+                                    var thisbacktrigger=autoread_obj["ar2"]["backtrigger"];
+                                            if(typeof(thisbacktrigger)=="undefined"){
+                                                thisbacktrigger="normal"
+                                            }else{
+                                            // 如果有特殊返回机制的情况的各种情况处理
+                                                if("xy_color_bool"==thisbacktrigger){
+                                                    //取出私有字段
+                                                var thisxy=autoread_obj["ar2"]["xy"];
+                                                var thisxyarr=thisxy.split("||");
+                                                var thisx=thisxyarr[0];
+                                                var thisy=thisxyarr[1];
+                                                }else if("id_xyoffset_color_bool"==thisbacktrigger){
+                                                    //alert("else if");
+                                                    //取出私有字段                                  
+                                                var thisid=autoread_obj["ar2"]["id"];
+                                                var thisxyoffset=autoread_obj["ar2"]["xyoffset"];
+                                                var thisxyoffsetarr=thisxyoffset.split("||");
+                                            
+                                                            try{
+                                                                var elex=id(thisid).findOnce().bounds().left;
+                                                                var eley=id(thisid).findOnce().bounds().top;  
+                                                            }catch(e){
+                                                                
+                                                                    funmulityback();
+                                                            
+                                                                Gworkthread="readnews_stop";
+                                                                sleep(1000);
+                                                                thread_readnews.interrupt();
+                                                            }                  
+                                                var thisx=Number(elex)+Number(thisxyoffsetarr[0]);
+                                                var thisy=Number(eley)+Number(thisxyoffsetarr[1]);
+                                                //  alert("else if end");
+                                                }
+                                                    //取出共有字段
+                                                var thiscolor=autoread_obj["ar2"]["color"];
+                                                var thisbool=autoread_obj["ar2"]["bool"];
+                                                var thisreswipe=autoread_obj["ar2"]["reswipe"];
+                                            }//else end
+                                }catch(e){
+                                    thisbacktrigger="normal";
+                                } ///判断返回机制结束
+                                
+                                //执行返回机制验证
+                                if("normal"==thisbacktrigger){
+                                            //采用计数器方式判断是否返回一级页面
+                                            upcount+=1;
+                                            toast("上滑："+upcount+"/"+maxupcount+"次");
+                                            if(upcount>maxupcount){
+                                                toast("返回首页...");
                                                 
                                                     funmulityback();
-                                               
+                                                
                                                 Gworkthread="readnews_stop";
                                                 sleep(1000);
                                                 thread_readnews.interrupt();
-                                            }                  
-                                 var thisx=Number(elex)+Number(thisxyoffsetarr[0]);
-                                  var thisy=Number(eley)+Number(thisxyoffsetarr[1]);
-                                //  alert("else if end");
-                                }
-                                    //取出共有字段
-                                var thiscolor=autoread_obj["ar2"]["color"];
-                                var thisbool=autoread_obj["ar2"]["bool"];
-                                var thisreswipe=autoread_obj["ar2"]["reswipe"];
-                            }//else end
-                   }catch(e){
-                    thisbacktrigger="normal";
-                   } ///判断返回机制结束
-                 
-                   //执行返回机制验证
-                   if("normal"==thisbacktrigger){
-                               //采用计数器方式判断是否返回一级页面
-                               upcount+=1;
-                               toast("上滑："+upcount+"/"+maxupcount+"次");
-                               if(upcount>maxupcount){
-                                   toast("返回首页...");
-                                  
-                                       funmulityback();
-                                  
-                                   Gworkthread="readnews_stop";
-                                   sleep(1000);
-                                   thread_readnews.interrupt();
-                               }
-                            //采用坐标取色法判断是否得到收益并赶回一级页面
-                              // toast("间隔："+x+"毫秒");
-                             
-                   }else{
-                       if("xy_color_bool"==thisbacktrigger||"id_xyoffset_color_bool"==thisbacktrigger){
-                            //截屏
-                        
-                            try{
-                               
-                                      var  img = captureScreen();
-                                                    //取出坐标值所属颜色值
-                                                    var color = images.pixel(img, thisx,thisy);
-                                                     color= colors.toString(color);
-                                          //  alert("thisx is:"+thisx+" thisy is:"+thisy+" mcolor is:"+color+" jsoncolor is:"+thiscolor);
-                            }catch(e){ 
-                                    toast("截取图像失败...");
-                            }
-                         
-                         
-                            //判断是否是第一次取值
-                            if(firstcapture==true && thisbool==false){
-                               // alert("3");
-                            //如果是第一次取值并且bool为false，那么当前坐标的值必须等于thiscolor,同时更新取值次数为2
-                                
-                            //如果是第一次取值并且bool为false,但是当前坐标值不等于thiscolor，不可能这么快就有收益，这是非收益页面
-                              if(color!="#"+thiscolor){
-                                  firstcapture=false;
-                              //  toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
-                                toast("非收益页面，返回首页...");
-                             
-                                  funmulityback();
-                               
-                                Gworkthread="readnews_stop";
-                                sleep(1000);
-                                thread_readnews.interrupt();
-                               // alert("4");
-                              }
-                            }else{
-                                 //如果通过了上面判断，就判断当前坐标的值是不是不等于thiscolor了，如果不等于了，那么就是有收益了，返回一级页面
-                                if(color!="#"+thiscolor){
-                                  //  toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
-                                  //  toast("返回首页...");
-                                  
-                                        funmulityback();
-                                   
-                                    Gworkthread="readnews_stop";
-                                    sleep(1000);
-                                    thread_readnews.interrupt();
-                                }
-                                  //更新backtrigger子计数器+1，如果3次计数后，圆圈还没有闭合，有可能没有阅读完，也有可能是二级页面已经到底，需要触发一次下滑
-                                  backtrigger_subcount+=1;
-                                  if(backtrigger_subcount>3){
-                                    if(thisreswipe=="true"){
-                                               Swipe(300,500,200,1200,500);
-                                          //     toast("反向滑动一次")
-                                     }
-                                    backtrigger_subcount=0;
-                                  }
-                                  //当然也要更新backtrigger总计数器，总集数器超过50次则返回一级页面
-                                  backtrigger_maincount+=1;
-                                  if(backtrigger_maincount>50){
-                                    toast("滑动次数太多了，一直未获取到收益，返回一级页面")
-                                   
-                                        funmulityback();
-                                  
-                                    Gworkthread="readnews_stop";
-                                    sleep(1000);
-                                    thread_readnews.interrupt();
-                                  }
-                            }
+                                            }
+                                            //采用坐标取色法判断是否得到收益并赶回一级页面
+                                            // toast("间隔："+x+"毫秒");
+                                            
+                                }else{
+                                    if("xy_color_bool"==thisbacktrigger||"id_xyoffset_color_bool"==thisbacktrigger){
+                                            //截屏
+                                        
+                                            try{
+                                            
+                                                    var  img = captureScreen();
+                                                                    //取出坐标值所属颜色值
+                                                                    var color = images.pixel(img, thisx,thisy);
+                                                                    color= colors.toString(color);
+                                                        //  alert("thisx is:"+thisx+" thisy is:"+thisy+" mcolor is:"+color+" jsoncolor is:"+thiscolor);
+                                            }catch(e){ 
+                                                    toast("截取图像失败...");
+                                            }
+                                        
+                                        
+                                            //判断是否是第一次取值
+                                            if(firstcapture==true && thisbool==false){
+                                            // alert("3");
+                                            //如果是第一次取值并且bool为false，那么当前坐标的值必须等于thiscolor,同时更新取值次数为2
+                                                
+                                            //如果是第一次取值并且bool为false,但是当前坐标值不等于thiscolor，不可能这么快就有收益，这是非收益页面
+                                            if(color!="#"+thiscolor){
+                                                firstcapture=false;
+                                            //  toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
+                                                toast("非收益页面，返回首页...");
+                                            
+                                                funmulityback();
+                                            
+                                                Gworkthread="readnews_stop";
+                                                sleep(1000);
+                                                thread_readnews.interrupt();
+                                            // alert("4");
+                                            }
+                                            }else{
+                                                //如果通过了上面判断，就判断当前坐标的值是不是不等于thiscolor了，如果不等于了，那么就是有收益了，返回一级页面
+                                                if(color!="#"+thiscolor){
+                                                //  toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
+                                                //  toast("返回首页...");
+                                                
+                                                        funmulityback();
+                                                
+                                                    Gworkthread="readnews_stop";
+                                                    sleep(1000);
+                                                    thread_readnews.interrupt();
+                                                }
+                                                //更新backtrigger子计数器+1，如果3次计数后，圆圈还没有闭合，有可能没有阅读完，也有可能是二级页面已经到底，需要触发一次下滑
+                                                backtrigger_subcount+=1;
+                                                if(backtrigger_subcount>3){
+                                                    if(thisreswipe=="true"){
+                                                            Swipe(300,500,200,1200,500);
+                                                        //     toast("反向滑动一次")
+                                                    }
+                                                    backtrigger_subcount=0;
+                                                }
+                                                //当然也要更新backtrigger总计数器，总集数器超过50次则返回一级页面
+                                                backtrigger_maincount+=1;
+                                                if(backtrigger_maincount>50){
+                                                    toast("滑动次数太多了，一直未获取到收益，返回一级页面")
+                                                
+                                                        funmulityback();
+                                                
+                                                    Gworkthread="readnews_stop";
+                                                    sleep(1000);
+                                                    thread_readnews.interrupt();
+                                                }
+                                            }
 
-                           
-                          
-                            
-                       }//xy_color_bool end
-                    
-                   }//执行返回机制验证结束
+                                        
+                                        
+                                            
+                                    }//xy_color_bool end
+                                    
+                                }//执行返回机制验证结束
+                }catch(e){
+                    toast("readnews 线程未知异常")
+                }
+              
 
                         
                },x);
