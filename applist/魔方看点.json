@@ -4,7 +4,7 @@
         "mulityback":"41||176",
         "appver":"3.2.2",
         "interval":"30",
-        "speed":"normal",
+        "speed":"slow",
         "packagename":"com.toutiao.hxtoutiao",
         "activityname":"com.huanxi.toutiao.ui.activity.other.MainActivity",
         "open":{
@@ -36,6 +36,15 @@
             "ab2":{
                "featuremode":"id",
                "id":"com.toutiao.hxtoutiao:id/iv_magic_red_packet",
+           },
+            "ab3":{
+               "featuremode":"id",
+               "id":"com.toutiao.hxtoutiao:id/replay_text",
+           },
+             "ab4":{
+               "featuremode":"classname_text",
+               "classname":"android.widget.TextView",
+              "text":"领取",
            },
          },
         "activitys":{
