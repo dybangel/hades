@@ -21,9 +21,8 @@
               "desc":"高佣任务",
                     },
              "sg2":{
-              "action":"click_boundary_path",
-              "boundary":"android.webkit.WebView",
-              "path":"0||1",
+              "action":"click_xypercent",
+              "click_xypercent":"0.833||0.084",
               "featuremode":"classname_desc",
               "classname":"android.view.View",
               "desc":"已完成",

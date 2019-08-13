@@ -4,7 +4,7 @@
         "mulityback":"110||213",
         "appver":"v1.0.1.5",
         "interval":"30",
-        "speed":"normal",
+        "speed":"slow",
         "packagename":"com.zx.mj.wztt",
         "activityname":"com.zx.zhuanqian.ui.activity.SplashActivity",
         "open":{
@@ -89,7 +89,7 @@
                 "id":"com.zx.mj.wztt:id/ivBack",
             },
             "ar2":{
-                "upcount":"38",
+                "upcount":"27",
                 "deploymode":"click_boundary_path",
                 "deployboundary":"android.support.v7.widget.RecyclerView",
                 "deploypath":"0||2||0||1||0",
