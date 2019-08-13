@@ -3,10 +3,10 @@
       "appname":"有看头",
       "mulityback":"true||2000",
       "appver":"3.6.5",
-      "interval":"30",
-      "speed":"normal",
+      "interval":"5",
+      "speed":"normal+",
       "packagename":"com.kuaima.kuailai",
-      "activityname":"com.kuaima.kuailai.MainInterfaceActivity",
+      "activityname":"com.kuaima.kuailai.login.ui.LaunchActivity",
       "open":{
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
