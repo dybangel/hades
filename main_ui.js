@@ -885,17 +885,7 @@ setgps_status();
 //如果是微信养号需要的操作
 if(Grunstate=="trainwechat"){
    //lanuchApp("微信");
-           thiscommon.clean(Gdevicetype);
-           var result= openwechat();
-           if(result==false){
-               play('global','打开失败');
-           }else{
-               play('global','打开成功');
-               //聊天 
-           //    whchat();
-               //朋友圈点赞
-               while_findmoments();
-           }   
+
            // whchat();
 
 }else{
@@ -1159,35 +1149,47 @@ function checklicence(fsn){
  }
 //加载开关量
 function loadGapps(){
-   if(Gjsonloadstate=="remote"){
-      // alert("1");
-      try{
-       http.__okhttp__.setTimeout(10000);
-       var r=http.get(Gappspath_remote);
-      }catch(e){
+    //判断本地有无特殊开关量，如果有则视为开发测试状态，以本地开关量为准
+        var result=files.exists("/sdcard/脚本/localgapps.json")
+        if(result){
+        toast("当前以本地开关量为准");
+        var str=files.read("/sdcard/脚本/localgapps.json");
+     //   alert(str);
+        Gapps=eval(str)
+        }else{
+            //正常用户状态
+                    if(Gjsonloadstate=="remote"){
+                        // alert("1");
+                        try{
+                        http.__okhttp__.setTimeout(10000);
+                        var r=http.get(Gappspath_remote);
+                        }catch(e){
+                
+                        }
+                    
+                        if("200"==r.statusCode){
+                            // alert(r.body.string());
+                            try{
+                            var tmpstr=r.body.string();
+                            Gapps=eval('('+tmpstr+')'); 
+                            }catch(e){
+                                toast("加载云端开关量延迟");
+                            }
+                            
+                            // alert(Gapps);
+                        //   ref_ui_list();
+                            
+                
+                        }else{
+                            toast("加载云端gapps列表出错");
+                        }
+                
+                    }else if(Gjsonloadstate=="local"){
+                
+                    }
 
-      }
-    
-       if("200"==r.statusCode){
-          // alert(r.body.string());
-          try{
-             var tmpstr=r.body.string();
-           Gapps=eval('('+tmpstr+')'); 
-          }catch(e){
-              toast("加载云端开关量延迟");
-          }
-           
-          // alert(Gapps);
-        //   ref_ui_list();
-           
+        }
 
-       }else{
-           toast("加载云端gapps列表出错");
-       }
-
-   }else if(Gjsonloadstate=="local"){
-
-   }
 
 
 }
@@ -2754,128 +2756,7 @@ function play(subpath,appname){
        // toast(appname);
    }
 }
-//打开微信并判断状态
-function openwechat(){
-   play("global","打开微信");
-   thiscommon.openpackage("com.tencent.mm/com.tencent.mm.ui.LauncherUI");
-   var num=0;
-   while(1){
-       var  thispackagename=currentPackage();
-       var  thisactivity=currentActivity();
-       if("com.tencent.mm"==thispackagename){
-           //说明微信包名已经拉起，要判断是否是已经登录的微信
-           //如果是已经登录的微信返回成功
-           //如果不是则提示用户登录
-           if("com.tencent.mm.plugin.account.ui.LoginPasswordUI"==thisactivity){
-               alert("请输入微信密码登录");
-               return false;
-           }else if(""==thisactivity){
-               alert("请登录微信");
-               return false;
-           }else if("com.tencent.mm.ui.LauncherUI"==thisactivity){
-               return true;
-           }
-       }
-       //判断是否启动完成
-       // var result=block_check("classname_text",'android.widget.TextView','通讯录','');
-       // if(result){
-       //     play("global","打开成功");
-       //     break;
-       // }
-       num+=1;
-       if(num>20){
-           play("global","打开失败");
-           break;
-       }
-       sleep(1000);
-   }
-   // sleep(1000);
-   // var result=className("android.widget.EditText").text('').exists();
-   // if(result){
-   //     className("android.widget.EditText").text('').click();
-   //     sleep(1000);
-   //     //输入密码
-   //     setText(Gwechatpass);
-   //     sleep(1000);
-   //     //登录
-   //     var ele=className("android.widget.Button").text("登录");
-   
-   //     thiscommon.clickxy_for_ele(ele.findOnce());
-   // }
-}
-//朋友圈点赞
-function while_findmoments(){
-   try{thread_findmoments.interrupt();}catch(e){}
-   click("发现");
-   play("global","点击");
-   play("global","发现");
 
-
-
-   ele=className("android.widget.TextView").text("朋友圈");
-   thiscommon.clickxy_for_ele_once(ele.findOne(1000));
-   play("global","点击");
-   play("global","朋友圈");
-   sleep(2000);
-   play("global","正在检索");
-   upcount=0
-   thread_findmoments=threads.start(
-       function(){
-           setInterval(function(){
-               if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
-                   thisswipe.swiperealup_custom_lnnl(Gppinterval);
-                }else{
-                    thisswipe.swiperealup_custom();
-                }
-               sleep(2000);
-               upcount+=1;
-               toast("upcount is:"+upcount);
-               var m=2;
-               var n=1;
-               //x 为向上滑动多少次后打开新闻
-               var x=Math.round(Math.random()*(m-n))+n;
-               if(upcount>x){
-                   upcount=0;
-                  // toast("准备点赞");
-                       //开始找moment
-                               // try{
-                                   mainfeature="android.widget.ListView";
-                                   var result=className(mainfeature).exists();
-                                   if(result){
-                                       //列表下有几个新闻块
-                                      // var subcount=className(mainfeature).findOnce().childCount();
-                                       //定义主框架
-                                      // var main=className(mainfeature).findOnce();
-                                       //看三个点是否存在
-                                       var result=id("com.tencent.mm:id/eho").exists();
-                                       //alert(result);
-                                       if(result){
-                                               ehoid=id("com.tencent.mm:id/eho").findOnce(1);
-                                           //点击三个点
-                                               thiscommon.clickxy_for_ele(ehoid);
-                                               //在判断小红心是否出现了
-                                               sleep(2000)
-                                               var result=id("com.tencent.mm:id/eha").exists();
-                                               if(result){
-                                                   ehaid=id("com.tencent.mm:id/eha").findOnce();
-                                                   play("global","点击");
-                                                   play("global","赞");
-                                                   thiscommon.clickxy_for_ele(ehaid);
-                                               }
-                                       }
-   
-                                   }//if end
-
-                             //   }catch(e){
-
-                               // }                       //先判断列表存不存在
-                          
-
-               } //if upcount>x end
-           },2000)
-       }//func end;
-   );
-}
 function whthumbup(){
 
 click("发现");
@@ -2922,146 +2803,7 @@ sleep(1000);
 // clickxy_for_ele_once(ele.findOne());
 
 }
-//微信聊天
-function whchat(){
-   //聊天模式
-   amgmode=""; //char voice
-   // thiscommon.clean();
- //  toast("123123");
-   play("global","自动聊天");
-  // alert(wechatfriends.length);
-   for(var i=0;i<wechatfriends.length;i++){
-       //alert(wechatfriends[i]["username"]);
-       //点击通讯录
-       var username=wechatfriends[i]["username"];
-       play("global","点击");
-       play("global","通讯录");
-       click("通讯录");
-       sleep(1000);
 
-       //点击放大镜搜索按钮
-       play("global","点击");
-       play("global","搜索按钮");
-       var searchbutton=id("com.tencent.mm:id/jb").findOnce();
-
-       //var ele=className("android.support.v7.widget.LinearLayoutCompat").className("RelativeLayout").findOnce(0);
-       thiscommon.clickxy_for_ele_once(searchbutton);
-       sleep(1000);
-
-      //输入用户名
-      play("global","随机搜索好友");
-       thiscommon.onebyoneinput(username);
-       setText(username);
-       sleep(1000);      
-       
-       //点击搜索结果
-       play("global","点击");
-       var result=className('android.widget.ListView').exists();
-       if(result){
-           ele=className('android.widget.ListView').findOnce();
-           ele.child(1).click();
-           thiscommon.clickxy_for_ele(ele.child(1));
-       }
-       //  ele=className("android.widget.ListView").className("RelativeLayout").findOnce(2);
-       // thiscommon.clickxy_for_ele(ele.child(0));
-       
-       //文字模式
-       play("global","随机文字聊天");
-      var result=whgetamgmode();
-       if(!result){
-           id("amg").findOne().click();
-       }
-       thiscommon.onebyoneinput("怎么不说话？");
-       sleep(2000);
-       ele=className("android.widget.Button").text("发送").findOne(1000);
-       thiscommon.clickxy_for_ele(ele);
-       //   alert(amg.desc());
-       sleep(10000);
-
-       //语音模式
-       play("global","随机发送语音");
-       result=whgetamgmode();
-       if(result){
-           id("amg").findOne().click(); 
-       }
-       sleep(5000);
-       ele=className("android.widget.Button").desc("按住说话").findOne(1000);
-       langtouch(ele.bounds().centerX(),ele.bounds().centerY(),3);
-
-//exit();
-exit();
-     
-   }
-   //循环遍历好友
-   //从循环遍历的语料库里选取内容发送
-
-}
-//微信判断当前聊天模式是语音还是文本
-function whgetamgmode(){
-   var amgstr=id("amg").findOne().desc();
-   if(amgstr=="切换到按住说话"){
-       return true;//true当前文字模式
-   }else{
-       return false;//false 当前语音模式
-   }
-   return;
-}
-//用户微信发送语音长按键
-function langtouch(x,y,interval){
-//   var ra = new RootAutomator();
-   ra.setScreenMetrics(device.width, device.height);
-   ra.touchX(x);//595
-   ra.touchY(y);//1828
-  
-   var num=0;
-   while(1){
-       ra.sendEvent(3, 58, 38);
-       ra.sendEvent(3, 48, 4);
-       ra.sendEvent(1, 330, 1);
-       ra.sendSync();
-       sleep(7);
-       ra.sendEvent(3, 58, 49);
-       ra.sendSync();
-   sleep(88);
-   ra.sendEvent(3, 58, 76);
-   ra.sendEvent(3, 48, 10);
-   ra.sendSync();
-   sleep(193);
-   ra.sendEvent(3, 58, 85);
-   ra.sendSync();
-   sleep(1565);
-   ra.sendEvent(3, 58, 91);
-   ra.sendEvent(3, 48, 9);
-   ra.sendSync();
-   sleep(1177);
-  
-   // sleep(110);
-   // ra.sendEvent(3, 57, -1);
-   // ra.sendEvent(1, 330, 0);
-   // ra.sendSync();
-   
-       num+=1;
-       if(num>interval){
-           break;
-       }
-  
-   }
-   ra.sendEvent(3, 58, 85);
-   ra.sendSync();
-   sleep(93);
-   ra.sendEvent(3, 57, -1);
-   ra.sendEvent(1, 330, 0);
-   ra.sendSync();
-   sleep(1110);
-   ra.sendEvent(3, 57, 900);
-   //  ra.touchX(x);//48
-   //  ra.touchY(y);//357
-   // ra.sendEvent(3, 58, 36);
-   // ra.sendEvent(3, 48, 4);
-   // ra.sendEvent(1, 330, 1);
-   ra.sendSync();
-   ra.exit();
-}
 //下载并安装最新海趣助手
 function download_installapp(){
    importClass("java.io.FileOutputStream")
