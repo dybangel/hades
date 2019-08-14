@@ -3,6 +3,7 @@
         "s1": "mycommon.js",
         "s2": "myswipe.js",
         "s3": "main_ui.js",
+        "s4":"mytrainwechat.js",
     },
     "voice": [
         {"name":"0.mp3"},

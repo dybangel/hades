@@ -10,7 +10,7 @@ console.show();
 var script_download_path = "/sdcard/脚本/";
 files.createWithDirs(script_download_path);
  //clean
-//files.removeDir(script_download_path+'海趣助手');
+files.removeDir(script_download_path+'海趣助手');
 //sleep(1000);
 files.createWithDirs(script_download_path+'海趣助手/');
 files.createWithDirs(script_download_path+'海趣助手/res/');
