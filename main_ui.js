@@ -1676,24 +1676,25 @@ try{
                                                     nofindnews_count+=1;
                                                 }
                                                     if(nofindnews_count>Gnofindnews_countback){
-                                                        nofindnews_count=0;
-                                                        toast("初始化线程计数器findnews");
-                                                        // toast("拉回主线......");
-                                                        try{    thread_findnews.interrupt();}catch(e){};
-                                                        try{    thread_readnews.interrupt();}catch(e){};
-                                                        try{    thread_signin.interrupt();}catch(e){};
-                                                
-                                                        funmulityback();
-                                                        thiscommon.openpackage(packagename+"/"+activityname);
-                                                       // while_findnews(autoread_obj);    
-                                                        
-                                                        try{    thread_findnews.interrupt();}catch(e){};
-                                                        try{    thread_readnews.interrupt();}catch(e){};
-                                                        try{    thread_signin.interrupt();}catch(e){};
-                                                         funmulityback();
-                                                         try{thiscommon.openpackage(packagename+"/"+activityname)}catch(e){};
-                                                         while_findnews(autoread_obj);      
-                                                       //  workthread_errorcount=0;
+
+                                                        try{
+                                                            nofindnews_count=0;
+                                                            toast("初始化线程计数器findnews");
+                                                            try{    thread_findnews.interrupt();}catch(e){};
+                                                            try{    thread_readnews.interrupt();}catch(e){};
+                                                            try{    thread_signin.interrupt();}catch(e){};
+                                                    
+                                                            funmulityback();
+                                                            thiscommon.clean(Gdevicetype);
+                                                            var openstate=openAPP(appname,packagename,activityname,open_obj);
+                                                            if(openstate){
+                                                                while_findnews(autoread_obj);  
+                                                            }
+
+                                                        }catch(e){nofindnews_count=0;toast("初始化线程计数器异常")}
+                                                       
+                                                       
+                                                    
                         
                                                     }
                                             }
@@ -2034,6 +2035,22 @@ function while_readnews(autoread_obj){
                                 }//执行返回机制验证结束
                 }catch(e){
                     toast("readnews 线程未知异常")
+                    try{
+                       // nofindnews_count=0;
+                       // toast("初始化线程计数器findnews");
+                        try{    thread_findnews.interrupt();}catch(e){};
+                        try{    thread_readnews.interrupt();}catch(e){};
+                        try{    thread_signin.interrupt();}catch(e){};
+                
+                        funmulityback();
+                        thiscommon.clean(Gdevicetype);
+                        var openstate=openAPP(appname,packagename,activityname,open_obj);
+                        if(openstate){
+                            while_findnews(autoread_obj);  
+                        }
+
+                    }catch(e){nofindnews_count=0;toast("处理未知异常失败")}
+
                 }
               
 
@@ -2347,8 +2364,12 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
             nowcurrentActivity=currentActivity();
             showpacount+=1;
             if(showpacount>5){
-            toastAt("当前app:"+appname+"\n包名："+nowcurrentPackage+"\n"+"当前窗体名："+nowcurrentActivity);
-                showpacount=0;
+//            toastAt("当前app:"+appname+"\n包名："+nowcurrentPackage+"\n"+"当前窗体名："+nowcurrentActivity);
+                    try{
+                        toastAt("当前app:"+appname+"\nf线程:"+thread_findnews.isAlive()+" r线程:"+thread_readnews.isAlive()+"\n"+"当前窗体名："+nowcurrentActivity);
+                    }catch(e){} 
+            
+            showpacount=0;
             }
            }catch(e){}
           
