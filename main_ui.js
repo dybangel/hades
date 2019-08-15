@@ -2211,7 +2211,7 @@ function  while_abnormal(abnormal_obj){
                         }
                     }
            }catch(e){
-            toast("id_depth:"+e);
+          //  toast("id_depth:"+e);
            }
          
        }else if("classname_text"==featuremode){
