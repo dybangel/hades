@@ -2,7 +2,7 @@
       "enable":"false",
       "appname":"趣看点", 
       "interval":"3",
-         "packagename":"com.zhangku.qukandian",
+      "packagename":"com.zhangku.qukandian",
       "activityname":"com.zhangku.qukandian.activitys.LauncherActivity",
       "open":{
         "featuremode":"classname_text",

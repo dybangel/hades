@@ -3,7 +3,7 @@
         "appname":"淘新闻",
         "mulityback":"15||208",		
         "appver":"3.4.6.2",
-        "interval":"5",
+        "interval":"30",
         "speed":"normal+",
         "packagename":"com.coohua.xinwenzhuan",
         "activityname":"com.coohua.xinwenzhuan.controller.MainActivity",
