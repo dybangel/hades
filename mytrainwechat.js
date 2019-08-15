@@ -2,11 +2,28 @@
 
 var thiscommon=require("mycommon.js");
 var thisswipe=require("myswipe.js");
+/**
+ * 设计原则
+ * 1线程守护机制
+ * 2线程目标页识别机制
+ * 3线程计数器超次数机制
+ * 
+ */
 //**********************全局变量****************** */ 
 Gclass_awt="android.widget.TextView";
 Gclass_v7="android.support.v7.widget.LinearLayoutCompat";
 Gclass_awb="android.widget.Button";
 Gppinterval=600;
+Gthread_list=[
+  {  
+    "thread_lookat_findnews_start":{
+        "threadname":"thread_lookat_findnews",      
+              },
+   "thread_lookat_readnews_start":{
+         "threadname":"thread_lookat_readnews",
+            }
+  } 
+]
 
 ra = new RootAutomator();
 events.setKeyInterceptionEnabled("volume_down", true);
@@ -27,6 +44,7 @@ exit();
 Gdevicetype="le";
 Gvoicepath="./voice/";    //请勿修改
 Gworkthread="";
+Greload=false;
 
 // thiscommon.clickxy_for_ele(className(Gclass_awt).text("看一看").findOnce());
 // exit();
@@ -80,14 +98,7 @@ function while_control(){
             toast("看一看");
                 //路由
                     try{
-                        click("发现")
-                    
-                        
-                        sleep(1000);
-                        click("看一看")
-                    
-                        sleep(1000);
-                        click("精选")
+                      lookat_router();
                                             //elestr='className("'+Gclass_awt+'").text("发现")';//.parent().parent().click();
                                     // parentclick(elestr,2);
                                         //elestr='className("'+Gclass_awt+'").text("看一看")';
@@ -99,29 +110,84 @@ function while_control(){
             lookat_findnews();   
         }
         setInterval(function(){
+            //周期内rf切换
+            if("thread_lookat_findnews_stop"==Gworkthread){
+                //结束线程
+                try{thread_lookat_findnews.interrupt()}catch(e){}
+                sleep(1000);
+                //启动阅读线程
+                lookat_readnews();
+               
+            }else if("thread_lookat_readnews_stop"==Gworkthread){
+                    //结束线程
+                    try{thread_lookat_readnews.interrupt()}catch(e){}
+                    sleep(1000);
+                    //启动阅读线程
+                    lookat_findnews();
+            }
+
+            //超时后的任务分发
             if(while_control_thread_count>600000){
+                //结束线程
                 shutdown_allthread();
-                lastflag+=1;//标志位+1
+                //标志位+1
+                lastflag+=1;
+                //初始化线程计数器 ，已经到600000了
                 while_control_thread_count=0;
-                //开始玩游戏
+                //再次打开微信
                 thiscommon.clean(Gdevicetype);
                 var result= openwechat();
-                if(result){
-                    if(1==lastflag){
+
+               if(result){
+                //根据lastflag 分发任务
+                if(1==lastflag){
+                //开始玩游戏
                     play_little_program();
                     }else if(2==lastflag){
                         toast("养号任务结束");
                     }
-                }
+                }//if end
 
             }
+            //任务分发结束
+
+            //显示计数器
             if(toastcount>10){
+                            //线程守护
+            try{
+                //                 Gworkthread="thread_lookat_findnews_start"
+                // result=eval(Gthread_list[0][Gworkthread]["threadname"]+".isAlive()");//.isAlive();
+                // alert(result);
+                // exit();
+                                if(""!=Gworkthread){
+                                    result= eval(Gthread_list[0][Gworkthread]["threadname"]).isAlive();
+                                    if(result){
+                                     toast(Gthread_list[0][Gworkthread]["threadname"]+"存活");
+                                    } else{
+                                     toast(Gthread_list[0][Gworkthread]["threadname"]+" not alive!!");
+                                     reload();
+                                    }
+                                 }
+                            }catch(e){
+                                toast("线程守护:"+e)
+                            }
+                            //线程守护结束
+
                 toast("计数器："+while_control_thread_count);
                 toastcount=0;
 
             }
+            //显示计数器结束
+
+            //跟新计数器
             toastcount+=1;
             while_control_thread_count+=1;
+            //跟新计数器结束
+
+ 
+
+          
+            //alert(Gthread_list[0]["thread_lookat_findnews_start"]["threadname"]);exit();
 
             //关闭弹窗
             try{
@@ -142,100 +208,128 @@ function while_control(){
                     thiscommon.clickxy_for_ele(className("android.widget.Button").desc("知道了").findOnce());
                 }
             }catch(e){}
-          
+           //关闭弹窗结束
         },3000);
 
     });
 }
+function lookat_router(){
+    click("发现")
+    sleep(2000);
+    click("看一看")
+    sleep(1000);
+    click("精选")
+}
 //看一看找新闻
 function lookat_findnews(){
+    var thisthread_count=0;
+
+try{thread_lookat_findnews.interrupt()}catch(e){};
 
 thread_lookat_findnews=threads.start(function(){
     try{
         Gworkthread="thread_lookat_findnews_start";
+        toast("findnews线程启动");
       //  console.show();
         Glasttitle="";
        var Gcheckstate=false;
                 setInterval(function(){
+                    try{
+                        //目标页判断
+                        var flag= block_pagecheck();
+                        if("1"==flag){
+                
+                        }else if("2"==flag){
+                         //   toast("findnews start 判断这是二级页面，要返回")
+                            back();
+                        }else{
+                            toast("finnews start 无法判断当前页面");
+                            reload();
+                        }
+                
+                    }catch(e){}
+
                     //滑动
                     try{  
-                        if(Gcheckstate==false && Gworkthread=="thread_lookat_findnews_start"){
+                    
+                        
+                        //var result=className(Gclass_awt).text("精选").exists();
+                        if( Gcheckstate==false && Gworkthread=="thread_lookat_findnews_start"){
                             thisswipe.swiperealup_custom_lnnl(Gppinterval);
                             sleep(2000);
-                            var main=className("android.widget.ListView").findOnce(1)
-                            //找新闻点击
-                  
-                            //alert(main.childCount());exit();
-                            for(var i=0;i<main.childCount();i++){
-                                //得到item的高度
-                                log("这是for循环");
-                                itemtop=main.child(i).bounds().top;
-                                //如果高度在可视区域内才出发点击动作
-                                if(itemtop>257 && itemtop<device.height){
-                                   
-                                    itemstate="null"
-                                    //判断新闻类型开始
-                                    try{
-                                        var isvideo=false;
-                                        //c3desc=main.child(i).child(3).desc();//.exists();
-                                        c2c=main.child(i).child(1).bounds().bottom-main.child(i).child(1).bounds().top;
-                                        if(c2c>60 && c2c<63){
-                                        itemstate="video"
-                                        }else{itemstate="news"}
-    
-                                    }catch(e){
-                                        itemstate="news"
-                                    }
-                                   //判断新闻类型结束
+                            var main=className("android.widget.ListView").findOnce(1);
+                            if(null!=main){
+                                        //找新闻点击
+                                    for(var i=0;i<main.childCount();i++){
+                                        //得到item的高度
+                                    // log("这是for循环");
+                                        itemtop=main.child(i).bounds().top;
+                                        //如果高度在可视区域内才出发点击动作
+                                        if(itemtop>257 && itemtop<device.height){
+                                        
+                                                    itemstate="null"
+                                                    //判断新闻类型开始
+                                                    try{
+                                                        var isvideo=false;
+                                                        //c3desc=main.child(i).child(3).desc();//.exists();
+                                                        c2c=main.child(i).child(1).bounds().bottom-main.child(i).child(1).bounds().top;
+                                                        if(c2c>60 && c2c<63){
+                                                        itemstate="video"
+                                                        }else{itemstate="news"}
+                    
+                                                    }catch(e){
+                                                        itemstate="news"
+                                                    }
+                                                //判断新闻类型结束
 
-                                    if("news"==itemstate){
-                                        eletitle=main.child(i).child(0);
-                                         log("点击新闻："+eletitle.desc());
-                                        //判断是否打开成功，如果成功 启动阅读线程 如果失败 继续滑动
-                                        thiscommon.clickxy_for_ele(main.child(i));    
-                                        Gcheckstate=true;
-                                        //进入判断循环
-                                        sleep(2000);
-                                       var elestr=className(Gclass_v7);
-                                       var result=elestr.exists();
+                                                    if("news"==itemstate){
+                                                        //找到新闻了，就初始化线程计数器
+                                                        thisthread_count=0;
+                                                        eletitle=main.child(i).child(0);
+                                                    //     log("点击新闻："+eletitle.desc());
+                                                        //判断是否打开成功，如果成功 启动阅读线程 如果失败 继续滑动
+                                                        thiscommon.clickxy_for_ele(main.child(i));    
+                                                        Gcheckstate=true;
+                                                        //进入判断循环
+                                                        sleep(2000);
+                                                        var flag=block_pagecheck();
+                                                        if("2"==flag){
+                                                            //说明打开二级页面成功
+                                                            Gworkthread ="thread_lookat_findnews_stop";  
+                                                        }else if("1"==flag){
+                                                            //说明还在一级页面
+                                                            toast(" findnews click 判断当前还是1级页面")
+                                                            //解锁滑动状态标志位
+                                                            Gcheckstate=false;
+                                                        }else if(""==flag){
+                                                            toast("findnews click 判断不了当前页面")
+                                                            Gcheckstate=false;
+                                                            //顾且返回
+                                                            back();
+                                                        }
 
-                                       if(result && elestr.findOnce().depth()==8){
-                                            Gworkthread="thread_lookat_findnews_stop"
-                                            toast("打开新闻成功");
-                                            //启动阅读线程
-                                            lookat_readnews();
-
-                                            sleep(1000);
-                                            //结束自己
-                                            try{thread_lookat_findnews.interrupt()}catch(e){}
-                                            break;
-                                        }else{
-                                           toast("模拟真人不感兴趣")
-                                           Gcheckstate=false;
-                                           //如果还在精选页面
-                                           var result=className("android.widget.TextView").text("精选").exists();
-                                           if(result){
-
-                                           }else{
-                                                //如果在视频页面
-                                               back();
-                                           }
-                                          
-                                           
-                                           sleep(2000);
-                                           break;
-                                        }
-
-                                    }
-    
-                                }
-                               
-                              
-                                }//for end;
+                                                    }//if end;
+            
+                                        } 
+                                        //如果高度在可视区域内才出发点击动作 判断结束
+                                    
+                                    
+                                        }//for end;
+                            }
+                          
                         }
-                        
-                        }catch(e){toast("e2:"+e)};
-                  
+                         thisthread_count+=1; 
+                         if(thisthread_count>30){
+                            thisthread_count=0;
+                            toast("滑动"+thisthread_count+"次没有找到新闻")
+                            //一级页面线程超次数触发重新启动微信
+                            reload();
+                         }
+                        }catch(e){
+                      //      toast("e2:"+e)
+                         //  Greload=true;
+                    };
+                
                     
                 },3000);
 
@@ -250,7 +344,24 @@ thread_lookat_findnews=threads.start(function(){
 }
 //看一看读新闻
 function lookat_readnews(){
-//alert("阅读");
+    try{
+        //目标页判断
+        var flag= block_pagecheck();
+        if("1"==flag){
+            //如果发现是一级页面，那么杀死线程，更新标志位，让control 决定
+            shutdown_allthread();
+            Gworkthread="thread_lookat_readnews_stop";
+        }else if("2"==flag){
+         //   toast("findnews start 判断这是二级页面，要返回")
+          //  back();
+        }else{
+            toast("readnews start 无法判断当前页面"); 
+            shutdown_allthread();
+            Gworkthread="thread_lookat_readnews_stop";
+            
+        }
+
+    }catch(e){}
 //线程计数器
 
 var thisthread_count=0;
@@ -263,12 +374,32 @@ var thisthread_count=0;
   }
 thread_lookat_readnews=threads.start(function(){
     Gworkthread="thread_lookat_readnews_start";
+    toast("readnews线程启动");
+
     var toastinterval=0;
     var Gcheckstate=false;
     
     setInterval(function(){
+        try{
+        var flag= block_pagecheck();
+        if("1"==flag){
+            //如果发现是一级页面，那么杀死线程，更新标志位，让control 决定
+            shutdown_allthread();
+            Gworkthread="thread_lookat_readnews_stop";
+        }else if("2"==flag){
+         //   toast("findnews start 判断这是二级页面，要返回")
+          //  back();
+        }else{
+            toast("readnews start 无法判断当前页面"); 
+            shutdown_allthread();
+            Gworkthread="thread_lookat_readnews_stop";
+            
+        }
+
+    }catch(e){}
         //超出线程计数器返回
         if(thisthread_count>30){
+            //二级页面线程计数器超次数触发返回
             funback_for_readnews();
            }else{
                 //根据随机种子判断是否要关注公众号
@@ -289,7 +420,7 @@ thread_lookat_readnews=threads.start(function(){
                     var thistop_readstr=className("android.view.View").text("阅读").findOnce().parent().parent().parent().bounds().top;//.bounds().top            
                     if(thistop_readstr<2000){
                         funback_for_readnews();
-
+                        Gworkthread="thread_lookat_readnews_stop";
                     }
                 }
                 //发现在看
@@ -299,6 +430,7 @@ thread_lookat_readnews=threads.start(function(){
                     thislook_top=className("android.view.View").textContains("在看").findOnce().parent().bounds().top;
                   if(thislook_top<2000){
                     funback_for_readnews();
+                    Gworkthread="thread_lookat_readnews_stop";
 
                   }
                 }
@@ -308,6 +440,8 @@ thread_lookat_readnews=threads.start(function(){
                     var thistop_userrpstr=className("android.view.View").text("用户热评").findOnce().bounds().top;
                     if(thistop_userrpstr<2500){
                         funback_for_readnews();
+                        Gworkthread="thread_lookat_readnews_stop";
+
                     }
                 }
                 //返回验证机制结束
@@ -684,7 +818,7 @@ function whchat(){
         langtouch(ele.bounds().centerX(),ele.bounds().centerY(),3);
  
  //exit();
- exit();
+ //exit();
       
     }
     //循环遍历好友
@@ -756,6 +890,65 @@ function whchat(){
     // ra.sendEvent(1, 330, 1);
     ra.sendSync();
     ra.exit();
+ }
+ function reload(){
+           //判断是否需要重载线程
+           
+      
+            try{
+                     toast("重新开始任务"); 
+                    shutdown_allthread();
+                    sleep(2000)              
+                    thiscommon.clean(Gdevicetype);
+                    var thisresult= openwechat();
+                    if(thisresult){
+                        play("global","打开成功")
+                        Gworkthread="";
+                        lookat_router();
+                        sleep(2000);
+                        lookat_findnews();
+                    }else{
+                        play("global","打开失败")
+                    } 
+            }catch(e){}
+         
+    
+      
+        //判断是否需要重载线程结束
+ }
+ function block_pagecheck(){
+     var whilecount=0;
+     var flag="";
+        while(true){
+            if(whilecount>5){
+                //时间太长了
+                return "";
+            }
+            //判断二级页面右上角三点  
+            var elestr=className(Gclass_v7);
+            var result=elestr.exists();
+
+            if(result && elestr.findOnce().depth()==8){
+                 flag="2";// return "2";
+                }else {
+                    //判断是不是一级页面
+                    var result=className("android.widget.TextView").text("精选").exists();
+                    if(result){
+                       flag="1";// return "1";
+                    }else{
+                        //搞不清楚是一级页面还是二级页面了
+                        flag="";//return "?";
+                    }
+        
+                } //else end;
+            if(""!=flag){
+                return flag;
+            }
+            sleep(1000)
+            whilecount+=1;
+        }
+
+
  }
 /*********** 通用函数****************************************/ 
 function shutdown_allthread(){
