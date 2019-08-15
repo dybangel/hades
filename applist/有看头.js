@@ -1,9 +1,6 @@
 function finditem(){ 
-    //1标识出主框架定界符
     var ele=className("android.widget.ListView");
-    //2定位到结构块层级父节点，并取出结构块数量
     var subcount=ele.findOnce(0).childCount();
-    //将主框架实例化
     var main=ele.findOnce(0);
     for(var i=1;i<subcount;i++){
            try{
@@ -27,6 +24,15 @@ function finditem(){
         try{
             var gg3=main.child(i);
             if(gg3.className()=="android.widget.TextView"){
+                     play("global",i);
+                     play("global","广告不点击");
+                     return false;
+            }  
+        }catch(e){
+        }
+        try{
+            var gg4=main.child(i).child(2).child(0);
+            if(gg4.text()=="广告"){
                      play("global",i);
                      play("global","广告不点击");
                      return false;
