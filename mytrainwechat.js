@@ -9,6 +9,21 @@ Gclass_awb="android.widget.Button";
 Gppinterval=600;
 
 ra = new RootAutomator();
+events.setKeyInterceptionEnabled("volume_down", true);
+threads.start(function(){
+events.observeKey();
+events.on("key", function(volume_down, event){
+exit();
+    //处理按键事件
+   toast("退出微信养号!!!");
+   try{  
+   }catch(e){
+       alert("关闭脚本："+e);
+   }
+  
+
+});
+});
 Gdevicetype="le";
 Gvoicepath="./voice/";    //请勿修改
 Gworkthread="";
@@ -61,30 +76,30 @@ function while_control(){
       //  alert(Gworkthread+"asdfasf");
         if(""==Gworkthread){
             sleep(2000);
-            play_little_program();
-            // toast("看一看");
-            //     //路由
-            //         try{
-            //             click("发现")
+         //   play_little_program();
+            toast("看一看");
+                //路由
+                    try{
+                        click("发现")
                     
                         
-            //             sleep(1000);
-            //             click("看一看")
+                        sleep(1000);
+                        click("看一看")
                     
-            //             sleep(1000);
-            //             click("精选")
-            //                                 //elestr='className("'+Gclass_awt+'").text("发现")';//.parent().parent().click();
-            //                         // parentclick(elestr,2);
-            //                             //elestr='className("'+Gclass_awt+'").text("看一看")';
-            //                             //parentclick(elestr,7);
-            //                             //elestr='className("'+Gclass_awt+'").text("精选")';
-            //                         // parentclick(elestr,3);
-            //         }catch(e){}
-            //     //路由结束
-            // lookat_findnews();   
+                        sleep(1000);
+                        click("精选")
+                                            //elestr='className("'+Gclass_awt+'").text("发现")';//.parent().parent().click();
+                                    // parentclick(elestr,2);
+                                        //elestr='className("'+Gclass_awt+'").text("看一看")';
+                                        //parentclick(elestr,7);
+                                        //elestr='className("'+Gclass_awt+'").text("精选")';
+                                    // parentclick(elestr,3);
+                    }catch(e){}
+                //路由结束
+            lookat_findnews();   
         }
         setInterval(function(){
-            if(while_control_thread_count>40){
+            if(while_control_thread_count>600000){
                 shutdown_allthread();
                 lastflag+=1;//标志位+1
                 while_control_thread_count=0;
@@ -107,6 +122,27 @@ function while_control(){
             }
             toastcount+=1;
             while_control_thread_count+=1;
+
+            //关闭弹窗
+            try{
+                var thiswindow=className("android.widget.Button").text("知道了").exists();
+                if(thiswindow){
+                    thiscommon.clickxy_for_ele(className("android.widget.Button").text("知道了").findOnce());
+                }
+                var thiswindow=className("android.widget.Button").desc("知道了").exists();
+                if(thiswindow){
+                    thiscommon.clickxy_for_ele(className("android.widget.Button").desc("知道了").findOnce());
+                }
+                var thiswindow=className("android.widget.Button").text("我知道了").exists();
+                if(thiswindow){
+                    thiscommon.clickxy_for_ele(className("android.widget.Button").text("知道了").findOnce());
+                }
+                var thiswindow=className("android.widget.Button").desc("我知道了").exists();
+                if(thiswindow){
+                    thiscommon.clickxy_for_ele(className("android.widget.Button").desc("知道了").findOnce());
+                }
+            }catch(e){}
+          
         },3000);
 
     });

@@ -103,8 +103,8 @@ ui.layout(
                                     {/* <radio id="allrun" text='全刷' color="{{textColor}}"></radio> */}
                                     <radio  id="autoread" text='自动阅读' color="{{textColor}}" checked="true"></radio>
                                     <radio id="bindwechat" text='微信绑定' color="{{textColor}}"></radio>
-                                    {/* <radio id="trainwechat" text='微信养号' color="{{textColor}}"></radio>    
-                                     <radio id="analy" text='统计' color="{{textColor}}"></radio>  */}
+                                    <radio id="trainwechat" text='微信养号' color="{{textColor}}"></radio>    
+                                     {/* <radio id="analy" text='统计' color="{{textColor}}"></radio>  */}
                                 </radiogroup>
                             </linear>
                         </linear>
@@ -884,6 +884,8 @@ if(Greadflag){//如果开关量打开，才根据本地app标志位确定下一�
 setgps_status();
 //如果是微信养号需要的操作
 if(Grunstate=="trainwechat"){
+
+    engines.execScriptFile('mytrainwechat.js');
    //lanuchApp("微信");
 
            // whchat();
@@ -3179,6 +3181,7 @@ function checklocalapp(){
     var voiceplaynum=0;
     var thisjsonstr="";
     var diffcount=0;
+    var alertstr="";
     for(var i=0;i<Gapps.length;i++){
     
         appname=Gapps[i]["appname"];
@@ -3209,6 +3212,7 @@ function checklocalapp(){
                         if(result==null){
                             diffcount+=1;
                             thisjsonstr+='{"appnum":"'+appnum+'","appname":"'+appname+'","state":"您未安装该APP，请安装"},';
+                            alertstr+=appname+"-未安装\n";
                         }else{
 
                             var localappver=thiscommon.getPackageVersion(pname);
@@ -3216,7 +3220,7 @@ function checklocalapp(){
                             if(localappver!=appver){
                                 diffcount+=1;
                           thisjsonstr+='{"appnum":"'+appnum+'","appname":"'+appname+'","state":"您的版本'+localappver+' 与云端版本'+appver+'不匹配"},';
-                
+                          alertstr+=appname+"-版本不匹配\n";                
                             }
     
     
@@ -3245,17 +3249,20 @@ function checklocalapp(){
     }
 
     if(""!=thisjsonstr){
-        thisjsonstr='['+thisjsonstr+']';
-       // log(thisjsonstr);
-       if(diffcount>10){
-        urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showapplist';
+    //     thisjsonstr='['+thisjsonstr+']';
+    //    // log(thisjsonstr);
+    //    if(diffcount>10){
+    //     urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showapplist';
 
-       }else{
-        urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showdiffapplist&jsonstr='+thisjsonstr;
-       }
-      //  console.show();
-    //log(thisjsonstr);
-         var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
+    //    }else{
+    //     urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showdiffapplist&jsonstr='+thisjsonstr;
+    //    }
+      
+    //      var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
+    alert(alertstr+"\n请允许打开浏览器，根据本提示下载对应app");
+         urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showapplist';
+          var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
+
     }else{
         alert("您手机上的APP与云端一致，请定期检测");
     }
