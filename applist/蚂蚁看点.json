@@ -3,7 +3,7 @@
         "appname":"蚂蚁看点",
         "mulityback":"25||152",
         "appver":"5.4.6",
-        "interval":"30",
+        "interval":"60",
         "speed":"normal",
         "packagename":"com.ldzs.zhangxin",
         "activityname":"com.weishang.wxrd.activity.MainActivity",

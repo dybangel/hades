@@ -3,7 +3,7 @@
       "appname":"阅看阅赚",
       "mulityback":"41||168",
       "appver":"2.2.1",
-      "interval":"30",
+      "interval":"45",
 	  "speed":"normal",
       "packagename":"com.zhuantoutiao",
       "activityname":"com.top.quanmin.app.ui.activity.SplashNewTopActivity",

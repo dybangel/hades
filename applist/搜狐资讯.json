@@ -3,7 +3,7 @@
         "appname":"搜狐资讯", 
         "mulityback":"67||161",
         "appver":"3.7.37",
-        "interval":"30",
+        "interval":"40",
         "speed":"normal",
         "packagename":"com.sohu.infonews",
         "activityname":"com.sohu.quicknews.homeModel.activity.HomeActivity",

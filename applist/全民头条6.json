@@ -3,7 +3,7 @@
       "appname":"全民头条6",
       "mulityback":"55||165",
 	  "appver":"2.5.0",
-      "interval":"30",
+      "interval":"40",
       "speed":"normal",
       "packagename":"com.huanxi.toutiao",
       "activityname":"com.huanxi.toutiao.ui.activity.other.MainActivity",

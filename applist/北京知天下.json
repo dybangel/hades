@@ -3,7 +3,7 @@
         "appname":"北京知天下",
         "mulityback":"true||1000",
         "appver":"1.8.5",
-        "interval":"30",
+        "interval":"50",
 		"speed":"normal",
          "packagename":"com.knowworld.news",
         "activityname":"cent.news.com.newscent.splash.SplashActivity",

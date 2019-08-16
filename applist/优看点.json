@@ -3,7 +3,7 @@
       "appname":"优看点",
       "mulityback":"20||165",	  
 	  "appver":"3.3.1",
-      "interval":"30",
+      "interval":"40",
       "speed":"normal+",
       "packagename":"com.memory.online",
       "activityname":"com.memory.online.activity.WelcomeActivity",

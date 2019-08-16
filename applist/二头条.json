@@ -3,7 +3,7 @@
         "appname":"二头条",
         "mulityback":"101||163",
 	    "appver":"1.2.3",
-        "interval":"30",
+        "interval":"60",
         "speed":"normal",
         "packagename":"com.emar.mcn",
         "activityname":"com.emar.mcn.activity.MainActivity",

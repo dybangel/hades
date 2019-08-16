@@ -3,7 +3,7 @@
         "appname":"惠头条",
         "mulityback":"true||2000",
         "appver":"4.1.1.0",		
-        "interval":"30",
+        "interval":"45",
 		"speed":"normal",
          "packagename":"com.cashtoutiao",
         "activityname":"com.cashtoutiao.account.ui.main.MainTabActivity",

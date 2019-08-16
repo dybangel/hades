@@ -3,7 +3,7 @@
         "appname":"快看点", 
 		"mulityback":"32||158",
         "appver":"1.4.1.51",
-        "interval":"30",
+        "interval":"60",
         "speed":"normal",
         "packagename":"com.yuncheapp.android.pearl",
         "activityname":"com.kuaishou.athena.MainActivity",

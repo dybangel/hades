@@ -3,7 +3,7 @@
         "appname":"韭菜资讯",
         "mulityback":"73||180",
         "appver":"2.0.7",
-        "interval":"30",
+        "interval":"40",
 		"speed":"normal",
         "packagename":"com.zujikandian.android",
         "activityname":"com.zujikandian.android.home.HomeActivity",
