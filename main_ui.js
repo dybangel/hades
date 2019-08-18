@@ -1985,7 +1985,7 @@ function while_readnews(autoread_obj){
                                         //当然也要更新backtrigger总计数器，总集数器超过50次则返回一级页面
                                         backtrigger_maincount+=1;
                                         if(backtrigger_maincount>50){
-                                            toast("滑动次数太多了，一直未获取到收益，返回一级页面")
+                                            toastAt("滑动次数太多了，一直未获取到收益，返回一级页面")
                                         
                                                 funmulityback();
                                         
@@ -2010,7 +2010,7 @@ function while_readnews(autoread_obj){
                         //执行返回机制验证结束
 
                        }catch(e){
-                                toast("readnews 检测到 "+appname+" 出现异常\n 如果异常持续超过1分钟将重新启动APP")
+                                toastAt("readnews 检测到 "+appname+" 出现异常\n 如果异常持续超过1分钟将重新启动APP")
                      }
               
 
