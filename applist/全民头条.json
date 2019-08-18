@@ -10,7 +10,9 @@
       "open":{
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
-        "text":"任务"
+        "text":"任务",
+        "depth":"",
+        "indexinparent":"",
         },
 	  "signin":{
             "sg1":{

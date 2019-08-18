@@ -10,7 +10,9 @@
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"发照片"
+          "text":"发照片",
+          "depth":"",
+          "indexinparent":"",
           },
 		  "signin":{
             "sg1":{

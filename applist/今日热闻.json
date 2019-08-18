@@ -10,7 +10,9 @@
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"今日热闻"
+          "text":"今日热闻",
+          "depth":"",
+          "indexinparent":"",
           },
         "abnormal":{
            "ab1":{
