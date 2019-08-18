@@ -988,7 +988,7 @@ if(Grunstate=="trainwechat"){
            if("undefined"==typeof(signin_obj)){
                toast(appname+".json signin数据项缺失");
            }
-           var autoread_obj=applist[i]["autoread"];
+            autoread_obj=applist[i]["autoread"];
             abnormal_obj=applist[i]["abnormal"];
             try{
                activitys_obj=applist[i]["activitys"];
@@ -1031,12 +1031,14 @@ if(Grunstate=="trainwechat"){
            try{    thread_signin.interrupt();}catch(e){};
            try{    thread_abnormal_overtime.interrupt();}catch(e){};
            try{    thread_closewindow.interrupt();}catch(e){};
+           //while_pagecheck();
 
     
            sleep(2000);
            //根据设备类型优化内存
            thiscommon.clean(Gdevicetype);
      
+           //while_pagecheck();
        //开启异常处理弹窗线程
        while_abnormal(abnormal_obj);
        //demon_abnormal(abnormal_obj);
@@ -1529,6 +1531,7 @@ function while_findnews(autoread_obj){
   //线程执行前初始化一下没有找到新闻的次数为0；
    //线程计数器
   var nofindnews_count=0;
+
   //正在找新闻状态
    findnews_state=false;
    toast("找新闻线程启动..."); play("global","正在检索");
@@ -1588,6 +1591,7 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
          //两次上滑之间的间隔
          var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
            setInterval(function(){ 
+         //   pagecheck();
                 toast("findnews 滑动间隔"+x+"毫秒");
                        try{
                                         //滑动
@@ -1600,19 +1604,21 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                         //swipecount 为向上滑动多少次后打开新闻
                                         var swipecount=Math.round(Math.random()*(maxswipecount-minswipecount))+minswipecount;
                                         //当upcount大于了x次数后，开始打开当前发现的新闻条目
-                                        if(upcount>=swipecount){        
+                                        if(upcount>=swipecount && findnews_state==false){        
                                             try{
                                                 //调用finditem方式获取element进行点击
                                                 var ele=finditem();
                                             }catch(e){
                                                 ele=false;
-                                                toast("finditem e :"+e);
+                                                toast("finditem e \n:"+e+"findnews_state:"+findnews_state);
                                             }
                                         
                                             if(ele){
                                                         //如果存在，点击新闻
                                                         play("global","打开新闻");
-                                                    try{thiscommon.clickxy_for_ele(ele);}catch(e){toast("findnews e4 "+e)} 
+                                                    try{thiscommon.clickxy_for_ele(ele);
+                                                        findnews_state=true//标识现在正在打开一个新闻，成功与否尚未确定，所该告诉finditem 不要着急滑动
+                                                    }catch(e){toast("findnews e4 "+e)} 
                                                             sleep(2000);
                                                             var result=false;
                                                             //最后判断二级页面特定控件是否存在，来确定是否打开成功
@@ -1621,11 +1627,13 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                                             if(result){
                                                                 play("global","打开成功");
                                                                 Gworkthread="findnews_stop";
-                                                                sleep(1000);
+                                                                findnews_state=true;
+                                                               // sleep(1000);
                                                                 try{thread_findnews.interrupt();}catch(e){}
                                                             }else{
                                                                 play("global","打开失败");
                                                                 funmulityback();
+                                                                findnews_state=false;//告诉findimte 可以动了
                                                             }
                                             
                                             }else{
@@ -1669,6 +1677,8 @@ function while_readnews(autoread_obj){
    var firstcapture=true;
    //线程计数器
    var thisthread_count=0;
+   //目标页面检测
+   //pagecheck();
   // var readnews_count=0;
    var backtrigger_maincount=0;
    var backtrigger_subcount=0;
@@ -1751,6 +1761,7 @@ function while_readnews(autoread_obj){
             ///判断返回机制结束
 
                setInterval(function(){
+     //           pagecheck();
                     //线程计数器机制开始
                     thisthread_count+=1; //线程计数器增加一
                     if(thisthread_count>90){
@@ -1890,10 +1901,16 @@ function while_readnews(autoread_obj){
                                         toast("返回首页...");
                                         
                                             funmulityback();
-                                        
-                                        Gworkthread="readnews_stop";
-                                        sleep(1000);
-                                        thread_readnews.interrupt();
+                                            var openstate=openAPP(appname,packagename,activityname,open_obj);
+                                            if(openstate){
+                                                //while_findnews(autoread_obj);  
+                                                Gworkthread="readnews_stop";
+                                                sleep(1000);
+                                                thread_readnews.interrupt();
+                                            }else{
+                                                funmulityback();
+                                            }
+                                       
                                     }
                                     //采用坐标取色法判断是否得到收益并赶回一级页面
                                     // toast("间隔："+x+"毫秒");
@@ -1926,10 +1943,16 @@ function while_readnews(autoread_obj){
                                         toast("非收益页面，返回首页...");
                                     
                                         funmulityback();
-                                    
-                                        Gworkthread="readnews_stop";
-                                        sleep(1000);
-                                        thread_readnews.interrupt();
+                                        var openstate=openAPP(appname,packagename,activityname,open_obj);
+                                        if(openstate){
+                                            //while_findnews(autoread_obj);  
+                                            Gworkthread="readnews_stop";
+                                            sleep(1000);
+                                            thread_readnews.interrupt();
+                                        }else{
+                                            funmulityback();
+                                        }
+                                       
                                     // alert("4");
                                     }
                                     }else{
@@ -1940,9 +1963,15 @@ function while_readnews(autoread_obj){
                                         
                                                 funmulityback();
                                         
-                                            Gworkthread="readnews_stop";
-                                            sleep(1000);
-                                            thread_readnews.interrupt();
+                                                var openstate=openAPP(appname,packagename,activityname,open_obj);
+                                                if(openstate){
+                                                    //while_findnews(autoread_obj);  
+                                                    Gworkthread="readnews_stop";
+                                                    sleep(1000);
+                                                    thread_readnews.interrupt();
+                                                }else{
+                                                    funmulityback();
+                                                }
                                         }
                                         //更新backtrigger子计数器+1，如果3次计数后，圆圈还没有闭合，有可能没有阅读完，也有可能是二级页面已经到底，需要触发一次下滑
                                         backtrigger_subcount+=1;
@@ -1960,9 +1989,15 @@ function while_readnews(autoread_obj){
                                         
                                                 funmulityback();
                                         
-                                            Gworkthread="readnews_stop";
-                                            sleep(1000);
-                                            thread_readnews.interrupt();
+                                                var openstate=openAPP(appname,packagename,activityname,open_obj);
+                                                if(openstate){
+                                                    //while_findnews(autoread_obj);  
+                                                    Gworkthread="readnews_stop";
+                                                    sleep(1000);
+                                                    thread_readnews.interrupt();
+                                                }else{
+                                                    funmulityback();
+                                                }
                                         }
                                     }
 
@@ -2047,6 +2082,7 @@ function openAPP(appname,packagename,activityname,open_obj){
        }
       var thisnum=0;
       while(1){
+          try{
                if(Number(thisnum) >6){ 
                    play("global","打开失败");
                    Gworkthread="openapp_fail"; 
@@ -2079,6 +2115,11 @@ function openAPP(appname,packagename,activityname,open_obj){
 
           sleep(5000);//10000
           thisnum+=1;
+
+          }catch(e){
+
+          }
+
       }
        return openstate;
 
@@ -2235,13 +2276,18 @@ function restartapp(){
     try{    thread_findnews.interrupt();}catch(e){};
     try{    thread_readnews.interrupt();}catch(e){};
     try{    thread_signin.interrupt();}catch(e){};
-    thiscommon.clean(Gdevicetype);
-    //这里延迟一秒防止clean延迟导致刚打开的app被clean
-    sleep(1000);
-    var openstate=openAPP(appname,packagename,activityname,open_obj);
-    if(openstate){
-        while_findnews(autoread_obj);  
+    try{
+            thiscommon.clean(Gdevicetype);
+                //这里延迟一秒防止clean延迟导致刚打开的app被clean
+                sleep(1000);
+                var openstate=openAPP(appname,packagename,activityname,open_obj);
+                if(openstate){
+                    while_findnews(autoread_obj);  
+                }
+    }catch(e){
+        
     }
+   
 }
 //全局调度线程
 function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj){
@@ -2293,10 +2339,12 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
 
              }else if("readnews_stop"==Gworkthread){
                     try{thread_findnews.interrupt();}catch(e){};
+                   try{thread_readnews.interrupt();}catch(e){};
                     while_findnews(autoread_obj);
              }           
              //4如果找到新闻后要做的工作    
              else if("findnews_stop"==Gworkthread){
+                try{thread_findnews.interrupt();}catch(e){};
                try{thread_readnews.interrupt();}catch(e){};
                while_readnews(autoread_obj);
              }
@@ -3293,7 +3341,130 @@ function getScriptFromServer() { //从服务器获取脚本
      //alert("1")
      return files.writeBytes("/sdcard/脚本/haiqu.apk", download_res.body.bytes()),!0;
   }
-function pagecheck(){
-    //判断workthread 
-    //如果是
+
+//目标页面检测
+function while_pagecheck(){
+    return true;
+try{thread_pachagecheck.interrupt();}catch(e){}
+    var nowpage="";
+    var while_count=0;
+    //while(true){
+//alert("目标页面识别准备启动")
+    thread_pachagecheck=threads.start(function(){
+
+        setInterval(function(){
+                    //目标页面判断
+    try{
+
+                            var thisfeaturemode=open_obj["featuremode"];
+                            if("classname_text"==thisfeaturemode){
+                            ///  alert("1")
+                                var thisclassname=open_obj["classname"];
+                                var thistext=open_obj["text"];
+                                var thisdepth=open_obj["depth"];
+                                var thisindexinparent=open_obj["indexinparent"];
+                            //  alert("classname is:"+thisclassname);
+                            //   alert("thistext is:"+thistext);
+                            //  alert("thisdepth is:"+thisdepth);
+                            //   alert("thisinparent is:"+thisindexinparent);
+                                var result=className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                        //     alert("result is:"+result)
+                                if(result){  //说明当前是在一级页     
+                                        nowpage="1";
+                                    }
+                                }
+                                if("classname_desc"==thisfeaturemode){
+                                    var thisclassname=open_obj["classname"];
+                                    var thisdesc=open_obj["text"];
+                                    var thisdepth=open_obj["depth"];
+                                    var thisindexinparent=open_obj["indexinparent"];
+                                    var result=className(thisclassname).desc(thisdesc).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                                    if(result){  //说明当前是在一级页     
+                                            nowpage="1";
+                                        }
+                                    }
+                            if("classname"==thisfeaturemode){
+                                return false;    
+                                // var thisclassname=open_obj["classname"];
+                                    // var thisdepth=open_obj["depth"];
+                                    // var thisindexinparent=open_obj["indexinparent"];
+                                    // var result=className(thisclassname).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                                    // if(result){  //说明当前是在一级页     
+                                    //            nowpage="1";
+                                    //     }
+                                }
+                            
+                        
+                            var  thisfeaturemode=autoread_obj["ar1"]["featuremode"];
+                            var result=block_mode("while_findnews",thisfeaturemode,autoread_obj,"");
+                                if(result){
+                                    nowpage="2";
+                                }   
+                            }catch(e){"pagecheck e1:"+e}
+                        //目标页面判断 结束
+                        
+                            //执行目标识别后的操作
+                            try{
+                                if("findnews_start"==Gworkthread){
+                                    //如果是 findnews_start则验证是不是一级页面
+                                    if("1"==nowpage){
+                                        //如果是一级页面则无妨
+                                       // break;
+                                      // alert("一级页面正常")
+                                      while_count=0;
+                                    }else if("2"==nowpage && while_count>10){
+                                        //如果是二级执行返回
+                                        toast("findnews_start检测：切换到读新闻线程")     
+                                        try{ thread_findnews.interrupt()}catch(e){}
+                                        while_readnews(autoread_obj);
+                                      while_count=0;
+
+                                       // break;  
+                                    }else if(""==nowpage  && while_count>10){
+                                        toast("findnews_start检测：未识别页面特征码") 
+                                        workthread_errorcount=999;
+                                      while_count=0;
+                                       
+                                        // break;
+                                    }
+                                
+                                
+                                    }else if("readnews_start"==Gworkthread){
+                                    //如果是readnews_start 则验证是不是二级页面
+                                        if("1"==nowpage  && while_count>10){
+                                            alert("readnews_start检测：切换到找新闻线程")  
+                                        try{ thread_readnews.interrupt()}catch(e){}
+                                        while_findnews(autoread_obj);
+                                      while_count=0;
+                                       
+                                        // break;
+                                        }else if("2"==nowpage){
+                                        //如果十二级页面 不处理
+                                       // alert("二级页面正常");
+                                         while_count=0;
+                                       
+                                       // break;
+                                        }else if(""==nowpage  && while_count>10){
+                                            toast("readnews_start检测：未识别页面特征码")  
+                                            try{ thread_readnews.interrupt()}catch(e){}
+                                        while_findnews(autoread_obj);
+                                        while_count=0;
+
+                                        // break;
+                                        }
+                                    }
+                        
+    
+                            }catch(e){toast("pagecheck e2"+e)}
+                            //执行目标识别后的操作 结束
+        },1000)
+    });
+
+
+
+   //     while_count+=1;
+   //     sleep(1000);
+  //  }end while
+    
+
 }
