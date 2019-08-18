@@ -10,6 +10,7 @@
       "open":{
         "featuremode":"classname",
         "classname":"android.view.View",
+          "desc":"首页 ",
         },
 	  "signin":{
           "sg1":{
@@ -51,9 +52,9 @@
             },
        "ar2":{
 	            "upcount":"25",
-                "deploymode":"",
+                "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
-				"deploydesc":"展开全文",
+				"deploydesc":" 展开全文",
 			   
       }, 
 	  },
