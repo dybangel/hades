@@ -1610,7 +1610,7 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                                 var ele=finditem();
                                             }catch(e){
                                                 ele=false;
-                                                toast("finditem e \n:"+e+"findnews_state:"+findnews_state);
+                                                toastAt("finditem e \n:"+e+"findnews_state:"+findnews_state);
                                             }
                                         
                                             if(ele){
