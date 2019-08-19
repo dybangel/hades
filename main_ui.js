@@ -2355,7 +2355,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
             if(showpacount>5){
 //            toastAt("当前app:"+appname+"\n包名："+nowcurrentPackage+"\n"+"当前窗体名："+nowcurrentActivity);
                     try{
-                        toastAt("当前app:"+appname+"\nf线程:"+thread_findnews.isAlive()+" r线程:"+thread_readnews.isAlive()+"\n"+"当前窗体名："+nowcurrentActivity);
+                        toastAt("当前app:"+appname+"\nf线程:"+thread_findnews.isAlive()+" r线程:"+thread_readnews.isAlive()+"\nGworkthread is:"+Gworkthread+"\n"+"workthread_errorcount is"+workthread_errorcount+"\n当前窗体名："+nowcurrentActivity);
                     }catch(e){} 
             
             showpacount=0;
