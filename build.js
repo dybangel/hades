@@ -6,6 +6,7 @@ toast("开始自动打包");
 //className("android.widget.TextView").text("打包成功")
 
 console.show(); 
+console.setPosition(400, 500);
 
 var script_download_path = "/sdcard/脚本/";
 files.createWithDirs(script_download_path);
