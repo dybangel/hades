@@ -89,6 +89,7 @@ ui.layout(
                                     <radio id="xiaomi4s" text='小米4s' color="{{textColor}}"></radio>
                                     <radio id="lnnl" text='LnnL' color="{{textColor}}"></radio>  
                                     <radio id="le" text='乐视' color="{{textColor}}"></radio>  
+                                    <radio id="vmos" text='vmos' color="{{textColor}}"></radio> 
 
                                 </radiogroup>
                             </linear>
@@ -289,6 +290,8 @@ ui.start.on("click", function(){
         Gdevicetype="lnnl"
     }else if(ui.le.checked==true){
         Gdevicetype="le"
+    }else if(ui.vmos.checked==true){
+        Gdevicetype="vmos"
     }
    // sleep(3000);
    // exit();
@@ -527,7 +530,8 @@ Glicence=false;
 Gcode_state="ui";//noui ui;
 //线程错误数量计数器
 workthread_errorcount=0;
-
+//所有开关量app对应的包名json
+Gpackagename_lists="";
 //脚本运行速度
 Grunspeed="slow";//fast normal slow;
 //当前工作模式，如果有UI界面，则该变量需要在UI的启动按钮中声明
@@ -593,6 +597,10 @@ if("Redmi Note 2"==devicestr){
 }if(devicestr=="Le X625" ||devicestr=="Le X620"||devicestr=="Le X820"){
     Gdevicetype="le"; //字典 xiaomi4 xiaomi4s lnnl xiaominote2
     try{if(Gcode_state=="ui"){ui.le.checked=true}}catch(e){};
+}if(devicestr=="vmos"){
+    Gdevicetype="vmos";
+    try{if(Gcode_state=="ui"){ui.vmos.checked=true}}catch(e){};
+
 }
 //显示序列号
 try{thread_upfsn.interrupt();
@@ -657,7 +665,7 @@ Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
 //Gapplistpath_remote="http://192.168.3.180/hades/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
-Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps"; //公有云
+Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps&devicetype="+Gdevicetype; //公有云
 //Gappspath_remote="http://192.168.3.180/hades/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
@@ -1036,7 +1044,7 @@ if(Grunstate=="trainwechat"){
     
            sleep(2000);
            //根据设备类型优化内存
-           thiscommon.clean(Gdevicetype);
+           thiscommon.clean(Gdevicetype,Gpackagename_lists);
      
            //while_pagecheck();
        //开启异常处理弹窗线程
@@ -1182,7 +1190,25 @@ function loadGapps(){
                             }catch(e){
                                 toast("加载云端开关量延迟");
                             }
-                            
+                            //获取所有开关量对应的包名
+                            try{
+                                packageliststr="";
+                               for(var i=0;i<Gapps.length;i++){
+                                  var thisappname=Gapps[i]["appname"]; 
+                                  var r=http.get(Gapplistpath_remote+"/"+thisappname+".json")
+                                if(r.statusCode=="200"){  
+                                   var jsonstr=r.body.string();
+                                   var thistempjson=eval('(' + jsonstr + ')');
+                                   var thispackagename=thistempjson["packagename"];
+                                   packageliststr+='{"packagename":"'+thispackagename+'"},';
+                                }
+
+                               }//for end;
+                              // alert("["+packageliststr+"]");
+                              Gpackagename_lists=eval("(["+packageliststr+"])")
+                             // alert(Gpackagename_lists[1]["packagename"]);
+                              // exit(); 
+                            }catch(e){toast("加载开关量包名错误")}
                             // alert(Gapps);
                         //   ref_ui_list();
                             
@@ -1369,6 +1395,8 @@ function voice_devicetype(){
 
    }else if("le"==Gdevicetype){
     play("global","乐视");
+}else if("vmos"==Gdevicetype){
+    play("global","虚拟机");
 }
    
 
@@ -2277,7 +2305,7 @@ function restartapp(){
     try{    thread_readnews.interrupt();}catch(e){};
     try{    thread_signin.interrupt();}catch(e){};
     try{
-            thiscommon.clean(Gdevicetype);
+            thiscommon.clean(Gdevicetype,Gpackagename_lists);
                 //这里延迟一秒防止clean延迟导致刚打开的app被clean
                 sleep(1000);
                 var openstate=openAPP(appname,packagename,activityname,open_obj);
@@ -2805,7 +2833,7 @@ sleep(1000);
 }
 //主模块自主判断滑动机制
 function main_swipe(){
-    if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype){
+    if("lnnl"==Gdevicetype||"xiaomi4"==Gdevicetype||"le"==Gdevicetype||"vmos"==Gdevicetype){
         try{   thisswipe.swiperealup_custom_lnnl(Gppinterval);}catch(e){toast("e2:"+e)};
     }else{
         thisswipe.swiperealup_custom();

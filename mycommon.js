@@ -77,39 +77,36 @@ module.exports = {
      },
     //小米优化内存
     clean:function (devicetype){
-        
-      home();
-     // exit();
-      sleep(1500);
-      recents();//最近任务
-     sleep(1500);
-    if("xiaomi4"==devicetype){
-       // var ele=className('android.widget.ImageView').findOnce();
-      // var ele=id("clearAnimView").findOne(1000); 
-      // ele.click();
-      touchreal(519,1733);
-    }else if("xiaomi4s"==devicetype||"xiaominote2"==devicetype){
-        //touchreal(561,1724);
-        id('com.android.systemui:id/clearButton').click();
-      //  touchreal(943,950);
-//        ra.tap(993.950,1);
-  //      ra.tap(993.950,1);
+        devicetype=arguments[0];            
 
-    }else if("lnnl"==devicetype){
-        // ra.tap(535, 1687, 1);
-        // ra.tap(535, 1687, 1);
-        // ra.tap(535, 1687, 1);
-        id('com.android.systemui:id/clear_recents').click();
-    }else if("le"==devicetype){
-       // thiscommon.touchreal(440,1820);
-       thiscommon.clickxy_for_ele(id("com.android.systemui:id/leui_recent_clear_all_txtview").findOnce());
-       sleep(500);
-       home();
-      // sleep(5000)
-
-    }
-    
-
+        if(2==arguments.length){
+            if("vmos"==devicetype){
+                toast("执行虚拟机优化进程，切换APP");
+               packagelist=arguments[1];
+               for(var i=0;i<packagelist.length;i++){
+                     try{shell("am force-stop "+packagelist[i]["packagename"], true);}catch(e){};
+               }
+               return;
+            }
+        }else if(1==arguments.length){
+                        home();
+                        sleep(1500);
+                        recents();//最近任务
+                    sleep(1500);
+                    if("xiaomi4"==devicetype){
+                        touchreal(519,1733);
+                    }else if("xiaomi4s"==devicetype||"xiaominote2"==devicetype){
+                        id('com.android.systemui:id/clearButton').click();
+                
+                    }else if("lnnl"==devicetype){
+                        id('com.android.systemui:id/clear_recents').click();
+                    }else if("le"==devicetype){
+                        thiscommon.clickxy_for_ele(id("com.android.systemui:id/leui_recent_clear_all_txtview").findOnce());
+                        sleep(500);
+                        home();
+                
+                    }
+        }
     },
     onebyoneinput:function(text){
         //var str='你好  这是一段测试代码'
