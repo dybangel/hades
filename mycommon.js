@@ -76,7 +76,7 @@ module.exports = {
         ra.tap(x, y, 1);
      },
     //小米优化内存
-    clean:function (devicetype){
+    clean:function (){
         devicetype=arguments[0];            
 
         if(2==arguments.length){
@@ -87,8 +87,7 @@ module.exports = {
                      try{shell("am force-stop "+packagelist[i]["packagename"], true);}catch(e){};
                }
                return;
-            }
-        }else if(1==arguments.length){
+            }else{
                         home();
                         sleep(1500);
                         recents();//最近任务
@@ -106,6 +105,7 @@ module.exports = {
                         home();
                 
                     }
+            }
         }
     },
     onebyoneinput:function(text){
