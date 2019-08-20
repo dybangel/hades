@@ -2454,22 +2454,31 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                     var result=thread_findnews.isAlive();
                     if(result==false){
                         workthread_errorcount+=1;
-                    }
+                    }else{workthread_errorcount=0}
                 }catch(e){};
              }else if("readnews_start"==Gworkthread){
                 try{
                     var result=thread_readnews.isAlive();
                     if(result==false){
                         workthread_errorcount+=1;
-                    }
+                    }else{workthread_errorcount=0}
                 }catch(e){};
              }else if("signin_start"==Gworkthread){
                 try{
                     var result=thread_signin.isAlive();
                     if(result==false){
                         workthread_errorcount+=1;
-                    }
+                    }else{workthread_errorcount=0}
                 }catch(e){};
+             }else {
+                var result1=thread_findnews.isAlive();
+                var result2=thread_readnews.isAlive();
+                var result3=thread_signin.isAlive();
+                if(result1==false && result2==false && result3==false){
+                    workthread_errorcount+=1;
+                }
+
+
              }
              if(workthread_errorcount>10){
                 workthread_errorcount=0;
@@ -2513,6 +2522,14 @@ function while_closewindow(devicetype){
                       elestr.click();
                     }
                 }catch(e){}
+                //关闭某某程序已经停止运行的弹窗
+                try{
+                    var elestr=id('android:id/le_bottomsheet_default_cancel');
+                    if(elestr.exists()){
+                      elestr.click();
+                    }
+                }catch(e){}
+                //android:id/le_bottomsheet_default_cancel
             
 
                },1000);
