@@ -1,15 +1,15 @@
 {
         "enable":"false",
         "appname":"兔头条", 
+		"mulityback":"false",
         "appver":"4.3.0",
         "interval":"30",
-		"speed":"normal",
+		"speed":"normal+",
         "packagename":"com.news.tutoutiao",
         "activityname":"com.news.tutoutiao.ui.comment.activity.SplashActivity",
         "open":{
-          "featuremode":"classname_text",
+          "featuremode":"classname",
           "classname":"android.widget.TextView",
-          "text":"任务红包",
           },
 		 "signin":{
             "sg1":{

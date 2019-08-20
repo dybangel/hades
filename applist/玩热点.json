@@ -40,6 +40,14 @@
 		   "featuremode":"id",
 		   "id":"com.app.wantoutiao:id/determine",
            }, 
+		 "ab2":{
+		   "featuremode":"id",
+		   "id":"com.app.wantoutiao:id/content",
+           },
+         "ab3":{
+		   "featuremode":"id",
+		   "id":"com.app.wantoutiao:id/chest_btn2",
+           }, 		   
 		   },
         "activitys":{
             "at1":"com.app.wantoutiao.view.main.MainActivity",
