@@ -2501,6 +2501,8 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
             if(Guser_close_myself_count>6){
                 shell("am force-stop org.autojs.autojs", true);
                 shell("am force-stop com.haiqu.autoread", true);
+                shell("am force-stop com.example.linyuming.broadcasttest", true);
+                //
             }else{
                 Guser_close_myself_count=0;
             }
