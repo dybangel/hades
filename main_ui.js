@@ -2499,9 +2499,10 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                  
             //判断退出
             if(Guser_close_myself_count>6){
+                shell("am force-stop com.example.linyuming.broadcasttest", true);
                 shell("am force-stop org.autojs.autojs", true);
                 shell("am force-stop com.haiqu.autoread", true);
-                shell("am force-stop com.example.linyuming.broadcasttest", true);
+             
                 //
             }else{
                 Guser_close_myself_count=0;
