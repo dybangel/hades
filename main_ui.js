@@ -2471,9 +2471,9 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                     }else{workthread_errorcount=0}
                 }catch(e){};
              }else {
-                var result1=thread_findnews.isAlive();
-                var result2=thread_readnews.isAlive();
-                var result3=thread_signin.isAlive();
+                try{var result1=thread_findnews.isAlive();}catch(e){var result1=false}
+                try{var result2=thread_readnews.isAlive();}catch(e){var result2=false;}
+                try{ var result3=thread_signin.isAlive();}catch(e){var result3=false;}
                 if(result1==false && result2==false && result3==false){
                     workthread_errorcount+=1;
                 }
