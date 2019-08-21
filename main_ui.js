@@ -3454,11 +3454,11 @@ function getScriptFromServer() { //从服务器获取脚本
                                 for(var i=0;i<ids_arr.length;i++){
                                 if(id(ids_arr[i]).exists()){
                                     if(result){thisispagetwo=true}     
-                                    break;
+                                  //  break;
                                 } 
                             }  
                             }catch(e){
-                                break;
+                              //  break;
                             }
                     }//else if end
                 
