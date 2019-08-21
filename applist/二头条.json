@@ -11,8 +11,8 @@
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"视频",
-          "depth":"",
-          "indexinparent":"",
+          "depth":"7",
+          "indexinparent":"1",
           },
         "signin":{
              "sg1":{

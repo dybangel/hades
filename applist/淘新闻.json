@@ -11,8 +11,8 @@
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"任务大厅",
-          "depth":"",
-          "indexinparent":"",
+          "depth":"12",
+          "indexinparent":"0",
           },
          "signin":{
             "sg1":{

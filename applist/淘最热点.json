@@ -11,8 +11,8 @@
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"任务",
-          "depth":"",
-          "indexinparent":"",
+          "depth":"6",
+          "indexinparent":"0",
           },
         "abnormal":{
            "ab1":{
