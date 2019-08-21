@@ -1616,11 +1616,13 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
    thread_findnews=threads.start(function(){
         //把finditem字符串变成函数
         try{eval(Gfinditemstr)}catch(e){toast("finditem eval error")};  
+        page_check();
          //两次上滑之间的间隔
          var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
+         toast("findnews 滑动间隔"+x+"毫秒");
            setInterval(function(){ 
          //   pagecheck();
-                toast("findnews 滑动间隔"+x+"毫秒");
+               
                        try{
                                         //滑动
                                         main_swipe();
@@ -1741,7 +1743,6 @@ function while_readnews(autoread_obj){
               //两次上滑之间的间隔
                var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
               try{toastAt("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");}catch(e){}
-
             //判断返回机制
             var thisbacktrigger="normal"
             try{
@@ -1789,6 +1790,7 @@ function while_readnews(autoread_obj){
             ///判断返回机制结束
 
                setInterval(function(){
+                page_check();
      //           pagecheck();
                     //线程计数器机制开始
                     thisthread_count+=1; //线程计数器增加一
@@ -3365,7 +3367,7 @@ function toastAt0(msg, x, y) {
   function toastAt(msg) {
       var x=500;
       var y=300;
-    ui.run(() => toastAt0(msg, x, y));
+ //   ui.run(() => toastAt0(msg, x, y));
   }
 
   function installapp(path){  
@@ -3390,129 +3392,175 @@ function getScriptFromServer() { //从服务器获取脚本
      return files.writeBytes("/sdcard/脚本/haiqu.apk", download_res.body.bytes()),!0;
   }
 
+  function page_check(){
+      try{
+                    var thisispageone=false;
+                    var thisispagetwo=false;
+                
+                    //一级页面验证方式取值
+                    var pageone_featuremode=open_obj["featuremode"];
+                    if("classname_text"==pageone_featuremode){
+                        var thisclassname=open_obj["classname"];
+                        var thistext=open_obj["text"];
+                        try{
+                            var thisdepth=open_obj["depth"];
+                            var thisindexinparent=open_obj["indexinparent"];
+                            var result=className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                        }catch(e){
+                            toast("open_obj classname_text depth indexinparent error");
+                            var result=false;
+                        }
+                    
+                        if(result){thisispageone=true}
+                    }else if("classname"==pageone_featuremode){
+                        var thisclassname=open_obj["classname"];
+                    try{
+                        var thisdepth=open_obj["depth"];
+                        var thisindexinparent=open_obj["indexinparent"];
+                        var result=className(thisclassname).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                    }catch(e){
+                        toast("open_obj classname depth indexinparent error");
+                        var result=false;
+                    }
+                        
+                        if(result){thisispageone=true}
+                    }
+                    //二级页面验证方式取值
+                    var pagetwo_featuremode=autoread_obj["ar1"]["featuremode"]
+                    obja="ar1";
+                    if("classname_desc"==pagetwo_featuremode){     
+                        var thisclassname=autoread_obj[obja]["classname"];
+                        var thisdesc=autoread_obj[obja]["desc"];
+                        var result=className(thisclassname).desc(thisdesc).exists();
+                        if(result){thisispagetwo=true}
+                    }else if("classname_text"==pagetwo_featuremode){
+                        var thisclassname=pagetwo_featuremode[obja]["classname"];
+                        var thistext=pagetwo_featuremode[obja]["text"];
+                        var result=className(thisclassname).text(thistext).exists();
+                        if(result){thisispagetwo=true}
+                    }else if("classname"==pagetwo_featuremode){
+                        var thisclassname=pagetwo_featuremode[obja]["classname"];
+                        var result=className(thisclassname).exists();
+                        if(result){thisispagetwo=true}
+                    }else if("id"==pagetwo_featuremode){
+                        var thisid=pagetwo_featuremode[obja]["id"];
+                        var result=id(thisid).exists();
+                        if(result){thisispagetwo=true}
+                    }else if("ids"==pagetwo_featuremode){
+                        var thisid=pagetwo_featuremode[obja]["ids"];
+                        ids_arr=thisid.split("||");
+                        var num=0;
+                            try{
+                                for(var i=0;i<ids_arr.length;i++){
+                                if(id(ids_arr[i]).exists()){
+                                    if(result){thisispagetwo=true}     
+                                    break;
+                                } 
+                            }  
+                            }catch(e){
+                                break;
+                            }
+                    }//else if end
+                
+                    //开始判断
+                //     如果当前是一级线程在工作，又是一级页面 pass
+                // 如果当前是一级线程在工作，却是二级页面，则切换成readnews 工作
+                // 如果当前是一级线程在工作，既是一级页面又是二级页面则弹窗
+                
+                // 如果当前是二级线程在工作 又是二级页面 pass
+                // 如果当前是二级线程在工作，却又是一级页面，则切换成findnews工作
+                // 如果当前是二级线程在工作，既是一级又是二级页面则弹窗
+                    if("findnews_start"==Gworkthread){
+                        if(thisispageone==true && thisispagetwo==true){
+                            alert("当前页面识别：既是1级又是2级");
+                        }else if(thisispagetwo==true){
+                            toast("发现一级切换到了二级")
+                        try{thread_findnews.interrupt()}catch(e){}
+                        while_readnews(autoread_obj);
+                        //   toast();
+                        }else if(thisispageone==true){
+                            toast("1级线程与1级页面匹配")
+                        }
+                    }else if("readnews_start"==Gworkthread){
+                        if(thisispageone==true && thisispagetwo==true){
+                            alert("当前页面识别：既是1级又是2级");
+                        }else if(thisispageone==true){
+                            toast("发现2级切换到了1级")
+                            try{thread_readnews.interrupt()}catch(e){}
+                            while_findnews(autoread_obj);
+                        }else if(thisispagetwo==true){
+                            toast("2级线程与2级页面匹配")
+
+                        }
+                    }
+
+      }catch(e){"page_check 异常"}
+   //初始化页面状态
+ 
+  }
+
 //目标页面检测
 function while_pagecheck(){
-    return true;
+    
+  //  return true;
 try{thread_pachagecheck.interrupt();}catch(e){}
     var nowpage="";
     var while_count=0;
     //while(true){
 //alert("目标页面识别准备启动")
-    thread_pachagecheck=threads.start(function(){
-
-        setInterval(function(){
-                    //目标页面判断
-    try{
+    thread_pachagecheck=threads.start(
+        function(){
+            try{}catch(e){};
 
                             var thisfeaturemode=open_obj["featuremode"];
                             if("classname_text"==thisfeaturemode){
-                            ///  alert("1")
+                           
                                 var thisclassname=open_obj["classname"];
                                 var thistext=open_obj["text"];
                                 var thisdepth=open_obj["depth"];
                                 var thisindexinparent=open_obj["indexinparent"];
-                            //  alert("classname is:"+thisclassname);
-                            //   alert("thistext is:"+thistext);
-                            //  alert("thisdepth is:"+thisdepth);
-                            //   alert("thisinparent is:"+thisindexinparent);
-                                var result=className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
-                        //     alert("result is:"+result)
+                              var result=className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                              //  var result=className(thisclassname).text(thistext).exists();
+                                //     alert("result is:"+result)
                                 if(result){  //说明当前是在一级页     
                                         nowpage="1";
                                     }
                                 }
-                                if("classname_desc"==thisfeaturemode){
-                                    var thisclassname=open_obj["classname"];
-                                    var thisdesc=open_obj["text"];
-                                    var thisdepth=open_obj["depth"];
-                                    var thisindexinparent=open_obj["indexinparent"];
-                                    var result=className(thisclassname).desc(thisdesc).depth(thisdepth).indexInParent(thisindexinparent).exists();
-                                    if(result){  //说明当前是在一级页     
-                                            nowpage="1";
-                                        }
-                                    }
-                            if("classname"==thisfeaturemode){
-                                return false;    
-                                // var thisclassname=open_obj["classname"];
-                                    // var thisdepth=open_obj["depth"];
-                                    // var thisindexinparent=open_obj["indexinparent"];
-                                    // var result=className(thisclassname).depth(thisdepth).indexInParent(thisindexinparent).exists();
-                                    // if(result){  //说明当前是在一级页     
-                                    //            nowpage="1";
-                                    //     }
-                                }
-                            
-                        
-                            var  thisfeaturemode=autoread_obj["ar1"]["featuremode"];
-                            var result=block_mode("while_findnews",thisfeaturemode,autoread_obj,"");
-                                if(result){
-                                    nowpage="2";
-                                }   
-                            }catch(e){"pagecheck e1:"+e}
                         //目标页面判断 结束
                         
                             //执行目标识别后的操作
-                            try{
+                            
                                 if("findnews_start"==Gworkthread){
                                     //如果是 findnews_start则验证是不是一级页面
                                     if("1"==nowpage){
-                                        //如果是一级页面则无妨
-                                       // break;
-                                      // alert("一级页面正常")
                                       while_count=0;
-                                    }else if("2"==nowpage && while_count>10){
-                                        //如果是二级执行返回
-                                        toast("findnews_start检测：切换到读新闻线程")     
-                                        try{ thread_findnews.interrupt()}catch(e){}
-                                        while_readnews(autoread_obj);
-                                      while_count=0;
-
-                                       // break;  
-                                    }else if(""==nowpage  && while_count>10){
+                                    }else{
+                                        while_count+=1;
+                                    }
+                                  
+                                 if( while_count>10){
                                         toast("findnews_start检测：未识别页面特征码") 
                                         workthread_errorcount=999;
-                                      while_count=0;
-                                       
-                                        // break;
-                                    }
-                                
-                                
-                                    }else if("readnews_start"==Gworkthread){
-                                    //如果是readnews_start 则验证是不是二级页面
-                                        if("1"==nowpage  && while_count>10){
-                                            alert("readnews_start检测：切换到找新闻线程")  
-                                        try{ thread_readnews.interrupt()}catch(e){}
-                                        while_findnews(autoread_obj);
-                                      while_count=0;
-                                       
-                                        // break;
-                                        }else if("2"==nowpage){
-                                        //如果十二级页面 不处理
-                                       // alert("二级页面正常");
                                          while_count=0;
                                        
-                                       // break;
-                                        }else if(""==nowpage  && while_count>10){
-                                            toast("readnews_start检测：未识别页面特征码")  
-                                            try{ thread_readnews.interrupt()}catch(e){}
-                                        while_findnews(autoread_obj);
-                                        while_count=0;
-
                                         // break;
-                                        }
                                     }
-                        
+                                
+                                
+
+
+        }//function end;
+
+        
+                    //目标页面判断
     
-                            }catch(e){toast("pagecheck e2"+e)}
+                                   
+                            
+    
+                          
                             //执行目标识别后的操作 结束
-        },1000)
-    });
+);
 
-
-
-   //     while_count+=1;
-   //     sleep(1000);
-  //  }end while
     
 
 }
