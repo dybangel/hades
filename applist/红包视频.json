@@ -10,8 +10,8 @@
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"视频",
-          "depth":"",
-          "indexinparent":"",
+          "depth":"9",
+          "indexinparent":"0",
           },
 		"signin":{
             "sg1":{

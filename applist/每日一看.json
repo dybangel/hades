@@ -11,8 +11,8 @@
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
         "text":"任 务",
-        "depth":"",
-        "indexinparent":"",
+        "depth":"10",
+        "indexinparent":"1",
         },
 		 "signin":{
              "sg1":{
