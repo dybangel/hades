@@ -10,7 +10,7 @@
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"资讯",,
+          "text":"资讯",
           "depth":"9",
           "indexinparent":"1",
           },
