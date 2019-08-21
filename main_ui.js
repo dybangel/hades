@@ -2456,21 +2456,21 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                     var result=thread_findnews.isAlive();
                     if(result==false){
                         workthread_errorcount+=1;
-                    }else{workthread_errorcount=0}
+                    }else{if(workthread_errorcount<10){workthread_errorcount=0}}
                 }catch(e){};
              }else if("readnews_start"==Gworkthread){
                 try{
                     var result=thread_readnews.isAlive();
                     if(result==false){
                         workthread_errorcount+=1;
-                    }else{workthread_errorcount=0}
+                    }else{if(workthread_errorcount<10){workthread_errorcount=0}}
                 }catch(e){};
              }else if("signin_start"==Gworkthread){
                 try{
                     var result=thread_signin.isAlive();
                     if(result==false){
                         workthread_errorcount+=1;
-                    }else{workthread_errorcount=0}
+                    }else{if(workthread_errorcount<10){workthread_errorcount=0}}
                 }catch(e){};
              }else {
                 try{var result1=thread_findnews.isAlive();}catch(e){var result1=false}
@@ -3393,6 +3393,7 @@ function getScriptFromServer() { //从服务器获取脚本
   }
 
   function page_check(){
+      
       try{
                     var thisispageone=false;
                     var thisispagetwo=false;
