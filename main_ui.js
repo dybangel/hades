@@ -527,7 +527,9 @@ ui.licence_activate.click(()=>{
 // });
 /************************************* UI结束**********************************************************************/ 
 Glicence=false;
-Gcode_state="ui";//noui ui;
+Gcode_state="ui";//noui ui
+//finditem 上一次返回的ele控件top值;
+Gfindnews_last_ele_top=0;
 //线程错误数量计数器
 workthread_errorcount=0;
 //所有开关量app对应的包名json
@@ -662,15 +664,15 @@ Gjsonloadstate="remote";
 /**************************研发常用开关量 ******************************************************/
 //1 app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
-//Gapplistpath_remote="http://192.168.3.180/hades/applist/";       //私有云
+//Gapplistpath_remote="http://192.168.3.97/haiqu/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps&devicetype="+Gdevicetype; //公有云
-//Gappspath_remote="http://192.168.3.180/hades/gapps.json";                                         //私有云
+//Gappspath_remote="http://192.168.3.97/haiqu/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json"; //公有云
-//Gapi_json_url="http://192.168.3.180/hades/api.json";        //私有云
+//Gapi_json_url="http://192.168.3.97/haiqu/api.json";        //私有云
 
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
 
@@ -1057,6 +1059,7 @@ if(Grunstate=="trainwechat"){
        
        //阻塞运行打开app 
        var openstate=openAPP(appname,packagename,activityname,open_obj);
+      // alert("openstate is:"+openstate);
      
        
 
@@ -1555,6 +1558,8 @@ if("undefined"==typeof(signin_obj)){
 //一级页面循环上滑找新闻线程
 function while_findnews(autoread_obj){
    Gworkthread="findnews_start";
+   //有多少次新闻ele是top值相同的
+   var same_ele_count=0;
 
   //线程执行前初始化一下没有找到新闻的次数为0；
    //线程计数器
@@ -1572,7 +1577,7 @@ function while_findnews(autoread_obj){
        if(Gisaction==false){
            //如果没有定位过首页模块，则开始定位，并且把标志位改为true，这样以后二级页面读完后返回一级页面时无需再次出发，避免首页刷新到top10，导致一直读重复新闻
            Gisaction=true;
-           //定位首页模块
+                   //定位首页模块
                     if("click_text"==action){
                         var text=autoread_obj["ar1"]["click_text"];
                         if("undefined"==typeof(text)){  toast(appname+":"+"autoread_obj[\"ar1\"][\"click_text\"]数据结构错误");}
@@ -1644,6 +1649,57 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                             }
                                         
                                             if(ele){
+                                                //取出取出ele的top值 与 Gfindnews_last_ele_top进行比较
+                                                  try{
+                                                     var thiseletop= ele.bounds().top;
+                                                     
+                                                       //如果两个值一致 计数器same_ele_count+1
+                                                     if(thiseletop==Gfindnews_last_ele_top){
+                                                        same_ele_count+=1;
+                                                     }
+                                                        //取出ele的top值放入全局变量   Gfindnews_last_ele_top
+                                                        Gfindnews_last_ele_top =same_ele_count;
+                                                     //如果same_ele_count>5 1触发action机制，并且初始化same_ele_count计数器
+                                                     if(same_ele_count>5){
+                                                         //action
+                                                         toast("新闻到底了，刷新一次");
+                                                    //定位首页模块
+                                                                        if("click_text"==action){
+                                                                            var text=autoread_obj["ar1"]["click_text"];
+                                                                            if("undefined"==typeof(text)){  toast(appname+":"+"autoread_obj[\"ar1\"][\"click_text\"]数据结构错误");}
+                                                                            //alert("click_text is:"+text);
+                                                                        try{
+                                                                            click(text);
+                                                                        }catch(e){}
+                                                                            
+                                                                            sleep(1000);
+                                                                        
+                                                                        }else if("click_id"==action){
+                                                                        
+                                                                        try{
+                                                                            var click_id=autoread_obj["ar1"]["click_id"];
+                                                                            thiscommon.clickxy_for_ele(id(click_id).findOnce());
+                                                                        }catch(e){}
+                                                                        }else if("click_boundary_path"==action){
+                                                                            try{
+                                                                                var boundary=autoread_obj["ar1"]["boundary"];
+                                                                                var path=autoread_obj["ar1"]["path"];
+                                                                                thiscommon.click_boundary_path(boundary,path);
+                                                                            }catch(e){
+
+                                                                            }
+                                                                        
+                                                                        }
+                                                      //定位首页模块结束
+                                                         same_ele_count=0;
+                                                     }
+                                                  }catch(e){}
+                                              
+                                                
+                                              
+                                                
+                                               
+                                              
                                                         //如果存在，点击新闻
                                                         play("global","打开新闻");
                                                     try{thiscommon.clickxy_for_ele(ele);
@@ -1926,7 +1982,7 @@ function while_readnews(autoread_obj){
                         if("normal"==thisbacktrigger){
                                     //采用计数器方式判断是否返回一级页面
                                     upcount+=1;
-                                    toast("上滑："+upcount+"/"+maxupcount+"次");
+                                  //  toast("上滑："+upcount+"/"+maxupcount+"次");
                                     if(upcount>maxupcount){
                                         toast("返回首页...");
                                         
@@ -1990,7 +2046,8 @@ function while_readnews(autoread_obj){
                                         if(color!="#"+thiscolor){
                                         //  toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
                                         //  toast("返回首页...");
-                                        
+                                               Swipe(300,500,200,1200,500);
+                                               sleep(500);
                                                 funmulityback();
                                         
                                                 var openstate=openAPP(appname,packagename,activityname,open_obj);
@@ -3367,7 +3424,7 @@ function toastAt0(msg, x, y) {
   function toastAt(msg) {
       var x=500;
       var y=300;
- //   ui.run(() => toastAt0(msg, x, y));
+    ui.run(() => toastAt0(msg, x, y));
   }
 
   function installapp(path){  
@@ -3393,20 +3450,24 @@ function getScriptFromServer() { //从服务器获取脚本
   }
 
   function page_check(){
-      
+     // toast("this is pagecheck")
       try{
                     var thisispageone=false;
                     var thisispagetwo=false;
                 
                     //一级页面验证方式取值
                     var pageone_featuremode=open_obj["featuremode"];
+                 //   alert("1")
                     if("classname_text"==pageone_featuremode){
+                     //   alert("2")
                         var thisclassname=open_obj["classname"];
                         var thistext=open_obj["text"];
+                      // alert("3")
                         try{
                             var thisdepth=open_obj["depth"];
                             var thisindexinparent=open_obj["indexinparent"];
                             var result=className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                           // alert("4")
                         }catch(e){
                             toast("open_obj classname_text depth indexinparent error");
                             var result=false;
@@ -3427,7 +3488,8 @@ function getScriptFromServer() { //从服务器获取脚本
                         if(result){thisispageone=true}
                     }
                     //二级页面验证方式取值
-                    var pagetwo_featuremode=autoread_obj["ar1"]["featuremode"]
+                    var pagetwo_featuremode=autoread_obj["ar1"]["featuremode"];
+                  //  alert()
                     obja="ar1";
                     if("classname_desc"==pagetwo_featuremode){     
                         var thisclassname=autoread_obj[obja]["classname"];
@@ -3435,20 +3497,23 @@ function getScriptFromServer() { //从服务器获取脚本
                         var result=className(thisclassname).desc(thisdesc).exists();
                         if(result){thisispagetwo=true}
                     }else if("classname_text"==pagetwo_featuremode){
-                        var thisclassname=pagetwo_featuremode[obja]["classname"];
-                        var thistext=pagetwo_featuremode[obja]["text"];
+                        var thisclassname=autoread_obj[obja]["classname"];
+                        var thistext=autoread_obj[obja]["text"];
                         var result=className(thisclassname).text(thistext).exists();
                         if(result){thisispagetwo=true}
                     }else if("classname"==pagetwo_featuremode){
-                        var thisclassname=pagetwo_featuremode[obja]["classname"];
+                        var thisclassname=autoread_obj[obja]["classname"];
                         var result=className(thisclassname).exists();
                         if(result){thisispagetwo=true}
                     }else if("id"==pagetwo_featuremode){
-                        var thisid=pagetwo_featuremode[obja]["id"];
+                    //    alert("5 id")
+                        var thisid=autoread_obj[obja]["id"];
+                      //  alert("thisis is:"+thisid)
                         var result=id(thisid).exists();
+                      //  alert("thisid:"+thisid)
                         if(result){thisispagetwo=true}
                     }else if("ids"==pagetwo_featuremode){
-                        var thisid=pagetwo_featuremode[obja]["ids"];
+                        var thisid=autoread_obj[obja]["ids"];
                         ids_arr=thisid.split("||");
                         var num=0;
                             try{
@@ -3471,31 +3536,43 @@ function getScriptFromServer() { //从服务器获取脚本
                 // 如果当前是二级线程在工作 又是二级页面 pass
                 // 如果当前是二级线程在工作，却又是一级页面，则切换成findnews工作
                 // 如果当前是二级线程在工作，既是一级又是二级页面则弹窗
+               
                     if("findnews_start"==Gworkthread){
+                      //  alert("panduan 1")
                         if(thisispageone==true && thisispagetwo==true){
+                       //     alert("panduan 1-1")
                             alert("当前页面识别：既是1级又是2级");
                         }else if(thisispagetwo==true){
+                           // alert("panduan 1-2")
                             toast("发现一级切换到了二级")
-                        try{thread_findnews.interrupt()}catch(e){}
-                        while_readnews(autoread_obj);
+                            while_readnews(autoread_obj);
+                            sleep(1000)
+                            try{thread_findnews.interrupt()}catch(e){}
+                      
                         //   toast();
                         }else if(thisispageone==true){
-                            toast("1级线程与1级页面匹配")
+                         //   toast("1级线程与1级页面匹配")
                         }
-                    }else if("readnews_start"==Gworkthread){
+                    }
+                    else if("readnews_start"==Gworkthread){
+                      //  alert("Gworkthread is"+Gworkthread);
                         if(thisispageone==true && thisispagetwo==true){
+                            //alert("panduan 2-1")
                             alert("当前页面识别：既是1级又是2级");
                         }else if(thisispageone==true){
                             toast("发现2级切换到了1级")
-                            try{thread_readnews.interrupt()}catch(e){}
+                         //   alert("panduan 2-2")
                             while_findnews(autoread_obj);
+                            sleep(1000)
+                            try{thread_readnews.interrupt()}catch(e){}
+                          
                         }else if(thisispagetwo==true){
-                            toast("2级线程与2级页面匹配")
+                          //  toast("2级线程与2级页面匹配")
 
                         }
                     }
 
-      }catch(e){"page_check 异常"}
+      }catch(e){toast("page_check 异常")}
    //初始化页面状态
  
   }
