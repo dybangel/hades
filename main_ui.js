@@ -26,7 +26,7 @@ window.addFlags(android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BA
 window.setStatusBarColor(Color.TRANSPARENT);
 
 ui.layout(
-    <drawer id="drawer">
+<drawer id="drawer">
         <vertical>
             <appbar>
                 <toolbar id="toolbar" title="海趣助手 V{{appversion}}"/>
@@ -3559,8 +3559,8 @@ try{thread_pachagecheck.interrupt();}catch(e){}
     
                           
                             //执行目标识别后的操作 结束
-);
 
-    
 
-}
+    })
+} 
+   
