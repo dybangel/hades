@@ -3541,7 +3541,7 @@ function getScriptFromServer() { //从服务器获取脚本
                       //  alert("panduan 1")
                         if(thisispageone==true && thisispagetwo==true){
                        //     alert("panduan 1-1")
-                            alert("当前页面识别：既是1级又是2级");
+                            toast("当前页面识别：既是1级又是2级");
                         }else if(thisispagetwo==true){
                            // alert("panduan 1-2")
                             toast("发现一级切换到了二级")
@@ -3558,7 +3558,7 @@ function getScriptFromServer() { //从服务器获取脚本
                       //  alert("Gworkthread is"+Gworkthread);
                         if(thisispageone==true && thisispagetwo==true){
                             //alert("panduan 2-1")
-                            alert("当前页面识别：既是1级又是2级");
+                            toast("当前页面识别：既是1级又是2级");
                         }else if(thisispageone==true){
                             toast("发现2级切换到了1级")
                          //   alert("panduan 2-2")
@@ -3571,7 +3571,9 @@ function getScriptFromServer() { //从服务器获取脚本
 
                         }
                     }
-
+                    if(thisispageone==false && thisispagetwo==false){
+                        toast("没有识别当前页面1or2级");
+                    }
       }catch(e){toast("page_check 异常")}
    //初始化页面状态
  
