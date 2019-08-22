@@ -324,24 +324,14 @@ ui.tabs.setupWithViewPager(ui.viewpager);
 //让工具栏左上角可以打开侧拉菜单
 ui.toolbar.setupWithDrawer(ui.drawer);
 
-ui.menu.setDataSource([
+// ui.menu.setDataSource(
+// [
 //   {
-//       title: "开始运行",
-//       icon: "@drawable/ic_android_black_48dp"
-//   },
-//   {
-//       title: "选项二",
-//       icon: "@drawable/ic_settings_black_48dp"
-//   },
-//   {
-//       title: "选项三",
-//       icon: "@drawable/ic_favorite_black_48dp"
-//   },
-  {
-      title: "退出",
-      icon: "@drawable/ic_exit_to_app_black_48dp"
-  }
-]);
+//       title: "退出",
+//       icon: "@drawable/ic_exit_to_app_black_48dp"
+//   }
+// ]
+// );
 
 ui.menu.on("item_click", item => {
     switch(item.title){
@@ -530,6 +520,8 @@ Glicence=false;
 Gcode_state="ui";//noui ui
 //finditem 上一次返回的ele控件top值;
 Gfindnews_last_ele_top=0;
+//砖头数量计数器，findnew readnews 在工作的时候需要每次循环增加一块砖，while_control每次循环先验证砖是不是0，如果不是0置空砖头为0
+Gbrick_count=0; 
 //线程错误数量计数器
 workthread_errorcount=0;
 //所有开关量app对应的包名json
@@ -1155,7 +1147,7 @@ function checklicence(fsn){
             var tmpstr=r.body.string();
             Gapps=eval('('+tmpstr+')');
           
-            
+           
  
         }else{
             toast("加载云端gapps列表出错");
@@ -1174,6 +1166,8 @@ function loadGapps(){
         var str=files.read("/sdcard/脚本/localgapps.json");
      //   alert(str);
         Gapps=eval(str)
+    
+    //    ui.menu.setDataSource(Gapps);
         }else{
             //正常用户状态
                     if(Gjsonloadstate=="remote"){
@@ -1196,6 +1190,7 @@ function loadGapps(){
                             //获取所有开关量对应的包名
                             try{
                                 packageliststr="";
+                                datasourcelist="";
                                for(var i=0;i<Gapps.length;i++){
                                   var thisappname=Gapps[i]["appname"]; 
                                   var r=http.get(Gapplistpath_remote+"/"+thisappname+".json")
@@ -1204,13 +1199,25 @@ function loadGapps(){
                                    var thistempjson=eval('(' + jsonstr + ')');
                                    var thispackagename=thistempjson["packagename"];
                                    packageliststr+='{"packagename":"'+thispackagename+'"},';
+                               //    datasourcelist+='{"title":"'+appname+'",icon:"@drawable/ic_android_black_48dp"}';
+                                
                                 }
 
                                }//for end;
                               // alert("["+packageliststr+"]");
                               Gpackagename_lists=eval("(["+packageliststr+"])")
-                             // alert(Gpackagename_lists[1]["packagename"]);
-                              // exit(); 
+                           //   datasourcelist=eval("(["+datasourcelist+"])");
+                            //   alert("a")
+                            //   ui.menu.setDataSource(
+                            //     [
+                            //       {
+                            //           title: "退出",
+                            //           icon: "@drawable/ic_exit_to_app_black_48dp"
+                            //       }
+                            //     ]
+                            //     );
+                            //    alert("b")
+                            
                             }catch(e){toast("加载开关量包名错误")}
                             // alert(Gapps);
                         //   ref_ui_list();
@@ -1730,6 +1737,7 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                                 }else{
                                                      //线程计数器加1
                                                     nofindnews_count+=1;
+                                                    Gbrick_count+=1;//砖头+1
                                                 }
                                                 //如果线程计数器到达设定值，通知while_control
                                                     if(nofindnews_count>Gnofindnews_countback){
@@ -1847,9 +1855,12 @@ function while_readnews(autoread_obj){
 
                setInterval(function(){
                 page_check();
+                thisthread_count+=1; //线程计数器增加一
+                Gbrick_count+=1;//砖头加一
+               
      //           pagecheck();
                     //线程计数器机制开始
-                    thisthread_count+=1; //线程计数器增加一
+                  
                     if(thisthread_count>90){
                         try{                      
                             workthread_errorcount=999;//修改变量，通知while_control重启app
@@ -2385,6 +2396,8 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
    var outsidecount=0;
    //站内非白名单计数器
    var erroraocount=0;
+   //搬砖异常
+   brick_error=0;
 
    //var tmpflag=0;
     //显示当前app toast计数器，目的是不要太频繁的显示，计数器到5就显示一次后重载，再到5后再显示重载
@@ -2442,7 +2455,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
             if(showpacount>5){
 //            toastAt("当前app:"+appname+"\n包名："+nowcurrentPackage+"\n"+"当前窗体名："+nowcurrentActivity);
                     try{
-                        toastAt("当前app:"+appname+"\nf线程:"+thread_findnews.isAlive()+" r线程:"+thread_readnews.isAlive()+"\nGworkthread is:"+Gworkthread+"\n"+"workthread_errorcount is"+workthread_errorcount+"\n当前窗体名："+nowcurrentActivity);
+                        toastAt("当前app:"+appname+"\nf线程:"+thread_findnews.isAlive()+" r线程:"+thread_readnews.isAlive()+"\nGworkthread is:"+Gworkthread+"\n"+"workthread_error is："+workthread_errorcount+"\nbe:"+brick_error+" bc:"+Gbrick_count+"\n当前窗体名："+nowcurrentActivity);
                     }catch(e){} 
             
             showpacount=0;
@@ -2513,14 +2526,34 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                     var result=thread_findnews.isAlive();
                     if(result==false){
                         workthread_errorcount+=1;
-                    }else{if(workthread_errorcount<10){workthread_errorcount=0}}
+                    }else{
+                        if(workthread_errorcount<10){workthread_errorcount=0}
+                        if(Gbrick_count!=0){
+                            //如果砖块不等于0 ，初始化为0，说明线程活着的同时还在滑动着
+                            Gbrick_count=0;
+                            brick_error=0;
+                        }else if(Gbrick_count==0){
+                        //如果砖块等于0，这是在线程活着的情况，砖块一直等于0就说明线程活着但是不搬砖了
+                        brick_error+=1;
+                        }
+                    }
                 }catch(e){};
              }else if("readnews_start"==Gworkthread){
                 try{
                     var result=thread_readnews.isAlive();
                     if(result==false){
                         workthread_errorcount+=1;
-                    }else{if(workthread_errorcount<10){workthread_errorcount=0}}
+                    }else{
+                        if(workthread_errorcount<10){workthread_errorcount=0}
+                        if(Gbrick_count!=0){
+                            //如果砖块不等于0 ，初始化为0，说明线程活着的同时还在滑动着
+                            Gbrick_count=0;
+                            brick_error=0;
+                        }else if(Gbrick_count==0){
+                        //如果砖块等于0，这是在线程活着的情况，砖块一直等于0就说明线程活着但是不搬砖了
+                        brick_error+=1;
+                        }
+                    }
                 }catch(e){};
              }else if("signin_start"==Gworkthread){
                 try{
@@ -2544,6 +2577,11 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                 toast("重新激活线程......");
                 restartapp();   
                 
+             }
+             if(brick_error>10){
+                 brick_error=0;
+                 toast("搬砖计数器重新激活线程......");
+                 restartapp();   
              }
              //其它线程检测结束
 
