@@ -1,7 +1,6 @@
-function finditem(){
-    m=25000;
-    n=20000;
+function finditem(){ 
+    m=15000;
+    n=8000;
     x=Math.round(Math.random()*(m-n))+n;
     sleep(x);
-    return false;
-    }
+    return false;}

@@ -10,6 +10,8 @@
         "open":{
           "featuremode":"classname",
           "classname":"android.widget.TextView",
+		  "depth":"7",
+	      "indexinparent":"1",
           },
 		 "signin":{
             "sg1":{
