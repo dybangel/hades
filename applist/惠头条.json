@@ -55,6 +55,10 @@
                "featuremode":"id",
                "id":"com.cashtoutiao:id/iv_btn_cancel",
            },
+		    "ab5":{
+               "featuremode":"id",
+               "id":"com.cashtoutiao:id/close_update_btn",
+           },
          },  
 		"activitys":{
             "at1":"com.cashtoutiao.account.ui.main.MainTabActivity",
