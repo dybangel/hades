@@ -3128,9 +3128,9 @@ var r=http.get(Gapi_json_url);
 if("200"==r.statusCode){
     var tmpstr=r.body.string();
     tmpjson=eval('(' + tmpstr + ')'); 
-   alert(tmpstr);
+  
     var server_version=tmpjson["server_version"]
-    alert("server_version is:"+server_version);
+   
     var now_version=app.versionName;
    var downloadurl=tmpjson["downloadurl"];
  //  alert(downloadurl);
