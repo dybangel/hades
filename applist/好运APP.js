@@ -12,7 +12,7 @@ function finditem(){
           thistitle="标题空"
         }
       }catch(e){
-        thistitle="无标题";
+        thistitle="标题空";
       }
       try{
 
@@ -33,7 +33,7 @@ function finditem(){
         ggkprivpriv="没有"
       }
       //首先要有刮刮卡字符，其次单位要是元才行
-      if("刮刮卡"==ggk && ggkpriv.indexOf("元")>-1 && thistitle=="标题空" && thistitle=="无标题"){
+      if("刮刮卡"==ggk && ggkpriv.indexOf("元")>-1 && thistitle=="标题空" ){
       //其次判断main.child(i)的中心点是否在可视区内
           main.child(i).click();  //控件支持clickenable true
           alert("点击"+ thistitle+" "+ggkprivpriv+ggkpriv+"  "+ggk);
