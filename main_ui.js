@@ -1042,6 +1042,9 @@ if(Grunstate=="trainwechat"){
            //每轮运行前杀死之前的线程，防止缓存
            clear_normal_thread();
            try{    thread_control.interrupt();}catch(e){};
+           try{    thread_abnormal.interrupt();}catch(e){};
+           try{    thread_abnormal_overtime.interrupt();}catch(e){};
+           try{    thread_closewindow.interrupt();}catch(e){};
            //while_pagecheck();
 
     
@@ -3797,12 +3800,9 @@ function while_pagecheck(){
 }
 
 function clear_normal_thread(){
-    try{    thread_abnormal.interrupt();}catch(e){};
     try{    thread_findnews.interrupt();}catch(e){};
     try{    thread_readnews.interrupt();}catch(e){};
-    try{    thread_signin.interrupt();}catch(e){};
-    try{    thread_abnormal_overtime.interrupt();}catch(e){};
-    try{    thread_closewindow.interrupt();}catch(e){};
+    try{    thread_signin.interrupt();}catch(e){}; 
     try{    thread_pagecheck.interrupt()}catch(e){};
 }
 //目标页面检测
