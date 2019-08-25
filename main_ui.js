@@ -1041,6 +1041,7 @@ if(Grunstate=="trainwechat"){
            
            //每轮运行前杀死之前的线程，防止缓存
            clear_normal_thread();
+           try{    thread_control.interrupt();}catch(e){};
            //while_pagecheck();
 
     
@@ -2399,7 +2400,7 @@ thread_demon_abnormal=threads.start(
 );
   
 }
-//重启app继续阅读
+//重启app继续  只有whilecontorl可以调用该函数，其他函数调用会把自己杀死，导致后续所有代码无法执行，只有让第三方执行
 function restartapp(){
     clear_normal_thread();
     try{
@@ -2409,13 +2410,14 @@ function restartapp(){
                 var openstate=openAPP(appname,packagename,activityname,open_obj);
                 if(openstate){
                     if("layers"==apptype){
+
                         while_pagecheck();
                     }else{
                         while_findnews(autoread_obj);  
                     }
                 }
     }catch(e){
-        
+      //  alert("restartapp appname"+appname+"packagename "+packageName+" actiname "+activityname+" e:"+e);
     }
    
 }
@@ -3734,11 +3736,7 @@ function while_pagecheck(){
                                 }
                                                              
                                 //如果线程计数器>90那么restartapp
-                                if(samepcx_count>90){
-                                    toast("本页面停留太长，重新拉起")
-                                    samepcx_count=0;
-                                    restartapp();
-                                }
+                           
 
                                 thisfindpage=true;
                                 toast(thisinfo);
@@ -3770,6 +3768,15 @@ function while_pagecheck(){
                             }//if end;
     
                         }//for end
+                        //线程计数器超过数量
+                        try{  if(samepcx_count>10){
+                            toast("本页面停留太长，重新拉起")
+                            samepcx_count=0;
+                            workthread_errorcount=999
+                        }}catch(e){
+                            toast("> e:"+e);
+                        }
+
                         Gbrick_count+=1;
                         thisforstart=false;
                        if(thisfindpage==false){
@@ -3791,7 +3798,6 @@ function while_pagecheck(){
 
 function clear_normal_thread(){
     try{    thread_abnormal.interrupt();}catch(e){};
-    try{    thread_control.interrupt();}catch(e){};
     try{    thread_findnews.interrupt();}catch(e){};
     try{    thread_readnews.interrupt();}catch(e){};
     try{    thread_signin.interrupt();}catch(e){};
