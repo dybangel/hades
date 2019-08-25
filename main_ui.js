@@ -3769,7 +3769,7 @@ function while_pagecheck(){
     
                         }//for end
                         //线程计数器超过数量
-                        try{  if(samepcx_count>10){
+                        try{  if(samepcx_count>50){
                             toast("本页面停留太长，重新拉起")
                             samepcx_count=0;
                             workthread_errorcount=999
