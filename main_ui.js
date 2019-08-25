@@ -660,15 +660,15 @@ Gjsonloadstate="remote";
 /**************************研发常用开关量 ******************************************************/
 //1 app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
-Gapplistpath_remote="http://192.168.3.201/haiqu/applist/";       //私有云
+//Gapplistpath_remote="http://192.168.3.201/haiqu/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps&devicetype="+Gdevicetype; //公有云
-Gappspath_remote="http://192.168.3.201/haiqu/gapps.json";                                         //私有云
+//Gappspath_remote="http://192.168.3.201/haiqu/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json"; //公有云
-Gapi_json_url="http://192.168.3.201/haiqu/api.json";        //私有云
+//Gapi_json_url="http://192.168.3.201/haiqu/api.json";        //私有云
 
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
 
@@ -3128,8 +3128,9 @@ var r=http.get(Gapi_json_url);
 if("200"==r.statusCode){
     var tmpstr=r.body.string();
     tmpjson=eval('(' + tmpstr + ')'); 
-   
+   alert(tmpstr);
     var server_version=tmpjson["server_version"]
+    alert("server_version is:"+server_version);
     var now_version=app.versionName;
    var downloadurl=tmpjson["downloadurl"];
  //  alert(downloadurl);
@@ -3561,7 +3562,7 @@ function getScriptFromServer() { //从服务器获取脚本
      return files.writeBytes("/sdcard/脚本/haiqu.apk", download_res.body.bytes()),!0;
   }
 
-  function page_check(){
+function page_check(){
      // toast("this is pagecheck")
       try{
                     var thisispageone=false;
@@ -3798,7 +3799,7 @@ function while_pagecheck(){
     });  
     
 }
-
+//结束普通线程
 function clear_normal_thread(){
     try{    thread_findnews.interrupt();}catch(e){};
     try{    thread_readnews.interrupt();}catch(e){};
