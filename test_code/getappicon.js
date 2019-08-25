@@ -6,7 +6,7 @@ importClass(android.util.DisplayMetrics)
 //var name = rawInput("请输入你想要获取的应用图标的应用名", "优看点");
 //packageName = app.getPackageName(name);
 //alert(paceageName);
-packageName="com.aimotech.yingbeitt";
+packageName="com.b12lab.myluck";
 
 appInfo = pm.getApplicationInfo(packageName, 0);
 bmp = appInfo.loadIcon(pm).getBitmap();
