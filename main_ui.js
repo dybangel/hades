@@ -518,6 +518,9 @@ ui.licence_activate.click(()=>{
 /************************************* UI结束**********************************************************************/ 
 Glicence=false;
 Gcode_state="ui";//noui ui
+
+//当该变量为true时，可以中途结束某一个app的阅读直接切换到下一个
+Grunbreak=false;
 //finditem 上一次返回的ele控件top值;
 Gfindnews_last_ele_top=0;
 //砖头数量计数器，findnew readnews 在工作的时候需要每次循环增加一块砖，while_control每次循环先验证砖是不是0，如果不是0置空砖头为0
@@ -656,15 +659,15 @@ Gjsonloadstate="remote";
 /**************************研发常用开关量 ******************************************************/
 //1 app json特征码远程下载根路径
 Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
-//Gapplistpath_remote="http://192.168.3.97/haiqu/applist/";       //私有云
+Gapplistpath_remote="http://192.168.3.201/haiqu/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
 Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps&devicetype="+Gdevicetype; //公有云
-//Gappspath_remote="http://192.168.3.97/haiqu/gapps.json";                                         //私有云
+Gappspath_remote="http://192.168.3.201/haiqu/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
 Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json"; //公有云
-//Gapi_json_url="http://192.168.3.97/haiqu/api.json";        //私有云
+Gapi_json_url="http://192.168.3.201/haiqu/api.json";        //私有云
 
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
 
@@ -898,6 +901,10 @@ if(Grunstate=="trainwechat"){
 }else{
    while(true){
        for(var i=0;i<applist.length;i++){
+           //给各个app用的计数器
+            Callback_finditem_swipecount=0;
+           //局部变量，秒计数器，用于记录app阅读时间，超时后切换下一个
+          var Gsecond=0;
          //签到之后定位首页模块是否操作过
          Gisaction=false;
         //拉起一次守护，保证相互守护
@@ -920,6 +927,11 @@ if(Grunstate=="trainwechat"){
 
            var enable=applist[i]['enable'];
             appname=applist[i]['appname'] 
+            try{apptype=applist[i]['apptype'];}catch(e){apptype="layer2"}
+            if("layers"==apptype){
+                pagecheck_obj=applist[i]['pagecheck'];
+                //alert("pagecheck_obj:"+pagecheck_obj);
+            }
             packagename=applist[i]['packagename']
             activityname=applist[i]['activityname'];
             open_obj=applist[i]["open"];
@@ -937,6 +949,8 @@ if(Grunstate=="trainwechat"){
           
            Gappinterval=applist[i]["interval"]
            Gappinterval=Number(Gappinterval)*60*1000;
+            //app要读多少秒
+           Gappinterval_second=Gappinterval/1000;
 
 
                 //根据设置的速断设置滑动量速度
@@ -972,7 +986,7 @@ if(Grunstate=="trainwechat"){
                 var r=http.get(Gapplistpath_remote+"/"+appname+".js")
                 
                 Gfinditemstr=r.body.string();
-                eval(Gfinditemstr);
+                eval(Gfinditemstr);//alert("加载"+appname+".js");
                 }catch(e){
                 toast("this is findnews httpget and eval:"+e);
                 }
@@ -1090,7 +1104,7 @@ if(Grunstate=="trainwechat"){
                     //     )
                     // }
                     //测试代码结束
-                        toast("阅读"+Gappinterval+"毫秒......................");
+                        toast("阅读"+Gappinterval_second/60+"分钟......................");
                         // setlastapp("",appname);
                         if("popupdebug"==Grunstate){
                             while_abnormal_overtime(activitys_obj); 
@@ -1110,7 +1124,27 @@ if(Grunstate=="trainwechat"){
                                  }
                            
                         }else{
-                            sleep(Gappinterval);
+                            while(true){
+                                //如果Grunbreak 为false，说明没有接到通知，切换下一个
+                              if(Grunbreak==false){
+
+                                  if(Gsecond>Gappinterval_second){
+                                    Gsecond=0;
+                                    break;
+                                  } 
+                                
+                                //+1秒
+                                Gsecond+=1;
+                                sleep(1000)
+                              }else{
+                                  toast("接到线程指令，提前切换下一个")
+                                  Gsecond=0;  
+                                //反之，接到了某一个线程或函数的通知，要求切换app，立刻跳出主线程阻塞，并且重载Grunbreak为false，否则会一直多米诺方式切换下一个的
+                                  Grunbreak=false;
+                                  break;
+                              }
+                            }
+                           // sleep(Gappinterval);
                         }
        }
            toast("准备开始下一个");
@@ -1180,7 +1214,7 @@ function loadGapps(){
                         }
                     
                         if("200"==r.statusCode){
-                            // alert(r.body.string());
+                           //  alert(r.body.string());
                             try{
                             var tmpstr=r.body.string();
                             Gapps=eval('('+tmpstr+')'); 
@@ -1204,7 +1238,7 @@ function loadGapps(){
                                 }
 
                                }//for end;
-                              // alert("["+packageliststr+"]");
+                          //     alert("["+packageliststr+"]");
                               Gpackagename_lists=eval("(["+packageliststr+"])")
                            //   datasourcelist=eval("(["+datasourcelist+"])");
                             //   alert("a")
@@ -1284,7 +1318,7 @@ for(var i=0;i<Gapps.length;i++){
        //如果是本地特征码机制
        }else if(Gjsonloadstate=="local"){
            if(voiceplaynum==0){
-               play("global","加载");
+               play("gulobal","加载");
                play("global","本地");
                play("global","特征码");
                voiceplaynum+=1;
@@ -2380,7 +2414,11 @@ function restartapp(){
                 sleep(1000);
                 var openstate=openAPP(appname,packagename,activityname,open_obj);
                 if(openstate){
-                    while_findnews(autoread_obj);  
+                    if("layers"==apptype){
+                        while_pagecheck();
+                    }else{
+                        while_findnews(autoread_obj);  
+                    }
                 }
     }catch(e){
         
@@ -2412,9 +2450,14 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                        //toast("开始绑定微信");
                        while_bindwechat(bindwechat_obj);
                    }else if("autoread"==Grunstate){
-                       toast("开始签到...");
-                       try{thread_signin.interrupt();}catch(e){};
-                       while_signin(signin_obj);
+                       if("layers"==apptype){
+                        while_pagecheck();//临时代码，为了加快测试绕过签到
+                       }else{
+                        toast("开始签到...");
+                        try{thread_signin.interrupt();}catch(e){};
+                        while_signin(signin_obj);
+                       }
+                      
                        
                    }else if("popupdebug"==Grunstate){
                        toast("弹窗跟踪调试");
@@ -2456,15 +2499,19 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
 //            toastAt("当前app:"+appname+"\n包名："+nowcurrentPackage+"\n"+"当前窗体名："+nowcurrentActivity);
                     try{
                         toastAt("当前app:"+appname+"\nf线程:"+thread_findnews.isAlive()+" r线程:"+thread_readnews.isAlive()+"\nGworkthread is:"+Gworkthread+"\n"+"workthread_error is："+workthread_errorcount+"\nbe:"+brick_error+" bc:"+Gbrick_count+"\n当前窗体名："+nowcurrentActivity);
-                    }catch(e){} 
+                    }catch(e){
+                        try{
+                            toastAt("p:"+thread_pagecheck.isAlive());
+                        }catch(e){ toast("p5 error")}
+                    } 
             
             showpacount=0;
             }
            }catch(e){}
           
             
-            //站外检测
-             if(nowcurrentPackage!=""){
+            //站外检测 对于layers的不适用
+             if(nowcurrentPackage!="" && apptype!="layers"){
                     //这是跳转到站外的情况了
                    if( nowcurrentPackage!=packagename){
                                outsidecount+=1;
@@ -2520,7 +2567,8 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
 
 
              }//站外检测结束
-             //其它线程检测
+
+             //线程守护  搬砖验证
              if("findnews_start"==Gworkthread){
                 try{
                     var result=thread_findnews.isAlive();
@@ -2566,7 +2614,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                 try{var result1=thread_findnews.isAlive();}catch(e){var result1=false}
                 try{var result2=thread_readnews.isAlive();}catch(e){var result2=false;}
                 try{ var result3=thread_signin.isAlive();}catch(e){var result3=false;}
-                if(result1==false && result2==false && result3==false){
+                if(result1==false && result2==false && result3==false && apptype!="layers"){
                     workthread_errorcount+=1;
                 }
 
@@ -3617,8 +3665,73 @@ function getScriptFromServer() { //从服务器获取脚本
  
   }
 
-//目标页面检测
+//layers机制
 function while_pagecheck(){
+    Gworkthread="pagecheck_start";
+    var thisforstart=false;
+    var thisfindpage=false;
+    var thistoastcount=0;
+    thread_pagecheck=threads.start(function(){
+                        //检测页面 并且根据页面acton
+                    //for循环pagecheck_obj 
+                    toast("页面识别启动")
+              setInterval(function(){
+                thistoastcount+=1;
+                if(thistoastcount>5){
+                    toast("thisforstart is:"+thisforstart);
+                    thistoastcount=0;
+                }
+
+                //这是线程内测循环执行，执行前要判断for循环是否结束
+                if(thisforstart==false){
+                    try{
+                        thisforstart=true;
+                        thisfindpage=false;
+                        for(var i=1;i<=thiscommon.JSONLength(pagecheck_obj);i++){
+                            var thisfeaturemode=pagecheck_obj["pc"+i]["featuremode"];
+                            var thisresult= eval(thisfeaturemode);
+                            var thisinfo=pagecheck_obj["pc"+i]["info"]
+                            if(thisresult){
+                                thisfindpage=true;
+                                toast(thisinfo);
+                                var thisactiontype=pagecheck_obj["pc"+i]["actiontype"];
+                                var thisaction=pagecheck_obj["pc"+i]["action"];
+                                //如果是执行一段私有函数
+                                        if(thisactiontype=="func"){
+                                    
+                                                try {
+                                                    eval(Gfinditemstr);
+                                                    eval(thisaction);
+                                                }catch(e){alert("pagecheck eval func e:"+e);}
+                                        }//if end;
+                                        else if(thisactiontype=="code"){
+                                        
+                                        try{ eval(thisaction)}catch(e){alert("pagecheck eval code e:"+e)};
+                                        }
+                         
+                                break;
+                            }//if end;
+    
+                        }//for end
+                        thisforstart=false;
+                       if(thisfindpage==false){
+                           toast("没有识别当前页面");
+                       }
+                    }catch(e){
+                        alert("pagecheck main e:"+e);
+                       // thisforstart=false;
+                    }
+
+                }
+
+              },3000);      
+                   
+    });  
+    
+}
+
+//目标页面检测
+function while_pagecheck_bak(){
     
   //  return true;
 try{thread_pachagecheck.interrupt();}catch(e){}
