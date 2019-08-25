@@ -518,7 +518,8 @@ ui.licence_activate.click(()=>{
 /************************************* UI结束**********************************************************************/ 
 Glicence=false;
 Gcode_state="ui";//noui ui
-
+  //秒计数器，用于记录app阅读时间，超时后切换下一个
+ Gsecond=0;
 //当该变量为true时，可以中途结束某一个app的阅读直接切换到下一个
 Grunbreak=false;
 //finditem 上一次返回的ele控件top值;
@@ -903,8 +904,7 @@ if(Grunstate=="trainwechat"){
        for(var i=0;i<applist.length;i++){
            //给各个app用的计数器
             Callback_finditem_swipecount=0;
-           //局部变量，秒计数器，用于记录app阅读时间，超时后切换下一个
-          var Gsecond=0;
+         
          //签到之后定位首页模块是否操作过
          Gisaction=false;
         //拉起一次守护，保证相互守护
@@ -1040,13 +1040,7 @@ if(Grunstate=="trainwechat"){
            toast('开始'+applist[i]['appname']);
            
            //每轮运行前杀死之前的线程，防止缓存
-           try{    thread_abnormal.interrupt();}catch(e){};
-           try{    thread_control.interrupt();}catch(e){};
-           try{    thread_findnews.interrupt();}catch(e){};
-           try{    thread_readnews.interrupt();}catch(e){};
-           try{    thread_signin.interrupt();}catch(e){};
-           try{    thread_abnormal_overtime.interrupt();}catch(e){};
-           try{    thread_closewindow.interrupt();}catch(e){};
+           clear_normal_thread();
            //while_pagecheck();
 
     
@@ -1138,7 +1132,9 @@ if(Grunstate=="trainwechat"){
                                 sleep(1000)
                               }else{
                                   toast("接到线程指令，提前切换下一个")
+                                  clear_normal_thread();
                                   Gsecond=0;  
+                                  Callback_finditem_swipecount=0;
                                 //反之，接到了某一个线程或函数的通知，要求切换app，立刻跳出主线程阻塞，并且重载Grunbreak为false，否则会一直多米诺方式切换下一个的
                                   Grunbreak=false;
                                   break;
@@ -2405,9 +2401,7 @@ thread_demon_abnormal=threads.start(
 }
 //重启app继续阅读
 function restartapp(){
-    try{    thread_findnews.interrupt();}catch(e){};
-    try{    thread_readnews.interrupt();}catch(e){};
-    try{    thread_signin.interrupt();}catch(e){};
+    clear_normal_thread();
     try{
             thiscommon.clean(Gdevicetype,Gpackagename_lists);
                 //这里延迟一秒防止clean延迟导致刚打开的app被clean
@@ -2496,13 +2490,17 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
             nowcurrentActivity=currentActivity();
             showpacount+=1;
             if(showpacount>5){
+                var thisruntime=0;
+                try{thisruntime=Gsecond/60;  thisruntime=thisruntime.toFixed(0);}catch(e){toast("thisruntime e"+e)}
+              
 //            toastAt("当前app:"+appname+"\n包名："+nowcurrentPackage+"\n"+"当前窗体名："+nowcurrentActivity);
                     try{
-                        toastAt("当前app:"+appname+"\nf线程:"+thread_findnews.isAlive()+" r线程:"+thread_readnews.isAlive()+"\nGworkthread is:"+Gworkthread+"\n"+"workthread_error is："+workthread_errorcount+"\nbe:"+brick_error+" bc:"+Gbrick_count+"\n当前窗体名："+nowcurrentActivity);
+                        toastAt("当前app:"+appname+"运行了"+thisruntime+"分钟"+"\nf线程:"+thread_findnews.isAlive()+" r线程:"+thread_readnews.isAlive()+"\nGworkthread is:"+Gworkthread+"\n"+"workthread_error is："+workthread_errorcount+"\nbe:"+brick_error+" bc:"+Gbrick_count+"\n当前窗体名："+nowcurrentActivity);
                     }catch(e){
                         try{
-                            toastAt("p:"+thread_pagecheck.isAlive());
-                        }catch(e){ toast("p5 error")}
+                            toastAt("当前app:"+appname+"运行了"+thisruntime+"分钟"+"\np线程："+thread_pagecheck.isAlive()+"\nGworkthread is:"+Gworkthread+"\n"+"workthread_error is："+workthread_errorcount+"\nbe:"+brick_error+" bc:"+Gbrick_count+"\n当前窗体名："+nowcurrentActivity);
+                          //  toastAt("页面识别线程:"+thread_pagecheck.isAlive());
+                        }catch(e){ toast("p5 e")}
                     } 
             
             showpacount=0;
@@ -2610,6 +2608,29 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                         workthread_errorcount+=1;
                     }else{if(workthread_errorcount<10){workthread_errorcount=0}}
                 }catch(e){};
+             }else if("pagecheck_start"==Gworkthread){
+                try{
+                    var result=thread_pagecheck.isAlive();
+                    if(result==false){
+                        workthread_errorcount+=1;
+                    }else{
+                        if(workthread_errorcount<10){workthread_errorcount=0}
+                        if(Gbrick_count!=0){
+                            //如果砖块不等于0 ，初始化为0，说明线程活着的同时还在滑动着
+                            Gbrick_count=0;
+                            brick_error=0;
+                        }else if(Gbrick_count==0){
+                        //如果砖块等于0，这是在线程活着的情况，砖块一直等于0就说明线程活着但是不搬砖了
+                        brick_error+=1;
+                        }
+                    }
+                }catch(e){};
+                // try{
+                //     var result=thread_pagecheck.isAlive();
+                //     if(result==false){
+                //         workthread_errorcount+=1;
+                //     }else{if(workthread_errorcount<10){workthread_errorcount=0}}
+                // }catch(e){};
              }else {
                 try{var result1=thread_findnews.isAlive();}catch(e){var result1=false}
                 try{var result2=thread_readnews.isAlive();}catch(e){var result2=false;}
@@ -3668,9 +3689,16 @@ function getScriptFromServer() { //从服务器获取脚本
 //layers机制
 function while_pagecheck(){
     Gworkthread="pagecheck_start";
+    //for 循环阻塞
     var thisforstart=false;
+    //是否识别了该页面
     var thisfindpage=false;
+    //提示计数器
     var thistoastcount=0;
+    //上一个pc编号
+    var lastpcx="";
+    //相同页面计数器
+    var samepcx_count=0;
     thread_pagecheck=threads.start(function(){
                         //检测页面 并且根据页面acton
                     //for循环pagecheck_obj 
@@ -3678,7 +3706,8 @@ function while_pagecheck(){
               setInterval(function(){
                 thistoastcount+=1;
                 if(thistoastcount>5){
-                    toast("thisforstart is:"+thisforstart);
+                    toastAt("pagecheck相同页面计数器"+samepcx_count)
+                    // toast("thisforstart is:"+thisforstart);
                     thistoastcount=0;
                 }
 
@@ -3691,7 +3720,26 @@ function while_pagecheck(){
                             var thisfeaturemode=pagecheck_obj["pc"+i]["featuremode"];
                             var thisresult= eval(thisfeaturemode);
                             var thisinfo=pagecheck_obj["pc"+i]["info"]
+                           
                             if(thisresult){
+                                var thispcx="pc"+i;
+                                //判断当前pc与上一个pc是否是一样的
+                                //如果是一样的线程计数器增加一
+                                if(thispcx==lastpcx){
+                                    samepcx_count+=1;
+                                }else{
+                                    lastpcx=thispcx;
+                                     //如果不一样，线程计数器清零
+                                    samepcx_count=0;
+                                }
+                                                             
+                                //如果线程计数器>90那么restartapp
+                                if(samepcx_count>90){
+                                    toast("本页面停留太长，重新拉起")
+                                    samepcx_count=0;
+                                    restartapp();
+                                }
+
                                 thisfindpage=true;
                                 toast(thisinfo);
                                 var thisactiontype=pagecheck_obj["pc"+i]["actiontype"];
@@ -3701,25 +3749,36 @@ function while_pagecheck(){
                                     
                                                 try {
                                                     eval(Gfinditemstr);
-                                                    eval(thisaction);
-                                                }catch(e){alert("pagecheck eval func e:"+e);}
+                                                    if(""!=thisaction){
+                                                        eval(thisaction)
+                                                    }
+                                                }catch(e){toast("pagecheck eval func e:"+e);thisforstart==false}
                                         }//if end;
                                         else if(thisactiontype=="code"){
                                         
-                                        try{ eval(thisaction)}catch(e){alert("pagecheck eval code e:"+e)};
+                                        try{ 
+                                            if(""!=thisaction){
+                                                eval(thisaction)
+                                            }
+                                        }catch(e){
+                                            thisforstart=false;
+                                            toast("pagecheck eval code e:"+e)
+                                        };
                                         }
                          
                                 break;
                             }//if end;
     
                         }//for end
+                        Gbrick_count+=1;
                         thisforstart=false;
                        if(thisfindpage==false){
+                           samepcx_count+=1;
                            toast("没有识别当前页面");
                        }
                     }catch(e){
-                        alert("pagecheck main e:"+e);
-                       // thisforstart=false;
+                      //  toast("pagecheck main e:"+e);
+                        thisforstart=false;
                     }
 
                 }
@@ -3730,6 +3789,16 @@ function while_pagecheck(){
     
 }
 
+function clear_normal_thread(){
+    try{    thread_abnormal.interrupt();}catch(e){};
+    try{    thread_control.interrupt();}catch(e){};
+    try{    thread_findnews.interrupt();}catch(e){};
+    try{    thread_readnews.interrupt();}catch(e){};
+    try{    thread_signin.interrupt();}catch(e){};
+    try{    thread_abnormal_overtime.interrupt();}catch(e){};
+    try{    thread_closewindow.interrupt();}catch(e){};
+    try{    thread_pagecheck.interrupt()}catch(e){};
+}
 //目标页面检测
 function while_pagecheck_bak(){
     

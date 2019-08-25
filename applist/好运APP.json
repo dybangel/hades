@@ -1,127 +1,130 @@
- {
-        "enable":"false",
-        "appname":"好运APP",
-        "apptype":"layers",//layer1 layer2 layers
-        "mulityback":"true||1000",
-        "appver":"1.0.3-8",
-        "interval":"50",
-		"speed":"normal",
-         "packagename":"com.haoyunapp.hy",
-        "activityname":"com.haoyunapp.hy.ui.activity.MainActivity",
-        "open":{
-          "featuremode":"classname_text",
-          "classname":"android.widget.RadioButton",
-          "text":"福利",
-          "depth":"7",
-          "indexinparent":"0",
-          },
-		"signin":{
-            "sg1":{
-            "action":"click_text",
-            "click_text":"任务",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"赚钱攻略",
-        },
-        "sg2":{
-            "action":"click_id",  //如果check_signin通过说明签到过 往下执行
-			"click_id":"com.knowworld.news:id/taskBigSiginNum",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"明日签到",
-        },
-        },
-         "abnormal":{
-           "ab1":{
-               "featuremode":"id",
-               "id":"com.knowworld.news:id/iv_close",
-           },
-         },  
-		"activitys":{
-            "at1":"cent.news.com.newscent.splash.SplashActivity",
-            "at2":"cent.news.com.newscent.webview.WebViewActivity",
-            "at3":"cent.news.com.newscent.webview.VideoWebViewActivity",
-               
-            "at4":"cent.news.com.newscent.MainActivity",
-            "at5":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
-            "at6":"cent.news.com.newscent.login.LoginActivity",
-               
-          } , 
-        "bindwechat":{
-            "bw1":{
-            "action":"click_text",
-            "click_text":"我的",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"看新闻就可以赚钱的APP",
-        },
-        "bw2":{
+{
+    "enable":"false",
+    "appname":"好运APP",
+    "apptype":"layers",//layer1 layer2 layers
+    "mulityback":"true||1000",
+    "appver":"1.0.3-8",
+    "interval":"50",
+    "speed":"normal",
+     "packagename":"com.haoyunapp.hy",
+    "activityname":"com.haoyunapp.hy.ui.activity.MainActivity",
+    "open":{
+      "featuremode":"classname_text",
+      "classname":"android.widget.RadioButton",
+      "text":"福利",
+      "depth":"7",
+      "indexinparent":"0",
+      },
+    "signin":{
+        "sg1":{
+        "action":"click_text",
+        "click_text":"任务",
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"赚钱攻略",
+    },
+    "sg2":{
+        "action":"click_id",  //如果check_signin通过说明签到过 往下执行
+        "click_id":"com.knowworld.news:id/taskBigSiginNum",
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"明日签到",
+    },
+    },
+     "abnormal":{
+       "ab1":{ //继续刮卡
+           "featuremode":"id",
+           "id":"com.haoyunapp.hy:id/tv_confirm",
+       },
+       "ab2":{//自动签到弹窗
+        "featuremode":"id",
+        "id":"com.haoyunapp.hy:id/tv_continue",
+       },
+     },  
+    "activitys":{
+        "at1":"cent.news.com.newscent.splash.SplashActivity",
+        "at2":"cent.news.com.newscent.webview.WebViewActivity",
+        "at3":"cent.news.com.newscent.webview.VideoWebViewActivity",
+           
+        "at4":"cent.news.com.newscent.MainActivity",
+        "at5":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+        "at6":"cent.news.com.newscent.login.LoginActivity",
+           
+      } , 
+    "bindwechat":{
+        "bw1":{
+        "action":"click_text",
+        "click_text":"我的",
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"看新闻就可以赚钱的APP",
+    },
+    "bw2":{
+        "action":"click_id",
+        "click_id":"weixinLoginLayout",
+        "featuremode":"classname_text",
+        "classname":"android.widget.TextView",
+        "text":"我的",
+    },
+    "bw3":{
+     "action":"click_text",
+     "click_text":"我的",
+     "featuremode":"classname_text",
+     "classname":"android.widget.TextView",
+     "text":"累计金币"
+    },
+    },
+    "autoread":{
+        "ar1":{
             "action":"click_id",
-            "click_id":"weixinLoginLayout",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"我的",
+            "click_id":"com.knowworld.news:id/homeBottomBar",
+            "featuremode":"id",
+            "id":"com.knowworld.news:id/OnBack",
         },
-        "bw3":{
-         "action":"click_text",
-         "click_text":"我的",
-         "featuremode":"classname_text",
-         "classname":"android.widget.TextView",
-         "text":"累计金币"
-        },
-        },
-        "autoread":{
-            "ar1":{
-                "action":"click_id",
-                "click_id":"com.knowworld.news:id/homeBottomBar",
-                "featuremode":"id",
-                "id":"com.knowworld.news:id/OnBack",
-            },
-            "ar2":{
-                "deploymode":"classname_desc",
-                "deployclassname":"android.view.View",
-                "deploydesc":"展开全文",
-                "backtrigger":"xy_color_bool",
-                "xy":"1270||2196",
-                "color":"ffff6249",
-                "bool":"false",
-                "reswipe":"true",
+        "ar2":{
+            "deploymode":"classname_desc",
+            "deployclassname":"android.view.View",
+            "deploydesc":"展开全文",
+            "backtrigger":"xy_color_bool",
+            "xy":"1270||2196",
+            "color":"ffff6249",
+            "bool":"false",
+            "reswipe":"true",
 
-            },
         },
-        "pagecheck":{
-            "pc1":{
-                "info":"发现首页",
-                "featuremode":"id('com.haoyunapp.hy:id/rb_welfare').depth(7).indexInParent(0).exists()",
-                "actiontype":"func",//code
-                "action":"finditem()", //customfun,click_id,
-               
-            },
-            
-            "pc2":{
-                "info":"获得奖励页面",
-                "featuremode":"className('android.widget.TextView').text('恭喜你获得').depth(6).indexInParent(0).exists()",
-                "actiontype":"code",
-                "action":"id('com.haoyunapp.hy:id/tv_share').click()",
-            },
-            "pc3":{
-                "info":"视频等待页面",
-                "featuremode":"id('com.haoyunapp.hy:id/tt_reward_ad_countdown').depth(3).indexInParent(1).exists()",
-                "actiontype":"code",
-                "action":"toast('等待视频播放完成')",
-            },
-            "pc4":{
-                "info":"关闭视频页面",
-                "featuremode":"id('com.haoyunapp.hy:id/tt_video_ad_close').depth(3).indexInParent(3).exists()",
-                "actiontype":"code",
-                "action":"id('com.haoyunapp.hy:id/tt_video_ad_close').click()",
-            },
-            "pc5":{
-                "info":"刮奖页面",
-                "featuremode":"id('com.haoyunapp.hy:id/sv_cover_pic').depth(8).indexInParent(0).exists()",
-                "actiontype":"func",//code
-                "action":"swipeguagua()", //customfun,click_id,
-            },
+    },
+    "pagecheck":{
+        "pc1":{
+            "info":"发现首页",
+            "featuremode":"id('com.haoyunapp.hy:id/rb_welfare').depth(7).indexInParent(0).exists()",
+            "actiontype":"func",//code
+            "action":"finditem()", //customfun,click_id,
+           
         },
-        "durl":"http://xzf.197946.com/com.knowworld.news.apk"
-       }
+        "pc2":{
+            "info":"获得奖励页面",
+            "featuremode":"className('android.widget.TextView').text('恭喜你获得').depth(6).indexInParent(0).exists()",
+            "actiontype":"code",
+            "action":"id('com.haoyunapp.hy:id/tv_share').click()",
+        },
+        "pc3":{
+            "info":"视频等待页面",
+            "featuremode":"id('com.haoyunapp.hy:id/tt_reward_ad_countdown').depth(3).indexInParent(1).exists()",
+            "actiontype":"code",
+            "action":"",
+        },
+        "pc4":{
+            "info":"关闭视频页面",
+            "featuremode":"id('com.haoyunapp.hy:id/tt_video_ad_close').depth(3).indexInParent(3).exists()",
+            "actiontype":"code",
+            "action":"id('com.haoyunapp.hy:id/tt_video_ad_close').click()",
+        },
+        "pc5":{
+            "info":"刮奖页面",
+            "featuremode":"id('com.haoyunapp.hy:id/sv_cover_pic').depth(8).indexInParent(0).exists()",
+            "actiontype":"func",//code
+            "action":"swipeguagua()", //customfun,click_id,
+        },
+    },
+    "durl":"http://xzf.197946.com/com.knowworld.news.apk"
+   }

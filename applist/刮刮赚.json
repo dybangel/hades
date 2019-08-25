@@ -34,7 +34,7 @@
      "abnormal":{
        "ab1":{
            "featuremode":"id",
-           "id":"com.knowworld.news:id/iv_close",
+           "id":"com.guazhuan.android:id/dialog_ok",
        },
      },  
     "activitys":{
@@ -114,7 +114,7 @@
             "info":"观看视频页面",
             "featuremode":"id('com.guazhuan.android:id/tt_reward_ad_countdown').depth(3).indexInParent(1).exists()",
             "actiontype":"code",
-            "action":"toast('等待视频播放完成')",
+            "action":"",
         },
         "pc5":{
             "info":"关闭视频页面",

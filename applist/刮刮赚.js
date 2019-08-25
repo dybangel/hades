@@ -6,15 +6,30 @@ function finditem(){
  // exit();
   //alert(main.childCount());
   for(var i=0;i<main.childCount();i++){
- //  alert(i+"  " +main.child(i).className())
+
    //如果是android.widget.LinearLayout
     if("android.widget.LinearLayout"==main.child(i).className()){
-       main.child(i).click();
-       Callback_finditem_swipecount=0;
+      try{
+        var thistitle=main.child(i).child(0).child(1).text();
+        //刮奖块不能有标题，高度必须大于5个像素
+        if(""==thistitle && main.child(i).bounds().bottom-main.child(i).bounds().top>5){
+          toast("1点击"+"标题"+thistitle)
+          alert(main.child(i));
+        //  main.child(i).click();
+          Callback_finditem_swipecount=0;
+          break;
+        }else{}
+      }catch(e){
+        toast("2点击 e："+e)
+        main.child(i).click();
+        Callback_finditem_swipecount=0;
+        break;
+      }
     }else{
       Swipe(400,1000,400,400,900);
       Callback_finditem_swipecount+=1;
     }
+  //  toast("Callback_finditem_swipecount:"+Callback_finditem_swipecount)
     if(Callback_finditem_swipecount>10){
                 //告诉主线程，没有可以刮奖卡片了，可以提前切换下一个
                 toast("通知主线程，提前结束");
