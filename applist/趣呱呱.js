@@ -17,29 +17,32 @@ function finditem(){
     try{ ggkprivpriv=main.child(i).child(0).child(1).child(2).text();}catch(e){
       ggkprivpriv="没有"
     }
-  // // alert(main.child(i).child(0)); 
-  //   //alert(thistitle+"  "+ggkprivpriv+ggkpriv+"  "+ggk);
-  //   //首先要有刮刮卡字符，其次单位要是元才行
     if("赢取"==ggk){
     //其次判断main.child(i)的中心点是否在可视区内
         main.child(i).click();  //控件支持clickenable true
+        Callback_finditem_swipecount=0;
         //alert("点击"+ggkprivpriv+"  "+ggk);
         break;
       }else{
-        if(Callback_finditem_swipecount>5){
-            //告诉主线程，没有可以刮奖卡片了，可以提前切换下一个
-            toast("通知主线程，提前结束");
-            Grunbreak=true;
-        }
         //如果没有匹配到可以刮卡的区域，上滑一次
         Swipe(400,1000,400,400,900);
+        //计数器增加1
         Callback_finditem_swipecount+=1;
-    //    toast("Callback_finditem_swipecount"+Callback_finditem_swipecount);
-    }
-    }catch(e){}
-
-  }
-  thisforstart=false;
+        // toast("Callback_finditem_swipecount"+Callback_finditem_swipecount);
+          }
+}catch(e){
+    //如果出现终极异常，保持上滑一次 计数器+1
+    Swipe(400,1000,400,400,900);
+    Callback_finditem_swipecount+=1;
+ //   toast("final e:"+e)
+}
+if(Callback_finditem_swipecount>10){
+    //告诉主线程，没有可以刮奖卡片了，可以提前切换下一个
+    toast("通知主线程，提前结束");
+    Grunbreak=true;
+}
+}//for end;
+thisforstart=false;
 }
 //遍历刮奖新闻块结束
 //判断二级页面打开成功与否并开始滑动
