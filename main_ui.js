@@ -321,17 +321,17 @@ ui.viewpager.setTitles(["全局设置"]);
 //让滑动页面和标签栏联动
 ui.tabs.setupWithViewPager(ui.viewpager);
 
-//让工具栏左上角可以打开侧拉菜单
-ui.toolbar.setupWithDrawer(ui.drawer);
+// //让工具栏左上角可以打开侧拉菜单
+ ui.toolbar.setupWithDrawer(ui.drawer);
 
-// ui.menu.setDataSource(
-// [
-//   {
-//       title: "退出",
-//       icon: "@drawable/ic_exit_to_app_black_48dp"
-//   }
-// ]
-// );
+ui.menu.setDataSource(
+[
+  {
+      title: "退出1",
+      icon: "@drawable/ic_exit_to_app_black_48dp"
+  }
+]
+);
 
 ui.menu.on("item_click", item => {
     switch(item.title){
@@ -1193,6 +1193,7 @@ function checklicence(fsn){
  }
 //加载开关量
 function loadGapps(){
+    
     //判断本地有无特殊开关量，如果有则视为开发测试状态，以本地开关量为准
         var result=files.exists("/sdcard/脚本/localgapps.json")
         if(result){
@@ -1241,16 +1242,7 @@ function loadGapps(){
                           //     alert("["+packageliststr+"]");
                               Gpackagename_lists=eval("(["+packageliststr+"])")
                            //   datasourcelist=eval("(["+datasourcelist+"])");
-                            //   alert("a")
-                            //   ui.menu.setDataSource(
-                            //     [
-                            //       {
-                            //           title: "退出",
-                            //           icon: "@drawable/ic_exit_to_app_black_48dp"
-                            //       }
-                            //     ]
-                            //     );
-                            //    alert("b")
+                           
                             
                             }catch(e){toast("加载开关量包名错误")}
                             // alert(Gapps);
@@ -1767,7 +1759,7 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                                 //没有找到新闻
                                                 //视频类的不需要线程计数器
                                                 if("快狗视频"==appname||"红包视频"==appname){
-                        
+                                                    Gbrick_count+=1;//砖头+1
                                                 }else{
                                                      //线程计数器加1
                                                     nofindnews_count+=1;
