@@ -12,7 +12,7 @@
           "classname":"android.widget.TextView",
           "text":"视频",
           "depth":"12",
-          "indexinparent":"0"
+          "indexinparent":"0",
           },
 		"signin":{
             "sg1":{
@@ -24,64 +24,30 @@
             },
           },
         "abnormal":{
-           "ab1":{
-               "featuremode":"id",
-               "id":"com.cnode.blockchain:id/iv_close",
-           },
-           "ab2":{
-            "featuremode":"id",
-            "id":"com.cnode.blockchain:id/tv_pass",
-          }, 
-           "ab3":{
-               "featuremode":"id",
-               "id":"com.cnode.blockchain:id/close",
-           },
-		    "ab4":{
+		    "ab1":{
                "featuremode":"id",
                "id":"com.cnode.blockchain:id/install_cancel",
            },
-		   "ab5":{
-               "featuremode":"id",
-               "id":"com.cnode.blockchain:id/tv_exit_cancel",
-           },
-		    "ab6":{
+		    "ab2":{
                "featuremode":"id",
                "id":"com.cnode.blockchain:id/tv_upgrade_cancel",
            },
-		   "ab7":{
+		   "ab3":{
                "featuremode":"id",
-               "id":"com.cnode.blockchain:id/tv_signin_dialog_gold",
+               "id":"com.cnode.blockchain:id/tv_exit_cancel",
            },
-		   "ab8":{
-               "featuremode":"id",
-               "id":"com.cnode.blockchain:id/iv_sign_in_result_close",
-           },
-		   "ab9":{
-               "featuremode":"id",
-               "id":"com.cnode.blockchain:id/tv_push_guide_cancel",
-           },
-		    "ab10":{
-               "featuremode":"click_boundary_path",
-               "boundary":"android.webkit.WebView",
-			   "path":"0||3||1||0||0",
-           },
-		   "ab11":{
-               "featuremode":"id",
-               "id":"com.cnode.blockchain:id/tv_news_person_dialog_guest_ok",
-           },
-            "ab12":{
-               "featuremode":"id",
-               "id":"com.cnode.blockchain:id/tv_user_guide_bottom_close",
-           },
-            "ab13":{
+            "ab4":{
                "featuremode":"classname_text",
                "classname":"android.widget.TextView",
                 "text":"立即领取",
            },
-            "ab14":{
-               "featuremode":"click_boundary_path",
-               "boundary":"android.webkit.WebView",
-			   "path":"0||0||18||1||0||0",
+             "ab5":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/tv_signin_dialog_gold",
+           },
+            "ab6":{
+               "featuremode":"id",
+               "id":"com.cnode.blockchain:id/iv_sign_in_result_close",
            },
 		   },
 		"activitys":{
