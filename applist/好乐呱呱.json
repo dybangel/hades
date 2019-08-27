@@ -73,18 +73,24 @@
                 "action":"id('com.haoleguagua.android:id/iv_scratch_unlock').click()",
             },
             "pc5":{
+                "info":"签到页面",
+                "featuremode":"className('android.widget.TextView').text('签到得现金').depth(5).indexInParent(0).exists()",
+                "actiontype":"code",
+                "action":"id('com.haoleguagua.android:id/iv_scratch_double').click()",
+            },
+            "pc6":{
                 "info":"视频等待页面",
                 "featuremode":"id('com.haoleguagua.android:id/tt_reward_ad_countdown').depth(3).indexInParent(1).exists()",
                 "actiontype":"code",
                 "action":"toast('等待视频播放完成')",
             },
-            "pc6":{
+            "pc7":{
                 "info":"关闭视频页面",
                 "featuremode":"id('com.haoleguagua.android:id/tt_video_ad_close').depth(3).indexInParent(3).exists()",
                 "actiontype":"code",
                 "action":"id('com.haoleguagua.android:id/tt_video_ad_close').click()",
             },
-            "pc7":{
+            "pc8":{
                 "info":"刮奖页面",
                 "featuremode":"id('com.haoleguagua.android:id/base_scratch_card').depth(9).indexInParent(0).exists()",
                 "actiontype":"func",//code
