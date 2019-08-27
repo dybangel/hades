@@ -1,6 +1,16 @@
 //var thisswipecount=0;
 //遍历刮奖新闻块
 function finditem(){
+  var img = captureScreen();
+//取出导航栏灰色按钮图标坐标值所属颜色值
+var color = images.pixel(img, 717,2432);
+color= colors.toString(color);
+if("#ff404040"==color){
+//这是没有弹窗的颜色
+}else if("#ff1e1e1e"==color){
+//这是出现蒙版弹窗的颜色，会暗淡一些
+thiscommon.touchreal(1220,745);
+}
     var parent=className("android.support.v7.widget.RecyclerView").findOnce(0);//.childCount();
     var main=parent;
     //alert(main.childCount());
