@@ -10,9 +10,9 @@
       "open":{
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
-        "text":"推荐",
-        "depth":"16",
-        "indexinparent":"0",
+        "text":"任务",
+        "depth":"9",
+        "indexinparent":"1",
         },
       "signin":{
              "sg1":{
