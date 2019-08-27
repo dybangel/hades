@@ -79,18 +79,24 @@
                 "action":"id('com.haoleguagua.android:id/iv_scratch_double').click()",
             },
             "pc6":{
+                "info":"签到页面",
+                "featuremode":"className('android.widget.TextView').text('已翻倍').depth(6).indexInParent(0).exists()",
+                "actiontype":"code",
+                "action":"id('com.haoleguagua.android:id/tv_scratch_now').click()",
+            },
+            "pc7":{
                 "info":"视频等待页面",
                 "featuremode":"id('com.haoleguagua.android:id/tt_reward_ad_countdown').depth(3).indexInParent(1).exists()",
                 "actiontype":"code",
                 "action":"toast('等待视频播放完成')",
             },
-            "pc7":{
+            "pc8":{
                 "info":"关闭视频页面",
                 "featuremode":"id('com.haoleguagua.android:id/tt_video_ad_close').depth(3).indexInParent(3).exists()",
                 "actiontype":"code",
                 "action":"id('com.haoleguagua.android:id/tt_video_ad_close').click()",
             },
-            "pc8":{
+            "pc9":{
                 "info":"刮奖页面",
                 "featuremode":"id('com.haoleguagua.android:id/base_scratch_card').depth(9).indexInParent(0).exists()",
                 "actiontype":"func",//code
