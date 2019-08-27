@@ -114,6 +114,10 @@
             "featuremode":"id",
             "id":"com.browser2345:id/star_guide_page_delete",
           },
+        "ab6":{
+            "featuremode":"id",
+            "id":"com.browser2345:id/btn_cancel",
+          },
          }, 
         "activitys":{
             "at1":"com.browser2345.BrowserActivity",
