@@ -34,7 +34,7 @@
          "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"com.knowworld.news:id/iv_close",
+               "id":"com.b12lab.myluck:id/tt_insert_dislike_icon_img",
            },
          },  
 		"activitys":{
@@ -132,9 +132,8 @@
                 "info":"看完视频后页面",
                 "featuremode":"className('android.widget.TextView').text('点击领取').depth(9).indexInParent(1).exists()",
                 "actiontype":"code",//code
-                "action":"className('android.widget.TextView').text('点击领取').findOnce().click()", //customfun,click_id,
+                "action":"className('android.widget.TextView').text('点击领取').click()", //customfun,click_id,
             },
-		   
 			
         },
         "durl":"http://xzf.197946.com/com.knowworld.news.apk"

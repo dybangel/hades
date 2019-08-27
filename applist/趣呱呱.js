@@ -78,6 +78,6 @@ sleep(800)
 Swipe(thisright-100,thisbottom-100,thisright-50,thistop,800);
 // alert(sx3);
 }
-    sleep(5000);
+    sleep(15000);
    thisforstart=false;
   }  
