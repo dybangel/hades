@@ -14,7 +14,7 @@ function finditem(){
         //刮奖块不能有标题，高度必须大于5个像素
         if(""==thistitle && main.child(i).bounds().bottom-main.child(i).bounds().top>5){
           toast("1点击"+"标题"+thistitle)
-          alert(main.child(i));
+          //alert(main.child(i));
         //  main.child(i).click();
           Callback_finditem_swipecount=0;
           break;
