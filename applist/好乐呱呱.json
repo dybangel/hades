@@ -73,13 +73,13 @@
                 "action":"id('com.haoleguagua.android:id/iv_scratch_unlock').click()",
             },
             "pc5":{
-                "info":"签到页面",
-                "featuremode":"className('android.widget.TextView').text('签到得现金').depth(5).indexInParent(0).exists()",
+                "info":"签到页面1",
+                "featuremode":"id('com.haoleguagua.android:id/iv_scratch_double').depth(6).indexInParent(0).exists()",
                 "actiontype":"code",
                 "action":"id('com.haoleguagua.android:id/iv_scratch_double').click()",
             },
             "pc6":{
-                "info":"签到页面",
+                "info":"签到页面2",
                 "featuremode":"className('android.widget.TextView').text('已翻倍').depth(6).indexInParent(0).exists()",
                 "actiontype":"code",
                 "action":"id('com.haoleguagua.android:id/tv_scratch_now').click()",

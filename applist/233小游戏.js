@@ -10,6 +10,8 @@ if("#ff404040"==color){
 }else if("#ff1e1e1e"==color){
 //这是出现蒙版弹窗的颜色，会暗淡一些
 thiscommon.touchreal(1220,745);
+
+thiscommon.touchreal(1220,560);
 }
     var parent=className("android.support.v7.widget.RecyclerView").findOnce(0);//.childCount();
     var main=parent;
@@ -43,21 +45,28 @@ thiscommon.touchreal(1220,745);
       //其次判断main.child(i)的中心点是否在可视区内
           main.child(i).click();  //控件支持clickenable true
           //alert("点击"+"  "+ggk);
-          break; 
-      }else{
-          if(Callback_finditem_swipecount>5){
-              //告诉主线程，没有可以刮奖卡片了，可以提前切换下一个
-              toast("通知主线程，提前结束");
-              Grunbreak=true;
+          Callback_finditem_swipecount=0;
+          break;     
+     }else{
+        //如果没有匹配到可以刮卡的区域，上滑一次
+        Swipe(400,1000,400,400,900);
+        //计数器增加1
+        Callback_finditem_swipecount+=1;
+        // toast("Callback_finditem_swipecount"+Callback_finditem_swipecount);
           }
-          //如果没有匹配到可以刮卡的区域，上滑一次
-          Swipe(400,1000,400,400,900);
-          Callback_finditem_swipecount+=1;
-      //    toast("Callback_finditem_swipecount"+Callback_finditem_swipecount);
-      }
-      }catch(e){}
-    }
-    thisforstart=false;
+}catch(e){
+    //如果出现终极异常，保持上滑一次 计数器+1
+    Swipe(400,1000,400,400,900);
+    Callback_finditem_swipecount+=1;
+ //   toast("final e:"+e)
+}
+if(Callback_finditem_swipecount>10){
+    //告诉主线程，没有可以刮奖卡片了，可以提前切换下一个
+    toast("通知主线程，提前结束");
+    Grunbreak=true;
+}
+}//for end;
+thisforstart=false;
 }
 //遍历刮奖新闻块结束
 function swipeguagua(){
