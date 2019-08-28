@@ -44,7 +44,7 @@ module.exports = {
     },
     //根据控件所在的坐标坐标点击
     clickxy_for_ele:function (ele){
-    touchreal(ele.bounds().centerX(),ele.bounds().centerY());
+    try{touchreal(ele.bounds().centerX(),ele.bounds().centerY())}catch(e){};
     },
     click_boundary_path:function(boundary,path){
         try{
@@ -88,23 +88,26 @@ module.exports = {
                }
                return;
             }else{
-                        home();
-                        sleep(1500);
-                        recents();//最近任务
-                    sleep(1500);
-                    if("xiaomi4"==devicetype){
-                        touchreal(519,1733);
-                    }else if("xiaomi4s"==devicetype||"xiaominote2"==devicetype){
-                        id('com.android.systemui:id/clearButton').click();
+                       try{
+                                    home();
+                                    sleep(1500);
+                                    recents();//最近任务
+                                sleep(1500);
+                                if("xiaomi4"==devicetype){
+                                    touchreal(519,1733);
+                                }else if("xiaomi4s"==devicetype||"xiaominote2"==devicetype){
+                                    id('com.android.systemui:id/clearButton').click();
+                            
+                                }else if("lnnl"==devicetype){
+                                    id('com.android.systemui:id/clear_recents').click();
+                                }else if("le"==devicetype){
+                                    thiscommon.clickxy_for_ele(id("com.android.systemui:id/leui_recent_clear_all_txtview").findOnce());
+                                    sleep(500);
+                                    home();
+                            
+                                } 
+                       }catch(e){}
                 
-                    }else if("lnnl"==devicetype){
-                        id('com.android.systemui:id/clear_recents').click();
-                    }else if("le"==devicetype){
-                        thiscommon.clickxy_for_ele(id("com.android.systemui:id/leui_recent_clear_all_txtview").findOnce());
-                        sleep(500);
-                        home();
-                
-                    }
             }
         }
     },
