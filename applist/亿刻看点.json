@@ -10,17 +10,18 @@
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"视频",
+          "text":"热点",
           "depth":"12",
-          "indexinparent":"0",
+          "indexinparent":"2",
           },
 		"signin":{
             "sg1":{
               "action":"click_boundary_path",
               "boundary":"android.widget.LinearLayout", 
 			  "path":"0||0||2||3",
-              "featuremode":"id",
-              "id":"com.cnode.blockchain:id/bage_wrapper",
+              "featuremode":"classname_desc",
+              "calssname":"android.view.View",
+              "desc":"新手任务",
             },
           },
         "abnormal":{
