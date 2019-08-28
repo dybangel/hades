@@ -1829,7 +1829,8 @@ function while_readnews(autoread_obj){
  }  
     
 
-   thread_readnews=threads.start(function(){
+   thread_readnews=threads.start(
+       function(){
               //两次上滑之间的间隔
                var x=Math.round(Math.random()*(Gmax-Gmin))+Gmin;
               try{toastAt("readnews 滑动间隔"+x+"毫秒 两点间隔"+Gppinterval+"毫秒");}catch(e){}
@@ -3590,7 +3591,7 @@ function page_check(){
                         var result=false;
                     }
                         
-                        if(result){thisispageone=true}
+                        if(result){thisispageone=true;toast('当前识别为1级页面')}
                     }
                     //二级页面验证方式取值
                     var pagetwo_featuremode=autoread_obj["ar1"]["featuremode"];
@@ -3618,14 +3619,16 @@ function page_check(){
                       //  alert("thisid:"+thisid)
                         if(result){thisispagetwo=true}
                     }else if("ids"==pagetwo_featuremode){
+                       
                         var thisid=autoread_obj[obja]["ids"];
                         ids_arr=thisid.split("||");
                         var num=0;
                             try{
                                 for(var i=0;i<ids_arr.length;i++){
                                 if(id(ids_arr[i]).exists()){
-                                    if(result){thisispagetwo=true}     
-                                  //  break;
+                                    thisispagetwo=true     
+                                  //  toast('当前识别为2级页面')
+                                    break;
                                 } 
                             }  
                             }catch(e){
