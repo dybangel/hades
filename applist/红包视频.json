@@ -2,7 +2,7 @@
         "enable":"false",
         "appname":"红包视频",
 		"appver":"2.6.0",
-        "interval":"120",
+        "interval":"60",
 		"speed":"normal",
         "packagename":"com.sanmiao.sound",
         "activityname":"com.sanmiao.sound.activity.MainActivity",
