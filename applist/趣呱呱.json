@@ -36,6 +36,16 @@
                "featuremode":"id",
                "id":"com.b12lab.myluck:id/tt_insert_dislike_icon_img",
            },
+		   "ab2":{
+               "featuremode":"className_text",
+               "classname":"android.widget.TextView",
+			   "text":"点击领取",
+           },
+		    "ab3":{
+               "featuremode":"classname_text",
+               "classname":"android.widget.TextView",
+			   "text":"关闭",
+           },
          },  
 		"activitys":{
             "at1":"cent.news.com.newscent.splash.SplashActivity",
@@ -94,8 +104,7 @@
                 "info":"发现首页",
                 "featuremode":"id('com.b12lab.myluck:id/fragment_main_ticketlist_title').depth(10).indexInParent(0).exists()",
                 "actiontype":"func",//code
-                "action":"finditem()", //customfun,click_id,
-               
+                "action":"finditem()", //customfun,click_id,  
             },
             
             "pc2":{
@@ -116,25 +125,24 @@
                 "actiontype":"code",
                 "action":"id('com.b12lab.myluck:id/tt_video_ad_close').click()",
             },
-            "pc5":{
+			"pc5":{
+                "info":"点击领取页面",
+                "featuremode":"className('android.widget.TextView').text('点击领取').depth(9).indexInParent(1).exists()",
+                "actiontype":"code",//code
+                "action":"className('android.widget.TextView').text('点击领取').click()", //customfun,click_id,
+            },
+            "pc6":{
                 "info":"刮奖页面",
                 "featuremode":"id('com.b12lab.myluck:id/swipeRefreshLayout').depth(13).indexInParent(0).exists()",
                 "actiontype":"func",//code
                 "action":"swipeguagua()", //customfun,click_id,
             },
-			"pc6":{
+			"pc7":{
                 "info":"非呱呱卡页面",
                 "featuremode":"className('android.widget.TextView').text('幸运转盘').depth(9).indexInParent(1).exists()",
                 "actiontype":"code",//code
                 "action":"id('com.b12lab.myluck:id/nav_bar_iv_nav_back').click()", //customfun,click_id,
             },
-			"pc7":{
-                "info":"看完视频后页面",
-                "featuremode":"className('android.widget.TextView').text('点击领取').depth(9).indexInParent(1).exists()",
-                "actiontype":"code",//code
-                "action":"className('android.widget.TextView').text('点击领取').click()", //customfun,click_id,
-            },
-			
         },
         "durl":"http://xzf.197946.com/com.knowworld.news.apk"
        }
