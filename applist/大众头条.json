@@ -1,0 +1,61 @@
+{
+    "enable": "false",
+    "appname": "大众头条",
+    "mulityback": "20||164",
+    "appver": "2.3.6",
+    "interval": "30",
+    "speed": "normal",
+    "packagename": "com.build.dazhong",
+    "activityname": "com.build.dazhong.reconsitution.home.activity.MainActivity_",
+    "open": {
+        "featuremode": "classname_text",
+        "classname": "android.widget.TextView",
+        "text": "任务",
+        "depth": "12",
+        "indexinparent": "1",
+    },
+    "signin": {
+        "sg1": {
+            "action": "click_text",
+            "click_text": "任务",
+            "featuremode": "classname_text",
+            "classname": "android.widget.TextView",
+            "text": "任务中心",
+        },
+    },
+    "abnormal": {
+        "ab1": {
+            "featuremode": "id",
+            "id": "com.build.dazhong:id/type_3_2_iv",
+        },
+        "ab2": {
+            "featuremode": "id",
+            "id": "com.build.dazhong:id/go_on_tv",
+        },
+        "ab3": {
+            "featuremode": "id",
+            "id": "com.build.dazhong:id/red_btn",
+        },
+    },
+    "activitys": {
+        "at1": "com.build.dazhong.reconsitution.home.activity.MainActivity_",
+        "at2": "com.build.dazhong.reconsitution.news.activity.NewsDetailListActivity",
+        "at3": "com.build.dazhong.reconsitution.video.activity.VideoDetailActivity_",
+    },
+    "bindwechat": {},
+    "autoread": {
+        "ar1": {
+            "action": "click_id",
+            "click_id": "com.build.dazhong:id/tab_item_iv",
+            "featuremode": "id",
+            "id": "com.build.dazhong:id/wechat_btn",
+        },
+        "ar2": {
+            "upcount": "20",
+            "deploymode": "classname_text",
+            "deployclassname": "android.widget.TextView",
+            "deploytext": "点击阅读全文",
+        },
+    },
+    "durl": "http://app.2345.cn/appsoft/54185.apk"
+}
