@@ -1062,8 +1062,8 @@ if(Grunstate=="trainwechat"){
        while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj);
        
        //阻塞运行打开app 
+       insert_log('','',appname,'012','')
        var openstate=openAPP(appname,packagename,activityname,open_obj);
-      // alert("openstate is:"+openstate);
      
        
 
@@ -1077,7 +1077,8 @@ if(Grunstate=="trainwechat"){
       // alert(openstate);
         //如果打开失败跳转到下一个app，如果成功则进行延迟等待，这样节约时间
        if(openstate){
-    
+        //alert("打开成功-写日志")
+        insert_log('','',appname,'012','1');
         try{setlastapp("1",appname); }catch(e){}
       
         //测试代码开始
@@ -1146,8 +1147,11 @@ if(Grunstate=="trainwechat"){
                             }
                            // sleep(Gappinterval);
                         }
+       }else{
+       insert_log('','',appname,'012','0')
+
        }
-           toast("准备开始下一个");
+        toast("准备开始下一个");
 
        //开启异常处理线程--通用
        Gfirstrun=false;
@@ -1487,6 +1491,7 @@ if(Genv=="indoor"){
 function while_signin(signin_obj){
  //  alert("signin_obj is:"+signin_obj)
 Gworkthread="signin_start";
+insert_log('','',appname,'010','')
 play("global","执行");
 play("global","每日签到");
 sleep(1000);
@@ -1563,11 +1568,13 @@ if("undefined"==typeof(signin_obj)){
                                if(i==thiscommon.JSONLength(signin_obj)){
                                    //最后一步的执行成功
                                    play("global","签到成功");
+                                   insert_log('','',appname,'010','1')
                                }else{
                                    play("global","执行完成");
                                }
                            
                            }else{
+                            insert_log('','',appname,'019','')
                                play("global","检查");
                            }
                       
@@ -1600,6 +1607,7 @@ function while_findnews(autoread_obj){
 
   //正在找新闻状态
    findnews_state=false;
+   insert_log('','',appname,'008','')
    toast("找新闻线程启动..."); play("global","正在检索");
    
 //取出action的值
@@ -1735,6 +1743,7 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                               
                                                         //如果存在，点击新闻
                                                         play("global","打开新闻");
+                                                     insert_log('','',appname,'014','')
                                                     try{thiscommon.clickxy_for_ele(ele);
                                                         findnews_state=true//标识现在正在打开一个新闻，成功与否尚未确定，所该告诉finditem 不要着急滑动
                                                     }catch(e){toast("findnews e4 "+e)} 
@@ -1745,12 +1754,14 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                                             mytoast("判断二级页面打开结果为:"+result);         
                                                             if(result){
                                                                 play("global","打开成功");
+                                                                insert_log('','',appname,'014','1')                                                                
                                                                 Gworkthread="findnews_stop";
                                                                 findnews_state=true;
                                                                // sleep(1000);
                                                                 try{thread_findnews.interrupt();}catch(e){}
                                                             }else{
                                                                 play("global","打开失败");
+                                                                insert_log('','',appname,'004','')
                                                                 funmulityback();
                                                                 findnews_state=false;//告诉findimte 可以动了
                                                             }
@@ -1769,6 +1780,7 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                                     if(nofindnews_count>Gnofindnews_countback){
                                                             nofindnews_count=0;
                                                             toast("初始化线程计数器findnews");
+                                                            insert_log('','',appname,'015','')
                                                             workthread_errorcount=999;
                                                         
                                                     }
@@ -1792,6 +1804,8 @@ function while_readnews(autoread_obj){
    Gworkthread="readnews_start";
    //线程执行前初始化一下没有找到新闻的次数为0； 
    play("global","开始阅读");
+   insert_log('','',appname,'009','')
+   
    var upcount=0;
    //初始化第一次截屏为是
    var firstcapture=true;
@@ -1889,7 +1903,8 @@ function while_readnews(autoread_obj){
                     //线程计数器机制开始
                   
                     if(thisthread_count>90){
-                        try{                      
+                        try{            
+                            insert_log('','',appname,'005','')          
                             workthread_errorcount=999;//修改变量，通知while_control重启app
                             toast("初始化线程计数器readnews");
                             thisthread_count=0;
@@ -2023,15 +2038,17 @@ function while_readnews(autoread_obj){
                                   //  toast("上滑："+upcount+"/"+maxupcount+"次");
                                     if(upcount>maxupcount){
                                         toast("返回首页...");
-                                        
+                                        insert_log('','',appname,'017','')
                                             funmulityback();
                                             var openstate=openAPP(appname,packagename,activityname,open_obj);
                                             if(openstate){
+                                        insert_log('','',appname,'017','1')
                                                 //while_findnews(autoread_obj);  
                                                 Gworkthread="readnews_stop";
                                                 sleep(1000);
                                                 thread_readnews.interrupt();
                                             }else{
+                                        insert_log('','',appname,'017','0')
                                                 funmulityback();
                                             }
                                        
@@ -2065,15 +2082,17 @@ function while_readnews(autoread_obj){
                                         firstcapture=false;
                                     //  toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
                                         toast("非收益页面，返回首页...");
-                                    
+                                        insert_log('','',appname,'002','')
                                         funmulityback();
                                         var openstate=openAPP(appname,packagename,activityname,open_obj);
                                         if(openstate){
+                                            insert_log('','',appname,'002','1')
                                             //while_findnews(autoread_obj);  
                                             Gworkthread="readnews_stop";
                                             sleep(1000);
                                             thread_readnews.interrupt();
                                         }else{
+                                            insert_log('','',appname,'002','0')
                                             funmulityback();
                                         }
                                        
@@ -2084,17 +2103,20 @@ function while_readnews(autoread_obj){
                                         if(color!="#"+thiscolor){
                                         //  toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
                                         //  toast("返回首页...");
+                                                insert_log('','',appname,'003','')
                                                Swipe(300,500,200,1200,500);
                                                sleep(500);
                                                 funmulityback();
                                         
                                                 var openstate=openAPP(appname,packagename,activityname,open_obj);
                                                 if(openstate){
+                                                    insert_log('','',appname,'003','1')
                                                     //while_findnews(autoread_obj);  
                                                     Gworkthread="readnews_stop";
                                                     sleep(1000);
                                                     thread_readnews.interrupt();
                                                 }else{
+                                                    insert_log('','',appname,'003','0')
                                                     funmulityback();
                                                 }
                                         }
@@ -2111,16 +2133,18 @@ function while_readnews(autoread_obj){
                                         backtrigger_maincount+=1;
                                         if(backtrigger_maincount>50){
                                             toastAt("滑动次数太多了，一直未获取到收益，返回一级页面")
-                                        
+                                            insert_log('','',appname,'001','')
                                                 funmulityback();
                                         
                                                 var openstate=openAPP(appname,packagename,activityname,open_obj);
                                                 if(openstate){
+                                            insert_log('','',appname,'001','1')
                                                     //while_findnews(autoread_obj);  
                                                     Gworkthread="readnews_stop";
                                                     sleep(1000);
                                                     thread_readnews.interrupt();
                                                 }else{
+                                            insert_log('','',appname,'001','0')
                                                     funmulityback();
                                                 }
                                         }
@@ -2517,6 +2541,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                         //   play("global","拉回站内");
 
                            toast("拉回站内......");
+                           insert_log('','',appname,'006','')
                           // thiscommon.openpackage(packagename+"/"+activityname);
                                restartapp();
                                outsidecount=0;
@@ -2528,7 +2553,8 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                            erroraocount+=1;
                            //如果一直没有匹配到白名单
                                      if(erroraocount>10){
-                                        log("erroraocount is:"+erroraocount);                                        
+                                        log("erroraocount is:"+erroraocount);
+                                        insert_log('','',appname,'007','')                                       
                                          toast("拉回主线......");
                                          try{    thread_findnews.interrupt();}catch(e){};
                                          try{    thread_readnews.interrupt();}catch(e){};
@@ -2647,6 +2673,7 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
              }
              if(brick_error>10){
                  brick_error=0;
+                 insert_log('','',appname,'013','')
                  toast("搬砖计数器重新激活线程......");
                  restartapp();   
              }
@@ -3719,10 +3746,12 @@ function while_pagecheck(){
                         thisfindpage=false;
                         for(var i=1;i<=thiscommon.JSONLength(pagecheck_obj);i++){
                             var thisfeaturemode=pagecheck_obj["pc"+i]["featuremode"];
+                            insert_log('','',appname,'018','')
                             var thisresult= eval(thisfeaturemode);
                             var thisinfo=pagecheck_obj["pc"+i]["info"]
                            
                             if(thisresult){
+                            insert_log('','',appname,'018','1')
                                 var thispcx="pc"+i;
                                 //判断当前pc与上一个pc是否是一样的
                                 //如果是一样的线程计数器增加一
@@ -3764,12 +3793,14 @@ function while_pagecheck(){
                                         }
                          
                                 break;
+                            
                             }//if end;
     
                         }//for end
                         //线程计数器超过数量
                         try{  if(samepcx_count>50){
                             toast("本页面停留太长，重新拉起")
+                            insert_log('','',appname,'016','')
                             samepcx_count=0;
                             workthread_errorcount=999
                         }}catch(e){
@@ -3780,6 +3811,7 @@ function while_pagecheck(){
                         thisforstart=false;
                        if(thisfindpage==false){
                            samepcx_count+=1;
+                           insert_log('','',appname,'018','0')
                            toast("没有识别当前页面");
                        }
                     }catch(e){
@@ -3865,4 +3897,69 @@ try{thread_pachagecheck.interrupt();}catch(e){}
 
     })
 } 
+function insert_log(psessionid,pthread,pappname,paction,presult){
+    importClass('android.database.sqlite.SQLiteDatabase');
+    //importClass("android.content.ContentValues");
+    importClass("android.content.Context");
+    importClass("android.database.Cursor");
+  try{
+             var db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null); 
+             db.execSQL("create table if not exists " +"t_log" + "(fsession,fthread,fappname,faction,factime,fresult)");
+            //var c = db.query("t_log", null, "", null, null, null, null, null);
+            var t_tag = new Object;
+            t_tag.sessionid=psessionid;
+            t_tag.thread=pthread;
+            t_tag.appname= pappname;
+            t_tag.action=paction;
+            t_tag.actime=load_time();
+            t_tag.result = presult;
+            //ContentValues以键值对的形式存放数据???????
+            var cv = new ContentValues();
+            cv.put("fsession", t_tag.sessionid);
+            cv.put("fthread", t_tag.thread);
+            cv.put("fappname", t_tag.appname);
+            cv.put("faction", t_tag.action);
+            cv.put("factime", t_tag.actime);
+            cv.put("fresult", t_tag.result);
+            
+            //插入ContentValues中的数据????????
+            db.insert("t_log", null, cv);
+            db.close();  
+
+  }catch(e){
+
+  }
+   
+}
+// 数据库：haiqu 表：t_log表结构
+// app名称 动作 动作所在线程 执行时间  执行结果
+// fappname,faction,fthread,factime,fresult
+
+
+// 获取手机系统时间函数
+// 动作faction 编号解释
+// 001 返回一级 二级页面滑栋超过50次
+// 002 返回一级 无收益圈 -
+// 003 返回一级 获得获益 -
+// 004 返回一级 打开失败 -
+// 005 返回一级 超过线程计数器90次 -
+// 006 拉回站内-
+// 007 拉回主线-
+// 008 找新闻 -
+// 009 读新闻 -
+// 010 签到
+// 011 优化进程
+// 012 打开APP -
+// 013 搬砖计数器超过次数重启 -
+// 014 找到新闻并打开 -
+// 015 一直没有找到新闻返回 -
+// 016 超过相同页面停留计数器50次，重启APP
+// 017 返回一级 滑动数量到达随机最大数
+// 018 刮刮卡页面识别
+// 019 检查
+
+//获取系统时间
+function load_time() {
+    return new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+  }
    
