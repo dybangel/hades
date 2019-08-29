@@ -13,6 +13,15 @@ function  finditem(){
             }catch(e){
                 }
             try{
+                var gg1=main.child(i).child(1).child(0);
+                if(gg1.text()=='幸运抽奖'){
+                    play('global',i);
+                    play('global','广告不点击'); 
+                    return false;
+                }
+            }catch(e){
+                }
+            try{
                 play('global',i);
                 play('global','点击');
                 return main.child(i);

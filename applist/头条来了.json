@@ -2,11 +2,11 @@
       "enable":"true", 
       "appname":"头条来了",
       "mulityback":"true||2000",
-	  "appver":"2.0.1.17",
+	  "appver":"2.0.3.7",
       "interval":"60",
       "speed":"normal",
       "packagename":"toutiao.yiimuu.appone",
-      "activityname":"toutiao.yiimuu.appone.main.HomeActivity",
+      "activityname":"toutiao.yiimuu.appone.main.loading.WelcomeActivity",
       "open":{
         "featuremode":"classname_text",
         "classname":"android.widget.TextView",
@@ -39,6 +39,10 @@
           "ab4":{
              "featuremode":"id",
              "id":"toutiao.yiimuu.appone:id/interaction_close",
+         },
+          "ab5":{
+             "featuremode":"id",
+             "id":"toutiao.yiimuu.appone:id/image_redOpen",
          },
        },  
 	  "activitys":{
