@@ -42,6 +42,10 @@
                "featuremode":"id",
                "id":"com.jidongtoutiao.jdtt:id/iv_close",
            },
+            "ab2":{
+               "featuremode":"id",
+               "id":"com.jidongtoutiao.jdtt:id/commom_dialog_ok",
+           },
          },  
         "activitys":{
             "at1":"com.jidongtoutiao.jdtt.home.HomeMainActivity",
