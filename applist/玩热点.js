@@ -5,7 +5,7 @@ function finditem(){
     for(var i=1;i<subcount;i++){
         try{
             var gg1=main.child(i).child(1).child(0).child(2);
-            if(gg1.id()=='ad_mark1'){
+            if(gg1.id()=='com.app.wantoutiao:id/ad_mark1'){
                 play('global',i);
                 play('global','广告不点击'); 
                 return false;
@@ -14,7 +14,7 @@ function finditem(){
             }
         try{
             var gg2=main.child(i).child(0).child(0).child(2);
-            if(gg2.id()=='ad_mark1'){
+            if(gg2.id()=='com.app.wantoutiao:id/ad_mark1'){
                 play('global',i);
                 play('global','广告不点击'); 
                 return false;

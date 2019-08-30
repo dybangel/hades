@@ -31,8 +31,26 @@ function finditem(){
             }catch(e){
                 }
          try{
-            var gg3=main.child(i).child(0).child(1).child(1);
-            if(gg3.id()=="com.jxbz.ztt:id/ad_item_ad_notice2"){
+            var gg4=main.child(i).child(0).child(1).child(1);
+            if(gg4.id()=="com.jxbz.ztt:id/ad_item_ad_notice2"){
+                play('global',i);
+                play('global','广告不点击'); 
+                return false;
+            }
+        }catch(e){
+            }
+        try{
+            var gg5=main.child(i).child(1).child(0).child(2);
+            if(gg5.className()=="android.widget.ImageView"){
+                play('global',i);
+                play('global','广告不点击'); 
+                return false;
+            }
+        }catch(e){
+            }
+        try{
+            var gg6=main.child(i);
+            if(gg6.className()=="android.widget.LinearLayout"){
                 play('global',i);
                 play('global','广告不点击'); 
                 return false;

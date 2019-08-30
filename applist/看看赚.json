@@ -2,7 +2,7 @@
         "enable":"false",
         "appname":"看看赚", 
 		"mulityback":"81||164",
-        "appver":"V3.3.0.0",
+        "appver":"V3.3.1.0",
         "interval":"30",
 		"speed":"normal+",
         "packagename":"com.yj.kankanzhuan",
@@ -10,7 +10,9 @@
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"推荐"
+          "text":"推荐",
+		   "depth":"14",
+          "indexinparent":"0",
           },
 		"signin":{
             "sg1":{
@@ -26,7 +28,7 @@
               "click_id":"com.yj.kankanzhuan:id/tv_sign",
               "featuremode":"classname_text",
               "classname":"android.widget.TextView",
-              "text":"金币",
+              "text":"已签到",
             },
 			},
     	"abnormal":{
@@ -50,7 +52,7 @@
             "id":"com.yj.kankanzhuan:id/change_fontsize",
 			},
 		  "ar2":{
-		    "upcount":"25",
+		    "upcount":"27",
 			"deploymode":"click_boundary_path",
 			"deployboundary":"android.support.v7.widget.RecyclerView",
 			"deploypath":"0||2||0||1||0",

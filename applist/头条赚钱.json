@@ -10,7 +10,9 @@
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"娱乐"
+          "text":"任务",
+		  "depth":"11",
+          "indexinparent":"1",
           },
 		"signin":{
         

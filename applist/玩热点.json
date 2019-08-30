@@ -10,7 +10,9 @@
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"热点"
+          "text":"热点",
+		  "depth":"12",
+          "indexinparent":"1",
           },
 		"signin":{
             "sg1":{
@@ -47,7 +49,11 @@
          "ab3":{
 		   "featuremode":"id",
 		   "id":"com.app.wantoutiao:id/chest_btn2",
-           }, 		   
+           }, 
+         "ab4":{
+		   "featuremode":"id",
+		   "id":"com.app.wantoutiao:id/img",
+           }, 		   		   
 		   },
         "activitys":{
             "at1":"com.app.wantoutiao.view.main.MainActivity",
@@ -65,7 +71,7 @@
             "id":"com.app.wantoutiao:id/iv_share",
 			},
 		  "ar2":{
-		        "upcount":"18",
+		        "upcount":"20",
 				"deploymode":"classname_desc",
 				"deployclassname":"android.view.View",
 				"deploydesc":"点击查看全文",
