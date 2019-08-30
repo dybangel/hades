@@ -23,7 +23,7 @@ function  finditem(){
             }
          try{
             var gg3=main.child(i);
-            if("广告3"==gg3.child(0).child(1).text()){
+            if("广告 3"==gg3.child(0).child(1).text()){
                         play("global",i);
                         play("global","广告不点击");
                         return false;
@@ -32,7 +32,7 @@ function  finditem(){
             }
             try{
                 var gg4=main.child(i);
-                if("广告2"==gg4.child(0).child(1).text()){
+                if("广告 2"==gg4.child(0).child(1).text()){
                             play("global",i);
                             play("global","广告不点击");
                             return false;
@@ -41,7 +41,7 @@ function  finditem(){
                 }
             try{
                 var gg5=main.child(i);
-                if("com.memory.online:id/iv_ad_logo"==gg5.child(0).child(2).id()){
+                if("com.memory.online:id/tv_ad_tips"==gg5.child(0).child(2).id()){
                             play("global",i);
                             play("global","广告不点击");
                             return false;
