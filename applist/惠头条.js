@@ -4,7 +4,7 @@ function  finditem(){
         var main=ele.findOnce(0);
         for(var i=1;i<subcount;i++){
                 try{
-                var gg1=main.child(i).child(0).child(2).child(0).child(0);
+                var gg1=main.child(i).child(1).child(0).child(2).child(0).child(0);
                 if(gg1.id()=="com.cashtoutiao:id/iv_ad_icon"){
                 play('global',i);
                 play('global','广告不点击'); 
