@@ -22,6 +22,15 @@ function  finditem(){
         }catch(e){
             }
         try{
+            var gg3=main.child(i).child(0).child(0).child(0).child(1).child(0).child(2);
+            if(gg3.text()=="广告"){
+                play('global',i);
+                play('global','广告不点击'); 
+                return false;
+            }
+        }catch(e){
+            }
+        try{
             play('global',i);
             play('global','点击');
             return main.child(i);
