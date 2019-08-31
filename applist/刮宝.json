@@ -4,7 +4,7 @@
         "apptype":"layers",//layer1 layer2 layers
         "mulityback":"true||1000",
         "appver":"1.0.3-9",
-        "interval":"50",
+        "interval":"30",
 		"speed":"normal",
          "packagename":"com.guabaoapp.gb",
         "activityname":"com.haoyunapp.hy.ui.activity.MainActivity",
