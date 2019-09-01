@@ -1,5 +1,3 @@
-//var thisswipecount=0;
-//遍历刮奖新闻块
 function finditem(){
   var img = captureScreen();
 //取出导航栏灰色按钮图标坐标值所属颜色值

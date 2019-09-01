@@ -100,16 +100,16 @@
                 "action":"id('com.meta.xyx:id/tt_video_ad_close').click()",
             },
             "pc6":{
-                "info":"关闭视频页面",
-                "featuremode":"className('android.widget.TextView').text('关闭广告').depth(4).indexInParent(2).exists()",
-                "actiontype":"code",
-                "action":"className('android.widget.TextView').text('关闭广告').click()",
-            },
-            "pc7":{
                 "info":"刮奖页面",
                 "featuremode":"id('com.meta.xyx:id/vw_scratch_game_cells').depth(6).indexInParent(7).exists()",
                 "actiontype":"func",//code
                 "action":"swipeguagua()", //customfun,click_id,
+            },
+			"pc7":{
+                "info":"横屏广告",
+                "featuremode":"classname('android.widget.WebView').desc('Oneway SDK WebView').depth(5).indexInParent(0).exists()",
+                "actiontype":"code",//code
+                "action":"thiscommon.touchreal(2490,64)", //customfun,click_id,
             },
         },
         "durl":"http://xzf.197946.com/com.knowworld.news.apk"
