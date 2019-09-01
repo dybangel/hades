@@ -41,6 +41,10 @@
             "classname":"android.widget.TextView",
             "text":"下次再说",
            },
+		    "ab5":{
+            "featuremode":"id",
+            "id":"android:id/button2",
+           },
          },  
         "activitys":{
             "at1":"com.weishang.wxrd.activity.MainActivity",
