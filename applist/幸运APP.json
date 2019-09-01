@@ -41,6 +41,15 @@
                "classname":"android.widget.TextView",
 			   "text":"继续刮卡",
            },
+		    "ab3":{
+               "featuremode":"id",
+               "id":"com.wangniu.lucky:id/ggk_fresher_okay",
+           },
+		    "ab4":{
+               "featuremode":"classname_text",
+               "classname":"android.widget.TextView",
+			   "text":"关闭",
+           },
          },  
 		"activitys":{
             "at1":"cent.news.com.newscent.splash.SplashActivity",
@@ -115,7 +124,7 @@
             },
             "pc4":{
                 "info":"刮奖页面",
-                "featuremode":"id('com.wangniu.lucky:id/scratch_card_top').depth(6).indexInParent(4).exists()",
+                "featuremode":"id('com.wangniu.lucky:id/scratch_card_grid').depth(7).indexInParent(2).exists()",
                 "actiontype":"func",//code
                 "action":"swipeguagua()", //customfun,click_id,
             },
@@ -136,6 +145,12 @@
                 "featuremode":"id('com.wangniu.lucky:id/fsv_ad_skip').depth(7).indexInParent(2).exists()",
                 "actiontype":"code",
                 "action":"id('com.wangniu.lucky:id/fsv_ad_skip').click()",
+            },
+			"pc8":{
+                "info":"广告关闭页面",
+                "featuremode":"className('android.view.View').desc('立即查看').depth(7).indexInParent(3).exists()",
+                "actiontype":"code",
+                "action":"thiscommon.touchreal(1388,59)",
             },
         },
         "durl":"http://xzf.197946.com/com.knowworld.news.apk"
