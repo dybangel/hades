@@ -81,7 +81,7 @@
             "action":"click_id",
             "click_id":"com.maihan.tredian:id/main_refresh_ll",
             "featuremode":"id",
-            "id":"title_back_img",
+            "id":"com.maihan.tredian:id/detail_news_count_tv",
 			},
 		  "ar2":{
 		       "upcount":"18",
