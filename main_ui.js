@@ -1769,7 +1769,7 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                             }else{
                                                 //没有找到新闻
                                                 //视频类的不需要线程计数器
-                                                if("快狗视频"==appname||"红包视频"==appname||"快手极速版"==appname){
+                                                if("快狗视频"==appname||"红包视频"==appname){
                                                     Gbrick_count+=1;//砖头+1
                                                 }else{
                                                      //线程计数器加1
@@ -3932,8 +3932,8 @@ function insert_log(psessionid,pthread,pappname,paction,presult){
    
 }
 // 数据库：haiqu 表：t_log表结构
-// app名称 动作 动作所在线程 执行时间  执行结果
-// fappname,faction,fthread,factime,fresult
+// 手机mac app名称 动作 动作所在线程 执行时间  执行结果
+// fsession,fappname,faction,fthread,factime,fresult
 
 
 // 获取手机系统时间函数
