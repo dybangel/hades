@@ -1,43 +1,58 @@
 {
         "enable":"false",
-        "appname":"中青看点", 
-        "interval":"3",
-         "packagename":"cn.youth.news",
-        "activityname":"com.weishang.wxrd.activity.MainActivity",
+        "appname":"中青看点",
+        "mulityback":"52||161",
+	    "appver":"1.5.6",
+        "interval":"30",
+        "speed":"normal",
+        "packagename":"cn.youth.news",
+        "activityname":"com.weishang.wxrd.activity.SplashActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"视频",
-          "depth":"",
-          "indexinparent":"",
+          "depth":"5",
+          "indexinparent":"1",
           },
-          "abnormal":{
+        "signin":{
+             "sg1":{
+              "action":"click_id",
+              "click_id":"cn.youth.news:id/a7k",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"任务中心",
+                    },
+             "sg2":{
+              "action":"click_id",
+              "click_id":"cn.youth.news:id/a6g",
+              "featuremode":"classname_desc",
+              "classname":"android.widget.Button",
+              "desc":"提现 ",
+                    },
+              "sg3":{
+              "action":"click_boundary_path",
+              "boundary":"android.webkit.WebView",
+              "path":"0||0||11",
+              "featuremode":"classname_desc",
+              "classname":"android.view.View",
+              "desc":"看视频得青豆",
+                    },
+			},
+        "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"iv_close",
+               "id":"cn.youth.news:id/kn",
            },
-           "ab2":{
-            "featuremode":"id",
-            "id":"tv_pass",
-          },
-            "ab3":{
-            "featuremode":"id",
-            "id":"android:id/button2",
-          },
-            "ab4":{
-            "featuremode":"id",
-            "id":"tv_skip_ad",
-          },
-            "ab5":{
-            "featuremode":"classname_desc",
-            "classname":"android.widget.Button",
-            "desc":"播放 开始播放"
+            "ab2":{
+            "featuremode":"classname_text",
+            "classname":"android.widget.TextView",
+            "text":"重播",
           },
          }, 
-		 "activitys":{
-			 "at1":"com.weishang.wxrd.activity.MainActivity",
+        "activitys":{
+			 "at1":"com.weishang.wxrd.activity.HomeActivity",
 			 "at2":"com.weishang.wxrd.activity.WebViewActivity",
-
+             "at3":"com.weishang.wxrd.activity.MoreActivity",
 		   } ,
         "bindwechat":{
     
@@ -46,15 +61,19 @@
           "ar1":{
             "action":"click_text",
             "click_text":"首页",
-            "featuremode":"id",
-            "id":"iv_collect",
+            "featuremode":"ids",
+            "ids":"cn.youth.news:id/ki||cn.youth.news:id/kj",
         },
         "ar2":{
             "deploymode":"classname_desc",
             "deployclassname":"android.view.View",
             "deploydesc":"查看全文，奖励更多",
-
+            "backtrigger":"xy_color_bool",
+            "xy":"1324||2070",
+            "color":"fffaee6b",
+            "bool":"false",
+            "reswipe":"true",
         },
         }, 
-       "durl":"https://res.youth.cn/youth_v1.2.8_code20_180824_c3001.apk"
+        "durl":"https://res.youth.cn/youth_v1.2.8_code20_180824_c3001.apk"
        }
