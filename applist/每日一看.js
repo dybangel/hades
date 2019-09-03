@@ -16,6 +16,15 @@ function finditem(){
            }catch(e){
            }
            try{
+            var gg1=main.child(i);
+            if(gg1.childCount()==2){
+                     play("global",i);
+                     play("global","广告不点击");
+                     return false;
+            }  
+        }catch(e){
+        }
+           try{
             play('global',i);
             play('global','点击');
             return main.child(i);

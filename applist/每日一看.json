@@ -1,8 +1,8 @@
 {
       "enable":"true",  
       "appname":"每日一看",
-      "mulityback":"81||170",
-      "appver":"3.6.0",
+      "mulityback":"101||201",
+      "appver":"3.7.0",
       "interval":"30",
 	  "speed":"normal",
       "packagename":"nsin.everydaywatch.com",
@@ -46,6 +46,10 @@
            "ab4":{
              "featuremode":"id",
              "id":"nsin.everydaywatch.com:id/tv_button",
+                },
+           "ab5":{
+             "featuremode":"id",
+             "id":"nsin.everydaywatch.com:id/button",
                 },
                 },  
 	    "activitys":{
