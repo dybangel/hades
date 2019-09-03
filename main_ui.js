@@ -1780,7 +1780,7 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                             }else{
                                                 //没有找到新闻
                                                 //视频类的不需要线程计数器
-                                                if("快狗视频"==appname||"红包视频"==appname){
+                                                if("快狗视频"==appname||"红包视频"==appname||"快手极速版"==appname){
                                                     Gbrick_count+=1;//砖头+1
                                                 }else{
                                                      //线程计数器加1
