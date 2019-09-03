@@ -50,7 +50,7 @@
         "pagecheck":{
             "pc1":{
                 "info":"发现首页",
-                "featuremode":"className('android.widget.TextView').text('任务').depth(8).indexInParent(0).exists()",
+                "featuremode":"className('android.widget.TextView').text('每日签到').depth(11).indexInParent(1).exists()",
                 "actiontype":"func",//code
                 "action":"finditem()", //customfun,click_id,    
             },
