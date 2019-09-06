@@ -2,7 +2,7 @@
         "enable":"true",
         "appname":"鸡冻头条",
         "mulityback":"52||223",
-	    "appver":"2.2.2",
+	    "appver":"2.2.4",
         "interval":"30",
         "speed":"normal",
         "packagename":"com.jidongtoutiao.jdtt",
