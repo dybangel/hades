@@ -15,6 +15,7 @@ importClass(android.widget.EditText);
 importClass(java.io.File);
 importClass(android.content.Context);
 importClass(android.provider.Settings);
+importClass(java.lang.Runnable);
 
 
 var window = activity.getWindow();
@@ -44,7 +45,7 @@ ui.layout(
                     {/* <text id="progress_value" textColor="black" textSize="16sp" margin="0" text=""/> */}
                     <progressbar id="progress" w="*" h="3" style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
                 </horizontal>
-                        <webview id="webview" w="*" h="*"/>
+                        {/* <webview id="webview" w="*" h="*"/> */}
                         <button id="start" text="开始运行" style="Widget.AppCompat.Button.Colored" textColor="#ffffff"/>
                        
 
@@ -186,7 +187,10 @@ ui.layout(
 
                         {/* 分割线填充 */}
                         <vertical w="*" h="1" bg="{{textColor}}" ></vertical>
-
+                                <vertical>
+                                        <webview id="webview"  w="*" h="*"/>
+                                        {/* <button id="button"/> */}
+                                    </vertical>
                         {/* 垃圾清理区域相关配置 */}
                         {/* <linear w="*" h="24" paddingLeft="8" gravity="left|center" >
                             <text text="清理相关" textSize="12sp" textColor="{{textColor}}" />
@@ -530,6 +534,7 @@ opennobarrier();
 
 
 
+
 Glicence=false;
 Gcode_state="ui";//noui ui
 
@@ -758,6 +763,7 @@ if(Gcode_state=="ui"){
                     }
                 
                     loadGapps();
+                    loadappjson();
                  // alert("hahah");
 
                 }
@@ -858,6 +864,7 @@ function init(){
     }
    
 }
+
 /*************************以下是主线程循环 *******************************************************************/ 
 function run(){
 
@@ -1309,7 +1316,9 @@ for(var i=0;i<Gapps.length;i++){
 
             http.__okhttp__.setTimeout(10000);
            var r=http.get(Gapplistpath_remote+"/"+appname+".json")
-         }catch(e){};
+         }catch(e){
+             toast("e "+e);
+         };
            
          //  toast('code=',r.statusCode)
            if(r.statusCode=="200"){  
@@ -1400,10 +1409,43 @@ alert("eval error:"+e)
 function ref_ui_list(){
   // alert(Gapps.length);
   try{
+  //  loadappjson();
         for(var i=0;i<Gapps.length;i++){
-            var thisappname=Gapps[i]["appname"];
+            let thisappname=Gapps[i]["appname"];
+            
+            // 根据包名判断是否安装
+         //   alert(applist[0]["packagename"]);
+            let thisappnum="";
+            let thispackagename="";
+            let thisactivityname="";
+            var appinstallstate="";
+            //根据app名称获得包名
+          //  for(var j=0;j<applist.length;j++){
+             //  if(thisappname==Gapps[i]["appname"]){
+                thisappnum=Gapps[i]["appnum"];
+                thispackagename=applist[i]["packagename"]
+                thisactivityname=applist[i]["activityname"];
+           //     break;
+          //     } 
+         //   }
+            //如果包名不为空，验证app是否安装
+            if(thispackagename!=""){
+             var result=app.getAppName(thispackagename);
+                if(result==null){
+                    appinstallstate="安装";
+                }else{
+                    appinstallstate="打开";
+                }
+            }
+          
+            //   alert(result)
+            
+            // 未安装字体变红色
+
             appliststr='<linear id="aa" layout_weight="1" >';
-            appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'" color="{{textColor}}" checked="true"/>'
+            appliststr+='    <button id="btn_'+i+'" desc="'+thispackagename+'" text="'+appinstallstate+" "+thisappname+'"  style="Widget.AppCompat.Button.Colored" w="160" h="40" />';
+       
+            //   appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'" color="{{textColor}}" checked="true"/>'
         //   appliststr+='<text text="次数:"';
         //   appliststr+='   marginLeft="10"';
         //   appliststr+='   marginRight="1"';
@@ -1412,14 +1454,53 @@ function ref_ui_list(){
         //   appliststr+='   />';
         //   appliststr+=' <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>';
             appliststr+='<linear layout_weight="1" gravity="right" >';
-        //  appliststr+='    <button id="android:id/open" text="" w="60" h="40" />';
             appliststr+='</linear>';
             appliststr+='</linear>';
-            ui.inflate( appliststr,ui.applist,true); 
+            
+            ui.inflate( appliststr,ui.applist,true);
+          
+            let thisbtn=ui.findView('btn_'+i);
+          //  cor=colors.rgb(random(0, 255), random(0, 255), random(0, 255));
+           // alert(cor)
+            if(appinstallstate=="安装"){
+                 thisbtn.attr('bg','#EE0000')
+                thisbtn.click(()=>{
+                    try{
+                        alert("请执行app检测进行安装");
+                         //ra = new RootAutomator();
+                      //   let urlStr="'http://download.dqu360.com:81/haiqu/"+thisappnum+thisappname+".apk"
+                      // let urlStr="http://www.baidu.com"
+                      //  thread_openurl=threads.start(function(){
+                          //  var result=shell("am start -a android.intent.action.VIEW -d https://www.baidu.com", true);
+                         //   adb shell 
+                        //    alert(result);
+
+                        //});
+                    }catch(e){
+                        toast("e "+e);
+                    }
+                
+                });
+               
+            } else{
+               // thisbtn.attr('bg',colors.toString(rndColor()))
+               thisbtn.click(()=>{
+              // alert(thisappnum+thisappname);
+                 thiscommon.openpackage(thispackagename+"/"+thisactivityname);
+                });
+        
+
+            }
+            //thisbtn.attr('bg',colors.toString(rndColor()))
+        
+
+
+
             }
     return true;
 
   }catch(e){
+      toast("加载列表"+e);
     return false;
   }
 
@@ -3333,7 +3414,7 @@ db.close(); 
 function readlastapp(){
 importClass('android.database.sqlite.SQLiteDatabase');
 //importClass("android.content.ContentValues");
-importClass("android.content.Context");
+//importClass("android.content.Context");
 importClass("android.database.Cursor"); 
             //context.deleteDatabase("haiqu.db");  
             //打开或创建haiqu.db数据库        
@@ -3924,7 +4005,7 @@ try{thread_pachagecheck.interrupt();}catch(e){}
 function insert_log(psessionid,pthread,pappname,paction,presult){
     importClass('android.database.sqlite.SQLiteDatabase');
     //importClass("android.content.ContentValues");
-    importClass("android.content.Context");
+//    importClass("android.content.Context");
     importClass("android.database.Cursor");
   try{
              var db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null); 
@@ -4040,8 +4121,35 @@ function getdevicemac(){
     toast("助手需要无线网络，请确认wifi开关处于开启状态");
    }else{
     GdeviceMac=mac;
-    //alert(device.getMacAddress());
+   // alert("this is fun "+device.getMacAddress());
    }
+   var midhead="dqprop01h2";
+   webView = ui.findById("webview");
+   
+   //var aa=device.getMacAddress();;
+   var mid=GdeviceMac.replace(/:/g,"");
+   mid=mid.toLocaleLowerCase()
+  // alert(GdeviceMac);
+   tmpstr="";
+   for(var i in mid){
+       tmpstr+=mid[i]+mid[i].charCodeAt(0);
+       if(tmpstr.length==30){
+           break;
+       }
+   }
+        
+    
+   
+   html = files.path("./qrcode.html");
+   webView.loadUrl("file://" + html);
+   setTimeout(() => {
+       webView.post(new Runnable({
+           run: function() {
+               // 调用javascript的callJS()方法
+               webView.loadUrl("javascript:callJS('"+midhead+tmpstr+"')");//传入的值为123
+           }
+       }));
+   }, 2000);
 
 },2000)
 }
