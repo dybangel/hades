@@ -13,6 +13,8 @@ importClass(android.graphics.Color)
 importClass(android.app.AlertDialog);
 importClass(android.widget.EditText);
 importClass(java.io.File);
+importClass(android.content.Context);
+importClass(android.provider.Settings);
 
 
 var window = activity.getWindow();
@@ -471,13 +473,16 @@ ui.licence_activate.click(()=>{
     }else{
         var session=device.getAndroidId();
         thread_licence_activate=threads.start(function(){
-            var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);
+            var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);      
             if(r.statusCode=="200"){  
                 var result=r.body.string();
+               
                 var resultobj=eval('('+result+')');
+                
                 if("ok"==resultobj[0]["status"]){
-                    initlicence(fsn);
                     toast("已经激活");
+                    initlicence(fsn);
+                   
                     
                    Guser_cancel=true;
                    Glicence=true;
@@ -487,6 +492,8 @@ ui.licence_activate.click(()=>{
                 }else if("error2"==resultobj[0]["status"]){
                    toast("您的设备信息与云端不一致，24小时后自动解锁");
                 }
+             }else{
+                 toast("网络连接异常");
              }
         });
        
@@ -519,7 +526,7 @@ ui.licence_activate.click(()=>{
 var result=shell("svc wifi enable ", true);
 GdeviceMac="";
 getdevicemac();
-
+opennobarrier();
 
 
 
@@ -3530,10 +3537,12 @@ function checklocalapp(){
     }
 //初始化licence 当传入空值时执行本地查询并返回本地fsn，传入fsn激活码时，只写入本地
 function initlicence(fsn){
+    //alert("123")
 importClass('android.database.sqlite.SQLiteDatabase');
 importClass("android.content.ContentValues");
-importClass("android.content.Context");
+//importClass("android.content.Context");
 importClass("android.database.Cursor"); 
+
             //context.deleteDatabase("haiqu.db");  
             //打开或创建haiqu.db数据库        
             db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null);   
@@ -4036,4 +4045,20 @@ function getdevicemac(){
 
 },2000)
 }
-   
+function opennobarrier(){
+    // importClass(android.content.Context);
+    // importClass(android.provider.Settings);
+  //  console.show();
+    try {
+        var enabledServices = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+        log('当前已启用的辅助服务\n', enabledServices);
+        var Services = enabledServices + ":org.autojs.autojs/com.stardust.autojs.core.accessibility.AccessibilityService";
+        Settings.Secure.putString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, Services);
+        Settings.Secure.putString(context.getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, '1');
+        toastLog("成功开启AutoJS的辅助服务");
+    } catch (error) {
+        //授权方法：开启usb调试并使用adb工具连接手机，执行 adb shell pm grant org.autojs.autojspro android.permission.WRITE_SECURE_SETTING
+      //  toastLog("\n请确保已给予 WRITE_SECURE_SETTINGS 权限\n\n授权代码已复制，请使用adb工具连接手机执行(重启不失效)\n\n", error);
+       // setClip("adb shell pm grant org.autojs.autojs android.permission.WRITE_SECURE_SETTINGS");
+    }
+}
