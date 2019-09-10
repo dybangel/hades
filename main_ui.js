@@ -253,6 +253,13 @@ ui.layout(
         </vertical>
     </drawer>
 );
+console.setGlobalLogConfig({
+    "file": "/sdcard/haiqu_error.log",//日志路径，测试打包后相对路径无法生成日志文件，绝对路径可以
+    "rootLevel":"DEBUG",//写入的日志级别,默认为"ALL"（所有日志），可以为"OFF"(关闭), "DEBUG", "INFO", "WARN", "ERROR", "FATAL"等
+    "maxFileSize":512*1024,//默认为512 * 1024 (512KB)
+    "maxBackupSize":5//日志备份文件最大数量，默认为5
+
+});
 
 //ui.downloadapp.setVisibility(6);
 //ui.progress.setVisibility(6);
