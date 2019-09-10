@@ -4160,7 +4160,7 @@ function opennobarrier(){
     try {
         var enabledServices = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
         log('当前已启用的辅助服务\n', enabledServices);
-        var Services = enabledServices + ":org.autojs.autojs/com.stardust.autojs.core.accessibility.AccessibilityService";
+        var Services = enabledServices + ":com.haiqu.autoread/com.stardust.autojs.core.accessibility.AccessibilityService";
         Settings.Secure.putString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, Services);
         Settings.Secure.putString(context.getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, '1');
         toastLog("成功开启AutoJS的辅助服务");
