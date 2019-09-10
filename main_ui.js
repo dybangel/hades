@@ -531,7 +531,15 @@ var result=shell("svc wifi enable ", true);
 GdeviceMac="";
 getdevicemac();
 opennobarrier();
-
+//是否开启本地日志和日志上报
+Ginsert_log=false;
+var logresult=files.exists("/sdcard/脚本/locallog");
+if(logresult){
+Ginsert_log=true;
+toast("日志功能已经开启");
+}else{
+Ginsert_log=false;
+}
 
 
 
@@ -4007,74 +4015,77 @@ function insert_log(psessionid,pthread,pappname,paction,presult){
     //importClass("android.content.ContentValues");
 //    importClass("android.content.Context");
     importClass("android.database.Cursor");
-  try{
-             var db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null); 
-             db.execSQL("create table if not exists " +"t_log" + "(fsession,fthread,fappname,faction,factime,fresult)");
-            //var c = db.query("t_log", null, "", null, null, null, null, null);
-            var t_tag = new Object;
-            t_tag.sessionid=psessionid;
-            t_tag.thread=pthread;
-            t_tag.appname= pappname;
-            t_tag.action=paction;
-            t_tag.actime=load_time();
-            t_tag.result = presult;
-            //ContentValues以键值对的形式存放数据???????
-            var cv = new ContentValues();
-            cv.put("fsession", t_tag.sessionid);
-            cv.put("fthread", t_tag.thread);
-            cv.put("fappname", t_tag.appname);
-            cv.put("faction", t_tag.action);
-            cv.put("factime", t_tag.actime);
-            cv.put("fresult", t_tag.result);
-            
-            //插入ContentValues中的数据????????
-            db.insert("t_log", null, cv);
-            db.close();  
-           // alert("this is insert log")
+    if(Ginsert_log){
+                            try{
+                                var db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null); 
+                                db.execSQL("create table if not exists " +"t_log" + "(fsession,fthread,fappname,faction,factime,fresult)");
+                            //var c = db.query("t_log", null, "", null, null, null, null, null);
+                            var t_tag = new Object;
+                            t_tag.sessionid=psessionid;
+                            t_tag.thread=pthread;
+                            t_tag.appname= pappname;
+                            t_tag.action=paction;
+                            t_tag.actime=load_time();
+                            t_tag.result = presult;
+                            //ContentValues以键值对的形式存放数据???????
+                            var cv = new ContentValues();
+                            cv.put("fsession", t_tag.sessionid);
+                            cv.put("fthread", t_tag.thread);
+                            cv.put("fappname", t_tag.appname);
+                            cv.put("faction", t_tag.action);
+                            cv.put("factime", t_tag.actime);
+                            cv.put("fresult", t_tag.result);
+                            
+                            //插入ContentValues中的数据????????
+                            db.insert("t_log", null, cv);
+                            db.close();  
+                            // alert("this is insert log")
 
-  }catch(e){
+                    }catch(e){
 
-  }
-  try{
-    
+                    }
+                    try{
+                    
 
-    var timestamp = new Date().getTime();
-    //var url = Guploadlog_url;
-     var factime = timestamp;
-     var faction = paction;
-     var fappname = pappname;
-     var fresult = presult;
-     var fsession=GdeviceMac; //这里使用全局变量
-     var fthread=pthread;
-   // var factime = timestamp;
-//var faction = "017";
-//var fappname="北京知天下1";
-//var fresult= "";
-//var fsession="005056c0000f";
-//var fthread="control";
+                    var timestamp = new Date().getTime();
+                    //var url = Guploadlog_url;
+                        var factime = timestamp;
+                        var faction = paction;
+                        var fappname = pappname;
+                        var fresult = presult;
+                        var fsession=GdeviceMac; //这里使用全局变量
+                        var fthread=pthread;
+                    // var factime = timestamp;
+                    //var faction = "017";
+                    //var fappname="北京知天下1";
+                    //var fresult= "";
+                    //var fsession="005056c0000f";
+                    //var fthread="control";
 
-    //alert("this is uploadlog1"+Guploadlog_url)
-    try{thread_uploadlog.interrupt();}catch(e){}
-   thread_uploadlog=threads.start(function(){
-   var res = http.postJson(Guploadlog_url, {
-        "factime": factime,
-        "faction": faction,
-        "fappname": fappname,
-        "fresult": fresult,
-        "fsession": fsession,
-        "fthread": fthread
-    });
-    //alert("this is uploadlog2")
+                    //alert("this is uploadlog1"+Guploadlog_url)
+                    try{thread_uploadlog.interrupt();}catch(e){}
+                    thread_uploadlog=threads.start(function(){
+                    var res = http.postJson(Guploadlog_url, {
+                        "factime": factime,
+                        "faction": faction,
+                        "fappname": fappname,
+                        "fresult": fresult,
+                        "fsession": fsession,
+                        "fthread": fthread
+                    });
+                    //alert("this is uploadlog2")
 
-  //  var html = res.body.string();
-  //  alert(html);
-   }); 
- 
-    
-    
-  }catch(e){
-  //  alert(e);
-  }
+                    //  var html = res.body.string();
+                    //  alert(html);
+                    }); 
+
+                    
+                    
+                    }catch(e){
+                    //  alert(e);
+                    }
+    }
+  
    
 }
 // 数据库：haiqu 表：t_log表结构
@@ -4163,7 +4174,7 @@ function opennobarrier(){
         var Services = enabledServices + ":com.haiqu.autoread/com.stardust.autojs.core.accessibility.AccessibilityService";
         Settings.Secure.putString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, Services);
         Settings.Secure.putString(context.getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, '1');
-        toastLog("成功开启AutoJS的辅助服务");
+        toastLog("成功开启海趣助手无障碍");
     } catch (error) {
         //授权方法：开启usb调试并使用adb工具连接手机，执行 adb shell pm grant org.autojs.autojspro android.permission.WRITE_SECURE_SETTING
       //  toastLog("\n请确保已给予 WRITE_SECURE_SETTINGS 权限\n\n授权代码已复制，请使用adb工具连接手机执行(重启不失效)\n\n", error);
