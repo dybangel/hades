@@ -29,3 +29,13 @@ function finditem(){
                     }
             }
     }
+function getcoinincome(){
+    Swipe(915,1080,915,2400,500);
+    sleep(1000);
+    coin=className('android.view.View').boundsInside(200,0,400, 693).findOnce().desc()
+    income=className('android.view.View').boundsInside(1053,577,1267,682).findOnce().desc();
+    income=income.replace(/元/g,'');
+   // alert(coin+"  "+income);
+    callback_updatecoinincome(coin,income);
+    Ganalybreak==true;
+}
