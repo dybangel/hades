@@ -37,5 +37,5 @@ function getcoinincome(){
     income=income.replace(/元/g,'');
    // alert(coin+"  "+income);
     callback_updatecoinincome(coin,income);
-    Ganalybreak==true;
+    Ganalybreak=true;
 }
