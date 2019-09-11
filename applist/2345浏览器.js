@@ -30,12 +30,16 @@ function finditem(){
             }
     }
 function getcoinincome(){
+    /**获取金币和收益的自定义代码开始 */
     Swipe(915,1080,915,2400,500);
     sleep(1000);
     coin=className('android.view.View').boundsInside(200,0,400, 693).findOnce().desc()
     income=className('android.view.View').boundsInside(1053,577,1267,682).findOnce().desc();
     income=income.replace(/元/g,'');
-   // alert(coin+"  "+income);
+    //该函数传入金币和收益，必须为整型或者浮点型，禁止出现中文和字母
     callback_updatecoinincome(coin,income);
+    /**获取金币和收益的自定义代码结束 */
+
+    //函数执行完成后必须将全局变量Ganalybreak改为true，通知主线程
     Ganalybreak=true;
 }

@@ -552,6 +552,10 @@ Ginsert_log=false;
 
 Glicence=false;
 Gcode_state="ui";//noui ui
+//记录本app是否收益统计完成了
+Ganalybreak=false;
+//记录当前APP是否统计过收益
+Galreadyaci=false;
 
   //秒计数器，用于记录app阅读时间，超时后切换下一个
  Gsecond=0;
@@ -942,6 +946,8 @@ if(Grunstate=="trainwechat"){
 }else{
    while(true){
        for(var i=0;i<applist.length;i++){
+        //初始化是否统计过收益状态 
+        Galreadyaci=false;
            //给各个app用的计数器
             Callback_finditem_swipecount=0;
          
@@ -972,6 +978,10 @@ if(Grunstate=="trainwechat"){
                 pagecheck_obj=applist[i]['pagecheck'];
                 //alert("pagecheck_obj:"+pagecheck_obj);
             }
+            analyincome_obj="";
+           // alert("analyincome_obj is1:"+analyincome_obj);
+            try{analyincome_obj=applist[i]['analyincome'];}catch(e){analyincome_obj=""};
+
             packagename=applist[i]['packagename']
             activityname=applist[i]['activityname'];
             open_obj=applist[i]["open"];
@@ -1182,9 +1192,15 @@ if(Grunstate=="trainwechat"){
                                   Callback_finditem_swipecount=0;
                                 //反之，接到了某一个线程或函数的通知，要求切换app，立刻跳出主线程阻塞，并且重载Grunbreak为false，否则会一直多米诺方式切换下一个的
                                   Grunbreak=false;
+                              
                                   break;
                               }
                             }
+                              //最后需要再次统计一次收益
+                                //clean
+                                //openapp
+                                //统计收益函数 finish标志，标识是该app刷完了，再次统计收益
+                                while_analycoinincome('finish')
                            // sleep(Gappinterval);
                         }
        }else{
@@ -2555,6 +2571,169 @@ function restartapp(){
     }
    
 }
+//统计收益函数
+function while_analycoinincome(flag){
+    Gworkthread="analycoinincome_start";
+     //for 循环阻塞
+     var thisforstart=false;
+     //是否识别了该页面
+     var thisfindpage=false;
+     //提示计数器
+     var thistoastcount=0;
+     //上一个pc编号
+     var lastpcx="";
+     //相同页面计数器
+     var samepcx_count=0;
+
+    toast("这是统计收益函数开始执行");
+  //  alert("analyincome_obj is:"+analyincome_obj);
+    if(analyincome_obj=="" || "undefined"==typeof(analyincome_obj)){
+            //如果obj为空，那么说明json文件没有实现统计收益特征码，切换到签到
+            toast("json文件没有统计收益特征码");
+            Gworkthread="openapp_stop";
+            Galreadyaci=true;
+            return;//返回，不执行下面的线程了
+
+    }else{
+
+    }
+    // sleep(1000);
+    // toast("执行完成");
+   // alert("Ganalybreak is:"+Ganalybreak);
+   try{thread_analycoinincome.interrupt()}catch(e){};
+    thread_analycoinincome=threads.start(function(){
+        setInterval(() => {
+        //检测是否统计完成收益开关量，
+         if(Ganalybreak==true){
+              //修改全局变量，标识该app打开时已经统计过收益
+                Galreadyaci=true;
+            //如果统计完成了，那么根据标志位进行下一步
+              //如果是app第一次统计，那么统计完成后需要触发签到
+              if("first"==flag){
+                toast('切换到签到')
+                        //前台进程优化
+                        thiscommon.clean(Gdevicetype,Gpackagename_lists);
+                        //这里延迟一秒防止clean延迟导致刚打开的app被clean
+                        sleep(1000);
+                        var openstate=openAPP(appname,packagename,activityname,open_obj);
+                        if(openstate){
+                            //如果打开成功，更新标志位 Gworkthread=openapp_stop，交由while_control处理
+                            Gworkthread="openapp_stop";
+                        }else{
+
+                        }
+                        
+            }else if("finish"==flag){
+                toast('交给主线程')
+            //如果是切换app时的统计（刷完统计）,统计完成后什么也不要做，退出本函数，交由主线程切换下一个app
+            }
+            //初始化标识位
+            Ganalybreak=false;
+            try{thread_analycoinincome.interrupt()}catch(e){};
+         }else{
+            // alert("obj count is:"+thiscommon.JSONLength(analyincome_obj))
+             //如果没有统计完，则继续进行页面识别和统计
+                            thistoastcount+=1;
+                            if(thistoastcount>5){
+                                toastAt("pagecheck相同页面计数器"+samepcx_count)
+                                // toast("thisforstart is:"+thisforstart);
+                                thistoastcount=0;
+                            }
+
+                            //这是线程内测循环执行，执行前要判断for循环是否结束
+                            if(thisforstart==false){
+                                try{
+                                    thisforstart=true;
+                                    thisfindpage=false;
+                                    for(var i=1;i<=thiscommon.JSONLength(analyincome_obj);i++){
+                                        var thisfeaturemode=analyincome_obj["ai"+i]["featuremode"];
+                                       // alert("thisfeaturemode is"+thisfeaturemode);
+                                       // insert_log('','pagecheck',appname,'018','')
+                                        var thisresult= eval(thisfeaturemode);
+                                        var thisinfo=analyincome_obj["ai"+i]["info"]
+                                     //   alert("thisresult is"+thisresult)
+                                        if(thisresult){
+                                       // insert_log('','pagecheck',appname,'018','1')
+                                            var thispcx="ai"+i;
+                                            //判断当前pc与上一个pc是否是一样的
+                                            //如果是一样的线程计数器增加一
+                                            if(thispcx==lastpcx){
+                                                samepcx_count+=1;
+                                            }else{
+                                                lastpcx=thispcx;
+                                                //如果不一样，线程计数器清零
+                                                samepcx_count=0;
+                                            }
+                                                                        
+                                            //如果线程计数器>90那么restartapp
+                                        
+
+                                            thisfindpage=true;
+                                            toast(thisinfo);
+                                            var thisactiontype=analyincome_obj["ai"+i]["actiontype"];
+                                            var thisaction=analyincome_obj["ai"+i]["action"];
+                                            //如果是执行一段私有函数
+                                                    if(thisactiontype=="func"){
+                                                
+                                                            try {
+                                                                //把js函数声明
+                                                                eval(Gfinditemstr);
+                                                                if(""!=thisaction){
+                                                                    eval(thisaction)
+                                                                }
+                                                            }catch(e){toast("analy eval func e:"+e);thisforstart==false}
+                                                    }//if end;
+                                                    else if(thisactiontype=="code"){
+                                                    
+                                                    try{ 
+                                                        if(""!=thisaction){
+                                                            eval(thisaction)
+                                                        }
+                                                    }catch(e){
+                                                        thisforstart=false;
+                                                        toast("analy eval code e:"+e)
+                                                    };
+                                                    }
+                                    
+                                            break;
+                                        
+                                        }//if end;
+                
+                                    }//for end
+                                    //线程计数器超过数量
+                                    try{  if(samepcx_count>20){
+                                        toast("本页面停留太长，重新拉起")
+                                       // insert_log('','pagecheck',appname,'016','')
+                                        samepcx_count=0;
+                                        workthread_errorcount=999
+                                        Galreadyaci=true;
+                                    
+                                    }}catch(e){
+                                        toast("> e:"+e);
+                                    }
+
+                                    Gbrick_count+=1;
+                                    thisforstart=false;
+                                    if(thisfindpage==false){
+                                        samepcx_count+=1;
+                                   //     insert_log('','pagecheck',appname,'018','0')
+                                        toast("没有识别当前页面");
+                                    }
+                                }catch(e){
+                                  toast("analy main e:"+e);
+                                    thisforstart=false;
+                                }
+
+                            }
+            
+         }//else 结束
+      
+       
+        }, 3000);
+    });
+   
+   
+}
 //全局调度线程
 function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,signin_obj,autoread_obj){
    //appname,packagename,activityname,open_obj,bindwechat_obj,autoread_obj
@@ -2580,14 +2759,23 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                        //toast("开始绑定微信");
                        while_bindwechat(bindwechat_obj);
                    }else if("autoread"==Grunstate){
-                       if("layers"==apptype){
-                        while_pagecheck();//临时代码，为了加快测试绕过签到
-                       }else{
-                        toast("开始签到...");
-                        try{thread_signin.interrupt();}catch(e){};
-                        while_signin(signin_obj);
-                       }
+                      //如果没有统计过收益，先执行统计收益
+                      if(Galreadyaci==false){
+                            //统计收益函数
+                            while_analycoinincome('first');
+                      }else{
+                          //反之执行原型的流程，签到或刮刮卡pagecheck机制
+                          
+                            if("layers"==apptype){
+                                while_pagecheck();//临时代码，为了加快测试绕过签到
+                            }else{
+                                toast("开始签到...");
+                                try{thread_signin.interrupt();}catch(e){};
+                                while_signin(signin_obj);
+                            }
                       
+                      }
+
                        
                    }else if("popupdebug"==Grunstate){
                        toast("弹窗跟踪调试");
@@ -3952,6 +4140,7 @@ function clear_normal_thread(){
     try{    thread_readnews.interrupt();}catch(e){};
     try{    thread_signin.interrupt();}catch(e){}; 
     try{    thread_pagecheck.interrupt()}catch(e){};
+    try{   thread_analycoinincome.interrupt()}catch(e){};
 }
 //目标页面检测
 function while_pagecheck_bak(){
@@ -4187,4 +4376,7 @@ function opennobarrier(){
       //  toastLog("\n请确保已给予 WRITE_SECURE_SETTINGS 权限\n\n授权代码已复制，请使用adb工具连接手机执行(重启不失效)\n\n", error);
        // setClip("adb shell pm grant org.autojs.autojs android.permission.WRITE_SECURE_SETTINGS");
     }
+}
+function callback_updatecoinincome(coin,income){
+    toast("回调函数接收到了金币"+coin+" 收益"+income);
 }
