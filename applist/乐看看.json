@@ -1,0 +1,34 @@
+ {
+        "enable":"false",
+        "appname":"乐看看",
+        "apptype":"layers",//layer1 layer2 layers
+        "mulityback":"true||1000",
+        "appver":"2.5.0.0",
+        "interval":"30",
+		"speed":"normal",
+        "packagename":"com.lekankan.reach",
+        "activityname":"",
+        "open":{
+          "featuremode":"classname_text",
+          "classname":"android.widget.TextView",
+          "text":"任务",
+          "depth":"9",
+          "indexinparent":"1",
+          },
+		"signin":{
+        },
+         "abnormal":{
+         },  
+		"activitys":{
+          } , 
+        "bindwechat":{
+     
+        },
+        "autoread":{
+       
+        },
+        "pagecheck":{
+      
+        },
+        "durl":"http://xzf.197946.com/com.knowworld.news.apk"
+       }
