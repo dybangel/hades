@@ -7,11 +7,10 @@
     "interval":"50",
     "speed":"normal",
      "packagename":"com.youqian.lucky",
-    "activityname":"",
-    "open":{
-      "featuremode":"classname_text",
-      "classname":"android.widget.RadioButton",
-      "text":"福利",
+    "activityname":"io.dcloud.PandoraEntryActivity",
+        "open":{
+          "featuremode":"classname",
+          "classname":"android.view.View",
       "depth":"7",
       "indexinparent":"0",
       },
