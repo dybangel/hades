@@ -2963,6 +2963,9 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                         }
                     }
                 }catch(e){};
+             }else if("openapp_start"==Gworkthread){
+                //openapp_start 是openapp更新的标志位 虽然不是线程，但如果一直卡在openapp_start也是不正常，所以计数器+1
+                workthread_errorcount+=1;
              }else if("readnews_start"==Gworkthread){
                 try{
                     var result=thread_readnews.isAlive();
