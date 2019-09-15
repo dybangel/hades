@@ -234,10 +234,17 @@ ui.layout(
               
                 </frame>
                 </scroll>
+                <frame >
+                <vertical margin="0 0 0 0" id="logframe">
+                                                   
+                                                   
+                   
+           
+                  
+           
+                   </vertical>           
+                 </frame>
                 {/* <frame>
-                    <text text="第二页内容" textColor="red" textSize="16sp"/>
-                </frame>
-                <frame>
                     <text text="第三页内容" textColor="green" textSize="16sp"/>
                 </frame> */}
             </viewpager>
@@ -330,7 +337,15 @@ ui.start.on("click", function(){
 activity.setSupportActionBar(ui.toolbar);
 
 //设置滑动页面的标题
-ui.viewpager.setTitles(["全局设置"]);
+//判断是否开启了本地收益统计
+var resultanaly=files.exists("/sdcard/脚本/localanaly")
+if(resultanaly){
+    ui.viewpager.setTitles(["全局设置","收益统计"]);
+
+}else{
+    ui.viewpager.setTitles(["全局设置"]);
+
+}
 //让滑动页面和标签栏联动
 ui.tabs.setupWithViewPager(ui.viewpager);
 
@@ -521,6 +536,23 @@ ui.licence_activate.click(()=>{
 //     menu.add("设置");
 //     menu.add("关于");
 // });
+ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐藏
+    onPageSelected: function(position, positionOffset, positionOffsetPixels) {
+      //  toast('position: ' + position + "\npositionOffsetPixels: " + positionOffsetPixels );
+        if (position == 1) {
+            toast("aaa")
+          //  showanalylog();
+            // thread_addrow=threads.start(function(){
+              
+            // })
+           // toast("b d 0")
+           // ui.refresh.setVisibility(View.INVISIBLE);
+        } else {
+           // toast("other")
+          //  ui.refresh.setVisibility(View.VISIBLE);
+        }
+    }
+});
 // //监听选项菜单点击
 // ui.emitter.on("options_item_selected", (e, item)=>{
 //     switch(item.getTitle()){
@@ -547,11 +579,21 @@ toast("日志功能已经开启");
 }else{
 Ginsert_log=false;
 }
-
+//是否要统计收益
+Ganalyincome=false;
+var result=files.exists("/sdcard/脚本/localincome");
+if(result){
+    Ganalyincome=true;
+    toast("统计收益已经开启");
+    }else{
+     Ganalyincome=false;
+    }
 
 
 Glicence=false;
 Gcode_state="ui";//noui ui
+//记录当前统计是app开始前的统计还是结束前的统计
+Ganalyflag=""
 //记录本app是否收益统计完成了
 Ganalybreak=false;
 //记录当前APP是否统计过收益
@@ -971,8 +1013,8 @@ if(Grunstate=="trainwechat"){
        }
 
 
-           var enable=applist[i]['enable'];
-            appname=applist[i]['appname'] 
+          // var enable=applist[i]['enable'];
+            appname=applist[i]['appname'];
             try{apptype=applist[i]['apptype'];}catch(e){apptype="layer2"}
             if("layers"==apptype){
                 pagecheck_obj=applist[i]['pagecheck'];
@@ -1199,8 +1241,11 @@ if(Grunstate=="trainwechat"){
                               //最后需要再次统计一次收益
                                 //clean
                                 //openapp
-                                //统计收益函数 finish标志，标识是该app刷完了，再次统计收益
-                                while_analycoinincome('finish')
+                                //统计收益函数 finish标志，标识是该app刷完了，如果本地统计收益开关量为开，再次统计收益
+                                if( Ganalyincome==true){
+                                    while_analycoinincome('finish')
+
+                                }
                            // sleep(Gappinterval);
                         }
        }else{
@@ -2168,7 +2213,7 @@ function while_readnews(autoread_obj){
                                   //  toast("上滑："+upcount+"/"+maxupcount+"次");
                                     if(upcount>maxupcount){
                                         toast("返回首页...");
-                                        insert_log('','readnews',appname,'017','')
+                                      //  insert_log('','readnews',appname,'017','')
                                             funmulityback();
                                             var openstate=openAPP(appname,packagename,activityname,open_obj);
                                             if(openstate){
@@ -2573,7 +2618,9 @@ function restartapp(){
 }
 //统计收益函数
 function while_analycoinincome(flag){
+    alert("给Ganalyflag赋值为"+flag);
     Gworkthread="analycoinincome_start";
+    Ganalyflag=flag;
      //for 循环阻塞
      var thisforstart=false;
      //是否识别了该页面
@@ -2607,10 +2654,12 @@ function while_analycoinincome(flag){
          if(Ganalybreak==true){
               //修改全局变量，标识该app打开时已经统计过收益
                 Galreadyaci=true;
-            //如果统计完成了，那么根据标志位进行下一步
+              //如果统计完成了，那么根据标志位进行下一步
               //如果是app第一次统计，那么统计完成后需要触发签到
               if("first"==flag){
-                toast('切换到签到')
+                 
+               
+                         toast('切换到签到')
                         //前台进程优化
                         thiscommon.clean(Gdevicetype,Gpackagename_lists);
                         //这里延迟一秒防止clean延迟导致刚打开的app被clean
@@ -2624,6 +2673,7 @@ function while_analycoinincome(flag){
                         }
                         
             }else if("finish"==flag){
+               
                 toast('交给主线程')
             //如果是切换app时的统计（刷完统计）,统计完成后什么也不要做，退出本函数，交由主线程切换下一个app
             }
@@ -2631,100 +2681,103 @@ function while_analycoinincome(flag){
             Ganalybreak=false;
             try{thread_analycoinincome.interrupt()}catch(e){};
          }else{
-            // alert("obj count is:"+thiscommon.JSONLength(analyincome_obj))
-             //如果没有统计完，则继续进行页面识别和统计
-                            thistoastcount+=1;
-                            if(thistoastcount>5){
-                                toastAt("pagecheck相同页面计数器"+samepcx_count)
-                                // toast("thisforstart is:"+thisforstart);
-                                thistoastcount=0;
-                            }
+             try{
+                                        //如果没有统计完，则继续进行页面识别和统计
+                                        thistoastcount+=1;
+                                        if(thistoastcount>5){
+                                            toastAt("pagecheck相同页面计数器"+samepcx_count)
+                                            // toast("thisforstart is:"+thisforstart);
+                                            thistoastcount=0;
+                                        }
 
-                            //这是线程内测循环执行，执行前要判断for循环是否结束
-                            if(thisforstart==false){
-                                try{
-                                    thisforstart=true;
-                                    thisfindpage=false;
-                                    for(var i=1;i<=thiscommon.JSONLength(analyincome_obj);i++){
-                                        var thisfeaturemode=analyincome_obj["ai"+i]["featuremode"];
-                                       // alert("thisfeaturemode is"+thisfeaturemode);
-                                       // insert_log('','pagecheck',appname,'018','')
-                                        var thisresult= eval(thisfeaturemode);
-                                        var thisinfo=analyincome_obj["ai"+i]["info"]
-                                     //   alert("thisresult is"+thisresult)
-                                        if(thisresult){
-                                       // insert_log('','pagecheck',appname,'018','1')
-                                            var thispcx="ai"+i;
-                                            //判断当前pc与上一个pc是否是一样的
-                                            //如果是一样的线程计数器增加一
-                                            if(thispcx==lastpcx){
-                                                samepcx_count+=1;
-                                            }else{
-                                                lastpcx=thispcx;
-                                                //如果不一样，线程计数器清零
-                                                samepcx_count=0;
-                                            }
-                                                                        
-                                            //如果线程计数器>90那么restartapp
-                                        
-
-                                            thisfindpage=true;
-                                            toast(thisinfo);
-                                            var thisactiontype=analyincome_obj["ai"+i]["actiontype"];
-                                            var thisaction=analyincome_obj["ai"+i]["action"];
-                                            //如果是执行一段私有函数
-                                                    if(thisactiontype=="func"){
-                                                
-                                                            try {
-                                                                //把js函数声明
-                                                                eval(Gfinditemstr);
-                                                                if(""!=thisaction){
-                                                                    eval(thisaction)
-                                                                }
-                                                            }catch(e){toast("analy eval func e:"+e);thisforstart==false}
-                                                    }//if end;
-                                                    else if(thisactiontype=="code"){
-                                                    
-                                                    try{ 
-                                                        if(""!=thisaction){
-                                                            eval(thisaction)
+                                        //这是线程内测循环执行，执行前要判断for循环是否结束
+                                        if(thisforstart==false){
+                                            try{
+                                                thisforstart=true;
+                                                thisfindpage=false;
+                                                for(var i=1;i<=thiscommon.JSONLength(analyincome_obj);i++){
+                                                    var thisfeaturemode=analyincome_obj["ai"+i]["featuremode"];
+                                                    // alert("thisfeaturemode is"+thisfeaturemode);
+                                                    // insert_log('','pagecheck',appname,'018','')
+                                                    var thisresult= eval(thisfeaturemode);
+                                                    var thisinfo=analyincome_obj["ai"+i]["info"]
+                                                //   alert("thisresult is"+thisresult)
+                                                    if(thisresult){
+                                                    // insert_log('','pagecheck',appname,'018','1')
+                                                        var thispcx="ai"+i;
+                                                        //判断当前pc与上一个pc是否是一样的
+                                                        //如果是一样的线程计数器增加一
+                                                        if(thispcx==lastpcx){
+                                                            samepcx_count+=1;
+                                                        }else{
+                                                            lastpcx=thispcx;
+                                                            //如果不一样，线程计数器清零
+                                                            samepcx_count=0;
                                                         }
-                                                    }catch(e){
-                                                        thisforstart=false;
-                                                        toast("analy eval code e:"+e)
-                                                    };
-                                                    }
-                                    
-                                            break;
-                                        
-                                        }//if end;
-                
-                                    }//for end
-                                    //线程计数器超过数量
-                                    try{  if(samepcx_count>20){
-                                        toast("本页面停留太长，重新拉起")
-                                       // insert_log('','pagecheck',appname,'016','')
-                                        samepcx_count=0;
-                                        workthread_errorcount=999
-                                        Galreadyaci=true;
-                                    
-                                    }}catch(e){
-                                        toast("> e:"+e);
-                                    }
+                                                                                    
+                                                        //如果线程计数器>90那么restartapp
+                                                    
 
-                                    Gbrick_count+=1;
-                                    thisforstart=false;
-                                    if(thisfindpage==false){
-                                        samepcx_count+=1;
-                                   //     insert_log('','pagecheck',appname,'018','0')
-                                        toast("没有识别当前页面");
-                                    }
-                                }catch(e){
-                                  toast("analy main e:"+e);
-                                    thisforstart=false;
-                                }
+                                                        thisfindpage=true;
+                                                        toast(thisinfo);
+                                                        var thisactiontype=analyincome_obj["ai"+i]["actiontype"];
+                                                        var thisaction=analyincome_obj["ai"+i]["action"];
+                                                        //如果是执行一段私有函数
+                                                                if(thisactiontype=="func"){
+                                                            
+                                                                        try {
+                                                                            //把js函数声明
+                                                                            eval(Gfinditemstr);
+                                                                            if(""!=thisaction){
+                                                                                eval(thisaction)
+                                                                            }
+                                                                        }catch(e){toast("analy eval func e:"+e);thisforstart==false}
+                                                                }//if end;
+                                                                else if(thisactiontype=="code"){
+                                                                
+                                                                try{ 
+                                                                    if(""!=thisaction){
+                                                                        eval(thisaction)
+                                                                    }
+                                                                }catch(e){
+                                                                    thisforstart=false;
+                                                                    toast("analy eval code e:"+e)
+                                                                };
+                                                                }
+                                                
+                                                        break;
+                                                    
+                                                    }//if end;
+                            
+                                                }//for end
+                                                //线程计数器超过数量
+                                                try{  if(samepcx_count>20){
+                                                    toast("本页面停留太长，重新拉起")
+                                                    // insert_log('','pagecheck',appname,'016','')
+                                                    samepcx_count=0;
+                                                    workthread_errorcount=999
+                                                    Galreadyaci=true;
+                                                
+                                                }}catch(e){
+                                                    toast("> e:"+e);
+                                                }
 
-                            }
+                                                Gbrick_count+=1;
+                                                thisforstart=false;
+                                                if(thisfindpage==false){
+                                                    samepcx_count+=1;
+                                                //     insert_log('','pagecheck',appname,'018','0')
+                                                    toast("没有识别当前页面");
+                                                }
+                                            }catch(e){
+                                            toast("analy main e:"+e);
+                                                thisforstart=false;
+                                            }
+
+                                        }
+
+             }catch(e){}
+
             
          }//else 结束
       
@@ -2759,8 +2812,8 @@ function while_control(appname,packagename,activityname,open_obj,bindwechat_obj,
                        //toast("开始绑定微信");
                        while_bindwechat(bindwechat_obj);
                    }else if("autoread"==Grunstate){
-                      //如果没有统计过收益，先执行统计收益
-                      if(Galreadyaci==false){
+                      //如果没有统计过收益，并且设置了统计收益本地文件开关量，先执行统计收益
+                      if(Galreadyaci==false && Ganalyincome==true){
                             //统计收益函数
                             while_analycoinincome('first');
                       }else{
@@ -4206,6 +4259,42 @@ try{thread_pachagecheck.interrupt();}catch(e){}
 
     })
 } 
+//统计收益函数
+function callback_updatecoinincome(coin,income){
+    importClass('android.database.sqlite.SQLiteDatabase');
+    //importClass("android.content.ContentValues");
+//    importClass("android.content.Context");
+    importClass("android.database.Cursor");
+    var analystate='unknow';
+    alert("Ganalyflag is:"+Ganalyflag);
+    if("first"==Ganalyflag){
+    analystate='1';
+
+    }else if("finish"==Ganalyflag){
+        analystate='2';
+
+    }
+
+    toast("回调函数接收到了金币"+coin+" 收益"+income);
+    try{
+        var db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null); 
+        db.execSQL("create table if not exists " +"app_income_mass" + "(deviceid,appnum,appname,coin,income,createtime,analystate)");
+        var cv = new ContentValues();
+        cv.put("deviceid",GdeviceMac);
+        cv.put("appnum",'');
+        cv.put("appname",appname);
+        cv.put("coin",coin);
+        cv.put("income",income);
+        cv.put("createtime",load_time());
+        cv.put("analystate",analystate);
+        db.insert("app_income_mass", null, cv);
+        db.close();  
+    }catch(e){
+        toast("upcoinincome:"+e);
+    }
+   
+}
+//写日志函数
 function insert_log(psessionid,pthread,pappname,paction,presult){
     importClass('android.database.sqlite.SQLiteDatabase');
     //importClass("android.content.ContentValues");
@@ -4377,6 +4466,92 @@ function opennobarrier(){
        // setClip("adb shell pm grant org.autojs.autojs android.permission.WRITE_SECURE_SETTINGS");
     }
 }
-function callback_updatecoinincome(coin,income){
-    toast("回调函数接收到了金币"+coin+" 收益"+income);
+
+function showanalylog(){
+    var xmlstr="";
+    xmlstr+=' <TableLayout '
+xmlstr+='        layout_width="match_parent"'
+xmlstr+='        layout_height="match_parent"'
+xmlstr+='        background="#ffffff"'
+xmlstr+='        stretchColumns="1"'
+xmlstr+='        >'
+xmlstr+=''
+xmlstr+=''
+xmlstr+='        <TableRow>'
+xmlstr+='        <TextView'
+xmlstr+='            layout_width="wrap_content"'
+xmlstr+='            layout_height="wrap_content"'
+xmlstr+='            background="#7E787F"   '
+xmlstr+='            layout_margin="1dip" '
+xmlstr+='            style="Widget.AppCompat.Button.Colored"'
+xmlstr+='            text="app名称"/>'
+xmlstr+='        <TextView'
+xmlstr+='            layout_width="wrap_content"'
+xmlstr+='            layout_height="wrap_content"'
+xmlstr+='            background="#7E787F"    '
+xmlstr+='            layout_margin="1dip" '
+xmlstr+='            style="Widget.AppCompat.Button.Colored"'
+xmlstr+='            text="金币数量"/>'
+xmlstr+='        <TextView'
+xmlstr+='            layout_width="wrap_content"'
+xmlstr+='            layout_height="wrap_content"'
+xmlstr+='            background="#7E787F"   '
+xmlstr+='            layout_margin="1dip" '
+xmlstr+='            style="Widget.AppCompat.Button.Colored"'
+xmlstr+='            text="收益"/>'
+xmlstr+='        <TextView'
+xmlstr+='            w="auto"'
+xmlstr+='            layout_height="wrap_content"'
+xmlstr+='            background="#7E787F"   '
+xmlstr+='            layout_margin="1dip" '
+xmlstr+='            style="Widget.AppCompat.Button.Colored"'
+xmlstr+='            text="统计时间"/>'
+xmlstr+='        </TableRow>'
+
+
+
+   
+
+// xmlstr="";
+
+
+    for(var i=0;i<10;i++){
+        xmlstr+=' <TableRow>';
+        xmlstr+='            <TextView'
+        xmlstr+='                layout_width="wrap_content"'
+        xmlstr+='                layout_height="wrap_content"'
+        xmlstr+='                background="#7E787F"   '
+        xmlstr+='                layout_margin="0dip" '
+        xmlstr+='                style="Widget.AppCompat.Button.Colored"'
+        xmlstr+='                text="北京知天下"/>'
+        xmlstr+='            <TextView'
+        xmlstr+='                layout_width="wrap_content"'
+        xmlstr+='                layout_height="wrap_content"'
+        xmlstr+='                background="#7E787F"    '
+        xmlstr+='                layout_margin="0dip" '
+        xmlstr+='                style="Widget.AppCompat.Button.Colored"'
+        xmlstr+='                text="2000"/>'
+        xmlstr+='            <TextView'
+        xmlstr+='                layout_width="wrap_content"'
+        xmlstr+='                layout_height="wrap_content"'
+        xmlstr+='                background="#7E787F"   '
+        xmlstr+='                layout_margin="0dip" '
+        xmlstr+='                style="Widget.AppCompat.Button.Colored"'
+        xmlstr+='                text="1.1"/>'
+        xmlstr+='            <TextView'
+        xmlstr+='                w="auto"'
+        xmlstr+='                layout_height="wrap_content"'
+        xmlstr+='                background="#7E787F"   '
+        xmlstr+='                layout_margin="0dip" '
+        xmlstr+='                style="Widget.AppCompat.Button.Colored"'
+        xmlstr+='                text="2019-08-09 11:22:33"/>'
+        xmlstr+='            </TableRow>'
+    }
+
+    xmlstr+='    '
+xmlstr+='       '
+xmlstr+='        </TableLayout>'
+
+ui.inflate(xmlstr ,ui.logframe,true);
+  
 }
