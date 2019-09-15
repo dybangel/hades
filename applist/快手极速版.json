@@ -1,43 +1,41 @@
- {
-        "enable":"false",
-        "appname":"快手极速版", 
-        "appver":"1.4.0.30",
-        "interval":"30",
-		"speed":"normal",
-        "packagename":"com.kuaishou.nebula",
-        "activityname":"com.yxcorp.gifshow.HomeActivity",
-        "open":{
-	    "featuremode":"classname_text",
-	    "classname":"android.widget.TextView",
-	    "text":"关注",
-	    "depth":"9",
-	    "indexinparent":"0",
-          },
-		"signin":{
-			},
-        "abnormal":{
-              "ab1":{
-               "featuremode":"id",
-               "id":"com.kuaishou.nebula:id/container",
-			   }, 
-			 },  
-        "activitys":{
-            "at1":"com.yxcorp.gifshow.detail.PhotoDetailActivity",
-          } , 
-        "bindwechat":{
-        },
-       "autoread":{
-          "ar1":{
-            "action":"",
-            "click_text":"",
-            "featuremode":"id",
-            "id":"com.kuaishou.nebula:id/",
-        },
-          "ar2":{
-                "deploymode":"",
-                "deployclassname":"",
-                "deploydesc":"",
-           },
-        "durl":""
-             },
-       }
+{
+	"enable": "false",
+	"appname": "快手极速版",
+	"appver": "1.4.0.30",
+	"interval": "30",
+	"speed": "normal",
+	"packagename": "com.kuaishou.nebula",
+	"activityname": "com.yxcorp.gifshow.HomeActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "关注",
+		"depth": "9",
+		"indexinparent": "0",
+	},
+	"signin": {},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.kuaishou.nebula:id/container",
+		},
+	},
+	"activitys": {
+		"at1": "com.yxcorp.gifshow.detail.PhotoDetailActivity",
+	},
+	"bindwechat": {},
+	"autoread": {
+		"ar1": {
+			"action": "",
+			"click_text": "",
+			"featuremode": "id",
+			"id": "com.kuaishou.nebula:id/",
+		},
+		"ar2": {
+			"deploymode": "",
+			"deployclassname": "",
+			"deploydesc": "",
+		},
+		"durl": ""
+	},
+}
