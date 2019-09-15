@@ -1,103 +1,102 @@
 {
-      "enable":"true",  
-      "appname":"赚钱小视频",
-      "mulityback":"118||2473||68||174",
-      "appver":"1.3.0",
-      "interval":"40",
-      "speed":"normal",
-      "packagename":"com.sljh.zqxsp",
-      "activityname":"com.cy.browser.BrowserActivity",
-      "open":{
-        "featuremode":"classname_text",
-        "classname":"android.widget.TextView",
-        "text":"任务",
-        "depth":"11",
-        "indexinparent":"1",
-        },
-		 "signin":{
-			},
-       "abnormal":{
-         "ab1":{
-             "featuremode":"id",
-             "id":"com.sljh.zqxsp:id/imagview_red_packet_close",
-                },
-           "ab2":{
-             "featuremode":"id",
-             "id":"com.sljh.zqxsp:id/money_activity_login_guide_skip",
-                },
-           "ab3":{
-             "featuremode":"id",
-             "id":"com.sljh.zqxsp:id/money_mine_popups_bt_close",
-                },
-           "ab4":{
-             "featuremode":"id",
-             "id":"com.sljh.zqxsp:id/msg_dialog_left",
-                },
-           "ab5":{
-             "featuremode":"id",
-             "id":"com.sljh.zqxsp:id/dialog_close",
-                },
-           "ab6":{
-             "featuremode":"id",
-             "id":"com.sljh.zqxsp:id/money_dialog_open_notice_close",
-                },
-		   "ab7":{
-             "featuremode":"id",
-             "id":"com.sljh.zqxsp:id/cy_plugin_close",
-                },
-			"ab8":{
-             "featuremode":"id",
-             "id":"com.sljh.zqxsp:id/dialog_exit_app_bt_clear_cancal",
-                },
-                },  
-	    "activitys":{
-            "at1":"com.cy.browser.BrowserActivity",
-            "at2":"com.cy.browser.money.activity.VideoPlaysActivity",
-            
-            "at3":"com.cy.browser.money.activity.LoginActivity",
-            "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
-   
-          } , 
-      "bindwechat":{
-        "bw1":{
-          "action":"click_text",
-          "click_text":"我的",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"手机登录",
-      },
-        "bw2":{
-          "action":"click_id",
-          "click_id":"com.sljh.zqxsp:id/money_activity_login_weixin",
-          "featuremode":"classname_text",
-          "classname":"android.widget.Button",
-          "text":"同意",
-      },
-        "bw3":{
-         "action":"click_text",
-         "click_text":"同意",
-         "featuremode":"classname_text",
-         "classname":"android.widget.TextView",
-         "text":"任务",
-       },
-       },
-      "autoread":{
-          "ar1":{
-                "action":"click_text",
-                "click_text":"视频",
-                "featuremode":"ids",
-                "ids":"com.sljh.zqxsp:id/activity_video_play_menu_share_news||com.sljh.zqxsp:id/activity_video_play_menu_goback_share",
-                },
-            "ar2":{
-                "deploymode":"",
-                "deployclassname":"android.widget.TextView",
-                "deploytext":"展开全文",
-                "backtrigger":"xy_color_bool",
-                "xy":"111||2044",
-                "color":"ffffffff",
-                "bool":"false",
-                "reswipe":"true",
-                 },
-          }, 
-      "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
-      }
+	"enable": "true",
+	"appname": "赚钱小视频",
+	"mulityback": "118||2473||68||174",
+	"appver": "1.3.0",
+	"interval": "40",
+	"speed": "normal",
+	"packagename": "com.sljh.zqxsp",
+	"activityname": "com.cy.browser.BrowserActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "任务",
+		"depth": "11",
+		"indexinparent": "1",
+	},
+	"signin": {},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.sljh.zqxsp:id/imagview_red_packet_close",
+		},
+		"ab2": {
+			"featuremode": "id",
+			"id": "com.sljh.zqxsp:id/money_activity_login_guide_skip",
+		},
+		"ab3": {
+			"featuremode": "id",
+			"id": "com.sljh.zqxsp:id/money_mine_popups_bt_close",
+		},
+		"ab4": {
+			"featuremode": "id",
+			"id": "com.sljh.zqxsp:id/msg_dialog_left",
+		},
+		"ab5": {
+			"featuremode": "id",
+			"id": "com.sljh.zqxsp:id/dialog_close",
+		},
+		"ab6": {
+			"featuremode": "id",
+			"id": "com.sljh.zqxsp:id/money_dialog_open_notice_close",
+		},
+		"ab7": {
+			"featuremode": "id",
+			"id": "com.sljh.zqxsp:id/cy_plugin_close",
+		},
+		"ab8": {
+			"featuremode": "id",
+			"id": "com.sljh.zqxsp:id/dialog_exit_app_bt_clear_cancal",
+		},
+	},
+	"activitys": {
+		"at1": "com.cy.browser.BrowserActivity",
+		"at2": "com.cy.browser.money.activity.VideoPlaysActivity",
+
+		"at3": "com.cy.browser.money.activity.LoginActivity",
+		"at4": "com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+
+	},
+	"bindwechat": {
+		"bw1": {
+			"action": "click_text",
+			"click_text": "我的",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "手机登录",
+		},
+		"bw2": {
+			"action": "click_id",
+			"click_id": "com.sljh.zqxsp:id/money_activity_login_weixin",
+			"featuremode": "classname_text",
+			"classname": "android.widget.Button",
+			"text": "同意",
+		},
+		"bw3": {
+			"action": "click_text",
+			"click_text": "同意",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "任务",
+		},
+	},
+	"autoread": {
+		"ar1": {
+			"action": "click_text",
+			"click_text": "视频",
+			"featuremode": "ids",
+			"ids": "com.sljh.zqxsp:id/activity_video_play_menu_share_news||com.sljh.zqxsp:id/activity_video_play_menu_goback_share",
+		},
+		"ar2": {
+			"deploymode": "",
+			"deployclassname": "android.widget.TextView",
+			"deploytext": "展开全文",
+			"backtrigger": "xy_color_bool",
+			"xy": "111||2044",
+			"color": "ffffffff",
+			"bool": "false",
+			"reswipe": "true",
+		},
+	},
+	"durl": "http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
+}

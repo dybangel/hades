@@ -1,120 +1,120 @@
 {
-      "enable":"true",  
-      "appname":"闪电盒子",
-      "mulityback":"true||2000",
-      "appver":"5.3.3.5",
-      "interval":"30",
-      "speed":"normal",
-      "packagename":"c.l.a",
-      "activityname":"c.l.a.views.AppBoxHomeActivity",
-      "open":{
-        "featuremode":"classname_text",
-        "classname":"android.widget.TextView",
-        "text":"任务",
-        "depth":"11",
-        "indexinparent":"1",
-        },
-		 "signin":{
-            "sg1":{
-              "action":"click_text",
-              "click_text":"任务",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"余额账户",
-            },
-			"sg2":{
-              "action":"click_id",
-              "click_id":"c.l.a:id/red_pack_signed_btn",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"已领取",
-            },
-			},
-       "abnormal":{
-         "ab1":{
-             "featuremode":"id",
-             "id":"c.l.a:id/btn_left",
-                },
-           "ab2":{
-             "featuremode":"id",
-             "id":"c.l.a:id/btn_close",
-                },
-           "ab3":{
-             "featuremode":"id",
-             "id":"c.l.a:id/dialog_close",
-                },
-		   "ab4":{
-             "featuremode":"id",
-             "id":"c.l.a:id/close_sign_dialog_btn",
-                },
-           "ab5":{
-             "featuremode":"click_boundary_path",
-             "boundary":"android.support.v4.view.ViewPager",
-               "path":"3||0||0||0||4",
-                },
-           "ab6":{
-             "featuremode":"id",
-             "id":"c.l.a:id/img_close",
-                },
-           "ab7":{
-             "featuremode":"id_depth",
-             "id":"c.l.a:id/image1",
-             "depth":"11",
-                },	
-                },  
-	    "activitys":{
-            "at1":"c.l.a.views.AppBoxHomeActivity",
-            "at2":"c.l.a.feed.wyyl.FeedArticleDetailActivitySub1",
-            "at3":"c.l.a.feed.wyyl.FeedArticleDetailActivitySub2",
-            "at4":"c.l.a.feed.wyyl.FeedVideoDetailActivitySub1",
-            "at5":"c.l.a.feed.wyyl.FeedVideoDetailActivitySub2",
-            "at6":"c.l.a.views.x5webkit.X5WebViewActivity",
-            
-            "at7":"c.l.a.views.AppBoxLoginWithWeChatActivity",
-            "at8":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI", 
-          } , 
-      "bindwechat":{
-        "bw1":{
-          "action":"click_text",
-          "click_text":"我的",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"我的余额",
-      },
-        "bw2":{
-          "action":"click_id",
-          "click_id":"c.l.a:id/user_name",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"微信一键登录",
-      },
-        "bw3":{
-         "action":"click_text",
-         "click_text":"微信一键登录",
-         "featuremode":"classname_text",
-         "classname":"android.widget.Button",
-         "text":"同意",
-       },
-      "bw4":{
-       "action":"click_text",
-       "click_text":"同意",
-       "featuremode":"classname_text",
-       "classname":"android.widget.TextView",
-       "text":"我的余额",
-       },
-       },
-      "autoread":{
-          "ar1":{
-                "action":"click_text",
-                "click_text":"首页",
-                "featuremode":"id",
-                "id":"c.l.a:id/back",
-                },
-            "ar2":{
-                "deploymode":"classname_text",
-                "deployclassname":"android.widget.TextView",
-                "deploytext":"展开全文",
-                 },
-          }, 
-      "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
-      }
+	"enable": "true",
+	"appname": "闪电盒子",
+	"mulityback": "true||2000",
+	"appver": "5.3.3.5",
+	"interval": "30",
+	"speed": "normal",
+	"packagename": "c.l.a",
+	"activityname": "c.l.a.views.AppBoxHomeActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "任务",
+		"depth": "11",
+		"indexinparent": "1",
+	},
+	"signin": {
+		"sg1": {
+			"action": "click_text",
+			"click_text": "任务",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "余额账户",
+		},
+		"sg2": {
+			"action": "click_id",
+			"click_id": "c.l.a:id/red_pack_signed_btn",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "已领取",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "c.l.a:id/btn_left",
+		},
+		"ab2": {
+			"featuremode": "id",
+			"id": "c.l.a:id/btn_close",
+		},
+		"ab3": {
+			"featuremode": "id",
+			"id": "c.l.a:id/dialog_close",
+		},
+		"ab4": {
+			"featuremode": "id",
+			"id": "c.l.a:id/close_sign_dialog_btn",
+		},
+		"ab5": {
+			"featuremode": "click_boundary_path",
+			"boundary": "android.support.v4.view.ViewPager",
+			"path": "3||0||0||0||4",
+		},
+		"ab6": {
+			"featuremode": "id",
+			"id": "c.l.a:id/img_close",
+		},
+		"ab7": {
+			"featuremode": "id_depth",
+			"id": "c.l.a:id/image1",
+			"depth": "11",
+		},
+	},
+	"activitys": {
+		"at1": "c.l.a.views.AppBoxHomeActivity",
+		"at2": "c.l.a.feed.wyyl.FeedArticleDetailActivitySub1",
+		"at3": "c.l.a.feed.wyyl.FeedArticleDetailActivitySub2",
+		"at4": "c.l.a.feed.wyyl.FeedVideoDetailActivitySub1",
+		"at5": "c.l.a.feed.wyyl.FeedVideoDetailActivitySub2",
+		"at6": "c.l.a.views.x5webkit.X5WebViewActivity",
+
+		"at7": "c.l.a.views.AppBoxLoginWithWeChatActivity",
+		"at8": "com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+	},
+	"bindwechat": {
+		"bw1": {
+			"action": "click_text",
+			"click_text": "我的",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "我的余额",
+		},
+		"bw2": {
+			"action": "click_id",
+			"click_id": "c.l.a:id/user_name",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "微信一键登录",
+		},
+		"bw3": {
+			"action": "click_text",
+			"click_text": "微信一键登录",
+			"featuremode": "classname_text",
+			"classname": "android.widget.Button",
+			"text": "同意",
+		},
+		"bw4": {
+			"action": "click_text",
+			"click_text": "同意",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "我的余额",
+		},
+	},
+	"autoread": {
+		"ar1": {
+			"action": "click_text",
+			"click_text": "首页",
+			"featuremode": "id",
+			"id": "c.l.a:id/back",
+		},
+		"ar2": {
+			"deploymode": "classname_text",
+			"deployclassname": "android.widget.TextView",
+			"deploytext": "展开全文",
+		},
+	},
+	"durl": "http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
+}

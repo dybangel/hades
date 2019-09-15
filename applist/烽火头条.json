@@ -1,83 +1,83 @@
 {
-      "enable":"true",  
-      "appname":"烽火头条",
-      "mulityback":"78||190",
-      "appver":"4.0.2",
-      "interval":"30",
-	  "speed":"normal",
-      "packagename":"com.tianfeng.fenghuotoutiao",
-      "activityname":"com.tianfeng.fenghuotoutiao.ui.activity.other.MainActivity",
-      "open":{
-        "featuremode":"classname_text",
-        "classname":"android.widget.TextView",
-        "text":"任务",
-        "depth":"11",
-        "indexinparent":"1",
-        },
-		 "signin":{
-             "sg1":{
-              "action":"click_text",
-              "click_text":"任务",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"日常任务",
-                    },
-             "sg2":{
-              "action":"click_id",
-              "click_id":"com.tianfeng.fenghuotoutiao:id/iv_sign_buttom",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"已签到",
-                    },
-			},
-       "abnormal":{
-         "ab1":{
-             "featuremode":"click_boundary_path",
-             "boundary":"android.support.v7.widget.RecyclerView",
-             "path":"0||0||0||0||2||2",
-                },
-                },  
-	    "activitys":{
-            "at1":"com.tianfeng.fenghuotoutiao.ui.activity.other.MainActivity",
-            "at2":"com.tianfeng.fenghuotoutiao.ui.activity.news.NewsDetailActivity2",
-            
-            "at3":"com.tianfeng.fenghuotoutiao.ui.activity.other.LoginActivityFirst",
-            "at4":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
-   
-          } , 
-      "bindwechat":{
-        "bw1":{
-          "action":"click_id",
-          "click_id":"com.tianfeng.fenghuotoutiao:id/tv_login",
-          "featuremode":"classname_text",
-          "classname":"android.widget.Button",
-          "text":"同意",
-      },
-           "bw2":{
-       "action":"click_text",
-       "click_text":"同意",
-       "featuremode":"classname_text",
-       "classname":"android.widget.TextView",
-       "text":"任务",
-       },
-       },
-      "autoread":{
-          "ar1":{
-                "action":"click_id",
-                "click_id":"com.tianfeng.fenghuotoutiao:id/tv_tab_text",
-                "featuremode":"id",
-                "id":"com.tianfeng.fenghuotoutiao:id/ivBack",
-                },
-            "ar2":{
-                "deploymode":"",
-                "deployboundary":"android.support.v7.widget.RecyclerView",
-                "deploypath":"0||0||0||0||2||0||0",
-                "backtrigger":"xy_color_bool",
-                "xy":"134||1999",
-                "color":"ffc8c8c8",
-                "bool":"false",
-                "reswipe":"true",
-                 },
-          }, 
-      "durl":"http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
-      }
+	"enable": "true",
+	"appname": "烽火头条",
+	"mulityback": "78||190",
+	"appver": "4.0.2",
+	"interval": "30",
+	"speed": "normal",
+	"packagename": "com.tianfeng.fenghuotoutiao",
+	"activityname": "com.tianfeng.fenghuotoutiao.ui.activity.other.MainActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "任务",
+		"depth": "11",
+		"indexinparent": "1",
+	},
+	"signin": {
+		"sg1": {
+			"action": "click_text",
+			"click_text": "任务",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "日常任务",
+		},
+		"sg2": {
+			"action": "click_id",
+			"click_id": "com.tianfeng.fenghuotoutiao:id/iv_sign_buttom",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "已签到",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "click_boundary_path",
+			"boundary": "android.support.v7.widget.RecyclerView",
+			"path": "0||0||0||0||2||2",
+		},
+	},
+	"activitys": {
+		"at1": "com.tianfeng.fenghuotoutiao.ui.activity.other.MainActivity",
+		"at2": "com.tianfeng.fenghuotoutiao.ui.activity.news.NewsDetailActivity2",
+
+		"at3": "com.tianfeng.fenghuotoutiao.ui.activity.other.LoginActivityFirst",
+		"at4": "com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+
+	},
+	"bindwechat": {
+		"bw1": {
+			"action": "click_id",
+			"click_id": "com.tianfeng.fenghuotoutiao:id/tv_login",
+			"featuremode": "classname_text",
+			"classname": "android.widget.Button",
+			"text": "同意",
+		},
+		"bw2": {
+			"action": "click_text",
+			"click_text": "同意",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "任务",
+		},
+	},
+	"autoread": {
+		"ar1": {
+			"action": "click_id",
+			"click_id": "com.tianfeng.fenghuotoutiao:id/tv_tab_text",
+			"featuremode": "id",
+			"id": "com.tianfeng.fenghuotoutiao:id/ivBack",
+		},
+		"ar2": {
+			"deploymode": "",
+			"deployboundary": "android.support.v7.widget.RecyclerView",
+			"deploypath": "0||0||0||0||2||0||0",
+			"backtrigger": "xy_color_bool",
+			"xy": "134||1999",
+			"color": "ffc8c8c8",
+			"bool": "false",
+			"reswipe": "true",
+		},
+	},
+	"durl": "http://b9.market.mi-img.com/download/AppStore/005564b984e5f6a7be783829ab12e6d65a442ff78/c.l.a.apk"
+}

@@ -1,51 +1,51 @@
 {
-        "enable":"false",
-        "appname":"头条赚钱", 
-		"mulityback":"",
-        "appver":"1.0.5",
-        "interval":"30",
-		"speed":"normal+",
-        "packagename":"com.jxbz.ztt",
-        "activityname":"com.cy.browser.BrowserActivity",
-        "open":{
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"任务",
-		  "depth":"11",
-          "indexinparent":"1",
-          },
-		"signin":{
-        
-			},
-	   "abnormal":{
-              "ab1":{
-               "featuremode":"id",
-               "id":"com.jxbz.ztt:id/dialog_exit_app_bt_clear_cancal",
-           }, 
-		   },
-        "activitys":{
-            "at1":"com.cy.browser.BrowserActivity",
-          } , 
-        "bindwechat":{
+	"enable": "false",
+	"appname": "头条赚钱",
+	"mulityback": "",
+	"appver": "1.0.5",
+	"interval": "30",
+	"speed": "normal+",
+	"packagename": "com.jxbz.ztt",
+	"activityname": "com.cy.browser.BrowserActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "任务",
+		"depth": "11",
+		"indexinparent": "1",
+	},
+	"signin": {
 
-        },
-        "autoread":{
-          "ar1":{
-            "action":"",
-            "click_id":"com.maihan.tredian:id/main_refresh_ll",
-            "featuremode":"id",
-            "id":"com.jxbz.ztt:id/menu_share_news",
-			},
-		  "ar2":{
-				"deploymode":"classname_text",
-				"deployclassname":"android.view.View",
-				"deploytext":"查看全文",
-                "backtrigger":"xy_color_bool",
-                "xy":"160||2070",
-                "color":"fff44118",
-                "bool":"false",
-                "reswipe":"true",
-			},
-			}, 
-        "durl":""
-      }
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.jxbz.ztt:id/dialog_exit_app_bt_clear_cancal",
+		},
+	},
+	"activitys": {
+		"at1": "com.cy.browser.BrowserActivity",
+	},
+	"bindwechat": {
+
+	},
+	"autoread": {
+		"ar1": {
+			"action": "",
+			"click_id": "com.maihan.tredian:id/main_refresh_ll",
+			"featuremode": "id",
+			"id": "com.jxbz.ztt:id/menu_share_news",
+		},
+		"ar2": {
+			"deploymode": "classname_text",
+			"deployclassname": "android.view.View",
+			"deploytext": "查看全文",
+			"backtrigger": "xy_color_bool",
+			"xy": "160||2070",
+			"color": "fff44118",
+			"bool": "false",
+			"reswipe": "true",
+		},
+	},
+	"durl": ""
+}

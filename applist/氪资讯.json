@@ -1,120 +1,120 @@
 {
-        "enable":"false",
-        "appname":"氪资讯",
-        "mulityback":"75||209",
-        "appver":"1.0.6",
-        "interval":"120",
-		"speed":"normal",
-        "packagename":"zixun.digu.ke",
-        "activityname":"zixun.digu.ke.main.HomeActivity",
-        "open":{
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"视频",
-          "depth":"9",
-          "indexinparent":"1",
-          },
-		   "signin":{
-            "sg1":{
-              "action":"click_text",
-              "click_text":"任务",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"金币",
-            },
-            "sg2":{
-              "action":"click_id",
-              "click_id":":zixun.digu.ke:id/task_sign_click",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"任务",
-            },
-          },  
-        "abnormal":{
-           "ab1":{
-               "featuremode":"id",
-               "id":"zixun.digu.ke:id/iv_close",
-           },
-           "ab2":{
-               "featuremode":"id",
-               "id":"zixun.digu.ke:id/image_redOpen",
-           },
-		    "ab3":{
-               "featuremode":"id",
-               "id":"zixun.digu.ke:id/image_close",
-           },
-         },  
-		"activitys":{
-            "at1":"zixun.digu.ke.main.HomeActivity",
-            "at2":"zixun.digu.ke.main.home.details.news.NewDetailsActivity",
-			"at3":"zixun.digu.ke.main.home.details.video.VideoDetail2Activity",
-			
-	        "at4":"zixun.digu.ke.main.login2.Login2Activity",
-          } , 
-    "bindwechat":{
-          "bw1":{
-            "action":"click_text",
-            "click_text":"我的",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"[氪资讯用户协议]",
-        },
-        "bw2":{
-          "action":"click_id",
-          "click_id":"zixun.digu.ke:id/tv_wechat_login",
-          "featuremode":"classname_text",
-          "classname":"android.widget.Button",
-          "text":"同意",
-         },
-         "bw3":{
-          "action":"click_text",
-          "click_text":"同意",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"兑换提现",
-        },
-    
-        },
-    "incomeanaly":{
-          "in1":{
-            "action":"click_xy",
-            "click_xy":"1291||2482",
-            },
-          "in2":{
-            "action":"gettext_id_index",
-             "id":"zixun.digu.ke:id/tv_income",
-            "index":"0",
-            "type":"money",
-            },
-          "in3":{
-            "action":"gettext_id_index",
-            "id":"zixun.digu.ke:id/tv_glod",
-            "index":"0",
-            "type":"coin",
-            },
-          },
-    "autoread":{
-		 "ar1":{
-		        "swipecount":"2",
-                "action":"click_boundary_path",
-                "boundary":"android.widget.RelativeLayout",
-				"path":"3||0",
-                "featuremode":"id",
-                "id":"zixun.digu.ke:id/back",
-            },
-            "ar2":{
-			    "swipeintervals":"4",
-                "upcount":"40",
-                "deploymode":"classname_text",
-                "deployclassname":"android.widget.TextView",
-                "deploytext":"展开查看全文",
-                "backtrigger":"xy_color_bool",
-                "xy":"1241||1214",
-                "color":"fffaf3f3",
-                "bool":"false",
-                "reswipe":"false",
-
-        }, 
+	"enable": "false",
+	"appname": "氪资讯",
+	"mulityback": "75||209",
+	"appver": "1.0.6",
+	"interval": "120",
+	"speed": "normal",
+	"packagename": "zixun.digu.ke",
+	"activityname": "zixun.digu.ke.main.HomeActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "视频",
+		"depth": "9",
+		"indexinparent": "1",
+	},
+	"signin": {
+		"sg1": {
+			"action": "click_text",
+			"click_text": "任务",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "金币",
 		},
-        "durl":"http://xzf.197946.com/kezixun.apk"
-      }
+		"sg2": {
+			"action": "click_id",
+			"click_id": ":zixun.digu.ke:id/task_sign_click",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "任务",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "zixun.digu.ke:id/iv_close",
+		},
+		"ab2": {
+			"featuremode": "id",
+			"id": "zixun.digu.ke:id/image_redOpen",
+		},
+		"ab3": {
+			"featuremode": "id",
+			"id": "zixun.digu.ke:id/image_close",
+		},
+	},
+	"activitys": {
+		"at1": "zixun.digu.ke.main.HomeActivity",
+		"at2": "zixun.digu.ke.main.home.details.news.NewDetailsActivity",
+		"at3": "zixun.digu.ke.main.home.details.video.VideoDetail2Activity",
+
+		"at4": "zixun.digu.ke.main.login2.Login2Activity",
+	},
+	"bindwechat": {
+		"bw1": {
+			"action": "click_text",
+			"click_text": "我的",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "[氪资讯用户协议]",
+		},
+		"bw2": {
+			"action": "click_id",
+			"click_id": "zixun.digu.ke:id/tv_wechat_login",
+			"featuremode": "classname_text",
+			"classname": "android.widget.Button",
+			"text": "同意",
+		},
+		"bw3": {
+			"action": "click_text",
+			"click_text": "同意",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "兑换提现",
+		},
+
+	},
+	"incomeanaly": {
+		"in1": {
+			"action": "click_xy",
+			"click_xy": "1291||2482",
+		},
+		"in2": {
+			"action": "gettext_id_index",
+			"id": "zixun.digu.ke:id/tv_income",
+			"index": "0",
+			"type": "money",
+		},
+		"in3": {
+			"action": "gettext_id_index",
+			"id": "zixun.digu.ke:id/tv_glod",
+			"index": "0",
+			"type": "coin",
+		},
+	},
+	"autoread": {
+		"ar1": {
+			"swipecount": "2",
+			"action": "click_boundary_path",
+			"boundary": "android.widget.RelativeLayout",
+			"path": "3||0",
+			"featuremode": "id",
+			"id": "zixun.digu.ke:id/back",
+		},
+		"ar2": {
+			"swipeintervals": "4",
+			"upcount": "40",
+			"deploymode": "classname_text",
+			"deployclassname": "android.widget.TextView",
+			"deploytext": "展开查看全文",
+			"backtrigger": "xy_color_bool",
+			"xy": "1241||1214",
+			"color": "fffaf3f3",
+			"bool": "false",
+			"reswipe": "false",
+
+		},
+	},
+	"durl": "http://xzf.197946.com/kezixun.apk"
+}

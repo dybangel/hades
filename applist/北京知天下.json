@@ -1,117 +1,117 @@
- {
-        "enable":"false",
-        "appname":"北京知天下",
-        "mulityback":"true||1000",
-        "appver":"1.8.5",
-        "interval":"50",
-		"speed":"normal",
-         "packagename":"com.knowworld.news",
-        "activityname":"cent.news.com.newscent.splash.SplashActivity",
-        "open":{
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"视频",
-          "depth":"10",
-          "indexinparent":"1",
-          },
-		"signin":{
-            "sg1":{
-            "action":"click_text",
-            "click_text":"任务",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"赚钱攻略",
-        },
-        "sg2":{
-            "action":"click_id",  //如果check_signin通过说明签到过 往下执行
-			"click_id":"com.knowworld.news:id/taskBigSiginNum",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"明日签到",
-        },
-        },
-         "abnormal":{
-           "ab1":{
-               "featuremode":"id",
-               "id":"com.knowworld.news:id/iv_close",
-           },
-           "ab2":{
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"暂不更新",
-          },
-		  "ab3":{
-               "featuremode":"id",
-               "id":"com.knowworld.news:id/closeView",
-           },
-		   "ab4":{
-               "featuremode":"id",
-               "id":"com.knowworld.news:id/closeView",
-           },
-		   "ab5":{
-               "featuremode":"id",
-               "id":"com.knowworld.news:id/cannel",
-           },
-		   "ab6":{
-               "featuremode":"id",
-               "id":"com.knowworld.news:id/cancle",
-           },
-           "ab7":{
-               "featuremode":"id",
-               "id":"com.knowworld.news:id/replay",
-           }
-         },  
-		   "activitys":{
-            "at1":"cent.news.com.newscent.splash.SplashActivity",
-            "at2":"cent.news.com.newscent.webview.WebViewActivity",
-            "at3":"cent.news.com.newscent.webview.VideoWebViewActivity",
-               
-            "at4":"cent.news.com.newscent.MainActivity",
-            "at5":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
-            "at6":"cent.news.com.newscent.login.LoginActivity",
-               
-          } , 
-        "bindwechat":{
-            "bw1":{
-            "action":"click_text",
-            "click_text":"我的",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"看新闻就可以赚钱的APP",
-        },
-        "bw2":{
-            "action":"click_id",
-            "click_id":"weixinLoginLayout",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"我的",
-        },
-        "bw3":{
-         "action":"click_text",
-         "click_text":"我的",
-         "featuremode":"classname_text",
-         "classname":"android.widget.TextView",
-         "text":"累计金币"
-        },
-        },
-        "autoread":{
-            "ar1":{
-                "action":"click_id",
-                "click_id":"com.knowworld.news:id/homeBottomBar",
-                "featuremode":"id",
-                "id":"com.knowworld.news:id/OnBack",
-            },
-            "ar2":{
-                "deploymode":"classname_desc",
-                "deployclassname":"android.view.View",
-                "deploydesc":"展开全文",
-                "backtrigger":"xy_color_bool",
-                "xy":"1270||2196",
-                "color":"ffff6249",
-                "bool":"false",
-                "reswipe":"true",
+{
+	"enable": "false",
+	"appname": "北京知天下",
+	"mulityback": "true||1000",
+	"appver": "1.8.5",
+	"interval": "50",
+	"speed": "normal",
+	"packagename": "com.knowworld.news",
+	"activityname": "cent.news.com.newscent.splash.SplashActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "视频",
+		"depth": "10",
+		"indexinparent": "1",
+	},
+	"signin": {
+		"sg1": {
+			"action": "click_text",
+			"click_text": "任务",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "赚钱攻略",
+		},
+		"sg2": {
+			"action": "click_id", //如果check_signin通过说明签到过 往下执行
+			"click_id": "com.knowworld.news:id/taskBigSiginNum",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "明日签到",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.knowworld.news:id/iv_close",
+		},
+		"ab2": {
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "暂不更新",
+		},
+		"ab3": {
+			"featuremode": "id",
+			"id": "com.knowworld.news:id/closeView",
+		},
+		"ab4": {
+			"featuremode": "id",
+			"id": "com.knowworld.news:id/closeView",
+		},
+		"ab5": {
+			"featuremode": "id",
+			"id": "com.knowworld.news:id/cannel",
+		},
+		"ab6": {
+			"featuremode": "id",
+			"id": "com.knowworld.news:id/cancle",
+		},
+		"ab7": {
+			"featuremode": "id",
+			"id": "com.knowworld.news:id/replay",
+		}
+	},
+	"activitys": {
+		"at1": "cent.news.com.newscent.splash.SplashActivity",
+		"at2": "cent.news.com.newscent.webview.WebViewActivity",
+		"at3": "cent.news.com.newscent.webview.VideoWebViewActivity",
 
-            },
-        }, 
-        "durl":"http://xzf.197946.com/com.knowworld.news.apk"
-       }
+		"at4": "cent.news.com.newscent.MainActivity",
+		"at5": "com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+		"at6": "cent.news.com.newscent.login.LoginActivity",
+
+	},
+	"bindwechat": {
+		"bw1": {
+			"action": "click_text",
+			"click_text": "我的",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "看新闻就可以赚钱的APP",
+		},
+		"bw2": {
+			"action": "click_id",
+			"click_id": "weixinLoginLayout",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "我的",
+		},
+		"bw3": {
+			"action": "click_text",
+			"click_text": "我的",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "累计金币"
+		},
+	},
+	"autoread": {
+		"ar1": {
+			"action": "click_id",
+			"click_id": "com.knowworld.news:id/homeBottomBar",
+			"featuremode": "id",
+			"id": "com.knowworld.news:id/OnBack",
+		},
+		"ar2": {
+			"deploymode": "classname_desc",
+			"deployclassname": "android.view.View",
+			"deploydesc": "展开全文",
+			"backtrigger": "xy_color_bool",
+			"xy": "1270||2196",
+			"color": "ffff6249",
+			"bool": "false",
+			"reswipe": "true",
+
+		},
+	},
+	"durl": "http://xzf.197946.com/com.knowworld.news.apk"
+}

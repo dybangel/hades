@@ -1,84 +1,84 @@
 {
-      "enable":"true", 
-      "appname":"优看点",
-      "mulityback":"20||165",	  
-	  "appver":"3.3.1",
-      "interval":"40",
-      "speed":"normal+",
-      "packagename":"com.memory.online",
-      "activityname":"com.memory.online.activity.WelcomeActivity",
-      "open":{
-        "featuremode":"classname_text",
-        "classname":"android.widget.TextView",
-        "text":"视频",
-        "depth":"10",
-        "indexinparent":"1",
-        },
-	  "signin":{
-   
-					},
-      "abnormal":{
-         "ab1":{
-             "featuremode":"id",
-             "id":"com.memory.online:id/tv_confim",
-         },
-		 "ab2":{
-             "featuremode":"id",
-             "id":"com.memory.online:id/tv_retain",
-         },
-       },  
-	  "activitys":{
-            "at1":"com.memory.online.activity.HomePageActivity",
-            "at2":"com.memory.online.activity.ShowWebActivity",
-          } , 
-      "bindwechat":{
-        "bw1":{
-          "action":"click_text",
-          "click_text":"我的",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"登录领1~100元",
-      },
-        "bw2":{
-          "action":"click_id",
-          "click_id":"tv_login",
-          "featuremode":"classname_text",
-          "classname":"android.widget.Button",
-          "text":"微信一键登录",
-      },
-        "bw3":{
-         "action":"click_text",
-         "click_text":"微信一键登录",
-         "featuremode":"classname_text",
-         "classname":"android.widget.Button",
-         "text":"同意",
-     },
-      "bw4":{
-       "action":"click_text",
-       "click_text":"同意",
-       "featuremode":"classname_text",
-       "classname":"android.widget.TextView",
-       "text":"我的金币",
-  },
-    
-      },
-      "autoread":{
-	   "ar1":{
-                "action":"",
-                "click_id":"com.yanhui.qktx:id/iv_icon",
-                "featuremode":"id",
-                "id":"com.memory.online:id/iv_back",
-            },
-       "ar2":{
-                 "deploymode":"classname_desc",
-                "deployclassname":"android.view.View",
-                "deploydesc":"展开全文 ",
-			    "backtrigger":"xy_color_bool",
-			    "xy":"1246||2032",
-			    "color":"ffefefef",
-			    "bool":"false",
-			    "reswipe":"true",
-      }, 
-      "durl":""
-      }
-    }
+	"enable": "true",
+	"appname": "优看点",
+	"mulityback": "20||165",
+	"appver": "3.3.1",
+	"interval": "40",
+	"speed": "normal+",
+	"packagename": "com.memory.online",
+	"activityname": "com.memory.online.activity.WelcomeActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "视频",
+		"depth": "10",
+		"indexinparent": "1",
+	},
+	"signin": {
+
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.memory.online:id/tv_confim",
+		},
+		"ab2": {
+			"featuremode": "id",
+			"id": "com.memory.online:id/tv_retain",
+		},
+	},
+	"activitys": {
+		"at1": "com.memory.online.activity.HomePageActivity",
+		"at2": "com.memory.online.activity.ShowWebActivity",
+	},
+	"bindwechat": {
+		"bw1": {
+			"action": "click_text",
+			"click_text": "我的",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "登录领1~100元",
+		},
+		"bw2": {
+			"action": "click_id",
+			"click_id": "tv_login",
+			"featuremode": "classname_text",
+			"classname": "android.widget.Button",
+			"text": "微信一键登录",
+		},
+		"bw3": {
+			"action": "click_text",
+			"click_text": "微信一键登录",
+			"featuremode": "classname_text",
+			"classname": "android.widget.Button",
+			"text": "同意",
+		},
+		"bw4": {
+			"action": "click_text",
+			"click_text": "同意",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "我的金币",
+		},
+
+	},
+	"autoread": {
+		"ar1": {
+			"action": "",
+			"click_id": "com.yanhui.qktx:id/iv_icon",
+			"featuremode": "id",
+			"id": "com.memory.online:id/iv_back",
+		},
+		"ar2": {
+			"deploymode": "classname_desc",
+			"deployclassname": "android.view.View",
+			"deploydesc": "展开全文 ",
+			"backtrigger": "xy_color_bool",
+			"xy": "1246||2032",
+			"color": "ffefefef",
+			"bool": "false",
+			"reswipe": "true",
+		},
+		"durl": ""
+	}
+}

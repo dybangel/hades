@@ -1,100 +1,99 @@
 {
-      "enable":"false",  
-      "appname":"阅看阅赚",
-      "mulityback":"41||168",
-      "appver":"2.2.1",
-      "interval":"45",
-	  "speed":"normal",
-      "packagename":"com.zhuantoutiao",
-      "activityname":"com.top.quanmin.app.ui.activity.SplashNewTopActivity",
-      "open":{
-        "featuremode":"classname_text",
-        "classname":"android.widget.TextView",
-        "text":"任务",
-        "depth":"12",
-        "indexinparent":"1",
-        },
-	  "signin":{
-            "sg1":{
-              "action":"click_id",
-              "click_id":"com.zhuantoutiao:id/tab_img_task",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"签到规则",
-            },
-            "sg2":{
-              "action":"click_id",
-              "click_id":"com.zhuantoutiao:id/tv_sign_in",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"已签到",
-            },
-          },
-      "abnormal":{
-         "ab1":{
-             "featuremode":"id",
-             "id":"com.zhuantoutiao:id/iv_red_picket_close",
-         },
-		  "ab2":{
-             "featuremode":"id",
-             "id":"com.zhuantoutiao:id/iv_dismiss",
-         },
-       },  
-      "activitys":{
-            "at1":"com.top.quanmin.app.ui.activity.HomeActivity",
-            "at2":"com.top.quanmin.app.ui.activity.ArticleDetailActivity",
-   
-          } ,
-      "bindwechat":{
-        "bw1":{
-          "action":"click_text",
-          "click_text":"我的",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"登录立即领现金",
-      },
-        "bw2":{
-          "action":"click_id",
-          "click_id":"com.top.quanmin.app:id/iv_wx_login",
-          "featuremode":"classname_text",
-          "classname":"android.widget.Button",
-          "text":"微信一键登录",
-      },
-        "bw3":{
-         "action":"click_text",
-         "click_text":"微信一键登录",
-         "featuremode":"classname_text",
-         "classname":"android.widget.Button",
-         "text":"同意",
-     },
-      "bw4":{
-       "action":"click_text",
-       "click_text":"同意",
-       "featuremode":"classname_text",
-       "classname":"android.widget.TextView",
-       "text":"我的金币",
-  },
-    
-      },
-      "autoread":{
-        "ar1":{
-          "action":"click_id",
-          "click_id":"com.zhuantoutiao:id/seal_pandect",
-          "featuremode":"id",
-          "id":"com.zhuantoutiao:id/ll_title_back",
-      },
-      "ar2":{
-          "deploymode":"classname_text",
-          "deployclassname":"android.widget.TextView",
-          "deploytext":"展开全文",
-          "backtrigger":"xy_color_bool",
-          "xy":"189||2088",
-          "color":"fff9f6a7",
-          "bool":"false",
-          "reswipe":"true",
+	"enable": "false",
+	"appname": "阅看阅赚",
+	"mulityback": "41||168",
+	"appver": "2.2.1",
+	"interval": "45",
+	"speed": "normal",
+	"packagename": "com.zhuantoutiao",
+	"activityname": "com.top.quanmin.app.ui.activity.SplashNewTopActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "任务",
+		"depth": "12",
+		"indexinparent": "1",
+	},
+	"signin": {
+		"sg1": {
+			"action": "click_id",
+			"click_id": "com.zhuantoutiao:id/tab_img_task",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "签到规则",
+		},
+		"sg2": {
+			"action": "click_id",
+			"click_id": "com.zhuantoutiao:id/tv_sign_in",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "已签到",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.zhuantoutiao:id/iv_red_picket_close",
+		},
+		"ab2": {
+			"featuremode": "id",
+			"id": "com.zhuantoutiao:id/iv_dismiss",
+		},
+	},
+	"activitys": {
+		"at1": "com.top.quanmin.app.ui.activity.HomeActivity",
+		"at2": "com.top.quanmin.app.ui.activity.ArticleDetailActivity",
 
-      },
-      }, 
-      "durl":""
-      }
-    
+	},
+	"bindwechat": {
+		"bw1": {
+			"action": "click_text",
+			"click_text": "我的",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "登录立即领现金",
+		},
+		"bw2": {
+			"action": "click_id",
+			"click_id": "com.top.quanmin.app:id/iv_wx_login",
+			"featuremode": "classname_text",
+			"classname": "android.widget.Button",
+			"text": "微信一键登录",
+		},
+		"bw3": {
+			"action": "click_text",
+			"click_text": "微信一键登录",
+			"featuremode": "classname_text",
+			"classname": "android.widget.Button",
+			"text": "同意",
+		},
+		"bw4": {
+			"action": "click_text",
+			"click_text": "同意",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "我的金币",
+		},
+
+	},
+	"autoread": {
+		"ar1": {
+			"action": "click_id",
+			"click_id": "com.zhuantoutiao:id/seal_pandect",
+			"featuremode": "id",
+			"id": "com.zhuantoutiao:id/ll_title_back",
+		},
+		"ar2": {
+			"deploymode": "classname_text",
+			"deployclassname": "android.widget.TextView",
+			"deploytext": "展开全文",
+			"backtrigger": "xy_color_bool",
+			"xy": "189||2088",
+			"color": "fff9f6a7",
+			"bool": "false",
+			"reswipe": "true",
+
+		},
+	},
+	"durl": ""
+}

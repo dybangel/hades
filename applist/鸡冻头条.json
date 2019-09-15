@@ -1,74 +1,73 @@
 {
-        "enable":"true",
-        "appname":"鸡冻头条",
-        "mulityback":"52||223",
-	    "appver":"2.2.4",
-        "interval":"30",
-        "speed":"normal",
-        "packagename":"com.jidongtoutiao.jdtt",
-        "activityname":"com.jidongtoutiao.jdtt.home.HomeMainActivity",
-        "open":{
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"视频",
-          "depth":"11",
-          "indexinparent":"1",
-          },
-        "signin":{
-             "sg1":{
-              "action":"click_id",
-              "click_id":"com.jidongtoutiao.jdtt:id/iv_red_packet",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"任务中心",
-                    },
-            "sg2":{
-              "action":"click_text",
-              "click_text":"任务中心",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"签到",
-                    },
-            "sg3":{
-              "action":"click_id",
-              "click_id":"com.jidongtoutiao.jdtt:id/sign_in_bt_click",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-              "text":"已签到",
-                    },
-			},
-        "abnormal":{
-           "ab1":{
-               "featuremode":"id",
-               "id":"com.jidongtoutiao.jdtt:id/iv_close",
-           },
-            "ab2":{
-               "featuremode":"id",
-               "id":"com.jidongtoutiao.jdtt:id/commom_dialog_ok",
-           },
-         },  
-        "activitys":{
-            "at1":"com.jidongtoutiao.jdtt.home.HomeMainActivity",
-            "at2":"com.jidongtoutiao.jdtt.home.detail.NewsDetailActivity",
-          
-            "at3":"com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
-          } , 
-        "bindwechat":{
-        },
-        "autoread":{
-		 "ar1":{
-                "action":"click_id",
-                "click_id":"com.jidongtoutiao.jdtt:id/home_page_bottom_view",
-                "featuremode":"id",
-                "id":"com.jidongtoutiao.jdtt:id/fl_back",
-            },
-            "ar2":{
-                "upcount":"21",
-                "deploymode":"",
-                "deployclassname":"android.widget.TextView",
-                "deploytext":"点击阅读全文",
-        }, 
-            },
-        "durl":""
-       
-      }
+	"enable": "true",
+	"appname": "鸡冻头条",
+	"mulityback": "52||223",
+	"appver": "2.2.4",
+	"interval": "30",
+	"speed": "normal",
+	"packagename": "com.jidongtoutiao.jdtt",
+	"activityname": "com.jidongtoutiao.jdtt.home.HomeMainActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "视频",
+		"depth": "11",
+		"indexinparent": "1",
+	},
+	"signin": {
+		"sg1": {
+			"action": "click_id",
+			"click_id": "com.jidongtoutiao.jdtt:id/iv_red_packet",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "任务中心",
+		},
+		"sg2": {
+			"action": "click_text",
+			"click_text": "任务中心",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "签到",
+		},
+		"sg3": {
+			"action": "click_id",
+			"click_id": "com.jidongtoutiao.jdtt:id/sign_in_bt_click",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "已签到",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.jidongtoutiao.jdtt:id/iv_close",
+		},
+		"ab2": {
+			"featuremode": "id",
+			"id": "com.jidongtoutiao.jdtt:id/commom_dialog_ok",
+		},
+	},
+	"activitys": {
+		"at1": "com.jidongtoutiao.jdtt.home.HomeMainActivity",
+		"at2": "com.jidongtoutiao.jdtt.home.detail.NewsDetailActivity",
+
+		"at3": "com.tencent.mm.plugin.webview.ui.tools.SDKOAuthUI",
+	},
+	"bindwechat": {},
+	"autoread": {
+		"ar1": {
+			"action": "click_id",
+			"click_id": "com.jidongtoutiao.jdtt:id/home_page_bottom_view",
+			"featuremode": "id",
+			"id": "com.jidongtoutiao.jdtt:id/fl_back",
+		},
+		"ar2": {
+			"upcount": "21",
+			"deploymode": "",
+			"deployclassname": "android.widget.TextView",
+			"deploytext": "点击阅读全文",
+		},
+	},
+	"durl": ""
+
+}
