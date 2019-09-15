@@ -30,14 +30,14 @@
         "bindwechat":{
           "bw1":{
             "action":"click_text",
-            "click_text":"我的",
+            "click_text":"",
             "featuremode":"classname_text",
             "classname":"android.widget.TextView",
             "text":"看视频赚零花",
         },
         "bw2":{
          "action":"click_text",
-         "click_text":"我也要",
+         "click_text":"",
          "featuremode":"classname_text",
          "classname":"android.widget.Button",
          "text":"同意"
