@@ -3,8 +3,8 @@
     "appname":"中合好运",
     "apptype":"layers",//layer1 layer2 layers
     "mulityback":"true||1000",
-    "appver":"",
-    "interval":"50",
+    "appver":"1.0",
+    "interval":"10",
     "speed":"normal",
      "packagename":"com.zhongheluck.cn",
     "activityname":"io.dcloud.PandoraEntryActivity",

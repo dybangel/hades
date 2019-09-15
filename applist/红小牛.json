@@ -3,8 +3,8 @@
         "appname":"红小牛",
         "apptype":"layers",//layer1 layer2 layers
         "mulityback":"true||1000",
-        "appver":"2.5.0.0",
-        "interval":"30",
+        "appver":"1.0",
+        "interval":"10",
 		"speed":"normal",
         "packagename":"com.cow.momo",
         "activityname":"io.dcloud.PandoraEntryActivity",

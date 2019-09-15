@@ -3,8 +3,8 @@
     "appname":"赚赚多多",
     "apptype":"layers",//layer1 layer2 layers
     "mulityback":"true||1000",
-    "appver":"",
-    "interval":"50",
+    "appver":"1.0",
+    "interval":"10",
     "speed":"normal",
      "packagename":"zhuanduo.mcn",
     "activityname":"io.dcloud.PandoraEntryActivity",
