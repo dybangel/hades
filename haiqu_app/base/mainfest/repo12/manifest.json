@@ -1,7 +1,7 @@
 {
     "@platforms" : [ "android", "iPhone", "iPad" ],
-    "id" : "com.zhongheluck.cn", /*应用的标识*/
-    "name" : "中合好运", /*应用名称，程序桌面图标名称*/
+    "id" : "zhuanduo.mcn", /*应用的标识*/
+    "name" : "赚赚多多", /*应用名称，程序桌面图标名称*/
     "version" : {
         "name" : "1.0", /*应用版本名称*/
         "code" : 100
