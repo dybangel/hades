@@ -20,24 +20,24 @@ $arrayhbuliderid=StringSplit($hbuliderid,",",1);
 $arraypackagename=StringSplit($packagename,",",1);
 $arrayhtmlfile=StringSplit($htmlfile,",",1);
 
-
+dircopy("./project/好鱼多","./release/好鱼多",1);复制目录
 For $i= 0 To UBound($arrayappname) -1
 ;MsgBox(64,"分割字符串", "分割后的数量：" & $array[$i]);
 If $i<>0 Then
-dircopy("./project/好鱼多",$arrayappname[$i],1);复制目录
+dircopy("./project/好鱼多","./release/"&$arrayappname[$i],1);复制目录
 ;MsgBox(0,"","./base/card/"&$arrayrepo[$i]&"/*.*"&" to "&$arrayappname[$i]&"/images")
-dircopy("./base/card/"&$arrayrepo[$i]&"/a.png",$arrayappname[$i]&"/images/a.png",1);复制目录
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/a.png",$arrayappname[$i]&"/images/a.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/b.png",$arrayappname[$i]&"/images/b.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/c.png",$arrayappname[$i]&"/images/c.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/d.png",$arrayappname[$i]&"/images/d.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/e.png",$arrayappname[$i]&"/images/e.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/f.png",$arrayappname[$i]&"/images/f.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/g.png",$arrayappname[$i]&"/images/g.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/h.png",$arrayappname[$i]&"/images/h.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/i.png",$arrayappname[$i]&"/images/i.png",1 )
-FileCopy ( "./base/card/"&$arrayrepo[$i]&"/j.png",$arrayappname[$i]&"/images/j.png",1 )
-FileCopy ( "./base/mainfest/"&$arrayrepo[$i]&"/manifest.json",$arrayappname[$i]&"/manifest.json",1 )
+dircopy("./base/card/"&$arrayrepo[$i]&"/a.png","./release/"&$arrayappname[$i]&"/images/a.png",1);复制目录
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/a.png","./release/"&$arrayappname[$i]&"/images/a.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/b.png","./release/"&$arrayappname[$i]&"/images/b.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/c.png","./release/"&$arrayappname[$i]&"/images/c.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/d.png","./release/"&$arrayappname[$i]&"/images/d.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/e.png","./release/"&$arrayappname[$i]&"/images/e.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/f.png","./release/"&$arrayappname[$i]&"/images/f.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/g.png","./release/"&$arrayappname[$i]&"/images/g.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/h.png","./release/"&$arrayappname[$i]&"/images/h.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/i.png","./release/"&$arrayappname[$i]&"/images/i.png",1 )
+FileCopy ( "./base/card/"&$arrayrepo[$i]&"/j.png","./release/"&$arrayappname[$i]&"/images/j.png",1 )
+FileCopy ( "./base/mainfest/"&$arrayrepo[$i]&"/manifest.json","./release/"&$arrayappname[$i]&"/manifest.json",1 )
 
 
 EndIf;
@@ -48,16 +48,16 @@ MsgBox(0, "", "准备复制")
 
 ;;;;;;;;复制文件夹
 For $i= 1 To UBound($arrayappname) -1
-	MsgBox(0,"",$arrayappname[$i])
-					$path="./"&$arrayappname[$i]&"/"&"manifest.json";
-					$jspath="./"&$arrayappname[$i]&"/js/reg.js";     \xxx\js\reg.js 
-					$indexhtmlpath="./"&$arrayappname[$i]&"/html/index.html";
-					$detailhtmlpath="./"&$arrayappname[$i]&"/html/detail.html";
-					$reghtmlpath="./"&$arrayappname[$i]&"/html/reg.html";
-					$withdrawhtmlpath="./"&$arrayappname[$i]&"/html/withdraw.html";
+	;MsgBox(0,"",$arrayappname[$i])
+					$path="./release/"&$arrayappname[$i]&"/"&"manifest.json";
+					$jspath="./release/"&$arrayappname[$i]&"/js/reg.js";     \xxx\js\reg.js 
+					$indexhtmlpath="./release/"&$arrayappname[$i]&"/html/index.html";
+					$detailhtmlpath="./release/"&$arrayappname[$i]&"/html/detail.html";
+					$reghtmlpath="./release/"&$arrayappname[$i]&"/html/reg.html";
+					$withdrawhtmlpath="./release/"&$arrayappname[$i]&"/html/withdraw.html";
 					
 				;打开文件
-				$file = FileOpen($path, 0)
+				;$file = FileOpen($path, 0)
 				$jsfile=FileOpen($jspath,0);
 				
 				$indexhtmlfile=FileOpen($indexhtmlpath,0);
