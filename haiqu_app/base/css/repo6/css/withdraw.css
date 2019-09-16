@@ -11,7 +11,7 @@ body{
 	position: relative;
 	width: 100%;
 	height: 8rem;
-	background-color: #E63634;
+	background-image:linear-gradient(to top,#ccc,#000000);
 	z-index: -20;
 	display: flex;
 	justify-content: center;
