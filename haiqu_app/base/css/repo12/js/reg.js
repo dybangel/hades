@@ -1,5 +1,5 @@
 var app = new Vue({
-	el: '#vueIdReg',
+	el: '#vueIdReg',//hello world
 	data: {
 		phone: '',
 		code: ''
