@@ -44,14 +44,16 @@ var app = new Vue({
 			appId: localStorage.appId,
 			userId: localStorage.userId
 		}
-
 		jup_request("POST", "app/today_card_count", true, param).then(function(res) {
-			that.countCard = res.result.cardCount
-			that.limit = res.result.limit
+			that.countCard = res.result.cardCount;
+			let randomFallArr =  [0.1,0.2,0.3];
+			let randomFall = randomFallArr[Math.floor((Math.random()*randomFallArr.length))];
+			that.limit = res.result.limit - randomFall;
+			console.log('that.limit',that.limit);
 			if(res.result.cardCount == 0){
-				$("#tip").show()
+				$("#tip").show();
 			}else{
-				$("#tip").hide()
+				$("#tip").hide();
 			}	
 
 			const randomRedPacket = randomRedPacketGenerator(0.6)
@@ -168,7 +170,7 @@ var app = new Vue({
 				filter.addAction("com.example.broadcasttest.MY_BROADCAST");
 				main.registerReceiver(receiver, filter);
 			})
-		})
+})
 
 		jup_request("POST", "user/getAccount", true, param).then(function(res) {
 			that.balance = res.result.balance;
