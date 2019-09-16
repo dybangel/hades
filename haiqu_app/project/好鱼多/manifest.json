@@ -1,6 +1,6 @@
 {
     "@platforms" : [ "android", "iPhone", "iPad" ],
-    "id" : "H519EB843", /*应用的标识*/
+    "id" : "com.pretty.fish", /*应用的标识H519EB843*/
     "name" : "好鱼多", /*应用名称，程序桌面图标名称*/
     "version" : {
         "name" : "1.0", /*应用版本名称*/

@@ -10,7 +10,7 @@ var app = new Vue({
 					} else {
 						window.location.href = "index.html"
 					}
-					localStorage.appId = 'a0'
+					localStorage.appId = '134'
 				},
 				methods: {
 					submit() {
