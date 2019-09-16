@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>注册</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" href="http://47.240.57.96:8080/repo2/css/reg.css">
+	</head>
+	<body>
+		<div class="alert"></div>
+		<div id="vueIdReg">
+			<div class="regTitle">
+				<span>用户登录/注册</span>
+			</div>
+			<form class="mui-input-group regForm">
+				<div class="mui-input-row phone">
+					<label>手机号</label>
+					<input v-model="phone" type="number" placeholder="在此输入手机号">
+				</div>
+				<div class="mui-input-row code">
+					<label>验证码</label>
+					<input v-model="code" type="number" placeholder="在此输入验证码">
+				</div>
+				<div class="mui-button-row btnRow">
+					<button class="btn1" type="button" @click="submit()">登录</button>&nbsp;&nbsp;
+					<button id="btnCode" type="button" @click="get_code()">发送短信验证码</button>
+				</div>
+			</form>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/jup-request.js"></script>
+		<script src="http://47.240.57.96:8080/repo2/js/reg.js"></script>
+	</body>
+</html>

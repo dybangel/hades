@@ -1,0 +1,123 @@
+* {
+	touch-action: pan-y;
+}
+/* 首页及我的页面 样式 */
+/* 每张刮刮卡样式 */
+.content-card {
+	display: inline-block;
+	margin-top: 7rem;
+	margin-bottom: 1rem;
+}
+
+.content-card div img {
+	width: 90%;
+	margin-left: 5%;
+	margin-top: 0.5rem;
+	border-radius: 5px;
+}
+/* 我的页面头部背景样式及内容 */
+.head-bg {
+	width: 100%;
+	height: 8rem;
+	color: #fff;
+	background-color: #e63634;
+	padding-left: 10%;
+	display: flex;
+	align-items: center;
+}
+.avatar2{
+	width: 3.125rem;
+	height: 3.125rem;
+	margin-right: 0.625rem;
+	border-radius: 10%;
+	background-size: cover;
+	background-image: url(../images/4.png);
+}
+.head-extra-content {
+	position: fixed;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 90%;
+	height: 7rem;
+	top: 9rem;
+	margin-left: 5%;
+	color: #000;
+	border-radius: 10px;
+	background-color: #fff;
+}
+/* 首页头部背景及内容 */
+.navHead {
+	background-color: #e63634;
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.avatar1 {
+	width: 3.125rem;
+	height: 3.125rem;
+	margin-left: 1.875rem;
+	border-radius: 10%;
+	background-size: cover;
+	background-image: url(../images/4.png);
+}
+.navHead .span1 {
+	background-color: white;
+	padding: 0.3rem 0.5rem;
+	border-radius: 20px;
+	margin-right: 1.875rem;
+}
+/* 我的页面登录，提现按钮样式 */
+.btnIndex {
+	margin-top: 2rem;
+	width: 90%;
+	margin-left: 5%;
+	color: #fff;
+	background-color: #E63634;
+}
+/* 提示没有剩余  样式 */
+#tip {
+	text-align: center;
+	width: 100%;
+	color: gray;
+}
+/* 提示框样式 */
+.alert {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 200px;
+    margin-left: -100px;
+    z-index: 99999;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+}
+
+/* .alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+} */

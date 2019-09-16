@@ -26,7 +26,7 @@ For $i= 0 To UBound($arrayappname) -1
 If $i<>0 Then
 dircopy("./project/好鱼多","./release/"&$arrayappname[$i],1);复制目录
 ;MsgBox(0,"","./base/card/"&$arrayrepo[$i]&"/*.*"&" to "&$arrayappname[$i]&"/images")
-dircopy("./base/card/"&$arrayrepo[$i]&"/a.png","./release/"&$arrayappname[$i]&"/images/a.png",1);复制目录
+;dircopy("./base/card/"&$arrayrepo[$i]&"/a.png","./release/"&$arrayappname[$i]&"/images/a.png",1);复制目录
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/a.png","./release/"&$arrayappname[$i]&"/images/a.png",1 )
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/b.png","./release/"&$arrayappname[$i]&"/images/b.png",1 )
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/c.png","./release/"&$arrayappname[$i]&"/images/c.png",1 )
@@ -38,6 +38,8 @@ FileCopy ( "./base/card/"&$arrayrepo[$i]&"/h.png","./release/"&$arrayappname[$i]
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/i.png","./release/"&$arrayappname[$i]&"/images/i.png",1 )
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/j.png","./release/"&$arrayappname[$i]&"/images/j.png",1 )
 FileCopy ( "./base/mainfest/"&$arrayrepo[$i]&"/manifest.json","./release/"&$arrayappname[$i]&"/manifest.json",1 )
+
+dircopy("./base/icon/"&$arrayrepo[$i]&"/res","release\"&$arrayappname[$i]&"\unpackage\res",1);复制目
 
 
 EndIf;

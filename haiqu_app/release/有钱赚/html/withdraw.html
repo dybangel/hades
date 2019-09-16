@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="http://47.240.57.96:8080/repo8/css/withdraw.css"/>
+	</head>
+	<body>
+		<div id="vueIdWithdraw">
+			<div class="btnHeadBack" onclick="goBack()">返回</div>
+			<div class="bgHead">
+				<div style="color: #fff;font-size: 1.25rem;">余额:{{balance}}元</div>
+			</div>
+			<div class="content" style="padding:0 0.5rem;">
+				<span class="title1">
+					请选择提现金额
+				</span>
+				<div class="withdraw-grid">
+					<div id="item-grid1" class="item-grid" @click="item_grid1_click()">
+						<span class="span-bold">1元</span>
+						<span>1元提现</span>
+					</div>
+					<div id="item-grid2" class="item-grid" @click="item_grid2_click()">
+						<span class="span-bold">10元</span>
+						<span>10元提现</span>
+					</div>
+				</div>
+				<div class="withdraw-grid">
+					<div id="item-grid3" class="item-grid" @click="item_grid3_click()">
+						<span class="span-bold">20元</span>
+						<span>20元提现</span>
+					</div>
+					<div id="item-grid4" class="item-grid" @click="item_grid4_click()">
+						<span class="span-bold">50元</span>
+						<span>50元提现</span>
+					</div>
+				</div>
+				<span class="title2">
+					到账账户
+				</span>
+				<div class="div-account">
+					<img src="../images/alipay.png">
+					<span>{{phone}}</span>
+				</div>
+				<div class="point">
+					<div v-for="item in tips">
+						<span>*{{item}}</span>
+					</div>
+				</div>
+				<span class="btn-tixian" @click="withdraw()">马上提现</span>
+				<div class="alert"></div>
+			</div>
+		</div>
+        <script src="../js/mui.min.js"></script>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/jup-request.js"></script>
+		<script src="http://47.240.57.96:8080/repo8/js/withdraw.js"></script>
+	</body>
+</html>
