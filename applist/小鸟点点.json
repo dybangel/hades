@@ -4,7 +4,7 @@
         "apptype":"layers",//layer1 layer2 layers
         "mulityback":"true||1000",
         "appver":"1.0",
-        "interval":"10",
+        "interval":"3",
 		"speed":"normal",
         "packagename":"com.brid.mel",
         "activityname":"io.dcloud.PandoraEntryActivity",
