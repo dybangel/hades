@@ -22,7 +22,7 @@ var app = new Vue({
             var string4 = string3.substring(0,18);
 			reader.close();
 		})
-		localStorage.appId = '134';
+		localStorage.appId = '136';
 		if (localStorage.userId == '' || localStorage.userId == null || localStorage.userId == undefined) {
 			return false;
 		} else {
