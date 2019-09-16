@@ -21,10 +21,10 @@ $arraypackagename=StringSplit($packagename,",",1);
 $arrayhtmlfile=StringSplit($htmlfile,",",1);
 
 
-For $i= 2 To UBound($arrayappname) -1
+For $i= 0 To UBound($arrayappname) -1
 ;MsgBox(64,"分割字符串", "分割后的数量：" & $array[$i]);
 If $i<>0 Then
-dircopy("./好鱼多",$arrayappname[$i],1);复制目录
+dircopy("./project/好鱼多",$arrayappname[$i],1);复制目录
 ;MsgBox(0,"","./base/card/"&$arrayrepo[$i]&"/*.*"&" to "&$arrayappname[$i]&"/images")
 dircopy("./base/card/"&$arrayrepo[$i]&"/a.png",$arrayappname[$i]&"/images/a.png",1);复制目录
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/a.png",$arrayappname[$i]&"/images/a.png",1 )
@@ -37,13 +37,18 @@ FileCopy ( "./base/card/"&$arrayrepo[$i]&"/g.png",$arrayappname[$i]&"/images/g.p
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/h.png",$arrayappname[$i]&"/images/h.png",1 )
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/i.png",$arrayappname[$i]&"/images/i.png",1 )
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/j.png",$arrayappname[$i]&"/images/j.png",1 )
+FileCopy ( "./base/mainfest/"&$arrayrepo[$i]&"/manifest.json",$arrayappname[$i]&"/manifest.json",1 )
+
 
 EndIf;
 Next
-
 MsgBox(0, "", "准备复制") 
+;Exit;
+
+
 ;;;;;;;;复制文件夹
 For $i= 1 To UBound($arrayappname) -1
+	MsgBox(0,"",$arrayappname[$i])
 					$path="./"&$arrayappname[$i]&"/"&"manifest.json";
 					$jspath="./"&$arrayappname[$i]&"/js/reg.js";     \xxx\js\reg.js 
 					$indexhtmlpath="./"&$arrayappname[$i]&"/html/index.html";
