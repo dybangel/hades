@@ -20,7 +20,8 @@
 	width: 100%;
 	height: 8rem;
 	color: #fff;
-	background-color: skyblue;
+	background-color: royalblue;
+	/* 我的选项页面头部颜色 */
 	padding-left: 10%;
 	display: flex;
 	align-items: center;
@@ -48,7 +49,8 @@
 }
 /* 首页头部背景及内容 */
 .navHead {
-	background-color: skyblue;
+	background-color: royalblue;
+	/* 首页头部背景色 */
 	width: 100%;
 	height: 100px;
 	position: absolute;
@@ -78,6 +80,7 @@
 	margin-left: 25%;
 	color: #fff;
 	background-color: #E63634;
+	/* 我的页面提现按钮颜色 */
 }
 /* 提示没有剩余  样式 */
 #tip {
@@ -97,6 +100,7 @@
     padding: 15px;
     border: 1px solid transparent;
     border-radius: 4px;
+	text-align: center;
 }
 
 .alert-success {

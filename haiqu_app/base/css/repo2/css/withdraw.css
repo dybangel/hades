@@ -12,6 +12,7 @@ body{
 	width: 100%;
 	height: 8rem;
 	background-color: skyblue;
+	/* 提现页面头部颜色 */
 	z-index: -20;
 	display: flex;
 	justify-content: center;

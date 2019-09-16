@@ -5,7 +5,7 @@ html {
 /* body整体 */
 body {
 	background-size: 100% 100%;
-	background-image: url(../images/mainBg.jpg);
+	background-image: url(../images/1.jpg);
 }
 /* 大标题 */
 .regTitle {
@@ -18,7 +18,7 @@ body {
 .regTitle span {
 	font-size: 1.5rem;
 	font-weight: bold;
-	color: #fff;
+	color: orangered;
 }
 /* 输入区域整体 */
 .regForm {
@@ -27,17 +27,17 @@ body {
 }
 /* 手机号 */
 .phone{
-	color: #fff;
+	color: orangered;
 }
 .phone input{
-	color: #fff;
+	color: cadetblue;
 }
 /* 验证码 */
 .code{
-	color: #fff;
+	color: orangered;
 }
 .code input{
-	color: #fff;
+	color: cadetblue;
 }
 /* 按钮整体 */
 .btnRow{
@@ -46,13 +46,15 @@ body {
 /* 登录按钮 */
 .btn1{
 	width: 40%;
-	background-color: #E63634;
+	height: 3rem;
+	background-color:yellowgreen;
 	color: #fff;
 }
 /* 短信按钮 */
 #btnCode{
 	width: 40%;
-	background-color: burlywood;
+	height: 3rem;
+	background-color: coral;
 	color: #fff;
 }
 /* 提示框样式 */
@@ -67,6 +69,7 @@ body {
     padding: 15px;
     border: 1px solid transparent;
     border-radius: 4px;
+	text-align: center;
 }
 .alert-success {
     color: #fff;

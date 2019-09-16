@@ -18,7 +18,7 @@ body {
 .regTitle span {
 	font-size: 1.5rem;
 	font-weight: bold;
-	color: cadetblue;
+	color: orange;
 }
 /* 输入区域整体 */
 .regForm {
@@ -27,17 +27,17 @@ body {
 }
 /* 手机号 */
 .phone{
-	color: cadetblue;
+	color: orange;
 }
 .phone input{
-	color: cadetblue;
+	color: black;
 }
 /* 验证码 */
 .code{
-	color: cadetblue;
+	color: orange;
 }
 .code input{
-	color: cadetblue;
+	color: black;
 }
 /* 按钮整体 */
 .btnRow{
@@ -54,7 +54,7 @@ body {
 #btnCode{
 	width: 40%;
 	height: 3rem;
-	background-color: coral;
+	background-color: yellowgreen;
 	color: #fff;
 }
 /* 提示框样式 */
