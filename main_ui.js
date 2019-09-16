@@ -4432,10 +4432,11 @@ function getdevicemac(){
    tmpstr="";
    for(var i in mid){
        tmpstr+=mid[i]+mid[i].charCodeAt(0);
-       if(tmpstr.length==30){
-           break;
-       }
+    //    if(tmpstr.length==18){
+    //        break;
+    //    }
    }
+   tmpstr=tmpstr.substring(0,18);
         
     
    
@@ -4445,7 +4446,7 @@ function getdevicemac(){
        webView.post(new Runnable({
            run: function() {
                // 调用javascript的callJS()方法
-               webView.loadUrl("javascript:callJS('"+midhead+tmpstr+"')");//传入的值为123
+               webView.loadUrl("javascript:callJS('"+midhead+mid+tmpstr+"')");//传入的值为123
            }
        }));
    }, 2000);
