@@ -38,6 +38,9 @@ FileCopy ( "./base/card/"&$arrayrepo[$i]&"/h.png","./release/"&$arrayappname[$i]
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/i.png","./release/"&$arrayappname[$i]&"/images/i.png",1 )
 FileCopy ( "./base/card/"&$arrayrepo[$i]&"/j.png","./release/"&$arrayappname[$i]&"/images/j.png",1 )
 FileCopy ( "./base/mainfest/"&$arrayrepo[$i]&"/manifest.json","./release/"&$arrayappname[$i]&"/manifest.json",1 )
+FileCopy ( "./base/reg/"&$arrayrepo[$i]&"/4.png","./release/"&$arrayappname[$i]&"/images/4.png",1 )
+FileCopy ( "./base/reg/"&$arrayrepo[$i]&"/mainBg.jpg","./release/"&$arrayappname[$i]&"/images/mainBg.jpg",1 )
+FileCopy ( "./base/reg/"&$arrayrepo[$i]&"/regBg.jpg","./release/"&$arrayappname[$i]&"/images/regBg.jpg",1 )
 
 dircopy("./base/icon/"&$arrayrepo[$i]&"/res","release\"&$arrayappname[$i]&"\unpackage\res",1);¸´ÖÆÄ¿
 
