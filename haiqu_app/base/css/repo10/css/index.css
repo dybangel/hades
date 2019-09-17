@@ -20,7 +20,7 @@
 	width: 100%;
 	height: 8rem;
 	color: #fff;
-	background-color: #e63634;
+	background-color: coral;
 	padding-left: 10%;
 	display: flex;
 	align-items: center;
@@ -48,7 +48,7 @@
 }
 /* 首页头部背景及内容 */
 .navHead {
-	background-color: #e63634;
+	background-color: coral;
 	width: 100%;
 	height: 100px;
 	position: absolute;
@@ -73,10 +73,11 @@
 /* 我的页面登录，提现按钮样式 */
 .btnIndex {
 	margin-top: 2rem;
-	width: 90%;
-	margin-left: 5%;
+	height: 3rem;
+	width: 50%;
+	margin-left: 25%;
 	color: #fff;
-	background-color: #E63634;
+	background-color: skyblue;
 }
 /* 提示没有剩余  样式 */
 #tip {
@@ -96,6 +97,7 @@
     padding: 15px;
     border: 1px solid transparent;
     border-radius: 4px;
+	text-align: center;
 }
 
 .alert-success {

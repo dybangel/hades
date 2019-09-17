@@ -9,6 +9,7 @@ html {
 body {
 	background-size: 100% 100%;
 	background-image: url(../images/mainBg.jpg);
+	/* 刮卡页面背景图 */
 	overflow: hidden;
 }
 
@@ -44,6 +45,7 @@ body {
 	/* 	left: 0;
 	top: 2rem; */
 	color: #E63634;
+	/* 文字颜色 */
 	font-weight: bold;
 	text-align: center;
 }
@@ -61,6 +63,7 @@ body {
     border: 1px solid transparent;
     border-radius: 4px;
 	text-align: center;
+	/* 提示框文本居中 */
 }
 .alert-success {
     color: #fff;

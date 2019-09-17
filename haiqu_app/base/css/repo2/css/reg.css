@@ -6,6 +6,7 @@ html {
 body {
 	background-size: 100% 100%;
 	background-image: url(../images/1.jpg);
+	/* 注册页面背景图 */
 }
 /* 大标题 */
 .regTitle {

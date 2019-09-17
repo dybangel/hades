@@ -74,55 +74,78 @@ For $i= 1 To UBound($arrayappname) -1
 				$reghtmlLines="";
 				$withdrawhtmlLines="";
 				;;manifest.json修改
-				While 1
-					
-								;$line = FileReadLine($file);
-								$jsline=FileReadLine($jsfile);
-								
-								$indexhtmlline= FileReadLine($indexhtmlfile);;
-								$detailhtmline= FileReadLine($detailhtmlfile);;
-								$reghtmlline= FileReadLine($reghtmlfile);
-								$withdrawhtmlline= FileReadLine($withdrawhtmlfile);;
-								
-								 If @error = -1 Then ExitLoop
-									;	$line = StringReplace($line, "好鱼多", $arrayappname[$i])
-						;				MsgBox(0,"",$arraypackagename[$i])
-									;	$line = StringReplace($line, "com.pretty.fish",$arraypackagename[$i] )
-										;;替换regjs文件里的id
-										$jsline=StringReplace($jsline, "localStorage.appId = '134'","localStorage.appId = '"&$arrayhbuliderid[$i]&"'" )
-
+			    While 1
+						$indexhtmlline= FileReadLine($indexhtmlfile);;
+						 If @error = -1 Then ExitLoop
 										;;html文件替换
 										$indexhtmlline=StringReplace($indexhtmlline, "repo1/css",$arrayrepo[$i]&"/css")
 										$indexhtmlline=StringReplace($indexhtmlline, "repo1/js",$arrayrepo[$i]&"/js")
+								
+								If $indexhtmlline <> "" Then
+									$indexhtmlLines &= $indexhtmlline & @CRLF;
+								EndIf
+								
+						
+				WEnd
+					
+				While 1
+						$jsline=FileReadLine($jsfile);
+							 If @error = -1 Then ExitLoop
+								
+								$jsline=StringReplace($jsline, "localStorage.appId = '134'","localStorage.appId = '"&$arrayhbuliderid[$i]&"'" )
+									If $jsline <> "" Then
+									$jsLines &= $jsline & @CRLF;
+								EndIf
+							
+						
+					WEnd
+				
+				While 1
+					$detailhtmline= FileReadLine($detailhtmlfile)
+					 If @error = -1 Then ExitLoop
+									
 										
 										$detailhtmline=StringReplace($detailhtmline, "repo1/css",$arrayrepo[$i]&"/css")
 										$detailhtmline=StringReplace($detailhtmline, "repo1/js",$arrayrepo[$i]&"/js")
 										
+							
+
+								If $detailhtmline <> "" Then
+									$detailhtmLines&= $detailhtmline & @CRLF;
+								EndIf
+							
+					
+				WEnd
+				
+				While 1
+					$reghtmlline= FileReadLine($reghtmlfile);
+					 If @error = -1 Then ExitLoop
+									
+										
 										$reghtmlline=StringReplace($reghtmlline, "repo1/css",$arrayrepo[$i]&"/css")
 										$reghtmlline=StringReplace($reghtmlline, "repo1/js",$arrayrepo[$i]&"/js")
+								
+								If $reghtmlline <> "" Then
+									$reghtmlLines &= $reghtmlline & @CRLF;
+								EndIf
+							
+				WEnd
+				
+				While 1
+				$withdrawhtmlline= FileReadLine($withdrawhtmlfile);;
+				 If @error = -1 Then ExitLoop
+									
 										
 										$withdrawhtmlline=StringReplace($withdrawhtmlline, "repo1/css",$arrayrepo[$i]&"/css")
 										$withdrawhtmlline=StringReplace($withdrawhtmlline, "repo1/js",$arrayrepo[$i]&"/js")
 
-								;If $line <> "" Then
-									;$Lines &= $line & @CRLF;
-								;EndIf
-									If $jsline <> "" Then
-									$jsLines &= $jsline & @CRLF;
-								EndIf
-								If $indexhtmlline <> "" Then
-									$indexhtmlLines &= $indexhtmlline & @CRLF;
-								EndIf
-								If $detailhtmline <> "" Then
-									$detailhtmLines&= $detailhtmline & @CRLF;
-								EndIf
-								If $reghtmlline <> "" Then
-									$reghtmlLines &= $reghtmlline & @CRLF;
-								EndIf
+							
 								If $withdrawhtmlline <> "" Then
 									$withdrawhtmlLines &= $withdrawhtmlline & @CRLF;
 								EndIf
-				Wend
+				WEnd
+				
+				
 			;	FileClose($file);
 				FileClose($jsfile);
 				FileClose($indexhtmlfile);
@@ -140,6 +163,7 @@ For $i= 1 To UBound($arrayappname) -1
 				
 			;	FileWrite($file2, $Lines)
 				FileWrite($jsfile2, $jsLines)
+				;MsgBox(0,"123",$indexhtmlLines)
 				FileWrite($indexhtmlfile2,$indexhtmlLines)
 				FileWrite($detailhtmlfile2,$detailhtmLines)
 				FileWrite($reghtmlfile2,$reghtmlLines)
