@@ -22,9 +22,8 @@ body {
 .draw {
 	margin-top: 15rem;
 	width: 100%;
-	height: 10.5rem;
+	height: 7rem;
 	text-align: center;
-	line-height: 10.5rem;
 	/* 	height: 40rem; */
 	/* 	position: relative; */
 	/* 	display: flex;
@@ -37,16 +36,15 @@ body {
 }
 
 .draw span {
-	position: absolute; 
-	display: block; 
+	/* 	position: absolute; */
+	display: block;
 	width: 100%;
 	z-index: 0.5;
-	/* margin-top: -3rem; */
+	margin-top: -3rem;
 	/* 	left: 0;
 	top: 2rem; */
 	color: #E63634;
 	font-weight: bold;
-	text-align: center;
 }
 
 /* 提示框样式 */
@@ -61,7 +59,7 @@ body {
     padding: 15px;
     border: 1px solid transparent;
     border-radius: 4px;
-	text-align: center;
+    text-align: center;
 }
 .alert-success {
     color: #fff;

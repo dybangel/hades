@@ -109,6 +109,7 @@ body{
 	padding: 15px;
 	border: 1px solid transparent;
 	border-radius: 4px;
+    text-align: center;
 }
 
 .alert-success {
