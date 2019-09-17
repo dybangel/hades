@@ -46,9 +46,6 @@ function GetRequest() {
 var disappear = 0
 
 const oImg = document.getElementById('img');
-if (oImg.readyState === "complete") {} else {
-	oImg.onload = draw();
-}
 
 function draw() { //等图片加载完成后再添加canvas画布在上面
 	let can = document.createElement('canvas'); //创建一个canvas画布
@@ -95,7 +92,9 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 						ctx.moveTo(10, 48); //起始点   
 						ctx.lineTo(384, 48);
 						ctx.stroke();
-						check()
+						setTimeout(function() {
+							check()
+						}, 1000)
 					}, 1000)
 				}
 				// console.log('xxxxx',intent.getAction()); //获取action
@@ -115,7 +114,7 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 		//e.pageX距离文档右边缘； offsetLeft：canvas画布距离文档的右边距离
 		let x = e.touches[0].clientX - can.offsetLeft; //得到的x是在canvas上的坐标值
 		let y = e.touches[0].clientY - can.offsetTop;
-		console.log(x+'++++++++++'+y)
+		console.log(x + '++++++++++' + y)
 		ctx.beginPath();
 		// ctx.moveTo(  x,y )//从哪里开始来画
 		ctx.arc(x, y, 15, 0, 6.3, false); //点第一下是画一个圆
@@ -198,4 +197,10 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 			// txt.value = "刮开面积大于30%，全部显示"
 		}
 	}
+}
+if (oImg.readyState === "complete") {
+	draw(); //true表示已经加载完成 执行draw()方法
+} else {
+	//图片加载完成执行draw方法
+	oImg.onload = draw;
 }
