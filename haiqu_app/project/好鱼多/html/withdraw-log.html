@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="http://47.240.57.96:8080/repo1/css/withdraw-log.css" />
+	</head>
+	<body>
+		<div id="vueIdWithdrawLog">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper" style="background-color: white;">
+				<div class="mui-scroll">
+					<div>
+						<div class="btnHeadBack" @tap="goBack()">返回</div>
+						<nav class="bgHead">
+							<span>提现记录</span>
+						</nav>
+						<div class="jup-table" v-for="item in list">
+							<div class="jup-table-item">
+								<div style="display: flex;flex-direction: column;">
+									<span class="span-aom">{{item.amount}}元</span>
+									<span class="span-time">{{item.createTime}}</span>
+								</div>
+								<span class="span-status1" v-if="item.status === 0">{{item.statusStr}}</span>
+								<span class="span-status2" v-if="item.status === 1">{{item.statusStr}}</span>
+								<span class="span-status3" v-if="item.status === 2">{{item.statusStr}}</span>
+							</div>
+							<div class="table-line"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/vue.js"></script>
+		<script src="../js/jup-request.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<script src="http://47.240.57.96:8080/repo1/js/withdraw-log.js"></script>
+	</body>
+</html>
