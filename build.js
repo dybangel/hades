@@ -1,5 +1,5 @@
 Gcodebaseurl = "http://raw.githubusercontent.com/dybangel/hades/master/"
-Gserver_ver_url="http://download.dqu360.com:81/haiqu/api.json";
+Gserver_ver_url="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/version/version.json";
 
 toast("开始自动打包");
 //className("android.widget.TextView").text("打包中")

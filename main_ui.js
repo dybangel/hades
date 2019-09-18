@@ -743,7 +743,8 @@ Gjsonloadstate="remote";
 Guploadlog_url="http://192.168.3.254:8888/import/import_log";
 
 //1 app json特征码远程下载根路径
-Gapplistpath_remote="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/applist/";//公有云
+Gapplistpath_remote="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/applist";//公有云
+//Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
 //Gapplistpath_remote="http://192.168.3.201/haiqu/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
@@ -822,8 +823,9 @@ if(Gcode_state=="ui"){
                       //  ui.progress.setVisibility(3);
                      play("global","发现新版本");
                     }
-                
+                    // alert("882266");
                     loadGapps();
+                   // alert("882288")
                     loadappjson();
                  // alert("hahah");
 
@@ -1311,6 +1313,7 @@ function loadGapps(){
         }else{
             //正常用户状态
                     if(Gjsonloadstate=="remote"){
+                       
                         // alert("1");
                         try{
                         http.__okhttp__.setTimeout(10000);
@@ -1320,6 +1323,8 @@ function loadGapps(){
                         }
                     
                         if("200"==r.statusCode){
+                      
+
                            //  alert(r.body.string());
                             try{
                             var tmpstr=r.body.string();
@@ -1328,27 +1333,32 @@ function loadGapps(){
                                 toast("加载云端开关量延迟");
                             }
                             //获取所有开关量对应的包名
+                           
                             try{
                                 packageliststr="";
                                 datasourcelist="";
-                               for(var i=0;i<Gapps.length;i++){
-                                  var thisappname=Gapps[i]["appname"]; 
-                                  var r=http.get(Gapplistpath_remote+"/"+thisappname+".json")
-                                if(r.statusCode=="200"){  
-                                   var jsonstr=r.body.string();
-                                   var thistempjson=eval('(' + jsonstr + ')');
-                                   var thispackagename=thistempjson["packagename"];
-                                   packageliststr+='{"packagename":"'+thispackagename+'"},';
-                               //    datasourcelist+='{"title":"'+appname+'",icon:"@drawable/ic_android_black_48dp"}';
+                               // console.show();
+                            //    for(var i=0;i<Gapps.length;i++){
+                            //       var thisappname=Gapps[i]["appname"]; 
+                            //       log(thisappname);
+                            //       var r=http.get(Gapplistpath_remote+"/"+thisappname+".json")
+                            //     if(r.statusCode=="200"){  
+                            //        var jsonstr=r.body.string();
+                            //        var thistempjson=eval('(' + jsonstr + ')');
+                            //        var thispackagename=thistempjson["packagename"];
+                            //        packageliststr+='{"packagename":"'+thispackagename+'"},';
+                            //    //    datasourcelist+='{"title":"'+appname+'",icon:"@drawable/ic_android_black_48dp"}';
                                 
-                                }
+                            //     }
 
-                               }//for end;
-                          //     alert("["+packageliststr+"]");
-                              Gpackagename_lists=eval("(["+packageliststr+"])")
+                            //    }//for end;
+                               //alert("["+packageliststr+"]");
+                            //  Gpackagename_lists=eval("(["+packageliststr+"])")
+                              Gpackagename_lists=eval("([])")
+
                            //   datasourcelist=eval("(["+datasourcelist+"])");
                            
-                            
+                        //   alert("+++++++++++++");
                             }catch(e){toast("加载开关量包名错误")}
                             // alert(Gapps);
                         //   ref_ui_list();
@@ -1369,12 +1379,13 @@ function loadGapps(){
 }
 //根据开关量加载特征码
 function loadappjson(){
+    //alert("1111")
 var start='[]'
 applist=eval('(' + start + ')'); 
 var tempstr="";
 var appname="";
 var voiceplaynum=0;
-
+//console.show();
 for(var i=0;i<Gapps.length;i++){
 
    appname=Gapps[i]["appname"];
@@ -1390,7 +1401,8 @@ for(var i=0;i<Gapps.length;i++){
            }
          try{
 
-            http.__okhttp__.setTimeout(10000);
+          //  http.__okhttp__.setTimeout(10000);
+          log(Gapplistpath_remote+"/"+appname+".json")
            var r=http.get(Gapplistpath_remote+"/"+appname+".json")
          }catch(e){
              toast("e "+e);
@@ -1410,7 +1422,7 @@ for(var i=0;i<Gapps.length;i++){
                }
              
            }else{
-               alert("没有找到远程"+appname+".json");
+               alert("没有找到远程-1"+appname+".json");
            }
           
 
@@ -1488,7 +1500,6 @@ function ref_ui_list(){
   //  loadappjson();
         for(var i=0;i<Gapps.length;i++){
             let thisappname=Gapps[i]["appname"];
-            
             // 根据包名判断是否安装
          //   alert(applist[0]["packagename"]);
             let thisappnum="";
@@ -1502,7 +1513,7 @@ function ref_ui_list(){
                 thispackagename=applist[i]["packagename"]
                 thisactivityname=applist[i]["activityname"];
            //     break;
-          //     } 
+          //     }  
          //   }
             //如果包名不为空，验证app是否安装
             if(thispackagename!=""){
@@ -1513,14 +1524,12 @@ function ref_ui_list(){
                     appinstallstate="打开";
                 }
             }
-          
             //   alert(result)
             
             // 未安装字体变红色
 
             appliststr='<linear id="aa" layout_weight="1" >';
-            appliststr+='    <button id="btn_'+i+'" desc="'+thispackagename+'" text="'+appinstallstate+" "+thisappname+'"  style="Widget.AppCompat.Button.Colored" w="160" h="40" />';
-       
+            appliststr+='    <button id="btn_'+i+'" desc="'+thispackagename+'" text="'+appinstallstate+" "+thisappname+'"  style="Widget.AppCompat.Button.Colored" w="160" h="40" />';      
             //   appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'" color="{{textColor}}" checked="true"/>'
         //   appliststr+='<text text="次数:"';
         //   appliststr+='   marginLeft="10"';
@@ -1532,15 +1541,18 @@ function ref_ui_list(){
             appliststr+='<linear layout_weight="1" gravity="right" >';
             appliststr+='</linear>';
             appliststr+='</linear>';
-            
-            ui.inflate( appliststr,ui.applist,true);
           
+            ui.inflate( appliststr,ui.applist,true);
+       
             let thisbtn=ui.findView('btn_'+i);
           //  cor=colors.rgb(random(0, 255), random(0, 255), random(0, 255));
-           // alert(cor)
+           
+        
             if(appinstallstate=="安装"){
                  thisbtn.attr('bg','#EE0000')
+                
                 thisbtn.click(()=>{
+                   
                     try{
                         alert("请执行app检测进行安装");
                          //ra = new RootAutomator();
@@ -1550,32 +1562,36 @@ function ref_ui_list(){
                           //  var result=shell("am start -a android.intent.action.VIEW -d https://www.baidu.com", true);
                          //   adb shell 
                         //    alert(result);
-
+                       
                         //});
                     }catch(e){
+                     
                         toast("e "+e);
                     }
                 
                 });
-               
+             
             } else{
                // thisbtn.attr('bg',colors.toString(rndColor()))
+            
                thisbtn.click(()=>{
               // alert(thisappnum+thisappname);
+          
                  thiscommon.openpackage(thispackagename+"/"+thisactivityname);
                 });
         
-
+               
             }
             //thisbtn.attr('bg',colors.toString(rndColor()))
         
 
 
-
+          
             }
     return true;
-
+   
   }catch(e){
+   
       toast("加载列表"+e);
     return false;
   }
@@ -3268,7 +3284,7 @@ var num=0;
 }
 //阻塞统计收益
 function block_analay(incomeanaly_obj){
-    console.show();
+    //console.show();
     var Ganalymoney="";
     var Ganaycoin="";
     //是否从app中取出过money
@@ -3277,9 +3293,9 @@ function block_analay(incomeanaly_obj){
     var findcoin=false;
 
       for(var i=1;i<=thiscommon.JSONLength(incomeanaly_obj);i++){
-        log("this is in"+i);
+        //log("this is in"+i);
         var thisaction=incomeanaly_obj['in'+i]["action"];
-        log("acton is:"+thisaction);
+        //log("acton is:"+thisaction);
         if("click_xy"==thisaction){
           var thisclick_xy=incomeanaly_obj['in'+i]["click_xy"];
           var thisclick_xyarr=thisclick_xy.split("||");
@@ -3700,7 +3716,7 @@ Gindexof_flag="";
 //console.show();
 //查找本地标志位所述云端序列的位置
 for(var i=0;i<applist.length;i++){
-      log(applist[i]["appname"]);
+     // log(applist[i]["appname"]);
       if(localflag==applist[i]["appname"]){
       Gindexof_flag=i;
     //  break;
@@ -3839,7 +3855,7 @@ function checklocalapp(){
                     }
                   
                 }else{
-                    alert("没有找到远程"+appname+".json");
+                    alert("没有找到远程-2"+appname+".json");
                 }
                
     
@@ -3939,7 +3955,7 @@ function getScriptFromServer() { //从服务器获取脚本
          log("res:"+download_res.statusCode);
          if(i>8) return !1;
      } catch (e) {
-       log("error res:"+download_res);
+       //log("error res:"+download_res);
          if (sleep(500), 9 == i) return !1;
      }
      //alert("1")
