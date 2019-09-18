@@ -1,0 +1,92 @@
+* {
+	touch-action: pan-y;
+}
+
+body {
+	margin: 0;
+}
+
+/* 首页头部背景及内容 */
+.bgHead {
+	position: relative;
+	width: 100%;
+	height: 4rem;
+	background-color: #E63634;
+/* 	z-index: -20; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.bgHead span {
+	color: #fff;
+}
+
+/* 头部返回按键样式 */
+.btnHeadBack {
+	margin-top: 1.4rem;
+	margin-left: 1rem;
+	position: absolute;
+	z-index: 2;
+/* 	font-size: 2.5rem; */
+	color: #fff;
+}
+
+.jup-table{
+	width: 100%;
+}
+
+.jup-table-item{
+	/* width: 100%; */
+/* 	height: 6rem; */
+	padding: 0.6rem 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.span-aom{
+	font-size: 1.2rem;
+}
+
+.span-time{
+	font-size: 0.9rem;
+	color: gray;
+}
+
+.span-status1{
+	color: orange;
+}
+.span-status2{
+	color: limegreen;
+}
+.span-status3{
+	color: #E63634;
+}
+
+.table-line{
+	width: 95%;
+	height: 0.0625rem;
+	background-color: lightgray;
+	margin-left: 5%;
+}
+
+/* 提示框样式 */
+.alert {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	min-width: 200px;
+	margin-left: -100px;
+	z-index: 99999;
+	padding: 15px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.alert-success {
+	color: #fff;
+	background-color: #000;
+	border-color: #000;
+}
