@@ -743,7 +743,7 @@ Gjsonloadstate="remote";
 Guploadlog_url="http://192.168.3.254:8888/import/import_log";
 
 //1 app json特征码远程下载根路径
-Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
+Gapplistpath_remote="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/applist/";//公有云
 //Gapplistpath_remote="http://192.168.3.201/haiqu/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
@@ -751,14 +751,14 @@ Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSF
 //Gappspath_remote="http://192.168.3.201/haiqu/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
-Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json"; //公有云
+Gapi_json_url="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/version/version.json"; //公有云
 //Gapi_json_url="http://192.168.3.201/haiqu/api.json";        //私有云
 
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
 
 /**************************研发常用开关量结束 ******************************************************/
-
-Gdownloadpath="http://download.dqu360.com:81/haiqu/haiqu.apk"  //请勿修改
+//海趣助手apk下载路径
+Gdownloadpath="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/update/haiqu.apk"  //请勿修改
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";  //请勿修改
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
