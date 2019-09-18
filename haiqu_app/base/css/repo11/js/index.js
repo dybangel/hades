@@ -49,7 +49,7 @@ var app = new Vue({
 			let randomFallArr =  [0.1,0.2,0.3];
 			let randomFall = randomFallArr[Math.floor((Math.random()*randomFallArr.length))];
 			that.limit = res.result.limit - randomFall;
-			console.log('that.limit',that.limit);
+			// console.log(''that.limit)
 			if(res.result.cardCount == 0){
 				$("#tip").show();
 			}else{
@@ -189,6 +189,9 @@ var app = new Vue({
 		},
 		withdraw() {
 			window.location.href = 'withdraw.html';
+		},
+		withdraw_log() {
+			window.location.href = 'withdraw-log.html';
 		}
 	}
 })
