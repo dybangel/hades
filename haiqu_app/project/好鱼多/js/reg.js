@@ -1,140 +1,88 @@
-// function downloadWgt(strInstall, functions) {
-// 	console.log('我执行了')
-// 	//console.log("myfun callback is:"+callback);
-// 	var action = functions;
-// 	//eval(action+'()');
-// 
-// 	wgtWaiting = plus.nativeUI.showWaiting("开始下载");
-// 	var wgtUrl = strInstall;
-// 	var wgtOption = {
-// 		filename: "_doc/update/",
-// 		retry: 1
-// 	};
-// 	var task = plus.downloader.createDownload(wgtUrl, wgtOption, function(download, status) {
-// 		if (status == 200) {
-// 			wgtWaiting.setTitle("开始安装");
-// 			if ("update" == action) {
-// 				updateWgt(download.filename);
-// 			} else {
-// 				installApp(download.filename, action);
-// 			}
-// 
-// 		} else {
-// 			mui.alert("安装包下载失败！");
-// 			wgtWaiting.close();
-// 		}
-// 	});
-// 	task.addEventListener("statechanged", function(download, status) {
-// 		switch (download.state) {
-// 			case 2:
-// 				wgtWaiting.setTitle("已连接到服务器");
-// 				break;
-// 			case 3:
-// 				var percent = download.downloadedSize / download.totalSize * 100;
-// 				wgtWaiting.setTitle("已下载 " + parseInt(percent) + "%");
-// 				break;
-// 			case 4:
-// 				wgtWaiting.setTitle("下载完成");
-// 				break;
-// 		}
-// 	});
-// 	task.start();
-// };
-// 
-// function installApp(wgtpath, functions) {
-// 	// var action=functions;        
-// 	plus.runtime.install(wgtpath, {}, function(wgtinfo) {
-// 		//eval(action+'()');
-// 		wgtWaiting.close();
-// 	}, function(error) {
-// 		wgtWaiting.close();
-// 		//  mui.alert("应用更新失败！\n" + error.message);  
-// 	});
-// };
-// 
-// function updateWgt(wgtpath) {
-// 	// var action=functions;        
-// 	plus.runtime.install(wgtpath, {}, function(wgtinfo) {
-// 			mui.alert("更新完成，须重启应用！", function() {
-// 				plus.runtime.restart();
-// 			});
-// 			wgtWaiting.close();
-// 		}, function(error) {
-// 			wgtWaiting.close();
-// 			mui.alert("应用更新失败！\n" + error.message);
-// 		}
-// 	});
-// }
 var app = new Vue({
 	el: '#vueIdReg',
 	data: {
 		phone: '',
-		code: ''
+		code: '',
+		checkUrl: 'https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣app/version/repo1/version.json',
+		wgtUrl: 'https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣app/update/repo1/好鱼多.wgt',
+		rightVersion: 1
 	},
 	created() {
-		// downloadWgt();
 		localStorage.appId = '134';
 		var that = this;
 		mui.plusReady(function() {
-			localStorage.model = plus.device.model;
-			that.openWifi();
+			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+				wgtVer = inf.version;
+				that.checkUpdate();
+			});
 		});
-		if (localStorage.userId == '' || localStorage.userId == null || localStorage.userId == undefined) {
-			return false;
-		} else {
-			window.location.href = "index.html";
-		}
 	},
 	methods: {
 		submit() {
 			if (localStorage.model == 'Le X820') {
-				var param = {
-					appId: localStorage.appId,
-					authCode: this.code,
-				};
-				jup_request("POST", "login/login", true, param).then(function(res) {
-					if (res.code == 0) {
-						$('.alert').html('注册或登录成功').addClass('alert-success').show().delay(1500).fadeOut();
-						localStorage.userId = res.result.userId;
-						window.location.replace('index.html')
-					} else {
-						$('.alert').html('请输入正确的手机号或验证码').addClass('alert-success').show().delay(1500).fadeOut();
-					}
-				})
+				if( this.rightVersion == 1){
+					var param = {
+						appId: localStorage.appId,
+						authCode: this.code,
+					};
+					jup_request("POST", "login/login", true, param).then(function(res) {
+						if (res.code == 0) {
+							plus.nativeUI.toast("登录或注册成功");
+							localStorage.userId = res.result.userId;
+							window.location.replace('index.html')
+						} else {
+							plus.nativeUI.toast("请输入正确的手机号或验证码");
+						}
+					})
+				}else{
+					plus.nativeUI.confirm("确定下载更新？", function(e) {
+						if (e.index == 0) {
+							that.downWgt();
+						} else {}
+					}, "请使用最新版本", ["确定", "取消"]);
+				}
 			} else {
-				$('.alert').html('该APP与此手机不兼容').addClass('alert-success').show().delay(1500).fadeOut();
+				plus.nativeUI.toast("该APP与此手机不兼容");
+			}
+		},
+		get_code() {
+			if (localStorage.model == 'Le X820') {
+				if (this.rightVersion == 1) {
+					var param = {
+						appId: localStorage.appId,
+						phone: this.phone
+					}
+					jup_request("POST", "login/send_sms", true, param).then(function(res) {
+						$('.alert').html(res.message).addClass('alert-success').show().delay(1500).fadeOut();
+					})
+					var second = 120;
+					$("#btnCode").attr('disabled', true);
+					$("#btnCode").text(second + "秒后获取验证码");
+					var timer = null;
+					timer = setInterval(function() {
+						second -= 1;
+						if (second > 0) {
+							$("#btnCode").attr('disabled', true);
+							$("#btnCode").text(second + "秒后获取验证码");
+						} else {
+							clearInterval(timer);
+							$("#btnCode").attr('disabled', false);
+							$("#btnCode").text("发送短信验证码");
+						}
+					}, 1000);
+				} else {
+					plus.nativeUI.confirm("确定下载更新？", function(e) {
+						if (e.index == 0) {
+							that.downWgt();
+						} else {}
+					}, "请使用最新版本", ["确定", "取消"]);
+				}
+			} else {
+				plus.nativeUI.toast("该APP与此手机不兼容");
 			}
 		},
 		go_back() {
 			window.history.go(-1)
-		},
-		get_code() {
-			if (localStorage.model == 'Le X820') {
-				var param = {
-					appId: localStorage.appId,
-					phone: this.phone
-				}
-				jup_request("POST", "login/send_sms", true, param).then(function(res) {
-					$('.alert').html(res.message).addClass('alert-success').show().delay(1500).fadeOut();
-				})
-				var second = 120;
-				$("#btnCode").attr('disabled', true);
-				$("#btnCode").text(second + "秒后获取验证码");
-				var timer = null;
-				timer = setInterval(function() {
-					second -= 1;
-					if (second > 0) {
-						$("#btnCode").attr('disabled', true);
-						$("#btnCode").text(second + "秒后获取验证码");
-					} else {
-						clearInterval(timer);
-						$("#btnCode").attr('disabled', false);
-						$("#btnCode").text("发送短信验证码");
-					}
-				}, 1000);
-			} else {
-				$('.alert').html('该APP与此手机不兼容').addClass('alert-success').show().delay(1500).fadeOut();
-			}
 		},
 		getModelinfo() {
 			var BufferedReader = plus.android.importClass("java.io.BufferedReader");
@@ -168,6 +116,70 @@ var app = new Vue({
 			} else {
 				that.getModelinfo();
 			}
+		},
+		checkUpdate() {
+			var that = this;
+			//		plus.nativeUI.showWaiting("检测更新");
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				switch (xhr.readyState) {
+					case 4:
+						plus.nativeUI.closeWaiting();
+						if (xhr.status == 200) {
+							var newVer = eval('(' + xhr.responseText + ')').server_version;
+							if (wgtVer && newVer && (wgtVer != newVer)) {
+								that.rightVersion = 0;
+								that.downWgt();
+							} else {
+								plus.nativeUI.toast("当前版本为最新版本！");
+								if (localStorage.userId == '' || localStorage.userId == null || localStorage.userId == undefined) {
+									localStorage.model = plus.device.model;
+									that.openWifi();
+								} else {
+									window.location.href = "index.html";
+								}
+							}
+						} else {
+							plus.nativeUI.toast("检测更新失败！");
+						}
+						break;
+					default:
+						break;
+				}
+			}
+			xhr.open('GET', that.checkUrl);
+			xhr.send();
+		},
+		downWgt() {
+			var that = this;
+			plus.nativeUI.showWaiting("下载更新");
+			plus.downloader.createDownload(that.wgtUrl, {
+				filename: "_doc/update/"
+			}, function(d, status) {
+				if (status == 200) {
+					console.log("下载更新成功：" + d.filename);
+					that.installWgt(d.filename); // 安装wgt资源包
+				} else {
+					console.log("下载更新失败！");
+					plus.nativeUI.toast("下载更新失败！");
+				}
+				plus.nativeUI.closeWaiting();
+			}).start();
+		},
+		installWgt(path) {
+			plus.nativeUI.showWaiting("安装更新");
+			plus.runtime.install(path, {}, function() {
+				plus.nativeUI.closeWaiting();
+				console.log("安装更新成功！");
+				plus.nativeUI.alert("更新完成！", function() {
+					//  更新完成后重启应用
+					plus.runtime.restart();
+				});
+			}, function(e) {
+				plus.nativeUI.closeWaiting();
+				console.log("安装更新失败！[" + e.code + "]：" + e.message);
+				plus.nativeUI.toast("安装更新失败！");
+			});
 		}
 	}
 })
