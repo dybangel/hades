@@ -167,9 +167,9 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 			var param = {
 				amount: a['value'],
 				appId: localStorage.appId,
-				userId: localStorage.userId
-			}
-
+				userId: localStorage.userId,
+				modelId: localStorage.modelId
+			};
 			jup_request("POST", "app/upload_card_info", true, param).then(function(res) {
 				if (res.code == 0) {
 					$('.alert').html('恭喜您获得奖励金').addClass('alert-success').show().delay(1500).fadeOut();
@@ -183,18 +183,6 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 					}, 2000)
 				}
 			})
-			// $.ajax({
-			// 	type: "POST",
-			// 	url: "http://xiaomage.natapp1.cc/app/upload_card_info",
-			// 	async: false,
-			// 	data: params,
-			// 	dataType: "json",
-			// 	contentType: "application/json",
-			// 	success: function(res) {
-			// 		console.log(res)
-			// 	}
-			// })
-			// txt.value = "刮开面积大于30%，全部显示"
 		}
 	}
 }
