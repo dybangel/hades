@@ -3,30 +3,21 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣app/repos/repo1/css/detail.css" />
-		<style type="text/css">
-			body {
-				background-size: 100% 100%;
-				background-image: url(../images/mainBg.jpg);
-				overflow: hidden;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="../css/main/detail.css" />
 	</head>
 	<body>
 		<div class="alert"></div>
 		<div id="vueIdDetail">
 			<div class="btnHeadBack" onclick="goBack()">返回</div>
 			<div class="draw">
-				<img id="img" src="../images/2.png">
-			<!-- 	<div id="img" style="height: 7rem;width: 100%;background-color: #fff;"></div> -->
+				<img id="img" :src="imgUrl">
 				<span>恭喜您获得{{amount}}元</span>
 			</div>
 		</div>
-		<script type="text/javascript" src="../js/mui.min.js"></script>
-		<script type="text/javascript" src="../js/jquery.min.js"></script>
-		<script type="text/javascript" src="../js/vue.js"></script>
-		<script type="text/javascript" src="../js/jup-request.js"></script>
-		<script type="text/javascript" src="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣app/repos/repo1/js/detail.js"></script>
+		<script type="text/javascript" src="../js/framework/mui.min.js"></script>
+		<script type="text/javascript" src="../js/framework/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/framework/vue.js"></script>
+		<script type="text/javascript" src="../js/framework/jup-request.js"></script>
+		<script type="text/javascript" src="../js/main/detail.js"></script>
 	</body>
 </html>
