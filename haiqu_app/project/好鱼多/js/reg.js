@@ -24,8 +24,11 @@ var app = new Vue({
 					var param = {
 						appId: localStorage.appId,
 						authCode: this.code,
+						phone:this.phone
 					};
+					console.log(param)
 					jup_request("POST", "login/login", true, param).then(function(res) {
+						console.log(res)
 						if (res.code == 0) {
 							plus.nativeUI.toast("登录或注册成功");
 							localStorage.userId = res.result.userId;

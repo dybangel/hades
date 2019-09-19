@@ -114,7 +114,6 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 		//e.pageX距离文档右边缘； offsetLeft：canvas画布距离文档的右边距离
 		let x = e.touches[0].clientX - can.offsetLeft; //得到的x是在canvas上的坐标值
 		let y = e.touches[0].clientY - can.offsetTop;
-		console.log(x + '++++++++++' + y)
 		ctx.beginPath();
 		// ctx.moveTo(  x,y )//从哪里开始来画
 		ctx.arc(x, y, 15, 0, 6.3, false); //点第一下是画一个圆
@@ -172,12 +171,12 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 			};
 			jup_request("POST", "app/upload_card_info", true, param).then(function(res) {
 				if (res.code == 0) {
-					$('.alert').html('恭喜您获得奖励金').addClass('alert-success').show().delay(1500).fadeOut();
+					plus.nativeUI.toast('恭喜您获得奖励金');
 					setTimeout(function() {
 						window.history.go(-1)
 					}, 2000)
 				} else {
-					$('.alert').html('获取奖励金失败').addClass('alert-success').show().delay(1500).fadeOut();
+					plus.nativeUI.toast(res.message);
 					setTimeout(function() {
 						window.history.go(-1)
 					}, 2000)
