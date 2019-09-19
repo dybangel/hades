@@ -87,7 +87,8 @@ var app = new Vue({
 				model:localStorage.model,
 				amount: this.withdrawValue,
 				appId: localStorage.appId,
-				userId: localStorage.userId
+				userId: localStorage.userId,
+				// modelId:localStorage.modelId
 			}
 			
 			if (this.withdrawValue == 0) {

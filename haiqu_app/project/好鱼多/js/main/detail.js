@@ -1,35 +1,26 @@
-function plusReady() {
-	mui.back = false
-}
-if (window.plus) {
-	plusReady();
-} else {
-	document.addEventListener("plusready", plusReady, false);
-}
-
-function goBack() {
-	if (disappear == 1) {
-		window.history.go(-1)
-	} else {
-		$('.alert').html('您还没有刮完').addClass('alert-success').show().delay(1500).fadeOut();
-	}
-}
-
-
 var app = new Vue({
 	el: '#vueIdDetail',
 	data: {
-		amount: ''
+		amount: '',
+		imgUrl:'../images/2.png'
 	},
 	created() {
 		var a = GetRequest();
 		this.amount = a['value'];
+		var that = this;
+		mui.plusReady(function() {
+			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+				wgtVer = inf.version;
+				that.checkUpdate();
+			});
+			mui.back = false
+		});
 	},
 	methods: {
 
 	}
 })
-
+//获取页面传值
 function GetRequest() {
 	var url = location.search; //获取url中"?"符后的字串
 	var theRequest = new Object();
@@ -43,8 +34,15 @@ function GetRequest() {
 	return theRequest;
 }
 
-var disappear = 0
+function goBack() {
+	if (disappear == 1) {
+		window.history.go(-1)
+	} else {
+		$('.alert').html('您还没有刮完').addClass('alert-success').show().delay(1500).fadeOut();
+	}
+}
 
+var disappear = 0
 const oImg = document.getElementById('img');
 
 function draw() { //等图片加载完成后再添加canvas画布在上面
@@ -97,7 +95,6 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 						}, 1000)
 					}, 1000)
 				}
-				// console.log('xxxxx',intent.getAction()); //获取action
 				// main.unregisterReceiver(receiver);//取消监听
 			}
 		});
@@ -167,7 +164,7 @@ function draw() { //等图片加载完成后再添加canvas画布在上面
 				amount: a['value'],
 				appId: localStorage.appId,
 				userId: localStorage.userId,
-				modelId: localStorage.modelId
+				// modelId: localStorage.modelId
 			};
 			jup_request("POST", "app/upload_card_info", true, param).then(function(res) {
 				if (res.code == 0) {

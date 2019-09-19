@@ -178,19 +178,20 @@ var app = new Vue({
 	},
 	methods: {
 		to_detail(e) {
-			window.location.href = "../html/detail.html?value=" + e
+			window.location.href = "../html/detail.html?value=" + e;
 		},
 		go_back() {
-			window.history.go(-1)
+			window.history.go(-1);
 		},
 		quit() {
 			localStorage.removeItem("userId");
-			window.location.replace('reg.html')
+			window.location.replace('reg.html');
 		},
 		withdraw() {
 			window.location.href = 'withdraw.html';
 		},
-		withdraw_log() {
+		toWithdrawlog() {
+			console.log('我执行了')
 			window.location.href = 'withdraw-log.html';
 		}
 	}

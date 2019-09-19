@@ -3,8 +3,8 @@ var app = new Vue({
 	data: {
 		phone: '',
 		code: '',
-		checkUrl: 'https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣app/version/repo1/version.json',
-		wgtUrl: 'https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣app/update/repo1/好鱼多.wgt',
+		checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo1/version.json',
+		wgtUrl: 'http://115.29.141.214:8888/repo/haiqu_app/update/repo1/好鱼多.wgt',
 		rightVersion: 1
 	},
 	created() {
@@ -122,7 +122,7 @@ var app = new Vue({
 		},
 		checkUpdate() {
 			var that = this;
-			//		plus.nativeUI.showWaiting("检测更新");
+		    plus.nativeUI.showWaiting("检测更新");
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				switch (xhr.readyState) {
@@ -131,6 +131,7 @@ var app = new Vue({
 						if (xhr.status == 200) {
 							var newVer = eval('(' + xhr.responseText + ')').server_version;
 							if (wgtVer && newVer && (wgtVer != newVer)) {
+								console.log(wgtVer+newVer)
 								that.rightVersion = 0;
 								that.downWgt();
 							} else {
@@ -139,7 +140,7 @@ var app = new Vue({
 									localStorage.model = plus.device.model;
 									that.openWifi();
 								} else {
-									window.location.href = "index.html";
+									window.location.replace = "index.html";
 								}
 							}
 						} else {

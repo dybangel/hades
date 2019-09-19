@@ -76,7 +76,6 @@ var app = new Vue({
 			}, 1500);
 		},
 		goBack(){
-			console.log('我执行了')
 			window.history.go(-1);
 		}
 	}
