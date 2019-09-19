@@ -752,14 +752,14 @@ Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSF
 //Gappspath_remote="http://192.168.3.201/haiqu/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
-Gapi_json_url="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/version/version.json"; //公有云
+Gapi_json_url="http://115.29.141.214:8888/repo/haiqu_helper/version/version.json"; //公有云
 //Gapi_json_url="http://192.168.3.201/haiqu/api.json";        //私有云
 
 Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
 
 /**************************研发常用开关量结束 ******************************************************/
 //海趣助手apk下载路径
-Gdownloadpath="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/update/haiqu.apk"  //请勿修改
+Gdownloadpath="http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk"  //请勿修改
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath="./applist/";  //请勿修改
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
@@ -1077,7 +1077,7 @@ if(Grunstate=="trainwechat"){
                             //从云端获取特征码js
                 try{
                 http.__okhttp__.setTimeout(10000);
-                var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+                var r=http.get(Gapplistpath+"/"+appname+".js")
                 
                 Gfinditemstr=r.body.string();
                 eval(Gfinditemstr);//alert("加载"+appname+".js");
@@ -1402,8 +1402,8 @@ for(var i=0;i<Gapps.length;i++){
          try{
 
           //  http.__okhttp__.setTimeout(10000);
-          log(Gapplistpath_remote+"/"+appname+".json")
-           var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+          log(Gapplistpath+"/"+appname+".json")
+           var r=http.get(Gapplistpath+"/"+appname+".json")
          }catch(e){
              toast("e "+e);
          };
@@ -1469,7 +1469,7 @@ function loadappjs(){
  //thisfinditem=require("http://192.168.3.89/jsonurl/2345%E6%B5%8F%E8%A7%88%E5%99%A8.js");
 //   http://192.168.3.89/jsonurl/2345%E6%B5%8F%E8%A7%88%E5%99%A8.js
 // alert("loadappjs appname is:"+appname);
- var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+ var r=http.get(Gapplistpath+"/"+appname+".js")
  tmpstr=r.body.string();
 // alert(tmpstr);
  //thisfinditem=
@@ -3820,7 +3820,7 @@ function checklocalapp(){
                 }
               
                 http.__okhttp__.setTimeout(10000);
-                var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+                var r=http.get(Gapplistpath+"/"+appname+".json")
              
                 if(r.statusCode=="200"){  
                     var jsonstr=r.body.string();
