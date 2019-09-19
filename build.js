@@ -15,6 +15,7 @@ files.removeDir(script_download_path+'海趣助手');
 //sleep(1000);
 files.createWithDirs(script_download_path+'海趣助手/');
 files.createWithDirs(script_download_path+'海趣助手/res/');
+files.createWithDirs(script_download_path+'海趣助手/applist/');
 files.createWithDirs(script_download_path+'海趣助手/voice/appname/');
 files.createWithDirs(script_download_path+'海趣助手/voice/global/');
 
@@ -53,6 +54,15 @@ if(result){
         voicename=json[0]["voice"][i]["name"];
         log(voicename);
         getScriptFromServer("voice/global/"+voicename,script_download_path+"海趣助手/")
+    }
+    //下载applist文件
+    log("下载applist----------");
+    for(var i=0;i<json[0]["applist"].length;i++){
+        applistname=json[0]["applist"][i]["appname"];
+        log(applistname+".js");
+        log(applistname+".json");
+        getScriptFromServer("applist/"+applistname+".js",script_download_path+"海趣助手/")
+        getScriptFromServer("applist/"+applistname+".json",script_download_path+"海趣助手/")
     }
     //下载图片文件
     log("下载打包图标----------");    
