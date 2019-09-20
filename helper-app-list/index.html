@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="gb2312">
+		<title>应用市场</title>
+		<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+		<meta content="telephone=no" name="format-detection" />
+		<link href="css/style.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="js/jquery-1.js"></script>
+		<script type="text/javascript" src="js/tab.js"></script>
+		<!-- <script src="js/index.js"></script> -->
+		<script src="js/doT.min.js"></script>
+	</head>
+	<body>
+
+		<!--
+         * 17素材vip建站专区模块代码
+         * 详尽信息请看官网：http://www.17sucai.com/pins/vip
+         *
+         * Copyright , 温州易站网络科技有限公司版权所有
+         *
+         * 请尊重原创，未经允许请勿转载。
+         * 在保留版权的前提下可应用于个人或商业用途
+        -->
+
+		<section class="aui-flexView">
+			<section class="aui-scrollView">
+				<div class="aui-tab" data-ydui-tab>
+					<ul class="tab-nav">
+						<li class="tab-nav-item tab-active">
+							<a href="javascript:;">APP下载</a>
+						</li>
+					</ul>
+					<div id="main">
+						<div class="aui-flex b-line" v-for="item in list">
+							<div class="aui-look-img">
+								<img :src="'http://115.29.141.214:8888/repo/haiqu_helper/logo/' + item.appnum+item.appname+'.jpg'">
+							</div>
+							<div class="aui-flex-box">
+								<h3>{{item.appname}}</h3>
+								<p>{{item.appnum}}</p>
+							</div>
+							<div class="aui-flex-download">
+								<a :href="'http://115.29.141.214:8888/repo/haiqu_helper/apk/'+item.appnum+item.appname+'.apk'">下载</a>
+							</div>
+						</div>
+						<div class="tab-panel" v-if="tipShow">
+							<div class="tab-panel-item tab-active appcontainer">
+								<div class="aui-flex b-line">
+									<div class="aui-flex-box">
+										<h3>文件不存在!</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+
+	</body>
+</html>
+
+<script src="js/vue.min.js"></script>
+<script type="text/javascript">
+	var app = new Vue({
+		el: '#main',
+		data: {
+			list: '',
+			tipShow: false
+		},
+		created() {
+			var that = this;
+			console.log('ssssss')
+			$.ajax({
+				type: 'GET',
+				url: "http://repo.natapp1.cc/app/list",
+				success: function(res) {
+					if (res.result == '' || res.result == null || res.result == undefined || res.result == []) {
+						that.tipShow = true;
+					} else {
+						that.list = res.result;
+					}
+				},
+				error: function(res) {
+					console.log('网络请求错误');
+				}
+			})
+		}
+	})
+</script>
