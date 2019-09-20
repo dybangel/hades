@@ -1077,7 +1077,7 @@ if(Grunstate=="trainwechat"){
                             //从云端获取特征码js
                 try{
                 http.__okhttp__.setTimeout(10000);
-                var r=http.get(Gapplistpath+"/"+appname+".js")
+                var r=http.get(Gapplistpath_remote+"/"+appname+".js")
                 
                 Gfinditemstr=r.body.string();
                 eval(Gfinditemstr);//alert("加载"+appname+".js");
@@ -1402,8 +1402,8 @@ for(var i=0;i<Gapps.length;i++){
          try{
 
           //  http.__okhttp__.setTimeout(10000);
-          log(Gapplistpath+"/"+appname+".json")
-           var r=http.get(Gapplistpath+"/"+appname+".json")
+          log(Gapplistpath_remote+"/"+appname+".json")
+           var r=http.get(Gapplistpath_remote+"/"+appname+".json")
          }catch(e){
              toast("e "+e);
          };
@@ -1469,7 +1469,7 @@ function loadappjs(){
  //thisfinditem=require("http://192.168.3.89/jsonurl/2345%E6%B5%8F%E8%A7%88%E5%99%A8.js");
 //   http://192.168.3.89/jsonurl/2345%E6%B5%8F%E8%A7%88%E5%99%A8.js
 // alert("loadappjs appname is:"+appname);
- var r=http.get(Gapplistpath+"/"+appname+".js")
+ var r=http.get(Gapplistpath_remote+"/"+appname+".js")
  tmpstr=r.body.string();
 // alert(tmpstr);
  //thisfinditem=
@@ -3449,7 +3449,7 @@ downloadthread=threads.start(
 var myPath = "/storage/emulated/0/脚本/haiqu.apk";
 //console.show();
 //log('im alive')
-var myUrl = "http://download.dqu360.com:81/haiqu/haiqu.apk";
+var myUrl = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk";
 var url = new URL(myUrl);
 var conn = url.openConnection(); //URLConnection
 var inStream = conn.getInputStream(); //InputStream
@@ -3820,7 +3820,7 @@ function checklocalapp(){
                 }
               
                 http.__okhttp__.setTimeout(10000);
-                var r=http.get(Gapplistpath+"/"+appname+".json")
+                var r=http.get(Gapplistpath_remote+"/"+appname+".json")
              
                 if(r.statusCode=="200"){  
                     var jsonstr=r.body.string();
@@ -3883,7 +3883,7 @@ function checklocalapp(){
       
     //      var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
     alert(alertstr+"\n请允许打开浏览器，根据本提示下载对应app");
-         urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showapplist';
+         urlStr = 'http://115.29.141.214:8888/repo/haiqu_helper/html/index.html';
           var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
 
     }else{
