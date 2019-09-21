@@ -14,7 +14,7 @@ var app = new Vue({
 			localStorage.model = plus.device.model;
 			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 				wgtVer = inf.version;
-				that.checkUpdate();
+				that.openWifi();
 			});
 		});
 	},
@@ -116,9 +116,11 @@ var app = new Vue({
 				mui.toast('正在开启wifi');
 				setTimeout(function() {
 					that.getModelinfo();
+					that.checkUpdate();
 				}, 5000);
 			} else {
 				that.getModelinfo();
+				that.checkUpdate();
 			}
 		},
 		checkUpdate() {
@@ -138,7 +140,6 @@ var app = new Vue({
 								plus.nativeUI.toast("当前版本为最新版本！");
 								if (localStorage.userId == '' || localStorage.userId == null || localStorage.userId == undefined) {
 									that.rightVersion = 1;
-									that.openWifi();
 								} else {
 									window.location.replace = "index.html";
 								}
