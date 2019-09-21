@@ -2,8 +2,8 @@
 	"enable": "true",
 	"appname": "优看点",
 	"mulityback": "20||165",
-	"appver": "3.3.1",
-	"interval": "40",
+	"appver": "3.4.0",
+	"interval": "60",
 	"speed": "normal+",
 	"packagename": "com.memory.online",
 	"activityname": "com.memory.online.activity.WelcomeActivity",
@@ -15,7 +15,27 @@
 		"indexinparent": "1",
 	},
 	"signin": {
-
+        "sg1": {
+			"action": "click_text",
+			"click_text": "钱包",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "金币",
+		},
+		"sg2": {
+			"action": "click_id",
+			"click_id": "com.memory.online:id/ll_feature2",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "签到",
+		},
+		"sg3": {
+			"action": "click_id",
+			"click_id": "com.memory.online:id/tv_sign_btn",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "签到",
+		},
 	},
 	"abnormal": {
 		"ab1": {
