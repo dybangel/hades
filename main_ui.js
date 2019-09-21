@@ -1107,7 +1107,7 @@ if(Grunstate=="trainwechat"){
                 //从本地获取特征码js
                 try{
                     
-                    var r=files.read(Gapplistpath+"/"+appname+".js")
+                    var r=files.read(Gapplistpath+"/"+appname+".js");
                     
                     Gfinditemstr=r;
                    // console.log(Gfinditemstr);
