@@ -3,16 +3,15 @@
 	"appname": "闪电盒子",
 	"mulityback": "true||2000",
 	"appver": "5.3.3.5",
-	"interval": "30",
-	"speed": "normal",
+	"interval": "40",
+	"speed": "normal+",
 	"packagename": "c.l.a",
 	"activityname": "c.l.a.views.AppBoxHomeActivity",
 	"open": {
-		"featuremode": "classname_text",
-		"classname": "android.widget.TextView",
-		"text": "任务",
-		"depth": "11",
-		"indexinparent": "1",
+		"featuremode": "classname",
+		"classname": "android.support.v7.widget.RecyclerView",
+		"depth": "3",
+		"indexinparent": "0",
 	},
 	"signin": {
 		"sg1": {
