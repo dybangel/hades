@@ -499,25 +499,35 @@ ui.licence_activate.click(()=>{
     }else{
         var session=device.getAndroidId();
         thread_licence_activate=threads.start(function(){
-            var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);      
+            //var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);      
+            var r = http.postJson(Gchecklicense_api_new,{
+                "fsn":fsn,
+                "fsession":session
+            });
             if(r.statusCode=="200"){  
                 var result=r.body.string();
                
                 var resultobj=eval('('+result+')');
                 
-                if("ok"==resultobj[0]["status"]){
-                    toast("已经激活");
+                // if("ok"==resultobj[0]["status"]){
+                //     toast("已经激活");
+                if(0==resultobj.code){
+                    toast(resultobj.message);
                     initlicence(fsn);
                    
                     
                    Guser_cancel=true;
                    Glicence=true;
                         
-                }else if("error1"==resultobj[0]["status"]){
-                   toast("激活码不正确");
-                }else if("error2"==resultobj[0]["status"]){
-                   toast("您的设备信息与云端不一致，24小时后自动解锁");
-                }
+                // }else if("error1"==resultobj[0]["status"]){
+                //    toast("激活码不正确");
+                // }else if("error2"==resultobj[0]["status"]){
+                //    toast("您的设备信息与云端不一致，24小时后自动解锁");
+                // }
+            }else{
+                toast(resultobj.message);
+            }       
+
              }else{
                  toast("网络连接异常");
              }
@@ -708,22 +718,29 @@ thread_upfsn=threads.start(
 
          var session=device.getAndroidId();
       //   alert("fsn is:"+fsn+" aid is:"+session);
-         var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);
-             
+        // var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);
+        var r = http.postJson(Gchecklicense_api_new,{
+            "fsn":fsn,
+            "fsession":session
+        });  
          if(r.statusCode=="200"){  
              var result=r.body.string();
              var resultobj=eval('('+result+')');
-             if("ok"==resultobj[0]["status"]){
-                 toast("已经激活");
-                 
+            //  if("ok"==resultobj[0]["status"]){
+            //      toast("已经激活");
+            if(0==resultobj.code){
+                toast(resultobj.message); 
                 Guser_cancel=false;
                 Glicence=true;
+            }else{
+                toast(resultobj.message);
+            }       
                      
-             }else if("error1"==resultobj[0]["status"]){
-                toast("激活码不正确");
-             }else if("error2"==resultobj[0]["status"]){
-                toast("您的设备信息与云端不一致，24小时后自动解锁");
-             }
+            //  }else if("error1"==resultobj[0]["status"]){
+            //     toast("激活码不正确");
+            //  }else if("error2"==resultobj[0]["status"]){
+            //     toast("您的设备信息与云端不一致，24小时后自动解锁");
+            //  }
           }
         
        
@@ -748,14 +765,16 @@ Gapplistpath_remote="https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/
 //Gapplistpath_remote="http://192.168.3.201/haiqu/applist/";       //私有云
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
-Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps&devicetype="+Gdevicetype; //公有云
+// Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps&devicetype="+Gdevicetype; //公有云
+Gappspath_remote="http://115.29.141.214:9999/app/list";
 //Gappspath_remote="http://192.168.3.201/haiqu/gapps.json";                                         //私有云
 
 //3 api 接口文件路径
 Gapi_json_url="http://115.29.141.214:8888/repo/haiqu_helper/version/version.json"; //公有云
 //Gapi_json_url="http://192.168.3.201/haiqu/api.json";        //私有云
 
-Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
+//Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
+Gchecklicense_api_new="http://115.29.141.214:9999/license/check"  //请勿修改
 
 /**************************研发常用开关量结束 ******************************************************/
 //海趣助手apk下载路径
@@ -764,6 +783,7 @@ Gdownloadpath="http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk"  /
 Gapplistpath="./applist/";  //请勿修改
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
 Gvoicepath="./voice/";    //请勿修改
+Gapps="";
 
 //fitem 函数专用定界特征码
 v4feature="android.support.v4.view.ViewPager";
@@ -827,7 +847,7 @@ if(Gcode_state=="ui"){
                     loadGapps();
                    // alert("882288")
                     loadappjson();
-                 // alert("hahah");
+                //   alert("hahah");
 
                 }
                 if(thisnum>0 && Guser_cancel==false){
@@ -1074,16 +1094,27 @@ if(Grunstate=="trainwechat"){
                     Gmin=1000;  
                     }
                     toast("当前速度"+Grunspeed);
-                            //从云端获取特征码js
-                try{
-                http.__okhttp__.setTimeout(10000);
-                var r=http.get(Gapplistpath_remote+"/"+appname+".js")
+                //             //从云端获取特征码js
+                // try{
+                // http.__okhttp__.setTimeout(10000);
+                // var r=http.get(Gapplistpath_remote+"/"+appname+".js")
                 
-                Gfinditemstr=r.body.string();
-                eval(Gfinditemstr);//alert("加载"+appname+".js");
-                }catch(e){
-                toast("this is findnews httpget and eval:"+e);
-                }
+                // Gfinditemstr=r.body.string();
+                // eval(Gfinditemstr);//alert("加载"+appname+".js");
+                // }catch(e){
+                // toast("this is findnews httpget and eval:"+e);
+                // }
+                //从本地获取特征码js
+                try{
+                    
+                    var r=files.read(Gapplistpath+"/"+appname+".js")
+                    
+                    Gfinditemstr=r;
+                   // console.log(Gfinditemstr);
+                    eval(Gfinditemstr);//alert("加载"+appname+".js");
+                    }catch(e){
+                    toast("this is findnews httpget and eval:"+e);
+                    }
 
 
            try{
@@ -1328,7 +1359,10 @@ function loadGapps(){
                            //  alert(r.body.string());
                             try{
                             var tmpstr=r.body.string();
-                            Gapps=eval('('+tmpstr+')'); 
+                            Gapps=eval('('+tmpstr+')');
+                            Gapps=Gapps.result;
+                            
+                             //console.log(Gapps);
                             }catch(e){
                                 toast("加载云端开关量延迟");
                             }
@@ -1355,6 +1389,7 @@ function loadGapps(){
                                //alert("["+packageliststr+"]");
                             //  Gpackagename_lists=eval("(["+packageliststr+"])")
                               Gpackagename_lists=eval("([])")
+                             // console.log(Gpackagename_lists);
 
                            //   datasourcelist=eval("(["+datasourcelist+"])");
                            
@@ -1379,7 +1414,7 @@ function loadGapps(){
 }
 //根据开关量加载特征码
 function loadappjson(){
-    //alert("1111")
+    // alert("1111")
 var start='[]'
 applist=eval('(' + start + ')'); 
 var tempstr="";
@@ -1390,47 +1425,50 @@ for(var i=0;i<Gapps.length;i++){
 
    appname=Gapps[i]["appname"];
   
-   if("true"==Gapps[i]['enable']){
-       //如果是云端特征码机制
-       if(Gjsonloadstate=="remote"){
-           if(voiceplaynum==0){
-             play("global","加载");
-             play("global","云端");
-             play("global","特征码");
-             voiceplaynum+=1;
-           }
-         try{
+//    if("true"==Gapps[i]['enable']){
+    if(Gapps[i]['enable']){
 
-          //  http.__okhttp__.setTimeout(10000);
-          log(Gapplistpath_remote+"/"+appname+".json")
-           var r=http.get(Gapplistpath_remote+"/"+appname+".json")
-         }catch(e){
-             toast("e "+e);
-         };
+//如果是云端特征码机制
+     //  if(Gjsonloadstate=="remote"){
+        //    if(voiceplaynum==0){
+        //      play("global","加载");
+        //      play("global","云端");
+        //      play("global","特征码");
+        //      voiceplaynum+=1;
+        //    }
+        //  try{
+
+        //   //  http.__okhttp__.setTimeout(10000);
+        //   log(Gapplistpath_remote+"/"+appname+".json")
+        //    var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+        //  }catch(e){
+        //      toast("e "+e);
+        //  };
            
          //  toast('code=',r.statusCode)
-           if(r.statusCode=="200"){  
+        //    if(r.statusCode=="200"){  
               
-            //   log(jsonstr);
-               try{ 
-                   var jsonstr=r.body.string();
-                   tempjson=eval('(' + jsonstr + ')');
-                           //将json添加到applist中
-                    applist.push(tempjson); 
-               }catch(e){
-                   alert(appname+" 远程数据结构错误");
-               }
+        //     //   log(jsonstr);
+        //        try{ 
+        //            var jsonstr=r.body.string();
+        //            tempjson=eval('(' + jsonstr + ')');
+        //                    //将json添加到applist中
+        //             applist.push(tempjson); 
+        //        }catch(e){
+        //            alert(appname+" 远程数据结构错误");
+        //        }
              
-           }else{
-               alert("没有找到远程-1"+appname+".json");
-           }
+        //    }else{
+        //        alert("没有找到远程-1"+appname+".json");
+        //    }
           
 
        //如果是本地特征码机制
-       }else if(Gjsonloadstate=="local"){
+    //   }else if(Gjsonloadstate=="local"){
+        if(Gjsonloadstate=="remote"){
            if(voiceplaynum==0){
-               play("gulobal","加载");
-               play("global","本地");
+               play("global","加载");
+              // play("global","本地");
                play("global","特征码");
                voiceplaynum+=1;
            }
@@ -1444,13 +1482,15 @@ for(var i=0;i<Gapps.length;i++){
                    }
                try{
                    //读取手机上的json
-                   tempstr=files.read(Gapplistpath+appname+".json");
+                   tempstr=files.read(Gapplistpath+"/"+appname+".json");
+                  // console.log(tempstr);
                    //将字符串转换成json
                    tempjson=eval('(' + tempstr + ')');
                    //将json添加到applist中
                    applist.push(tempjson); 
                }catch(e){
-                   alert(appname+" 本地数据结构错误");
+                   //alert(appname+" 本地数据结构错误");
+                   toast(appname+" 本地数据结构错误");
                }
        }
   
@@ -1501,7 +1541,8 @@ function ref_ui_list(){
         for(var i=0;i<Gapps.length;i++){
             let thisappname=Gapps[i]["appname"];
             // 根据包名判断是否安装
-         //   alert(applist[0]["packagename"]);
+            //alert(applist[0]["packagename"]);
+            //console.log(applist.length);
             let thisappnum="";
             let thispackagename="";
             let thisactivityname="";
@@ -1591,7 +1632,7 @@ function ref_ui_list(){
     return true;
    
   }catch(e){
-   
+    //console.log(e);
       toast("加载列表"+e);
     return false;
   }
@@ -3809,7 +3850,10 @@ function checklocalapp(){
     
         appname=Gapps[i]["appname"];
         appnum=Gapps[i]["appnum"];
-        if("true"==Gapps[i]['enable']){
+        //console.log(appnum);
+       //if("true"==Gapps[i]['enable']){
+        if(Gapps[i]['enable']){
+            //alert("1");
             //如果是云端特征码机制
             if(Gjsonloadstate=="remote"){
                 if(voiceplaynum==0){
@@ -3819,19 +3863,23 @@ function checklocalapp(){
                   voiceplaynum+=1;
                 }
               
-                http.__okhttp__.setTimeout(10000);
-                var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+                // http.__okhttp__.setTimeout(10000);
+                // var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+                var r=files.read(Gapplistpath+"/"+appname+".json")
              
-                if(r.statusCode=="200"){  
-                    var jsonstr=r.body.string();
+                //if(r.statusCode=="200"){ 
+                   //console.log(r); 
+                    var jsonstr=r;
+                   // console.log(jsonstr);
                
                     try{
                         tempjson=eval('(' + jsonstr + ')');
                         var pname=tempjson['packagename'];
+                       // alert(pname);
                         var appname=tempjson['appname'];
                         var appver=tempjson['appver'];
                         var result=app.getAppName(pname);
-                     //   alert(result)
+                       //alert(result);
                         if(result==null){
                             diffcount+=1;
                             thisjsonstr+='{"appnum":"'+appnum+'","appname":"'+appname+'","state":"您未安装该APP，请安装"},';
@@ -3854,9 +3902,9 @@ function checklocalapp(){
                         alert(appname+" 远程数据结构错误");
                     }
                   
-                }else{
-                    alert("没有找到远程-2"+appname+".json");
-                }
+                // }else{
+                //     alert("没有找到远程-2"+appname+".json");
+                // }
                
     
             //如果是本地特征码机制
@@ -3866,7 +3914,7 @@ function checklocalapp(){
              
     
         }else{
-    
+         //alert("1");
         }
     
     }
