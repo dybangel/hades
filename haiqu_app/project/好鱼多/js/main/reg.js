@@ -21,11 +21,11 @@ var app = new Vue({
 	methods: {
 		submit() {
 			if (localStorage.model == 'Le X820') {
-				if( this.rightVersion == 1){
+				if (this.rightVersion == 1) {
 					var param = {
 						appId: localStorage.appId,
 						authCode: this.code,
-						phone:this.phone
+						phone: this.phone
 					};
 					console.log(param)
 					jup_request("POST", "login/login", true, param).then(function(res) {
@@ -37,7 +37,9 @@ var app = new Vue({
 							plus.nativeUI.toast("请输入正确的手机号或验证码");
 						}
 					})
-				}else{
+				} else if (that.rightVersion == 2) {
+					that.checkUpdate();
+				} else {
 					plus.nativeUI.confirm("确定下载更新？", function(e) {
 						if (e.index == 0) {
 							that.downWgt();
@@ -74,6 +76,8 @@ var app = new Vue({
 							$("#btnCode").text("发送短信验证码");
 						}
 					}, 1000);
+				} else if (that.rightVersion == 2) {
+					that.checkUpdate();
 				} else {
 					plus.nativeUI.confirm("确定下载更新？", function(e) {
 						if (e.index == 0) {
@@ -113,11 +117,12 @@ var app = new Vue({
 			var re = plus.android.invoke(activityService, "isWifiEnabled");
 			if (!re) {
 				plus.android.invoke(activityService, "setWifiEnabled", true);
-				mui.toast('正在开启wifi');
+				plus.nativeUI.showWaiting("正在开启wifi");
 				setTimeout(function() {
 					that.getModelinfo();
 					that.checkUpdate();
-				}, 5000);
+					plus.nativeUI.closeWaiting();
+				}, 10000);
 			} else {
 				that.getModelinfo();
 				that.checkUpdate();
@@ -125,7 +130,7 @@ var app = new Vue({
 		},
 		checkUpdate() {
 			var that = this;
-		    plus.nativeUI.showWaiting("检测更新");
+			plus.nativeUI.showWaiting("检测更新");
 			var xhr = new XMLHttpRequest();
 			xhr.onreadystatechange = function() {
 				switch (xhr.readyState) {
@@ -134,7 +139,7 @@ var app = new Vue({
 						if (xhr.status == 200) {
 							var newVer = eval('(' + xhr.responseText + ')').server_version;
 							if (wgtVer && newVer && (wgtVer != newVer)) {
-								console.log(wgtVer+newVer)
+								console.log(wgtVer + newVer)
 								that.downWgt();
 							} else {
 								plus.nativeUI.toast("当前版本为最新版本！");
@@ -145,6 +150,7 @@ var app = new Vue({
 								}
 							}
 						} else {
+							that.rightVersion = 2;
 							plus.nativeUI.toast("检测更新失败！");
 						}
 						break;
@@ -166,7 +172,7 @@ var app = new Vue({
 					console.log("下载更新成功：" + d.filename);
 					that.installWgt(d.filename); // 安装wgt资源包
 				} else {
-					console.log("下载更新失败！"+status+d);
+					console.log("下载更新失败！" + status + d);
 					plus.nativeUI.toast("下载更新失败！");
 				}
 				plus.nativeUI.closeWaiting();
