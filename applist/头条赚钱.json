@@ -1,9 +1,9 @@
 {
 	"enable": "false",
 	"appname": "头条赚钱",
-	"mulityback": "",
+	"mulityback": "false",
 	"appver": "1.0.5",
-	"interval": "30",
+	"interval": "50",
 	"speed": "normal+",
 	"packagename": "com.jxbz.ztt",
 	"activityname": "com.cy.browser.BrowserActivity",
@@ -21,6 +21,10 @@
 		"ab1": {
 			"featuremode": "id",
 			"id": "com.jxbz.ztt:id/dialog_exit_app_bt_clear_cancal",
+		},
+		"ab2": {
+			"featuremode": "id",
+			"id": "com.jxbz.ztt:id/dialog_close",
 		},
 	},
 	"activitys": {
