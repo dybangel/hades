@@ -37,14 +37,12 @@ var app = new Vue({
 							plus.nativeUI.toast("请输入正确的手机号或验证码");
 						}
 					})
-				} else if (that.rightVersion == 2) {
-					that.checkUpdate();
 				} else {
-					plus.nativeUI.confirm("确定下载更新？", function(e) {
+					plus.nativeUI.confirm("请先检查更新", function(e) {
 						if (e.index == 0) {
-							that.downWgt();
+							that.checkUpdate();
 						} else {}
-					}, "请使用最新版本", ["确定", "取消"]);
+					}, "确认检查更新？", ["确定", "取消"]);
 				}
 			} else {
 				plus.nativeUI.toast("该APP与此手机不兼容");
@@ -59,7 +57,7 @@ var app = new Vue({
 						phone: this.phone
 					}
 					jup_request("POST", "login/send_sms", true, param).then(function(res) {
-						$('.alert').html(res.message).addClass('alert-success').show().delay(1500).fadeOut();
+						plus.nativeUI.toast(res.message);
 					})
 					var second = 120;
 					$("#btnCode").attr('disabled', true);
@@ -76,14 +74,12 @@ var app = new Vue({
 							$("#btnCode").text("发送短信验证码");
 						}
 					}, 1000);
-				} else if (that.rightVersion == 2) {
-					that.checkUpdate();
 				} else {
-					plus.nativeUI.confirm("确定下载更新？", function(e) {
+					plus.nativeUI.confirm("请先检查更新", function(e) {
 						if (e.index == 0) {
-							that.downWgt();
+							that.checkUpdate();
 						} else {}
-					}, "请使用最新版本", ["确定", "取消"]);
+					}, "确认检查更新？", ["确定", "取消"]);
 				}
 			} else {
 				plus.nativeUI.toast("该APP与此手机不兼容");
@@ -150,7 +146,6 @@ var app = new Vue({
 								}
 							}
 						} else {
-							that.rightVersion = 2;
 							plus.nativeUI.toast("检测更新失败！");
 						}
 						break;
