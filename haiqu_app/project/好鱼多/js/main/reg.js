@@ -4,13 +4,14 @@ var app = new Vue({
 		phone: '',
 		code: '',
 		checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo1/version.json',
-		wgtUrl: 'http://115.29.141.214:8888/repo/haiqu_app/update/repo1/好鱼多.wgt',
-		rightVersion: 1
+		wgtUrl: 'http://115.29.141.214:8888/repo/haiqu_app/update/repo1/com.pretty.fish.wgt',
+		rightVersion: 0
 	},
 	created() {
 		localStorage.appId = '134';
 		var that = this;
 		mui.plusReady(function() {
+			localStorage.model = plus.device.model;
 			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 				wgtVer = inf.version;
 				that.checkUpdate();
@@ -28,7 +29,6 @@ var app = new Vue({
 					};
 					console.log(param)
 					jup_request("POST", "login/login", true, param).then(function(res) {
-						console.log(res)
 						if (res.code == 0) {
 							plus.nativeUI.toast("登录或注册成功");
 							localStorage.userId = res.result.userId;
@@ -49,6 +49,7 @@ var app = new Vue({
 			}
 		},
 		get_code() {
+			var that = this;
 			if (localStorage.model == 'Le X820') {
 				if (this.rightVersion == 1) {
 					var param = {
@@ -132,12 +133,11 @@ var app = new Vue({
 							var newVer = eval('(' + xhr.responseText + ')').server_version;
 							if (wgtVer && newVer && (wgtVer != newVer)) {
 								console.log(wgtVer+newVer)
-								that.rightVersion = 0;
 								that.downWgt();
 							} else {
 								plus.nativeUI.toast("当前版本为最新版本！");
 								if (localStorage.userId == '' || localStorage.userId == null || localStorage.userId == undefined) {
-									localStorage.model = plus.device.model;
+									that.rightVersion = 1;
 									that.openWifi();
 								} else {
 									window.location.replace = "index.html";
@@ -156,21 +156,23 @@ var app = new Vue({
 		},
 		downWgt() {
 			var that = this;
+			console.log(that.wgtUrl);
 			plus.nativeUI.showWaiting("下载更新");
 			plus.downloader.createDownload(that.wgtUrl, {
-				filename: "_doc/update/"
+				// filename: "_doc/update/"
 			}, function(d, status) {
 				if (status == 200) {
 					console.log("下载更新成功：" + d.filename);
 					that.installWgt(d.filename); // 安装wgt资源包
 				} else {
-					console.log("下载更新失败！");
+					console.log("下载更新失败！"+status+d);
 					plus.nativeUI.toast("下载更新失败！");
 				}
 				plus.nativeUI.closeWaiting();
 			}).start();
 		},
 		installWgt(path) {
+			console.log('我执行了')
 			plus.nativeUI.showWaiting("安装更新");
 			plus.runtime.install(path, {}, function() {
 				plus.nativeUI.closeWaiting();
