@@ -38,11 +38,11 @@ var app = new Vue({
 						}
 					})
 				} else {
-					plus.nativeUI.confirm("请先检查更新", function(e) {
-						if (e.index == 0) {
-							that.checkUpdate();
-						} else {}
-					}, "确认检查更新？", ["确定", "取消"]);
+					// plus.nativeUI.confirm("请先检查更新", function(e) {
+					// 	if (e.index == 0) {
+					that.checkUpdate();
+					// 	} else {}
+					// }, "确认检查更新？", ["确定", "取消"]);
 				}
 			} else {
 				plus.nativeUI.toast("该APP与此手机不兼容");
@@ -75,11 +75,11 @@ var app = new Vue({
 						}
 					}, 1000);
 				} else {
-					plus.nativeUI.confirm("请先检查更新", function(e) {
-						if (e.index == 0) {
-							that.checkUpdate();
-						} else {}
-					}, "确认检查更新？", ["确定", "取消"]);
+					// plus.nativeUI.confirm("请先检查更新", function(e) {
+					// 	if (e.index == 0) {
+					that.checkUpdate();
+					// 	} else {}
+					// }, "确认检查更新？", ["确定", "取消"]);
 				}
 			} else {
 				plus.nativeUI.toast("该APP与此手机不兼容");
@@ -135,7 +135,6 @@ var app = new Vue({
 						if (xhr.status == 200) {
 							var newVer = eval('(' + xhr.responseText + ')').server_version;
 							if (wgtVer && newVer && (wgtVer != newVer)) {
-								console.log(wgtVer + newVer)
 								that.downWgt();
 							} else {
 								plus.nativeUI.toast("当前版本为最新版本！");
