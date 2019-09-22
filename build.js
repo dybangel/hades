@@ -1,5 +1,8 @@
-Gcodebaseurl = "http://raw.githubusercontent.com/dybangel/hades/master/"
+Gcodebaseurl = "http://raw.githubusercontent.com/dybangel/hades/master/";
 Gserver_ver_url="http://115.29.141.214:8888/repo/haiqu_helper/version/version.json";
+Gappsurl="http://115.29.141.214:9999/app/list";
+Gapps="";
+
 
 toast("开始自动打包");
 //className("android.widget.TextView").text("打包中")
@@ -56,14 +59,34 @@ if(result){
         getScriptFromServer("voice/global/"+voicename,script_download_path+"海趣助手/")
     }
     //下载applist文件
+    // log("下载applist----------");
+    // for(var i=0;i<json[0]["applist"].length;i++){
+    //     applistname=json[0]["applist"][i]["appname"];
+    //     log(applistname+".js");
+    //     log(applistname+".json");
+    //     getScriptFromServer("applist/"+applistname+".js",script_download_path+"海趣助手/")
+    //     getScriptFromServer("applist/"+applistname+".json",script_download_path+"海趣助手/")
+    // }
+    //下载applist文件
     log("下载applist----------");
-    for(var i=0;i<json[0]["applist"].length;i++){
-        applistname=json[0]["applist"][i]["appname"];
+    try{
+      //http.__okhttp__.setTimeout(10000);
+      var r=http.get(Gappsurl);
+      
+      var tmpstr=r.body.string();
+      var ele=eval('('+tmpstr+')');
+      Gapps=ele.result;
+      //console.log(Gapps[0]["appname"].length);
+    }catch(e){
+    toast(e);
+    }
+   for(var i=0;i<Gapps.length;i++){
+   applistname=Gapps[i]["appname"];
         log(applistname+".js");
         log(applistname+".json");
         getScriptFromServer("applist/"+applistname+".js",script_download_path+"海趣助手/")
         getScriptFromServer("applist/"+applistname+".json",script_download_path+"海趣助手/")
-    }
+}
     //下载图片文件
     log("下载打包图标----------");    
     getScriptFromServer("res/logo.png",script_download_path+"海趣助手/")
