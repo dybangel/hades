@@ -11,6 +11,7 @@ var app = new Vue({
 	},
 	created() {
 		var that = this
+		mui.plusReady();
 		var param = {
 			appId: localStorage.appId,
 			userId: localStorage.userId
@@ -92,16 +93,16 @@ var app = new Vue({
 			}
 			
 			if (this.withdrawValue == 0) {
-				$('.alert').html('请选择提现金额').addClass('alert-success').show().delay(1500).fadeOut();
+				plus.nativeUI.toast("请选择提现金额");
 			} else if (this.withdrawValue !== 0 && this.withdrawValue > this.balance) {
-				$('.alert').html('余额不足	').addClass('alert-success').show().delay(1500).fadeOut();
+				plus.nativeUI.toast("余额不足");
 			} else {
 				jup_request("POST", "user/withdraw", true, param).then(function(res) {
 					if (res.code == 0) {
-						$('.alert').html(res.message).addClass('alert-success').show().delay(1500).fadeOut();
+						plus.nativeUI.toast(reg.message);
 					    location.reload()
 					} else {
-						$('.alert').html(res.message).addClass('alert-success').show().delay(1500).fadeOut();
+						plus.nativeUI.toast(reg.message);
 					}
 				})
 			}
