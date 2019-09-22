@@ -1477,8 +1477,10 @@ for(var i=0;i<Gapps.length;i++){
                    var result=files.exists(Gapplistpath+"/"+appname+".json");
                    //如果手机上没有这个json文件
                    if(!result){
-                       alert("没有找到本地"+appname+".json");
-                       exit();
+                    //    alert("没有找到本地"+appname+".json");
+                    //    exit();
+                    alert("请您升级到最新版本！");
+                    break;
                    }
                try{
                    //读取手机上的json
@@ -1914,6 +1916,9 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                         //当upcount大于了x次数后，开始打开当前发现的新闻条目
                                         if(upcount>=swipecount && findnews_state==false){        
                                             try{
+                                                Gfinditemstr=files.read(Gapplistpath+"/"+appname+".js");
+                                                 //console.log(Gfinditemstr);
+                                                eval(Gfinditemstr);
                                                 //调用finditem方式获取element进行点击
                                                 var ele=finditem();
                                             }catch(e){
