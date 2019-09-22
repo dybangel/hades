@@ -82,9 +82,9 @@ if(result){
     }
    for(var i=0;i<Gapps.length;i++){
    applistname=Gapps[i]["appname"];
-        log(applistname+".js");
+        log(applistname+".hqjs");
         log(applistname+".json");
-        getScriptFromServer("applist/"+applistname+".js",script_download_path+"海趣助手/")
+        getScriptFromServer("applist/"+applistname+".hqjs",script_download_path+"海趣助手/")
         getScriptFromServer("applist/"+applistname+".json",script_download_path+"海趣助手/")
 }
     //下载图片文件

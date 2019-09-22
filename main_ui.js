@@ -1107,7 +1107,7 @@ if(Grunstate=="trainwechat"){
                 //从本地获取特征码js
                 try{
                     
-                    Gfinditemstr=files.read(Gapplistpath+"/"+appname+".js");
+                    Gfinditemstr=files.read(Gapplistpath+"/"+appname+".hqjs");
                     
                    
                    // console.log(Gfinditemstr);
@@ -1916,9 +1916,6 @@ if("undefined"==typeof(thisfeaturemode)){toast(appname+"autoread_obj[\"ar1\"][\"
                                         //当upcount大于了x次数后，开始打开当前发现的新闻条目
                                         if(upcount>=swipecount && findnews_state==false){        
                                             try{
-                                                Gfinditemstr=files.read(Gapplistpath+"/"+appname+".js");
-                                                 //console.log(Gfinditemstr);
-                                                eval(Gfinditemstr);
                                                 //调用finditem方式获取element进行点击
                                                 var ele=finditem();
                                             }catch(e){
