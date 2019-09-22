@@ -1107,9 +1107,9 @@ if(Grunstate=="trainwechat"){
                 //从本地获取特征码js
                 try{
                     
-                    var r=files.read(Gapplistpath+"/"+appname+".js");
+                    Gfinditemstr=files.read(Gapplistpath+"/"+appname+".js");
                     
-                    Gfinditemstr=r;
+                   
                    // console.log(Gfinditemstr);
                     eval(Gfinditemstr);//alert("加载"+appname+".js");
                     }catch(e){
