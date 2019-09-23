@@ -499,7 +499,9 @@ ui.licence_activate.click(()=>{
     }else{
         var session=device.getAndroidId();
         thread_licence_activate=threads.start(function(){
-            //var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);      
+            //var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);  
+
+            Gdevicecode=builddevicecode();
             var r = http.postJson(Gchecklicense_api_new,{
                 "fsn":fsn,
                 "fsession":Gdevicecode
@@ -723,6 +725,12 @@ thread_upfsn=threads.start(
        //  var session=Gdevicecode;//device.getAndroidId();
       //   alert("fsn is:"+fsn+" aid is:"+session);
         // var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);
+                     
+       
+             
+        //生成机器码
+        Gdevicecode=builddevicecode();
+        
         var r = http.postJson(Gchecklicense_api_new,{
             "fsn":fsn,
             "fsession":Gdevicecode
@@ -4509,7 +4517,9 @@ function getdevicemac(){
    tmpstr=tmpstr.substring(0,18);
         
    //生成机器码
-   Gdevicecode=midhead+mid+tmpstr;
+  // Gdevicecode=midhead+mid+tmpstr;
+   //return Gdevicecode;
+
    html = files.path("./qrcode.html");
    webView.loadUrl("file://" + html);
    setTimeout(() => {
@@ -4520,7 +4530,7 @@ function getdevicemac(){
            }
        }));
    }, 2000);
-
+  
 },2000)
 }
 function opennobarrier(){
@@ -4628,4 +4638,32 @@ xmlstr+='        </TableLayout>'
 
 ui.inflate(xmlstr ,ui.logframe,true);
   
+}
+//生成机器码
+function builddevicecode(){
+    var mac=device.getMacAddress();
+    if(mac==null){
+     GdeviceMac="";
+     //alert("mac is kong");
+     toast("助手需要无线网络，请确认wifi开关处于开启状态");
+    }else{
+     GdeviceMac=mac;
+    // alert("this is fun "+device.getMacAddress());
+    }
+    var midhead="dqprop01h2";
+   // webView = ui.findById("webview");
+    
+    //var aa=device.getMacAddress();;
+    var mid=GdeviceMac.replace(/:/g,"");
+    mid=mid.toLocaleLowerCase()
+   // alert(GdeviceMac);
+    tmpstr="";
+    for(var i in mid){
+        tmpstr+=mid[i]+mid[i].charCodeAt(0);
+     //    if(tmpstr.length==18){
+     //        break;
+     //    }
+    }
+    tmpstr=tmpstr.substring(0,18);
+   return midhead+mid+tmpstr;
 }
