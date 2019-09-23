@@ -502,7 +502,7 @@ ui.licence_activate.click(()=>{
             //var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);      
             var r = http.postJson(Gchecklicense_api_new,{
                 "fsn":fsn,
-                "fsession":session
+                "fsession":Gdevicecode
             });
             if(r.statusCode=="200"){  
                 var result=r.body.string();
@@ -578,7 +578,11 @@ ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐�
 /************************************* UI结束**********************************************************************/ 
 var result=shell("svc wifi enable ", true);
 GdeviceMac="";
+//机器码
+Gdevicecode="";
 getdevicemac();
+
+
 opennobarrier();
 //是否开启本地日志和日志上报
 Ginsert_log=false;
@@ -716,12 +720,12 @@ thread_upfsn=threads.start(
                             ui.licence_activate.setVisibility(7);
                         });
 
-         var session=device.getAndroidId();
+       //  var session=Gdevicecode;//device.getAndroidId();
       //   alert("fsn is:"+fsn+" aid is:"+session);
         // var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);
         var r = http.postJson(Gchecklicense_api_new,{
             "fsn":fsn,
-            "fsession":session
+            "fsession":Gdevicecode
         });  
          if(r.statusCode=="200"){  
              var result=r.body.string();
@@ -4504,8 +4508,8 @@ function getdevicemac(){
    }
    tmpstr=tmpstr.substring(0,18);
         
-    
-   
+   //生成机器码
+   Gdevicecode=midhead+mid+tmpstr;
    html = files.path("./qrcode.html");
    webView.loadUrl("file://" + html);
    setTimeout(() => {
