@@ -116,7 +116,6 @@ var app = new Vue({
 				var model = 0
 				plus.device.getInfo({
 					success: function(e) {
-						console.log('getDeviceInfo success: ' + JSON.stringify(e));
 						console.log(plus.device.model)
 						// if(plus.device.model == 'Le X820'){
 						// 	model = 1

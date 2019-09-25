@@ -1,6 +1,10 @@
 * {
 	touch-action: pan-y;
 }
+.mine_bg{
+	background-image: url(../../images/mine_bg1.jpg);
+	min-height:100vh;
+}
 /* 首页及我的页面 样式 */
 /* 每张刮刮卡样式 */
 .content-card {
@@ -46,6 +50,7 @@
 	border-radius: 10px;
 	background-color: #fff;
 }
+
 /* 首页头部背景及内容 */
 .navHead {
 	background-color: #e63634;

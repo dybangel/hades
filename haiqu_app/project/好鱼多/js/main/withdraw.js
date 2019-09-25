@@ -7,7 +7,7 @@ var app = new Vue({
 		balance: 0,
 		withdrawValue: 0,
 		phone: '',
-		tips: ['提现门槛为1元起提', '提现门槛为1元起提', '提现门槛为1元起提', '提现门槛为1元起提', '提现门槛为1元起提', '提现门槛为1元起提']
+		tips: ['提现门槛为1元起提']
 	},
 	created() {
 		var that = this

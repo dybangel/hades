@@ -40,16 +40,18 @@
 				</div>
 			</div>
 			<div id="tabbar2" class="mui-control-content">
-				<div class='head-bg'>
+				<div class="head-bg">
 					<div class="avatar2"></div>
 					<div>
 						<div>余额:{{balance}}元</div>
 						<div>下次开奖时间为12：00</div>
 					</div>
 				</div>
-				<button class="btnIndex" @click="withdraw()">提现</button>
-				<button class="btnIndex" @click="toWithdrawlog()">提现记录</button>
-				<button class="btnIndex" @click="quit()">退出登录</button>
+				<div class="mine_bg">
+					<button class="btnIndex" @click="withdraw()">提现</button>
+					<button class="btnIndex" @click="toWithdrawlog()">提现记录</button>
+					<button class="btnIndex" @click="quit()">退出登录</button>
+				</div>
 			</div>
 		</div>
 	</body>

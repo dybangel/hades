@@ -62,6 +62,7 @@ var app = new Vue({
 					var second = 120;
 					$("#btnCode").attr('disabled', true);
 					$("#btnCode").text(second + "秒后获取验证码");
+
 					var timer = null;
 					timer = setInterval(function() {
 						second -= 1;
@@ -137,9 +138,11 @@ var app = new Vue({
 							if (wgtVer && newVer && (wgtVer != newVer)) {
 								that.downWgt();
 							} else {
+								that.rightVersion = 1;
+								console.log(that.rightVersion);
 								plus.nativeUI.toast("当前版本为最新版本！");
 								if (localStorage.userId == '' || localStorage.userId == null || localStorage.userId == undefined) {
-									that.rightVersion = 1;
+									
 								} else {
 									window.location.replace = "index.html";
 								}
@@ -173,7 +176,7 @@ var app = new Vue({
 			}).start();
 		},
 		installWgt(path) {
-			console.log('我执行了')
+			console.log('我执行了');
 			plus.nativeUI.showWaiting("安装更新");
 			plus.runtime.install(path, {}, function() {
 				plus.nativeUI.closeWaiting();
