@@ -1,41 +1,70 @@
 {
-        "enable":"true",
+        "enable":"false",
         "appname":"聚看点", 
-        "interval":"3",
-         "packagename":"com.xiangzi.jukandian",
+		"mulityback":"false",
+		"appver":"6.5.6",
+        "interval":"50",
+		"speed":"normal+",
+        "packagename":"com.xiangzi.jukandian",
         "activityname":"com.xiangzi.jukandian.activity.MainActivity",
         "open":{
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
-          "text":"视频",
-          "depth":"",
-          "indexinparent":"",
+          "text":"推荐",
+          "depth":"19",
+          "indexinparent":"0",
           },
+	"signin":{
+		"sg1":{
+		  "action":"click_id",
+		  "click_id":"com.xiangzi.jukandian:id/ll_tab3_layout",
+		  "featuremode":"id",
+		  "id":"com.songheng.eastnews:id/aqf",
+		},
+		"sg2":{
+		  "action":"click_boundary_path",
+		  "boundary":"android.webkit.WebView",
+          "path":"0||2",
+		  "featuremode":"classname_desc",
+		  "classname":"android.view.View",
+		  "desc":"分享赚更多金币",
+		},
+	  },
         "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"close_button",
+               "id":"com.xiangzi.jukandian:id/dialog_close",
            },
            "ab2":{
             "featuremode":"id",
-            "id":"image_update_cancle",
+            "id":"com.xiangzi.jukandian:id/icon_home_left_timer_lq",
           },
-              "ab3":{
+            "ab3":{
             "featuremode":"id",
-            "id":"tosign",
+            "id":"com.xiangzi.jukandian:id/mine_starlert_close",
           },
-              "ab4":{
-            "featuremode":"id",
-            "id":"image_user_task_pop_close",
+		    "ab4":{
+            "featuremode":"classname_desc",
+            "classname":"android.widget.Image",
+			"desc":"cotreelq",
           },
-              "ab5":{
+		  "ab5":{
             "featuremode":"id",
-            "id":"iv_cancel",
+            "id":"com.xiangzi.jukandian:id/close_dialog_layout",
+          },
+		   "ab6":{
+            "featuremode":"id",
+            "id":"com.xiangzi.jukandian:id/cancel_quit",
+          },
+		  "ab7":{
+            "featuremode":"id",
+            "id":"com.xiangzi.jukandian:id/dismisstv",
           },
          },  
 		"activitys":{
             "at1":"com.xiangzi.jukandian.activity.MainActivity",
             "at2":"com.xiangzi.jukandian.activity.WebViewActivity",
+			"at3":"com.xiangzi.ju kandian.activity.V2NativeVideoActivity",
    
           } , 
         "bindwechat":{
@@ -43,16 +72,16 @@
         },
         "autoread":{
             "ar1":{
-                "action":"click_text",
-                "click_text":"看点",
+                "action":"",
+                "click_text":"",
                 "featuremode":"id",
-                "id":"image_tool_bar_menu1",
+                "id":"com.xiangzi.jukandian:id/img_iszan",
             },
             "ar2":{
-                "upcount":"40",
+                "upcount":"25",
                 "deploymode":"classname_desc",
                 "deployclassname":"android.view.View",
-                "deploydesc":"查看全文，奖励更多",
+                "deploydesc":"",
 
             },
         }, 
