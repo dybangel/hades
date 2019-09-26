@@ -579,10 +579,13 @@ ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐�
 // });
 /************************************* UI结束**********************************************************************/ 
 var result=shell("svc wifi enable ", true);
-GdeviceMac="";
+//GdeviceMac="";
+GdeviceImei="";
 //机器码
 Gdevicecode="";
-getdevicemac();
+//getdevicemac();
+getdeviceimei();
+
 
 
 opennobarrier();
@@ -4361,7 +4364,8 @@ function callback_updatecoinincome(coin,income){
         var db  =  context.openOrCreateDatabase("haiqu.db",  Context.MODE_PRIVATE,  null); 
         db.execSQL("create table if not exists " +"app_income_mass" + "(deviceid,appnum,appname,coin,income,createtime,analystate)");
         var cv = new ContentValues();
-        cv.put("deviceid",GdeviceMac);
+        //cv.put("deviceid",GdeviceMac);
+        cv.put("deviceid",GdeviceImei);
         cv.put("appnum",'');
         cv.put("appname",appname);
         cv.put("coin",coin);
@@ -4419,7 +4423,8 @@ function insert_log(psessionid,pthread,pappname,paction,presult){
                         var faction = paction;
                         var fappname = pappname;
                         var fresult = presult;
-                        var fsession=GdeviceMac; //这里使用全局变量
+                        //var fsession=GdeviceMac; //这里使用全局变量
+                        var fsession=GdeviceImei;
                         var fthread=pthread;
                     // var factime = timestamp;
                     //var faction = "017";
@@ -4488,24 +4493,72 @@ function load_time() {
 function update_log(){
 
 }
-function getdevicemac(){
+// function getdevicemac(){
+//     setTimeout(function(){
+// //如果mac地址为空
+//    var mac=device.getMacAddress();
+//    if(mac==null){
+//     GdeviceMac="";
+//     //alert("mac is kong");
+//     toast("助手需要无线网络，请确认wifi开关处于开启状态");
+//    }else{
+//     GdeviceMac=mac;
+//    // alert("this is fun "+device.getMacAddress());
+//    }
+//    var midhead="dqprop01h2";
+//    webView = ui.findById("webview");
+   
+//    //var aa=device.getMacAddress();;
+//    var mid=GdeviceMac.replace(/:/g,"");
+//    mid=mid.toLocaleLowerCase()
+//   // alert(GdeviceMac);
+//    tmpstr="";
+//    for(var i in mid){
+//        tmpstr+=mid[i]+mid[i].charCodeAt(0);
+//     //    if(tmpstr.length==18){
+//     //        break;
+//     //    }
+//    }
+//    tmpstr=tmpstr.substring(0,18);
+        
+//    //生成机器码
+//   // Gdevicecode=midhead+mid+tmpstr;
+//    //return Gdevicecode;
+
+//    html = files.path("./qrcode.html");
+//    webView.loadUrl("file://" + html);
+//    setTimeout(() => {
+//        webView.post(new Runnable({
+//            run: function() {
+//                // 调用javascript的callJS()方法
+//                webView.loadUrl("javascript:callJS('"+midhead+mid+tmpstr+"')");//传入的值为123
+//            }
+//        }));
+//    }, 2000);
+  
+// },2000)
+// }
+function getdeviceimei(){
     setTimeout(function(){
 //如果mac地址为空
-   var mac=device.getMacAddress();
-   if(mac==null){
-    GdeviceMac="";
-    //alert("mac is kong");
+    var ele=shell("service call iphonesubinfo 1",true);
+    var str=ele.result;
+    var patt1=/\d\./g;
+    var imei=str.match(patt1).join("").replace(/\./g,"");
+    if(imei==null){
+        GdeviceImei="";
+ //alert("mac is kong");
     toast("助手需要无线网络，请确认wifi开关处于开启状态");
-   }else{
-    GdeviceMac=mac;
-   // alert("this is fun "+device.getMacAddress());
-   }
+}else{
+    GdeviceImei=imei;
+// alert("this is fun "+device.getMacAddress());
+}
    var midhead="dqprop01h2";
    webView = ui.findById("webview");
    
    //var aa=device.getMacAddress();;
-   var mid=GdeviceMac.replace(/:/g,"");
-   mid=mid.toLocaleLowerCase()
+   var mid=GdeviceImei;
+   //mid=mid.toLocaleLowerCase()
   // alert(GdeviceMac);
    tmpstr="";
    for(var i in mid){
@@ -4514,7 +4567,7 @@ function getdevicemac(){
     //        break;
     //    }
    }
-   tmpstr=tmpstr.substring(0,18);
+   tmpstr=tmpstr.substring(0,15);
         
    //生成机器码
   // Gdevicecode=midhead+mid+tmpstr;
@@ -4640,22 +4693,53 @@ ui.inflate(xmlstr ,ui.logframe,true);
   
 }
 //生成机器码
+// function builddevicecode(){
+//     var mac=device.getMacAddress();
+//     if(mac==null){
+//      GdeviceMac="";
+//      //alert("mac is kong");
+//      toast("助手需要无线网络，请确认wifi开关处于开启状态");
+//     }else{
+//      GdeviceMac=mac;
+//     // alert("this is fun "+device.getMacAddress());
+//     }
+//     var midhead="dqprop01h2";
+//    // webView = ui.findById("webview");
+    
+//     //var aa=device.getMacAddress();;
+//     var mid=GdeviceMac.replace(/:/g,"");
+//     mid=mid.toLocaleLowerCase()
+//    // alert(GdeviceMac);
+//     tmpstr="";
+//     for(var i in mid){
+//         tmpstr+=mid[i]+mid[i].charCodeAt(0);
+//      //    if(tmpstr.length==18){
+//      //        break;
+//      //    }
+//     }
+//     tmpstr=tmpstr.substring(0,18);
+//    return midhead+mid+tmpstr;
+// }
+//生成机器码
 function builddevicecode(){
-    var mac=device.getMacAddress();
-    if(mac==null){
-     GdeviceMac="";
+    var ele=shell("service call iphonesubinfo 1",true);
+    var str=ele.result;
+    var patt1=/\d\./g;
+    var imei=str.match(patt1).join("").replace(/\./g,"");
+    if(imei==null){
+     GdeviceImei="";
      //alert("mac is kong");
      toast("助手需要无线网络，请确认wifi开关处于开启状态");
     }else{
-     GdeviceMac=mac;
+     GdeviceImei=imei;
     // alert("this is fun "+device.getMacAddress());
     }
     var midhead="dqprop01h2";
    // webView = ui.findById("webview");
     
     //var aa=device.getMacAddress();;
-    var mid=GdeviceMac.replace(/:/g,"");
-    mid=mid.toLocaleLowerCase()
+    var mid=GdeviceImei;
+    //mid=mid.toLocaleLowerCase()
    // alert(GdeviceMac);
     tmpstr="";
     for(var i in mid){
@@ -4664,6 +4748,6 @@ function builddevicecode(){
      //        break;
      //    }
     }
-    tmpstr=tmpstr.substring(0,18);
+    tmpstr=tmpstr.substring(0,15);
    return midhead+mid+tmpstr;
 }
