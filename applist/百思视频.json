@@ -1,0 +1,81 @@
+{
+	"enable": "false",
+	"appname": "百思视频",
+	"appver": "2.2.3",
+	"interval": "30",
+	"speed": "normal",
+	"packagename": "com.budejie.v",
+	"activityname": "com.budejie.v.main.activity.MainActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "推荐",
+		"depth": "11",
+		"indexinparent": "0",
+	},
+	"signin": {
+	    "sg1": {
+			"action": "click_xypercent",
+			"click_xypercent":"0.886||0.058",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "余额",
+		},
+		"sg2": {
+			"action": "click_xypercent",
+			"click_xypercent":"0.858||0.969",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "余额",
+		},
+		"sg3": {
+			"action": "click_id",
+			"click_id": "com.budejie.v:id/task_layout",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "签到领金币",
+		},
+		"sg4": {
+			"action": "click_id",
+			"click_id": "com.budejie.v:id/checkin",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "已签到",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.budejie.v:id/closeIV",
+		},
+		"ab2": {
+			"featuremode": "id",
+			"id": "com.budejie.v:id/close",
+		},
+		"ab3": {
+			"featuremode": "id",
+			"id": "com.budejie.v:id/start_layout",
+		},
+	},
+	"activitys": {
+		"at1": "com.budejie.v.main.activity.MainActivity",
+		"at2": "com.budejie.v.video.activity.VideoDetailActivity",
+	},
+	"bindwechat": {
+	},
+	"autoread": {
+		"ar1": {
+			"action": "",
+			"click_id": "",
+			"featuremode": "id",
+			"id": "com.budejie.v:id/share_btn",
+		},
+		"ar2": {
+		    "upcount":"25",
+			"deploymode": "",
+			"deployclassname": "",
+			"deploydesc": "",
+		},
+	},
+	"durl": "http://xzf.197946.com/com.sanmiao.sound_2.3.4_34.apk"
+}
