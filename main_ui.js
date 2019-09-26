@@ -4560,6 +4560,7 @@ function getdeviceimei(){
    var mid=GdeviceImei;
    //mid=mid.toLocaleLowerCase()
   // alert(GdeviceMac);
+  var imeinum=mid.length;
    tmpstr="";
    for(var i in mid){
        tmpstr+=mid[i]+mid[i].charCodeAt(0);
@@ -4567,7 +4568,7 @@ function getdeviceimei(){
     //        break;
     //    }
    }
-   tmpstr=tmpstr.substring(0,15);
+   tmpstr=tmpstr.substring(0,30-imeinum);
         
    //生成机器码
   // Gdevicecode=midhead+mid+tmpstr;
@@ -4741,6 +4742,7 @@ function builddevicecode(){
     var mid=GdeviceImei;
     //mid=mid.toLocaleLowerCase()
    // alert(GdeviceMac);
+   var imeinum=mid.length;
     tmpstr="";
     for(var i in mid){
         tmpstr+=mid[i]+mid[i].charCodeAt(0);
@@ -4748,6 +4750,6 @@ function builddevicecode(){
      //        break;
      //    }
     }
-    tmpstr=tmpstr.substring(0,15);
+    tmpstr=tmpstr.substring(0,30-imeinum);
    return midhead+mid+tmpstr;
 }
