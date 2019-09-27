@@ -1,4 +1,3 @@
-
 function shuffle_pick(arr) {
 	const arr2 = []
 	for (let len = arr.length; len > 0;) {
@@ -39,6 +38,29 @@ var app = new Vue({
 		cardCount: 0
 	},
 	created() {
+
+		mui.init({
+			keyEventBind: {
+				backbutton: true //开启back按键监听
+			}
+		});
+		var clickNum = 0;
+		mui.back = function(event) {
+			clickNum++;
+			if (clickNum > 1) {
+				plus.runtime.quit();
+			} else {
+				mui.toast("再按一次退出应用");
+			}
+			setTimeout(function() {
+				clickNum = 0
+			}, 2000);
+			return false;
+		}
+		mui.plusReady(function() {
+			plus.webview.currentWebview().opener().close();
+		});
+
 		var that = this
 		var param = {
 			appId: localStorage.appId,
@@ -46,15 +68,15 @@ var app = new Vue({
 		}
 		jup_request("POST", "app/today_card_count", true, param).then(function(res) {
 			that.countCard = res.result.cardCount;
-			let randomFallArr =  [0.1,0.2,0.3];
-			let randomFall = randomFallArr[Math.floor((Math.random()*randomFallArr.length))];
+			let randomFallArr = [0.1, 0.2, 0.3];
+			let randomFall = randomFallArr[Math.floor((Math.random() * randomFallArr.length))];
 			that.limit = res.result.limit - randomFall;
 			// console.log(''that.limit)
-			if(res.result.cardCount == 0){
+			if (res.result.cardCount == 0) {
 				$("#tip").show();
-			}else{
+			} else {
 				$("#tip").hide();
-			}	
+			}
 
 			const randomRedPacket = randomRedPacketGenerator(0.6)
 			const arr = randomRedPacket(that.limit, that.countCard)
@@ -111,31 +133,17 @@ var app = new Vue({
 				arrJson[i].value = arr[i]
 			}
 			that.listImg = arrJson
-			
+
 			mui.plusReady(function() {
-				var model = 0
-				plus.device.getInfo({
-					success: function(e) {
-						console.log(plus.device.model)
-						// if(plus.device.model == 'Le X820'){
-						// 	model = 1
-						// }
-						localStorage.model = plus.device.model
-					},
-					fail: function(e) {
-						console.log('getDeviceInfo failed: ' + JSON.stringify(e));
-					}
-				});
-				var receiver;
 				main = plus.android.runtimeMainActivity(); //获取activity
-				receiver = plus.android.implements('io.dcloud.android.content.BroadcastReceiver', {
+				var receiver = plus.android.implements('io.dcloud.android.content.BroadcastReceiver', {
 					onReceive: function(context, intent) { //实现onReceiver回调函数
 						plus.android.importClass(intent); //通过intent实例引入intent类，方便以后的‘.’操作
 						// console.log('我执行了啊啊啊啊啊啊'+intent.getAction())
-						if(intent.getAction() == "com.example.broadcasttest.MY_BROADCAST"&&localStorage.model == 'Le X820'){
+						if (intent.getAction() == "com.example.broadcasttest.MY_BROADCAST" && localStorage.model == 'Le X820') {
 							// alert(intent.getAction()+localStorage.model)
-							console.log('aaaaa'+cardCountAuto)
-							if(cardCountAuto > 0){
+							console.log('aaaaa' + cardCountAuto)
+							if (cardCountAuto > 0) {
 								setTimeout(function() {
 									console.log("ssssssssssssssss")
 									$('html,body').animate({
@@ -155,7 +163,7 @@ var app = new Vue({
 										}, 1000)
 									}, 1000)
 								}, 1000)
-							}else{
+							} else {
 								return false;
 							}
 						}
@@ -169,7 +177,7 @@ var app = new Vue({
 				filter.addAction("com.example.broadcasttest.MY_BROADCAST");
 				main.registerReceiver(receiver, filter);
 			})
-})
+		})
 
 		jup_request("POST", "user/getAccount", true, param).then(function(res) {
 			that.balance = res.result.balance;
