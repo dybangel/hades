@@ -11,7 +11,6 @@ var app = new Vue({
 	created() {
 		localStorage.appId = '134';
 		var that = this;
-
 		mui.init();
 		mui.plusReady(function() {
 			var nt = plus.networkinfo.getCurrentType();
@@ -23,24 +22,27 @@ var app = new Vue({
 					wgtVer = inf.version;
 					that.checkUpdate();
 				});
-				plus.device.getInfo({
-					success: function(e) {
-						var imeiHead = 'dqprop01h2' + e.imei.match('^[^,]*(?=,)');
-						var str0 = e.imei.match('^[^,]*(?=,)');
-						str0 = JSON.stringify(str0[0]);
-						var str = str0.substring(1, 3);
-						var str1 = str.charAt(0) + str.charAt(0).charCodeAt();
-						var str2 = str.charAt(1) + str.charAt(1).charCodeAt();
-						var str3 = str1 + str2;
-						var str4 = str3.substring(0, 5);
-						localStorage.imei = imeiHead + str4;
-						that.gotPermission = 1;
-				
-					},
-					fail: function(e) {
-						console.log('请先允许权限');
-					}
-				});
+				if(localStorage.imei == '' || localStorage.imei == null || localStorage.imei == undefined){
+					plus.device.getInfo({
+						success: function(e) {
+							var imeiHead = 'dqprop01h2' + e.imei.match('^[^,]*(?=,)');
+							var str0 = e.imei.match('^[^,]*(?=,)');
+							str0 = JSON.stringify(str0[0]);
+							var str = str0.substring(1, 3);
+							var str1 = str.charAt(0) + str.charAt(0).charCodeAt();
+							var str2 = str.charAt(1) + str.charAt(1).charCodeAt();
+							var str3 = str1 + str2;
+							var str4 = str3.substring(0, 5);
+							localStorage.imei = imeiHead + str4;
+							that.gotPermission = 1;
+						},
+						fail: function(e) {
+							console.log('请先允许权限');
+						}
+					});
+				}else{
+					that.gotPermission = 1;
+				}
 			}
 		});
 	},
@@ -70,7 +72,6 @@ var app = new Vue({
 					} else {
 						if (model != 'Le X820') {
 							plus.nativeUI.toast("该APP与此手机不兼容");
-							return false;
 						} else if (that.rightVersion == 0) {
 							that.checkUpdate();
 						} else {
@@ -114,7 +115,6 @@ var app = new Vue({
 					} else {
 						if (model != 'Le X820') {
 							plus.nativeUI.toast("该APP与此手机不兼容");
-							return false;
 						} else if (that.rightVersion == 0) {
 							that.checkUpdate();
 						} else if (that.gotPermission == 0) {
