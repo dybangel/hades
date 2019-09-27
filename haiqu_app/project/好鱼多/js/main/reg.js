@@ -14,96 +14,115 @@ var app = new Vue({
 
 		mui.init();
 		mui.plusReady(function() {
-			model = plus.device.model;
-			plus.runtime.getProperty(plus.runtime.appid, function(inf) {
-				wgtVer = inf.version;
-				that.checkUpdate();
-			});
-			plus.device.getInfo({
-				success: function(e) {
-					var imeiHead = 'dqprop01h2' + e.imei.match('^[^,]*(?=,)');
-					var str0 = e.imei.match('^[^,]*(?=,)');
-					str0 = JSON.stringify(str0[0]);
-					var str = str0.substring(1, 3);
-					var str1 = str.charAt(0) + str.charAt(0).charCodeAt();
-					var str2 = str.charAt(1) + str.charAt(1).charCodeAt();
-					var str3 = str1 + str2;
-					var str4 = str3.substring(0, 5);
-					localStorage.imei = imeiHead + str4;
-					that.gotPermission = 1;
-
-				},
-				fail: function(e) {
-					console.log('请先允许权限');
-				}
-			});
+			var nt = plus.networkinfo.getCurrentType();
+			if (nt == plus.networkinfo.CONNECTION_NONE) {
+				plus.nativeUI.toast("网络连接失败！请检查您的网络");
+			} else {
+				model = plus.device.model;
+				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+					wgtVer = inf.version;
+					that.checkUpdate();
+				});
+				plus.device.getInfo({
+					success: function(e) {
+						var imeiHead = 'dqprop01h2' + e.imei.match('^[^,]*(?=,)');
+						var str0 = e.imei.match('^[^,]*(?=,)');
+						str0 = JSON.stringify(str0[0]);
+						var str = str0.substring(1, 3);
+						var str1 = str.charAt(0) + str.charAt(0).charCodeAt();
+						var str2 = str.charAt(1) + str.charAt(1).charCodeAt();
+						var str3 = str1 + str2;
+						var str4 = str3.substring(0, 5);
+						localStorage.imei = imeiHead + str4;
+						that.gotPermission = 1;
+				
+					},
+					fail: function(e) {
+						console.log('请先允许权限');
+					}
+				});
+			}
 		});
 	},
 	methods: {
 		submit() {
-			if (model == 'Le X820' && this.rightVersion == 1 && this.gotPermission == 1) {
-				var param = {
-					appId: localStorage.appId,
-					authCode: this.code,
-					phone: this.phone
-				};
-				jup_request("POST", "login/login", true, param).then(function(res) {
-					if (res.code == 0) {
-						plus.nativeUI.toast("登录或注册成功");
-						localStorage.userId = res.result.userId;
-						window.location.replace('index.html')
-					} else {
-						plus.nativeUI.toast("请输入正确的手机号或验证码");
-					}
-				})
-			} else {
-				if (model != 'Le X820') {
-					plus.nativeUI.toast("该APP与此手机不兼容");
-					return false;
-				} else if (this.rightVersion == 0) {
-					this.checkUpdate();
+			var that = this;
+			mui.plusReady(function() {
+				var nt = plus.networkinfo.getCurrentType();
+				if (nt == plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast("网络连接失败！请检查您的网络");
 				} else {
-					this.plus_get_permission();
+					if (model == 'Le X820' && that.rightVersion == 1 && that.gotPermission == 1) {
+						var param = {
+							appId: localStorage.appId,
+							authCode: that.code,
+							phone: that.phone
+						};
+						jup_request("POST", "login/login", true, param).then(function(res) {
+							if (res.code == 0) {
+								plus.nativeUI.toast("登录或注册成功");
+								localStorage.userId = res.result.userId;
+								window.location.replace('index.html')
+							} else {
+								plus.nativeUI.toast("请输入正确的手机号或验证码");
+							}
+						})
+					} else {
+						if (model != 'Le X820') {
+							plus.nativeUI.toast("该APP与此手机不兼容");
+							return false;
+						} else if (that.rightVersion == 0) {
+							that.checkUpdate();
+						} else {
+							that.plus_get_permission();
+						}
+					}
 				}
-			}
+			});
 		},
 		get_code() {
 			var that = this;
-			if (model == 'Le X820' && this.rightVersion == 1 && this.gotPermission == 1) {
-				var param = {
-					appId: localStorage.appId,
-					phone: this.phone
-				}
-				jup_request("POST", "login/send_sms", true, param).then(function(res) {
-					plus.nativeUI.toast(res.message);
-				})
-				var second = 120;
-				$("#btnCode").attr('disabled', true);
-				$("#btnCode").text(second + "秒后获取验证码");
-
-				var timer = null;
-				timer = setInterval(function() {
-					second -= 1;
-					if (second > 0) {
+			mui.plusReady(function() {
+				var nt = plus.networkinfo.getCurrentType();
+				if (nt == plus.networkinfo.CONNECTION_NONE) {
+					plus.nativeUI.toast("网络连接失败！请检查您的网络");
+				} else {
+					if (model == 'Le X820' && that.rightVersion == 1 && that.gotPermission == 1) {
+						var param = {
+							appId: localStorage.appId,
+							phone: that.phone
+						}
+						jup_request("POST", "login/send_sms", true, param).then(function(res) {
+							plus.nativeUI.toast(res.message);
+						})
+						var second = 120;
 						$("#btnCode").attr('disabled', true);
 						$("#btnCode").text(second + "秒后获取验证码");
-					} else {
-						clearInterval(timer);
-						$("#btnCode").attr('disabled', false);
-						$("#btnCode").text("发送短信验证码");
-					}
-				}, 1000);
-			} else {
-				if (model != 'Le X820') {
-					plus.nativeUI.toast("该APP与此手机不兼容");
-					return false;
-				} else if (this.rightVersion == 0) {
-					this.checkUpdate();
-				} else {
-					this.plus_get_permission();
-				}
 
-			}
+						var timer = null;
+						timer = setInterval(function() {
+							second -= 1;
+							if (second > 0) {
+								$("#btnCode").attr('disabled', true);
+								$("#btnCode").text(second + "秒后获取验证码");
+							} else {
+								clearInterval(timer);
+								$("#btnCode").attr('disabled', false);
+								$("#btnCode").text("发送短信验证码");
+							}
+						}, 1000);
+					} else {
+						if (model != 'Le X820') {
+							plus.nativeUI.toast("该APP与此手机不兼容");
+							return false;
+						} else if (that.rightVersion == 0) {
+							that.checkUpdate();
+						} else if (that.gotPermission == 0) {
+							that.plus_get_permission();
+						}
+					}
+				}
+			});
 		},
 		// go_back() {
 		// 	window.history.go(-1)
@@ -152,10 +171,11 @@ var app = new Vue({
 				switch (xhr.readyState) {
 					case 4:
 						plus.nativeUI.closeWaiting();
+						console.log('2222' + xhr.responseText)
 						if (xhr.status == 200) {
+
 							var newVer = eval('(' + xhr.responseText + ')').server_version;
 							if (wgtVer && newVer && (wgtVer != newVer)) {
-								console.log(wgtVer+newVer);
 								that.downWgt();
 							} else {
 								that.rightVersion = 1;
@@ -164,15 +184,15 @@ var app = new Vue({
 									console.log('没有登录过')
 								} else {
 									mui.plusReady(function() {
-									mui.openWindow({
-										url: 'index.html',
-										id: 'index'
-									})
+										mui.openWindow({
+											url: 'index.html',
+											id: 'index'
+										})
 									});
 								}
 							}
 						} else {
-							plus.nativeUI.toast("检测更新失败！请检查您的网络");
+							plus.nativeUI.toast("检测更新失败！");
 						}
 						break;
 					default:
@@ -215,6 +235,7 @@ var app = new Vue({
 			});
 		},
 		plus_get_permission() {
+			var that = this;
 			mui.plusReady(function() {
 				plus.device.getInfo({
 					success: function(e) {
