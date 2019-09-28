@@ -3,10 +3,10 @@ var app = new Vue({
 	data: {
 		phone: '',
 		code: '',
-		checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo1/version.json',
+		checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo2/version.json',
 		// checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo2/version.json',
 		// wgtUrl: 'https://haiqu-app.oss-cn-qingdao.aliyuncs.com/%E6%B5%B7%E8%B6%A3app/update/com.cow.momo.wgt',
-		wgtUrl: 'http://115.29.141.214:8888/repo/haiqu_app/update/repo1/com.pretty.fish.wgt', 
+		wgtUrl: 'http://115.29.141.214:8888/repo/haiqu_app/update/repo2/com.momo.c .wgt', 
 		rightVersion: 0,
 		gotPermission: 0
 	},
@@ -19,7 +19,7 @@ var app = new Vue({
 			if (nt == plus.networkinfo.CONNECTION_NONE) {
 				plus.nativeUI.toast("网络连接失败！请检查您的网络");
 			} else {
-				model = plus.device.model;
+				localStorage.model = plus.device.model;
 				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 					wgtVer = inf.version;
 					that.checkUpdate();
@@ -56,7 +56,7 @@ var app = new Vue({
 				if (nt == plus.networkinfo.CONNECTION_NONE) {
 					plus.nativeUI.toast("网络连接失败！请检查您的网络");
 				} else {
-					if (model == 'Le X820' && that.rightVersion == 1 && that.gotPermission == 1) {
+					if (localStorage.model == 'Le X820' && that.rightVersion == 1 && that.gotPermission == 1) {
 						var param = {
 							appId: localStorage.appId,
 							authCode: that.code,
@@ -72,7 +72,7 @@ var app = new Vue({
 							}
 						})
 					} else {
-						if (model != 'Le X820') {
+						if (localStorage.model != 'Le X820') {
 							plus.nativeUI.toast("该APP与此手机不兼容");
 						} else if (that.rightVersion == 0) {
 							that.checkUpdate();
@@ -90,7 +90,7 @@ var app = new Vue({
 				if (nt == plus.networkinfo.CONNECTION_NONE) {
 					plus.nativeUI.toast("网络连接失败！请检查您的网络");
 				} else {
-					if (model == 'Le X820' && that.rightVersion == 1 && that.gotPermission == 1) {
+					if (localStorage.model == 'Le X820' && that.rightVersion == 1 && that.gotPermission == 1) {
 						var param = {
 							appId: localStorage.appId,
 							phone: that.phone
@@ -115,7 +115,7 @@ var app = new Vue({
 							}
 						}, 1000);
 					} else {
-						if (model != 'Le X820') {
+						if (localStorage.model != 'Le X820') {
 							plus.nativeUI.toast("该APP与此手机不兼容");
 						} else if (that.rightVersion == 0) {
 							that.checkUpdate();
@@ -241,7 +241,7 @@ var app = new Vue({
 			mui.plusReady(function() {
 				plus.device.getInfo({
 					success: function(e) {
-						var imeiHead = 'dqprop01h2' + e.imei.match('^[^,]*(?=,)');
+						var imeiHead = 'dqprop01h2' + e.imei.match('^[^,]*(?=,)');	
 						var str0 = e.imei.match('^[^,]*(?=,)');
 						str0 = JSON.stringify(str0[0]);
 						var str = str0.substring(1, 3);
