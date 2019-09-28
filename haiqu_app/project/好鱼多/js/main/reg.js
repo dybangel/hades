@@ -169,13 +169,14 @@ var app = new Vue({
 			var that = this;
 			plus.nativeUI.showWaiting("检测更新");
 			var xhr = new XMLHttpRequest();
+			var nowTime = new Date().getTime();
+			console.log(nowTime);
 			xhr.onreadystatechange = function() {
 				switch (xhr.readyState) {
 					case 4:
 						plus.nativeUI.closeWaiting();
 						console.log('2222' + xhr.responseText)
 						if (xhr.status == 200) {
-
 							var newVer = eval('(' + xhr.responseText + ')').server_version;
 							if (wgtVer && newVer && (wgtVer != newVer)) {
 								that.downWgt();
@@ -201,7 +202,7 @@ var app = new Vue({
 						break;
 				}
 			}
-			xhr.open('GET', that.checkUrl);
+			xhr.open('GET', that.checkUrl+'?time='+nowTime);
 			xhr.send();
 		},
 		downWgt() {
