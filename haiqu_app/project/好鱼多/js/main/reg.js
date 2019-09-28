@@ -3,10 +3,10 @@ var app = new Vue({
 	data: {
 		phone: '',
 		code: '',
-		// checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo1/version.json',
-		checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo2/version.json',
-		wgtUrl: 'https://haiqu-app.oss-cn-qingdao.aliyuncs.com/%E6%B5%B7%E8%B6%A3app/update/com.cow.momo.wgt',
-		// wgtUrl: 'http://115.29.141.214:8888/repo/haiqu_app/update/repo1/com.pretty.fish.wgt',
+		checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo1/version.json',
+		// checkUrl: 'http://115.29.141.214:8888/repo/haiqu_app/version/repo2/version.json',
+		// wgtUrl: 'https://haiqu-app.oss-cn-qingdao.aliyuncs.com/%E6%B5%B7%E8%B6%A3app/update/com.cow.momo.wgt',
+		wgtUrl: 'http://115.29.141.214:8888/repo/haiqu_app/update/repo1/com.pretty.fish.wgt', 
 		rightVersion: 0,
 		gotPermission: 0
 	},
@@ -225,11 +225,11 @@ var app = new Vue({
 			plus.nativeUI.showWaiting("安装更新");
 			plus.runtime.install(path, {}, function() {
 				plus.nativeUI.closeWaiting();
-				console.log("安装更新成功！");
-				plus.nativeUI.alert("更新完成！", function() {
-					//  更新完成后重启应用
+				plus.nativeUI.toast("更新完成！");
+				// plus.nativeUI.alert("更新完成！", function() {
+				// 	//  更新完成后重启应用
 					plus.runtime.restart();
-				});
+				// });
 			}, function(e) {
 				plus.nativeUI.closeWaiting();
 				console.log("安装更新失败！[" + e.code + "]：" + e.message);
