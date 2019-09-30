@@ -5,7 +5,7 @@ swiperealup_custom_lnnl:function(ppinterval){
     x=Math.round(Math.random()*(m-n))+n; 
    // Swipe(x,device.height * 0.625,x,device.height *0.25,ppinterval);
    //滑动函数改为 adb方式，效果一样的，使用adb滑动是因为Swipe长时间运行在个别手机上出现过空指针报错 
-   shell("input swipe "+x+" "+device.height * 0.625+" "+x+" "+device.height *0.25+" "+ppinterval);
+   shell("input swipe "+x+" "+device.height * 0.625+" "+x+" "+device.height *0.25+" "+ppinterval,true);
 },
 swiperealup_custom_xy:function (y){
         m=800;
