@@ -234,6 +234,14 @@ ui.layout(
               
                 </frame>
                 </scroll>
+                <scroll layout_gravity="center">
+                    <frame>
+                        <vertical>
+                        <button text="自动初始化配置" id="autoconfig" style="Widget.AppCompat.Button.Colored" textColor="#ffffff"/>
+                        </vertical>
+
+                    </frame>
+                </scroll>
                 <frame >
                 <vertical margin="0 0 0 0" id="logframe">
                                                    
@@ -340,10 +348,10 @@ activity.setSupportActionBar(ui.toolbar);
 //判断是否开启了本地收益统计
 var resultanaly=files.exists("/sdcard/脚本/localanaly")
 if(resultanaly){
-    ui.viewpager.setTitles(["全局设置","收益统计"]);
+    ui.viewpager.setTitles(["全局设置","收益统计","自动配置"]);
 
 }else{
-    ui.viewpager.setTitles(["全局设置"]);
+    ui.viewpager.setTitles(["全局设置","自动配置"]);
 
 }
 //让滑动页面和标签栏联动
@@ -548,6 +556,10 @@ ui.licence_activate.click(()=>{
 //     menu.add("设置");
 //     menu.add("关于");
 // });
+ui.autoconfig.on("click", function(){
+    // engines.execScript("auto configuration", "thisautoconfig.autoconfiguration();\n" + thisautoconfig.autoconfiguration.toString());
+    engines.execScriptFile("./autoconfig.js");
+});
 ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐藏
     onPageSelected: function(position, positionOffset, positionOffsetPixels) {
       //  toast('position: ' + position + "\npositionOffsetPixels: " + positionOffsetPixels );
@@ -1025,6 +1037,19 @@ if(Grunstate=="trainwechat"){
 }else{
    while(true){
        for(var i=0;i<applist.length;i++){
+
+         //每轮运行前杀死之前的线程，防止缓存
+         clear_normal_thread();
+         try{    thread_control.interrupt();}catch(e){};
+         try{    thread_abnormal.interrupt();}catch(e){};
+         try{    thread_abnormal_overtime.interrupt();}catch(e){};
+         try{    thread_closewindow.interrupt();}catch(e){};
+         //while_pagecheck();
+
+  
+         sleep(2000);
+         //根据设备类型优化内存
+         thiscommon.clean(Gdevicetype,Gpackagename_lists);
         //初始化是否统计过收益状态 
         Galreadyaci=false;
            //给各个app用的计数器
@@ -1179,18 +1204,18 @@ if(Grunstate=="trainwechat"){
           
            toast('开始'+applist[i]['appname']);
            
-           //每轮运行前杀死之前的线程，防止缓存
-           clear_normal_thread();
-           try{    thread_control.interrupt();}catch(e){};
-           try{    thread_abnormal.interrupt();}catch(e){};
-           try{    thread_abnormal_overtime.interrupt();}catch(e){};
-           try{    thread_closewindow.interrupt();}catch(e){};
-           //while_pagecheck();
+        //    //每轮运行前杀死之前的线程，防止缓存
+        //    clear_normal_thread();
+        //    try{    thread_control.interrupt();}catch(e){};
+        //    try{    thread_abnormal.interrupt();}catch(e){};
+        //    try{    thread_abnormal_overtime.interrupt();}catch(e){};
+        //    try{    thread_closewindow.interrupt();}catch(e){};
+        //    //while_pagecheck();
 
     
-           sleep(2000);
-           //根据设备类型优化内存
-           thiscommon.clean(Gdevicetype,Gpackagename_lists);
+        //    sleep(2000);
+        //    //根据设备类型优化内存
+        //    thiscommon.clean(Gdevicetype,Gpackagename_lists);
      
            //while_pagecheck();
        //开启异常处理弹窗线程
