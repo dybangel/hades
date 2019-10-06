@@ -2,7 +2,7 @@
         "enable":"false",
         "appname":"聚看点", 
 		"mulityback":"false",
-		"appver":"6.5.6",
+		"appver":"6.5.8",
         "interval":"50",
 		"speed":"normal+",
         "packagename":"com.xiangzi.jukandian",
@@ -59,6 +59,14 @@
 		  "ab7":{
             "featuremode":"id",
             "id":"com.xiangzi.jukandian:id/dismisstv",
+          },
+		  "ab8":{
+            "featuremode":"id",
+            "id":"com.xiangzi.jukandian:id/v2_sign_close_button",
+          },
+		   "ab9":{
+            "featuremode":"id",
+            "id":"com.xiangzi.jukandian:id/image_user_task_pop_close",
           },
          },  
 		"activitys":{
