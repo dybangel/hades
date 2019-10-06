@@ -1,4 +1,4 @@
-{
+ {
         "enable":"false",
         "appname":"想看",
         "mulityback":"59||185",
@@ -11,15 +11,63 @@
           "featuremode":"classname_text",
           "classname":"android.widget.TextView",
           "text":"视频",
-          "depth":"10",
-          "indexinparent":"1",
+          "depth":"12",
+          "indexinparent":"0",
           },
         "signin":{
+		   "sg1":{
+              "action":"click_id",
+              "click_id":"com.xiangkan.android:id/tv_box_hint",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"视频",
+                    },
+			"sg2":{
+              "action":"click_id",
+              "click_id":"com.xiangkan.android:id/tv_box_time_new",
+              "featuremode":"classname_text",
+              "classname":"android.widget.TextView",
+              "text":"签到",
+                    },
 			},
         "abnormal":{
            "ab1":{
                "featuremode":"id",
                "id":"com.xiangkan.android:id/close_iv",
+           },
+		   "ab2":{
+               "featuremode":"classname_text",
+               "classname":"android.widget.TextView",
+			   "text":"签到",
+           },
+		   "ab2":{
+               "featuremode":"classname_text",
+               "classname":"android.widget.TextView",
+			   "text":"领金币",
+           },
+		   "ab4":{
+               "featuremode":"id",
+               "id":"com.xiangkan.android:id/more_minute_btn",
+           },
+		    "ab5":{
+               "featuremode":"id",
+               "id":"com.xiangkan.android:id/ivClose",
+           },
+		    "ab6":{
+               "featuremode":"id",
+               "id":"com.xiangkan.android:id/btn_close",
+           },
+		    "ab7":{
+               "featuremode":"id",
+               "id":"com.xiangkan.android:id/tvSign",
+           },
+		    "ab8":{
+               "featuremode":"id",
+               "id":"com.xiangkan.android:id/closelv",
+           },
+		   "ab9":{
+               "featuremode":"id",
+               "id":"com.xiangkan.android:id/rec_task_btn",
            },
          }, 
         "activitys":{
@@ -37,14 +85,11 @@
             "ids":"com.xiangkan.android:id/img_back||com.xiangkan.android:id/action_bar_back",
         },
         "ar2":{
+		    "upcount":"20",
             "deploymode":"",
             "deployclassname":"android.view.View",
             "deploydesc":"查看全文，奖励更多",
-            "backtrigger":"xy_color_bool",
-            "xy":"1224||2102",
-            "color":"ffffd65e",
-            "bool":"false",
-            "reswipe":"true",
+
         },
         }, 
         "durl":"https://res.youth.cn/youth_v1.2.8_code20_180824_c3001.apk"
