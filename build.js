@@ -90,6 +90,9 @@ if(result){
     //下载图片文件
     log("下载打包图标----------");    
     getScriptFromServer("res/logo.png",script_download_path+"海趣助手/")
+    getScriptFromServer("res/1.png",script_download_path+"海趣助手/")
+    getScriptFromServer("res/2.png",script_download_path+"海趣助手/")
+    getScriptFromServer("res/3.png",script_download_path+"海趣助手/")
     //下载project.json文件
     log("下载项目配置----------");    
     getScriptFromServer("project.json",script_download_path+"海趣助手/")

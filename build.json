@@ -5,6 +5,7 @@
         "s3": "main_ui.js",
         "s4":"mytrainwechat.js",
         "s5":"qrcode.html",
+        "s6":"autoconfig.js",
     },
     "voice": [
         {"name":"0.mp3"},
