@@ -1,5 +1,5 @@
 var jup_request = (type, path, isAsync, param) => {
-	var domain = 'http://47.240.57.96:9999/'
+	var domain = 'haiquapp.dianqu666.online'
 	// var domain = 'http://repo.natapp1.cc/'
 	var path = path
 	var url = domain + path
