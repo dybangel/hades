@@ -805,22 +805,26 @@ Gapplistpath_remote = "https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助�
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
 // Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps&devicetype="+Gdevicetype; //公有云
-Gappspath_remote = "http://115.29.141.214:9999/app/list";
+//Gappspath_remote = "http://115.29.141.214:9999/app/list";
+Gappspath_remote = "http://manager.dianqu666.online:9999/app/list";
 //Gappspath_remote="http://192.168.3.201/haiqu/gapps.json";                                         //私有云
 
 //apk下载地址
 Gappdownloadpath = "https://haiqu-app.oss-cn-qingdao.aliyuncs.com/apk/";
 
 //3 api 接口文件路径
-Gapi_json_url = "http://115.29.141.214:8888/repo/haiqu_helper/version/version.json"; //公有云
+//Gapi_json_url = "http://115.29.141.214:8888/repo/haiqu_helper/version/version.json"; //公有云
+Gapi_json_url = "http://manager.dianqu666.online:8888/repo/haiqu_helper/version/version.json"; //公有云
 //Gapi_json_url="http://192.168.3.201/haiqu/api.json";        //私有云
 
 //Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
-Gchecklicense_api_new = "http://115.29.141.214:9999/license/check"  //请勿修改
+//Gchecklicense_api_new = "http://115.29.141.214:9999/license/check"  //请勿修改
+Gchecklicense_api_new = "http://manager.dianqu666.online:9999/license/check"  //请勿修改
 
 /**************************研发常用开关量结束 ******************************************************/
 //海趣助手apk下载路径
-Gdownloadpath = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk"  //请勿修改
+//Gdownloadpath = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk"  //请勿修改
+Gdownloadpath = "http://manager.dianqu666.online:8888/repo/haiqu_helper/update/haiqu.apk"  //请勿修改
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath = "./applist/";  //请勿修改
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
@@ -3835,7 +3839,8 @@ function download_installapp() {
             var myPath = "/storage/emulated/0/脚本/haiqu.apk";
             //console.show();
             //log('im alive')
-            var myUrl = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk";
+            //var myUrl = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk";
+            var myUrl = "http://manager.dianqu666.online:8888/repo/haiqu_helper/update/haiqu.apk";
             var url = new URL(myUrl);
             var conn = url.openConnection(); //URLConnection
             var inStream = conn.getInputStream(); //InputStream
@@ -4275,7 +4280,8 @@ function checklocalapp() {
 
         //      var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
         alert(alertstr + "\n请允许打开浏览器，根据本提示下载对应app");
-        urlStr = 'http://115.29.141.214:8888/repo/haiqu_helper/html/index.html';
+        //urlStr = 'http://115.29.141.214:8888/repo/haiqu_helper/html/index.html';
+        urlStr = 'http://manager.dianqu666.online:8888/repo/haiqu_helper/html/index.html';
         var result = shell("am start -a android.intent.action.VIEW -d '" + urlStr + "'", true);
 
     } else {
