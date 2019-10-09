@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>海趣支付管理平台</title>
+		<link rel="stylesheet" href="./layui/css/layui.css">
+		<script src="./layui/layui.all.js"></script>
+		<script src="assets/javascripts/jquery/jquery.min.js"></script>
+		<style type="text/css">
+			.layui-table-cell {
+				height: auto;
+			}
+		</style>
+	</head>
+	<body class="layui-layout-body">
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<div class="layui-logo">海趣支付管理平台</div>
+				<ul class="layui-nav layui-layout-right">
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+							<span id="username"><span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd><a href="">基本资料</a></dd>
+							<dd><a href="">安全设置</a></dd>
+						</dl>
+					</li>
+					<!-- <li class="layui-nav-item"><a href="">退了</a></li> -->
+					<li class="layui-nav-item"><a class="quit">退出登录</a></li>
+				</ul>
+			</div>
+
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree" lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="index.html">总览</a>
+
+						</li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="layui-body" id="vue">
+				<div style="padding: 15px;">
+					<form class="layui-form" action="">
+						<div class="layui-form-item">
+							<label class="layui-form-label">备注</label>
+							<div class="layui-input-block">
+								<input type="text" id="etc" name="etc" lay-verify="title" autocomplete="off" placeholder="请输入备注" class="layui-input">
+								
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">支付截图</label>
+							<div class="layui-input-block">
+								<input type="file" class="imgInput" method="post" enctype="multipart/form-data" />
+								<img class="img" src="">
+							</div>
+						</div>
+						
+			
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							</div>
+						</div>
+					</form>
+					
+				</div>
+			</div>
+
+			<div class="layui-footer">
+				<!-- 底部固定区域 -->
+
+			</div>
+		</div>
+
+		<script>
+			if(localStorage.userId == null || localStorage.userId == '' || localStorage.userId == undefined){
+				 window.location.href = 'login.html'
+			}
+			 function beizhu(){
+			 
+			            var etc=document.getElementById('etc').value;
+						console.log('pppppppppppppppppppp',etc)
+			 
+			            return etc;
+			 
+			        }
+		
+			
+		    $("#username").html(localStorage.name);
+			window.icon;
+			window.url2 = '192.168.3.254:8888'
+			window.url1 = '192.168.2.69:8888'
+			function parseUrl() {
+				var url = location.href;
+				var i = url.indexOf('?');
+				if (i == -1) return;
+				var querystr = url.substr(i + 1);
+				var arr1 = querystr.split('&');
+				var arr2 = new Object();
+				for (i in arr1) {
+					var ta = arr1[i].split('=');
+					arr2[ta[0]] = ta[1];
+				}
+				return arr2;
+			}
+			var v = parseUrl(); //解析所有参数
+			var param = {
+				"logId": v['logId'],
+				
+			}
+			var params = JSON.stringify(param)
+			console.log('ooooooooooooo',params)
+			
+			$(".imgInput").change(function() {
+				console.log('ssssssssssss'+$(this)[0].files[0])
+				$(".img").attr("src", URL.createObjectURL($(this)[0].files[0]));
+				var imgFile = new FileReader();
+				imgFile.readAsDataURL($(this)[0].files[0]);
+			
+				imgFile.onload = function() {
+					icon = this.result
+					console.log(icon);
+				}
+			});
+			
+			layui.use(['form', 'layedit', 'laydate'], function() {
+				var form = layui.form,
+					layer = layui.layer,
+					layedit = layui.layedit,
+					laydate = layui.laydate;
+			
+				//监听提交
+				form.on('submit(demo1)', function(data) {
+					var json = data.field
+				    var etc = beizhu();
+				index = layer.load(1);
+					json.userId = localStorage.userId
+					json.logId = v['logId']
+					json.tokenImg = icon
+					json.etc = etc
+					console.log(json)
+					var param = JSON.stringify(json)
+					$.ajax({
+						type: "POST",
+						url: 'http://'+url1+'/manager/update_withdraw_log',
+						async: true,
+						data: param,
+						dataType: "json",
+						contentType: "application/json",
+						success: function(res) {
+							if(res.code == 0){
+								window.location.href = 'index.html'
+							}else{
+								layer.close(index);
+								layer.alert(res.message, {
+									icon: 5,
+									title: "提示"
+								});
+							}
+						}
+					})
+					return false
+				});
+				
+			
+			});
+           
+
+		</script>
+		<script src="js/quit.js"></script>
+	</body>
+</html>

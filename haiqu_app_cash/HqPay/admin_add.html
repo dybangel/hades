@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>海趣支付管理平台</title>
+		<link rel="stylesheet" href="./layui/css/layui.css">
+		<script src="./layui/layui.all.js"></script>
+		<script src="assets/javascripts/jquery/jquery.min.js"></script>
+		<style type="text/css">
+			.layui-table-cell {
+				height: auto;
+			}
+		</style>
+	</head>
+	<body class="layui-layout-body">
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<div class="layui-logo">海趣支付管理平台</div>
+				<ul class="layui-nav layui-layout-right">
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+							<span id="username"><span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd><a href="">基本资料</a></dd>
+							<dd><a href="">安全设置</a></dd>
+						</dl>
+					</li>
+					<!-- <li class="layui-nav-item"><a href="">退了</a></li> -->
+					<li class="layui-nav-item"><a class="quit">退出登录</a></li>
+				</ul>
+			</div>
+
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree" lay-filter="test">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="admin_index.html">总览</a>
+							<a href="admin_add.html">添加管理员</a>
+
+						</li>
+
+					</ul>
+				</div>
+			</div>
+			
+			
+            
+			<div class="layui-body" id="vue">
+				<div style="padding: 15px;">
+					<form class="layui-form" action="">
+						
+						<table class="layui-hide" id="test" lay-filter="kkk"></table>
+						<script type="text/html" id="checkboxTpl">
+						  
+						  <input type="checkbox" {{ 0==d.status?'checked':''}} name="zzz" lay-skin="switch" lay-filter="switchTest" lay-text="启用|禁用">
+						</script>
+						
+						<div class="layui-form-item">
+							<label class="layui-form-label">新增账号</label>
+							<div class="layui-input-block">
+								<input type="text" id="account" name="account" lay-verify="title" autocomplete="off" placeholder="请输入新增用户账号" class="layui-input">
+								
+							</div>
+						</div>
+						
+						<div class="layui-form-item">
+							<label class="layui-form-label">应用ID</label>
+							<div class="layui-input-block">
+								<input type="text" id="appId" name="appId" lay-verify="title" autocomplete="off" placeholder="请输入应用ID" class="layui-input">
+								
+							</div>
+						</div>
+						
+						<div class="layui-form-item">
+							<label class="layui-form-label">新增姓名</label>
+							<div class="layui-input-block">
+								<input type="text" id="name" name="name" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input">
+								
+							</div>
+						</div>
+						
+						<div class="layui-form-item">
+							<label class="layui-form-label">新增密码</label>
+							<div class="layui-input-block">
+								<input type="text" id="password" name="password" lay-verify="title" autocomplete="off" placeholder="请输入密码" class="layui-input">
+								
+							</div>
+						</div>
+						
+						
+			
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							</div>
+						</div>
+					</form>
+					
+				</div>
+			</div>
+
+			<div class="layui-footer">
+				<!-- 底部固定区域 -->
+
+			</div>
+		</div>
+
+		<script>
+			if(localStorage.userId == null || localStorage.userId == '' || localStorage.userId == undefined){
+				 window.location.href = 'login.html'
+			}
+			 function yonghuzhanghao(){
+			 
+			            var account=document.getElementById('account').value;
+						console.log('pppppppppppppppppppp',account)
+			 
+			            return account;
+			 
+			        }
+			function yingyongID(){
+			
+			           var appId=document.getElementById('appId').value;
+									console.log('pppppppppppppppppppp',appId)
+			
+			           return appId;
+			
+			       }
+			function xingming(){
+			
+			           var name=document.getElementById('name').value;
+									console.log('pppppppppppppppppppp',name)
+			
+			           return name;
+			
+			       }
+		    function yonghumima(){
+		    
+		               var password=document.getElementById('password').value;
+		    						console.log('pppppppppppppppppppp',password)
+		    
+		               return password;
+		    
+		           }
+		
+			
+		    $("#username").html(localStorage.name);
+			window.icon;
+			window.url2 = '192.168.3.254:8888'
+			window.url1 = '192.168.2.69:8888'
+			
+			layui.use(['form', 'layedit', 'laydate'], function() {
+				var form = layui.form,
+					layer = layui.layer,
+					layedit = layui.layedit,
+					laydate = layui.laydate;
+			
+				//监听提交
+				form.on('submit(demo1)', function(data) {
+					var json = data.field
+				    var account = yonghuzhanghao();
+					var appId = yingyongID();
+					var name = xingming();
+					var password = yonghumima();
+				    index = layer.load(1);
+				    json.account = account
+					json.appId = appId
+					json.name = name
+					json.password = password
+					json.userId = localStorage.userId
+					console.log(json)
+					var param = JSON.stringify(json)
+					$.ajax({
+						type: "POST",
+						url: 'http://'+url1+'/manager/add_manager',
+						async: true,
+						data: param,
+						dataType: "json",
+						contentType: "application/json",
+						success: function(res) {
+							if(res.code == 0){
+								window.location.href = 'admin_add.html'
+							}else{
+								layer.close(index);
+								layer.alert(res.message, {
+									icon: 5,
+									title: "提示"
+								});
+							}
+						}
+					})
+					return false
+				});
+				
+			
+			});
+           layui.use(['form','jquery','layer','table'], function(){
+             var table = layui.table;
+             var form = layui.form;
+             var jquery = layui.jquery;
+             var layer = layui.layer;
+             
+             table.render({
+               elem: '#test',
+               url: 'http://' + url1 + '/manager/get_manager_list',
+			   method: 'POST',
+			   contentType: 'application/json',
+			   where: {
+			   	userId: localStorage.userId
+			   },
+			   parseData: function(res) {
+			   	return {
+			   		"code": res.code,
+			   		"msg": res.message,
+			   		"count": "",
+			   		"data": res.result
+			   	}
+			   },
+			   toolbar: '',
+			   title: '账号数据表',
+			   id: 'tableName'
+               ,cols: [[
+                 {type:'numbers'}
+                 ,{field:'appId', title:'appid', width:'', sort: true}
+				 ,{field:'appName', title:'app名称', width:''}
+                 ,{field:'name', title:'用户名', width:''}
+				 ,{field:'id', title:'用户id', width:''}
+                 ,{field:'account', title:'用户账号',width:''}
+				 ,{field:'createTime', title:'创建时间',width:''}
+                 ,{field:'status', title:'是否锁定', width:'', templet: '#checkboxTpl'}
+               ]]
+               ,page: true
+             });
+             
+             //监听提交
+                     form.on('switch(switchTest)', function (data) {
+                         console.log(data.elem); //得到checkbox原始DOM对象
+                         console.log(data.elem.checked); //开关是否开启，true或者false
+                         console.log(data.value); //开关value值，也可以通过data.elem.value得到
+                         console.log(data.othis); //得到美化后的DOM对象
+						 // console.log('eeeeeeeeeeee',data.id);
+						 
+						  // 获取当前控件                                                                  
+						 var selectIfKey=data.othis;                                                 
+						 // 获取当前所在行                                                                 
+						 var parentTr = selectIfKey.parents("tr"); 
+						 var dataField = $(parentTr).find("td:eq(4)").find(".layui-table-cell").text(); 
+						 console.log('eeeeeeeeeeee',dataField);
+                         var x=data.elem.checked;
+                         layer.open({
+                             content: '确定启用或者禁用该管理员？'
+                             ,btn: ['确定', '取消']
+                             ,yes: function(index, layero){
+                                 data.elem.checked=x;
+                                 form.render();
+								 table.reload('tableName', {
+								 	url: 'http://'+url1+'/manager/manager_status',
+								 	where: {
+								 		managerId : dataField,
+								 		userId: localStorage.userId
+								 	} //设定异步数据接口的额外参数
+								 	//,height: 300
+								 });
+                                 layer.close(index);
+								 location.reload();
+                                 //按钮【按钮一】的回调
+                             }
+                             ,btn2: function(index, layero){
+                                 //按钮【按钮二】的回调
+                                 data.elem.checked=!x;
+                                 form.render();
+                                 layer.close(index);
+                                 // return false 开启该代码可禁止点击该按钮关闭
+                             }
+                             ,cancel: function(){
+                                 //右上角关闭回调
+                                 data.elem.checked=!x;
+                                 form.render();
+                                 // return false 开启该代码可禁止点击该按钮关闭
+                             }
+                         });
+                         return false;
+                     });
+           });
+
+		</script>
+		<script src="js/quit.js"></script>
+	</body>
+</html>

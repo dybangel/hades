@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>海趣支付管理平台</title>
+		<link rel="stylesheet" href="./layui/css/layui.css">
+		<script src="./layui/layui.all.js"></script>
+		<script src="assets/javascripts/jquery/jquery.min.js"></script>
+		<style type="text/css">
+			.layui-table-cell {
+				height: auto;
+			}
+		</style>
+	</head>
+	<body class="layui-layout-body">
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<div class="layui-logo">海趣支付管理平台</div>
+				<ul class="layui-nav layui-layout-right">
+					<li class="layui-nav-item">
+						<a href="javascript:;">
+							<img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+							<span id="username"><span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd><a href="">基本资料</a></dd>
+							<dd><a href="">安全设置</a></dd>
+						</dl>
+					</li>
+					<!-- <li class="layui-nav-item"><a href="">退了</a></li> -->
+					<li class="layui-nav-item"><a class="quit">退出登录</a></li>
+				</ul>
+			</div>
+
+			<div class="layui-side layui-bg-black">
+				<div class="layui-side-scroll">
+					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+					<ul class="layui-nav layui-nav-tree" lay-filter="test1">
+						<li class="layui-nav-item layui-nav-itemed">
+							<a class="" href="javascript:;">总览</a>
+							
+
+						</li>
+
+					</ul>
+				</div>
+			</div>
+
+			<div class="layui-body">
+
+
+				<table class="layui-hide" id="test" lay-filter="kkk"></table>
+
+				<script type="text/html" id="toolbarDemo">
+
+					
+	  <div class="demoTable">
+	    搜索手机号：
+	    <div class="layui-inline">
+	      <input class="layui-input" name="id" id="demoReload" autocomplete="off">
+	    </div>
+	    <button class="layui-btn" lay-event="reload">搜索</button>
+	  </div>
+	</script>
+				<script type="text/html" id="barDemo">
+					<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	            </script>
+				<!-- 定义图像模板 d为filed中的返回参数,url为后台中每一组元素的url -->
+				<script type="text/html" id="imgtemp">
+					<div><img src="{{d.imgBase64}}" style="width:20px;height:20px"></div>
+				</script>
+				<script>
+					if(localStorage.userId == null || localStorage.userId == '' || localStorage.userId == undefined){
+						 window.location.href = 'login.html'
+					}
+					$("#username").html(localStorage.name);
+					window.url2 = '192.168.3.254:8888'
+					window.url1 = '192.168.2.69:8888'
+					layui.use('table', function() {
+						var table = layui.table;
+						laypage = layui.laypage;
+
+						table.render({
+							elem: '#test',
+							url:'http://'+url1+'/manager/get_withdraw_log',
+							method: 'POST',
+							contentType: 'application/json',
+							request: {
+								pageName: 'pageIndex', //页码的参数名称，默认：page
+								limitName: 'pageSize' //每页数据量的参数名，默认：limit
+							},
+							where: {
+								phone: '',
+								createTimeEnd: '',
+								createTimeStart: '',
+								userId: localStorage.userId
+							},
+							parseData: function(res) {
+								return {
+									"code": res.code,
+									"msg": res.message,
+									"count": res.result.totalCount,
+									"data": res.result.withdrawLogModels
+								}
+							},
+							toolbar: '#toolbarDemo',
+							title: '用户数据表',
+							totalRow: true,
+							id: 'tableMain',
+							cols: [
+									[{
+											type: 'numbers',
+							
+											totalRowText: '合计'
+										},
+										{
+											field: 'logId',
+											title: '编号',
+											sort: true,
+											width: '',
+							
+										}, {
+											field: 'phone',
+											sort: true,
+											title: '手机号(支付宝账号)',
+											width: '',
+							
+										}, {
+											field: 'appName',
+											title: 'app名称',
+											sort: true,
+											width: ''
+										}, {
+											field: 'appId',
+											title: 'appid',
+											sort: true,
+											width: ''
+										}, {
+											field: 'withdrawAmount',
+											title: '提现金额',
+											sort: true,
+											width: '',
+											totalRow: true
+										}, {
+											field: 'etc',
+											title: '备注',
+											width: ''
+										}, {
+											field: 'imgBase64',
+											title: '上传截图',
+											width: '',
+											templet: '#imgtemp'
+										}, {
+											field: 'updateTime',
+											sort: true,
+											title: '登记时间',
+											width: ''
+										}, {
+											fixed: 'right',
+											title: '操作',
+											toolbar: '#barDemo',
+											width: ''
+										}
+									]
+								],
+							
+								page: true,
+							
+							
+							});
+
+
+						//工具栏事件
+						table.on('toolbar(kkk)', function(obj) {
+							var checkStatus = table.checkStatus(obj.config.id);
+							console.log('uuuuuuuuuuuuu')
+							switch (obj.event) {
+								case 'reload':
+									table.reload('tableMain', {
+										url: 'http://'+url1+'/manager/get_withdraw_log',
+										request: {
+											pageName: 'pageIndex', //页码的参数名称，默认：page
+											limitName: 'pageSize' //每页数据量的参数名，默认：limit
+										},
+										where: {
+											phone: $("#demoReload").val(),
+											createTimeEnd: '',
+											createTimeStart: '',
+											userId: localStorage.userId
+											
+										} //设定异步数据接口的额外参数
+										//,height: 300
+									});
+									break;
+								case 'getCheckLength':
+									var data = checkStatus.data;
+									layer.msg('选中了：' + data.length + ' 个');
+									break;
+								case 'isAll':
+									layer.msg(checkStatus.isAll ? '全选' : '未全选');
+									break;
+							};
+						});
+						
+						table.on('tool(kkk)', function(obj) {
+							var data = obj.data;
+							console.log(obj.data)
+							if (obj.event === 'edit') {
+								window.location.href = 'app_edit.html' + '?logId=' + data.logId 
+								console.log(data.logId)
+							}
+						});
+
+
+					});
+				</script>
+
+			</div>
+
+			<div class="layui-footer">
+				<!-- 底部固定区域 -->
+
+			</div>
+		</div>
+		
+		
+
+		<script>
+			//JavaScript代码区域
+			layui.use('element', function() {
+				var element = layui.element;
+
+			});
+		</script>
+		<script src="js/quit.js"></script>
+	</body>
+</html>
