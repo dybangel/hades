@@ -2,19 +2,18 @@
         "enable":"false",
         "appname":"微鲤看看", 
         "mulityback":"true||2000",
-        "appver":"1.5.0",
+        "appver":"1.6.1",
         "interval":"30",
         "speed":"normal",
         "packagename":"cn.weli.story",
         "activityname":"cn.etouch.ecalendar.MainActivity",
         "open":{
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"发照片",
-          "depth":"",
-          "indexinparent":"",
+          "featuremode":"classname",
+          "classname":"android.support.v7.widget.RecyclerView",
+          "depth":"10",
+          "indexinparent":"1",
           },
-		  "signin":{
+		"signin":{
             "sg1":{
               "action":"click_id",
               "click_id":"cn.weli.story:id/rl_head_line",
@@ -44,7 +43,7 @@
 			  "text":"发照片",
             },
           },
-          "abnormal":{
+        "abnormal":{
            "ab1":{
                "featuremode":"id",
                "id":"cn.weli.story:id/iv_close",
@@ -99,14 +98,10 @@
             "id":"cn.weli.story:id/btn_back",
         },
         "ar2":{
+		    "upcount":"20",
             "deploymode":"classname_text",
             "deployclassname":"android.widget.TextView",
             "deploytext":"展开查看全文",
-            "backtrigger":"xy_color_bool",
-            "xy":"1258||2164",
-            "color":"ffffd412",
-            "bool":"false",
-            "reswipe":"true",
 
         },
         }, 
