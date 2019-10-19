@@ -38,7 +38,7 @@
 					<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
 					<ul class="layui-nav layui-nav-tree" lay-filter="test1">
 						<li class="layui-nav-item layui-nav-itemed">
-							<a class="" href="javascript:;">总览</a>
+							<a href="admin_index.html">总览</a>
 							<a href="admin_todaytixian.html">今日提现</a>
 							<a href="admin_yesterdaytixian.html">昨日提现</a>
 							<a href="admin_add.html">添加管理员</a>
@@ -81,6 +81,12 @@
 					   </div>
 					   <button class="layui-btn" lay-event="reloadss">搜索</button>
 					</div>
+					<div class="hejijine">
+						今日提现总金额：元
+					</div>
+					<div class="hejirenshu">
+						今日提现总人数：人
+					</div>
 	            </script>
 				<script type="text/html" id="barDemo">
 					<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -104,7 +110,7 @@
 
 						table.render({
 							elem: '#test',
-							url: 'http://' + url1 + '/manager/get_withdraw_log',
+							url: 'http://' + url1 + '/manager/get_today_withdraw_log',
 							method: 'POST',
 							contentType: 'application/json',
 							request: {
@@ -120,13 +126,20 @@
 								userId: localStorage.userId
 							},
 							parseData: function(res) {
-								console.log('rrrrrrrr', res)
+								console.log('rrrrrrrr', res)//打印出返回的数据
+								var tixianzongjine = res.result.totalAmount;//声明一个变量,把提现总金额的值赋给他
+								var tixianrenshu = res.result.withDrawCount;//声明一个变量,把提现总人数的值赋给他
+								console.log('llllll',tixianzongjine,tixianrenshu);//打印出来看看有没有值
+								$(".hejijine").html("今日提现总金额："+tixianzongjine+"元");//把div元素class值为hejijine的div内容替换为"今日提现总金额："+tixianzongjine+"元"
+								$(".hejirenshu").html("今日提现总人数："+tixianrenshu+"人");//把div元素class值为hejirenshu的div内容替换为"今日提现总人数："+tixianrenshu+"人"
 								return {
 									"code": res.code,
 									"msg": res.message,
 									"count": res.result.totalCount,
-									"data": res.result.withdrawLogModels
+									"data": res.result.withdrawLogModels,
+									
 								}
+								
 							},
 							toolbar: '#toolbarDemo',
 							title: '用户数据表',
@@ -197,6 +210,7 @@
 							page: true,
 							
 
+
 						});
 
 
@@ -207,7 +221,7 @@
 							switch (obj.event) {
 								case 'reload'://搜索手机号
 									table.reload('tableMain', {
-										url: 'http://'+url1+'/manager/get_withdraw_log',
+										url: 'http://'+url1+'/manager/get_today_withdraw_log',
 										request: {
 											pageName: 'pageIndex', //页码的参数名称，默认：page
 											limitName: 'pageSize' //每页数据量的参数名，默认：limit
@@ -226,7 +240,7 @@
 									break;
 									case 'reloads'://搜索app名称
 										table.reload('tableMain', {
-											url: 'http://'+url1+'/manager/get_withdraw_log',
+											url: 'http://'+url1+'/manager/get_today_withdraw_log',
 											request: {
 												pageName: 'pageIndex', //页码的参数名称，默认：page
 												limitName: 'pageSize' //每页数据量的参数名，默认：limit
@@ -243,9 +257,9 @@
 											//,height: 300
 										});
 										break;
-									case 'reloadss'://搜索提现状态
+									case 'reloadss'://搜索提现状态名称
 										table.reload('tableMain', {
-											url: 'http://'+url1+'/manager/get_withdraw_log',
+											url: 'http://'+url1+'/manager/get_today_withdraw_log',
 											request: {
 												pageName: 'pageIndex', //页码的参数名称，默认：page
 												limitName: 'pageSize' //每页数据量的参数名，默认：limit
