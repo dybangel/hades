@@ -1,0 +1,62 @@
+{
+	"enable": "false",
+	"appname": "今日头条极速版",
+	"mulityback": "false",
+	"appver": "7.1.7",
+	"interval": "30",
+	"speed": "normal",
+	"packagename": "com.ss.android.article.lite",
+	"activityname": "com.ss.android.article.lite.activity.SplashActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "推荐",
+		"depth": "15",
+		"indexinparent": "0",
+	},
+	"signin": {
+		"sg1": {
+			"action": "click_xypercent",
+			"click_xypercent": "0.694||0.96",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "去领取",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.ss.android.article.lite:id/a_q",
+		},
+	},
+	"activitys": {
+		"at1": "com.ss.android.article.lite.activity.SplashActivity",
+		"at2": "com.ss.android.article.base.feature.detail2.view.NewDetailActivity",
+        "at3": "com.ss.android.newugc.detail.UgcDetailActivity",
+        "at4": "com.bytedance.learningplugin.LearningLiteArticleActivity",
+        "at5": "com.afollestad.materialdialogs.MaterialDialog",
+        "at6": "com.ss.android.article.base.feature.detail2.view.NewVideoDetailActivity",
+        "at7": "com.ss.android.ugc.detail.detail.ui.v2.view.TikTokDetailActivity",
+        "at8": "com.ss.android.wenda.answer.list.AnswerListActivity",
+	},
+	"bindwechat": {
+	},
+	"autoread": {
+		"ar1": {
+			"action": "",
+			"boundary": "android.support.v4.widget.DrawerLayout",
+			"path": "0||2||0",
+			"featuremode": "id",
+			"id": "com.ss.android.article.lite:id/ju",
+		},
+		"ar2": {
+			"upcount": "20",
+			"deploymode": "",
+			"deployclassname": "android.view.View",
+			"deploydesc": "展开全文",
+
+		},
+	},
+	"durl": "http://xzf.197946.com/kuaikandian.apk"
+
+}
