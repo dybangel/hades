@@ -1,51 +1,58 @@
  {
         "enable":"false",
         "appname":"有米头条", 
-        "interval":"3",
-         "packagename":"com.zz.ymtt",
+		"mulityback": "true||2000",
+	    "appver": "1.1.7",
+        "interval":"30",
+		"speed": "slow",
+        "packagename":"com.zz.ymtt",
         "activityname":"com.zz.ymtt.ui.ShouyeActivity",
         "open":{
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"我的",
-          "depth":"",
-        "indexinparent":"",
+	    "featuremode":"classname_text",
+	    "classname":"android.widget.TextView",
+	    "text":"视频",
+	    "depth":"9",
+        "indexinparent":"1",
           },
+		"signin": {
+		  "sg1": {
+			"action":"click_xypercent",
+			"click_xypercent":"0.643||0.972",
+			"featuremode": "classname_text",
+			"classname": "android.widget.TextView",
+			"text": "签到",
+			},
+		  "sg2":{
+			  "action":"click_id",
+			  "click_id":"com.zz.ymtt:id/signHint",
+			  "featuremode":"classname_text",
+			  "classname":"android.widget.TextView",
+			  "text":"已签到",
+					},
+				},
         "abnormal":{
            "ab1":{
                "featuremode":"id",
-               "id":"iv_close",
+               "id":"com.zz.ymtt:id/iv_close",
            },
           "ab2":{
-            "featuremode":"id",
-            "id":"closeView1",
+            "featuremode":"classname_text",
+            "classname":"android.widget.TextView",
+			"text":"领金币",
           },
           "ab3":{
-            "featuremode":"id",
-            "id":"closeView2",
-          },
-          "ab4":{
-            "featuremode":"id",
-            "id":"closeView3",
-          },
-          "ab5":{
-            "featuremode":"id",
-            "id":"closeView4",
-          },
-          "ab6":{
-            "featuremode":"id",
-            "id":"closeView",
-          },
-            "ab7":{
-            "featuremode":"clssname_text",
+               "featuremode":"id",
+               "id":"com.zz.ymtt:id/close_view",
+           },
+		  "ab4":{
+            "featuremode":"classname_text",
             "classname":"android.widget.TextView",
-                "text":"领金币",
+			"text":"领取",
           },
          },  
 	    "activitys":{
 			 "at1":"com.zz.ymtt.ui.ShouyeActivity",
 			 "at2":"com.zz.ymtt.ui.NewsDetailActivity",
-
 		   } ,
         "bindwechat":{
           "bw1":{
@@ -80,16 +87,16 @@
         },
         "autoread":{
           "ar1":{
-            "action":"click_text",
-            "click_text":"首页",
+            "action":"",
+            "click_text":"",
             "featuremode":"id",
-            "id":"back_view",
+            "id":"com.zz.ymtt:id/mDetailCircleView",
         },
         "ar2":{
+		    "upcount":"12",
             "deploymode":"classname_desc",
             "deployclassname":"android.view.View",
             "deploydesc":"展开阅读全文",
-
            },
         }, 
          "durl":"http://xzc.197746.com/youmitt.apk"
