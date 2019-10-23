@@ -1,0 +1,54 @@
+function finditem(){
+            var ele=className(v7feature);
+            var subcount=ele.findOnce(0).childCount();
+            var main=ele.findOnce(0);
+            for(var i=1;i<subcount;i++){
+                try{
+                    var gg1=main.child(i).child(1).child(0);
+                    if(gg1.text()=="广告"){
+                                play("global",i);
+                                play("global","广告不点击");
+                                  return false;
+                    }
+                }catch(e){
+                }
+                try{
+                    var gg2=main.child(i).child(2).child(0);
+                    if(gg2.text()=="广告"){
+                                play("global",i);
+                                play("global","广告不点击");
+                                  return false;
+                    }
+                }catch(e){
+                }
+                try{
+                    var gg3=main.child(i).child(2).child(0).child(0);
+                    if(gg3.text()=="广告"){
+                                play("global",i);
+                                play("global","广告不点击");
+                                  return false;
+                    }
+                }catch(e){
+                }
+                try{
+                    play('global',i);
+                    play('global','点击');
+                    return main.child(i);
+                    }catch(e){
+                    }
+            }
+    }
+function getcoinincome(){
+    /**获取金币和收益的自定义代码开始 */
+    Swipe(915,1080,915,2400,500);
+    sleep(1000);
+    coin=className('android.view.View').boundsInside(200,0,400, 693).findOnce().desc()
+    income=className('android.view.View').boundsInside(1053,577,1267,682).findOnce().desc();
+    income=income.replace(/元/g,'');
+    //该函数传入金币和收益，必须为整型或者浮点型，禁止出现中文和字母
+    callback_updatecoinincome(coin,income);
+    /**获取金币和收益的自定义代码结束 */
+
+    //函数执行完成后必须将全局变量Ganalybreak改为true，通知主线程
+    Ganalybreak=true;
+}

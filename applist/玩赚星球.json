@@ -1,0 +1,66 @@
+{
+	"enable": "false",
+	"appname": "玩赚星球",
+	"mulityback": "72||150",
+	"appver": "5.6",
+	"interval": "30",
+	"speed":"normal+",
+	"packagename": "com.planet.light2345",
+	"activityname": "com.planet.light2345.main.MainActivity",
+	"open": {
+		"featuremode": "classname_text",
+		"classname": "android.widget.TextView",
+		"text": "头条",
+		"depth": "6",
+		"indexinparent": "2",
+	},
+	"signin": {
+	   "sg1":{
+		  "action":"click_id",
+		  "click_id":"com.planet.light2345:id/home_sign_btn",
+		  "featuremode":"id",
+		  "id":"com.songheng.eastnews:id/aqf",
+		},
+		 "sg2":{
+		  "action":"click_id",
+		  "click_id":"com.planet.light2345:id/home_reward",
+		  "featuremode":"id",
+		  "id":"com.songheng.eastnews:id/aqf",
+		},
+	},
+	"abnormal": {
+		"ab1": {
+			"featuremode": "id",
+			"id": "com.planet.light2345:id/iv_close",
+		},
+	    "ab2": {
+			"featuremode": "click_boundary_path",
+			"boundary": "android.support.v7.widget.RecyclerView",
+			"path": "0||0||0||7||0||1",
+		},
+		"ab3": {
+			"featuremode": "id",
+			"id": "com.planet.light2345:id/home_sign_btn",
+		},
+	},
+	"activitys": {
+		"at1": "com.planet.light2345.main.MainActivity",
+		"at2": "com.starnews2345.news.detailpage.ui.StarNewsDetailActivity",
+	},
+	"bindwechat": {},
+	"autoread": {
+		"ar1": {
+			"action": "",
+			"click_id": "",
+			"featuremode": "id",
+			"id": "com.planet.light2345:id/rl_content",
+		},
+		"ar2": {
+		    "upcount":"20",
+			"deploymode": "classname_desc",
+			"deployclassname": "android.view.View",
+			"deploydesc": "点击阅读全文",
+		},
+	},
+	"durl": "http://app.2345.cn/appsoft/54185.apk"
+}
