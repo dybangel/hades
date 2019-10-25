@@ -1,0 +1,55 @@
+{
+    "enable": "false",
+    "appname": "点点新闻",
+    "mulityback": "32||158",
+    "appver": "1.1.3.4",
+    "interval": "30",
+    "speed": "normal",
+    "packagename": "com.yingliang.clicknews",
+    "activityname": "com.yingliang.clicknews.MainActivity",
+    "open": {
+        "featuremode": "classname_text",
+        "classname": "android.widget.TextView",
+        "text": "推荐",
+        "depth": "11",
+        "indexinparent": "0",
+    },
+    "signin": {
+        "sg1": {
+            "action": "click_xypercent",
+            "click_xypercent": "0.625||0.953",
+            "featuremode": "classname_text",
+            "classname": "android.view.View",
+            "text": "已领取",
+        },
+    },
+    "abnormal": {
+        "ab1": {
+            "featuremode": "id",
+            "id": "com.zx.localnews:id/id_dialog_login_close",
+        },
+    },
+    "activitys": {
+        "at1": "com.yingliang.clicknews.MainActivity",
+        "at2": "com.yingliang.clicknews.activity.NewsActivity",
+    },
+    "bindwechat": {},
+    "autoread": {
+        "ar1": {
+            "action": "",
+            "boundary": "android.support.v4.widget.DrawerLayout",
+            "path": "0||2||0",
+            "featuremode": "id",
+            "id": "com.yingliang.clicknews:id/back",
+        },
+        "ar2": {
+            "upcount": "15",
+            "deploymode": "",
+            "deployclassname": "android.view.View",
+            "deploydesc": "展开全文",
+
+        },
+    },
+    "durl": "http://xzf.197946.com/kuaikandian.apk"
+
+}

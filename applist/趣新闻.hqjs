@@ -1,0 +1,22 @@
+function finditem(){  
+    var ele=className("android.widget.ImageView");
+    var subcount=ele.findOnce(3).child(0).child(0).childCount();
+    var main=ele.findOnce(3).child(0).child(0);
+    for(var i=1;i<subcount;i++){
+          try{
+               var gg1=main.child(i).text();
+                if(gg1.indexOf("广告")>-1){
+                        play("global",i);
+                        play("global","广告不点击");
+                        return false;
+               }
+         }catch(e){
+          }
+          try{
+            play('global',i);
+            play('global','点击');
+            return main.child(i);
+            }catch(e){
+            }
+    }
+}

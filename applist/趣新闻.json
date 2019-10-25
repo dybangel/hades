@@ -1,0 +1,61 @@
+{
+    "enable": "false",
+    "appname": "趣新闻",
+    "mulityback": "60||200",
+    "appver": "2.1.5",
+    "interval": "30",
+    "speed": "slow",
+    "packagename": "com.ys.news",
+    "activityname": "com.ys.news.ui.activity.MainActivity",
+    "open": {
+        "featuremode": "classname_text",
+        "classname": "android.widget.ImageView",
+        "text": "领取",
+        "depth": "14",
+        "indexinparent": "3",
+    },
+    "signin": {
+        "sg1": {
+            "action": "click_xypercent",
+            "click_xypercent": "0.694||0.957",
+            "featuremode": "classname_text",
+            "classname": "android.view.View",
+            "text": "任务",
+        },
+        "sg2": {
+            "action": "click_xypercent",
+            "click_xypercent": "0.5||0.371",
+            "featuremode": "classname_text",
+            "classname": "android.view.View",
+            "text": "任务",
+        },
+    },
+    "abnormal": {
+        "ab1": {
+            "featuremode": "classname_text",
+            "classname": "android.widget.Button",
+            "text": "忽略",
+        },
+    },
+    "activitys": {
+        "at1": "com.ys.news.ui.activity.MainActivity",
+    },
+    "bindwechat": {},
+    "autoread": {
+        "ar1": {
+            "action": "",
+            "featuremode": "classname_text",
+            "classname": "android.view.View",
+            "text": "趣新闻",
+        },
+        "ar2": {
+            "upcount": "20",
+            "deploymode": "",
+            "deployclassname": "android.view.View",
+            "deploydesc": "展开全文",
+
+        },
+    },
+    "durl": "http://xzf.197946.com/kuaikandian.apk"
+
+}
