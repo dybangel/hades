@@ -2,7 +2,7 @@
 	"enable": "false",
 	"appname": "今日头条极速版",
 	"mulityback": "false",
-	"appver": "7.1.7",
+	"appver": "7.1.8",
 	"interval": "30",
 	"speed": "normal",
 	"packagename": "com.ss.android.article.lite",
