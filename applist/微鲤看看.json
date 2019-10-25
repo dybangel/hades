@@ -2,7 +2,7 @@
         "enable":"false",
         "appname":"微鲤看看", 
         "mulityback":"true||2000",
-        "appver":"1.6.1",
+        "appver":"1.6.2",
         "interval":"30",
         "speed":"normal",
         "packagename":"cn.weli.story",
@@ -13,37 +13,23 @@
           "depth":"10",
           "indexinparent":"1",
           },
-		"signin":{
+		  "signin":{
             "sg1":{
               "action":"click_id",
-              "click_id":"cn.weli.story:id/rl_head_line",
+              "click_id":"cn.weli.story:id/rl_bottom_4",
               "featuremode":"id",
               "id":"cn.weli.story:id/iv_back",
             },
             "sg2":{
               "action":"click_boundary_path",
-              "boundary":"android.webkit.WebView",
-			  "path":"0||1",
+              "boundary":"android.widget.ListView",
+			  "path":"0||0||0||0||0||1||0||0",
               "featuremode":"classname_desc",
               "classname":"android.view.View",
               "desc":"保存稍后分享",
             },
-			"sg3":{
-              "action":"click_id",
-              "click_id":"cn.weli.story:id/iv_back",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-			  "text":"今日金币",
-            },
-			"sg4":{
-              "action":"click_id",
-              "click_id":"rl_bottom_1",
-              "featuremode":"classname_text",
-              "classname":"android.widget.TextView",
-			  "text":"发照片",
-            },
           },
-        "abnormal":{
+          "abnormal":{
            "ab1":{
                "featuremode":"id",
                "id":"cn.weli.story:id/iv_close",
@@ -51,6 +37,18 @@
 		   "ab2":{
                "featuremode":"id",
                "id":"cn.weli.story:id/text_ok",
+           },
+		    "ab3":{
+               "featuremode":"id",
+               "id":"cn.weli.story:id/iv_take",
+           },
+		    "ab4":{
+               "featuremode":"id",
+               "id":"cn.weli.story:id/image_close",
+           },
+		   "ab5":{
+               "featuremode":"id",
+               "id":"cn.weli.story:id/text_open",
            },
          },  
 		"activitys":{
@@ -61,34 +59,6 @@
    
           } , 
         "bindwechat":{
-          "bw1":{
-            "action":"click_text",
-            "click_text":"我的",
-            "featuremode":"classname_text",
-            "classname":"android.widget.TextView",
-            "text":"登录看文章赚零花",
-        },
-        "bw2":{
-          "action":"click_text",
-          "click_text":"立即赚钱",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"微信一键登录",
-         },
-		  "bw3":{
-          "action":"click_id",
-          "click_id":"cn.weli.story:id/login_0",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"同意",
-         },
-         "bw4":{
-          "action":"click_text",
-          "click_text":"同意",
-          "featuremode":"classname_text",
-          "classname":"android.widget.TextView",
-          "text":"兑换提现",
-        },
         },
         "autoread":{
           "ar1":{
@@ -98,10 +68,14 @@
             "id":"cn.weli.story:id/btn_back",
         },
         "ar2":{
-		    "upcount":"20",
             "deploymode":"classname_text",
             "deployclassname":"android.widget.TextView",
             "deploytext":"展开查看全文",
+            "backtrigger":"xy_color_bool",
+            "xy":"1258||2164",
+            "color":"ffffd412",
+            "bool":"false",
+            "reswipe":"true",
 
         },
         }, 

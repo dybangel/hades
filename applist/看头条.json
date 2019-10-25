@@ -2,7 +2,7 @@
         "enable":"false",  
         "appname":"看头条", 
         "mulityback":"false",
-        "appver":"2.1.1",
+        "appver":"2.1.2",
         "interval":"30",
         "speed":"normal+",
         "packagename":"com.huabian.android",

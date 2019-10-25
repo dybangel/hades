@@ -2,7 +2,7 @@
       "enable":"true", 
       "appname":"趣看天下",
       "mulityback":"23||228",	  
-	  "appver":"3.0.6.1",
+	  "appver":"3.0.14",
       "interval":"30",
       "speed":"normal",
       "packagename":"com.yanhui.qktx",

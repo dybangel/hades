@@ -2,7 +2,7 @@
         "enable":"false",
         "appname":"聚看点", 
 		"mulityback":"false",
-		"appver":"6.5.8",
+		"appver":"6.6.1",
         "interval":"50",
 		"speed":"normal+",
         "packagename":"com.xiangzi.jukandian",
