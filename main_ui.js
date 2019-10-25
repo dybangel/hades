@@ -824,7 +824,8 @@ Gchecklicense_api_new = "http://manager.dianqu666.online:9999/license/check"  //
 /**************************研发常用开关量结束 ******************************************************/
 //海趣助手apk下载路径
 //Gdownloadpath = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk"  //请勿修改
-Gdownloadpath = "http://manager.dianqu666.online:8888/repo/haiqu_helper/update/haiqu.apk"  //请勿修改
+//Gdownloadpath = "http://manager.dianqu666.online:8888/repo/haiqu_helper/update/haiqu.apk"  //请勿修改
+Gdownloadpath = "https://haiqu-app.oss-cn-qingdao.aliyuncs.com/%E6%B5%B7%E8%B6%A3%E5%8A%A9%E6%89%8B/update/haiqu.apk"  //请勿修改
 //特征码路径 字典./applist/  表示到根目录脚本里找applist， /storage/emulated/0/applist/ 表示只到根目录下找applist
 Gapplistpath = "./applist/";  //请勿修改
 //语音包路径  /storage/emulated/0/voice/ 表示到根目录下找voice
@@ -3840,7 +3841,8 @@ function download_installapp() {
             //console.show();
             //log('im alive')
             //var myUrl = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk";
-            var myUrl = "http://manager.dianqu666.online:8888/repo/haiqu_helper/update/haiqu.apk";
+            //var myUrl = "http://manager.dianqu666.online:8888/repo/haiqu_helper/update/haiqu.apk";
+            var myUrl = "https://haiqu-app.oss-cn-qingdao.aliyuncs.com/%E6%B5%B7%E8%B6%A3%E5%8A%A9%E6%89%8B/update/haiqu.apk";
             var url = new URL(myUrl);
             var conn = url.openConnection(); //URLConnection
             var inStream = conn.getInputStream(); //InputStream
