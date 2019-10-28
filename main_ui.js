@@ -965,7 +965,7 @@ function run() {
         // whchat();
 
     } else {
-        alert("applist length is"+applist.length);
+        
         while (true) {
             for (var i = 0; i < applist.length; i++) {
 
