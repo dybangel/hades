@@ -3716,7 +3716,7 @@ function while_abnormal(abnormal_obj) {
             //       toast("this is while_abnormal... allcount is:"+thiscommon.JSONLength(abnormal_obj));             
             for (var i = 1; i <= thiscommon.JSONLength(abnormal_obj); i++) {
 
-                var featuremode = abnormal_obj["ab" + i]["featuremode"];
+                try{var featuremode = abnormal_obj["ab" + i]["featuremode"];}catch(e){var featuremode=""}
 
                 if ("id" == featuremode) {
 
