@@ -389,7 +389,7 @@ ui.appinfo.click(() => {
     try {
         // ref_ui_list();
         // setTimeout(() => {
-        if (ref_ui_list()) {
+        if (thiscommon.ref_ui_list()) {
             ui.appinfo.setVisibility(8);
         };
         // }, 5000);
@@ -401,19 +401,7 @@ ui.appinfo.click(() => {
 
 
 });
-//执行app检测点击事件
-// ui.checklocalapp.click(() => {
-//     try {
-//         try { thread_checklocalapp.interrupt() } catch (e) { }
-//         thread_checklocalapp = threads.start(
-//             function () {
-//                 checklocalapp();
-//             }
-//         );
-//     } catch (e) {
 
-//     }
-// });
 
 
 ui.indoor.on('check', (checked) => {
@@ -481,12 +469,12 @@ ui.downloadapp.click(() => {
     try { thread_checkver.interrupt() } catch (e) { }
     thread_checkver = threads.start(
         function () {
-            var result = sysupdate_check();
+            var result = thiscommon.sysupdate_check();
             if (result) {
-                toastAt("已经是最新版本了");
+                thiscommon.toastAt("已经是最新版本了");
             } else {
 
-                download_installapp();
+                thiscommon.download_installapp();
 
                 //  urlStr = "http://download.dqu360.com/download/haiqu/#/home";//要访问的 URL
                 //  var result=shell("am start -a android.intent.action.VIEW -d " + urlStr, true);
@@ -511,6 +499,7 @@ ui.downloadapp.click(() => {
 ui.licence_activate.click(() => {
     //alert("123");
     var fsn = ui.fsn.text();
+    alert("click fsn is "+fsn);
     if (fsn == "") {
         toast("请输入激活码");
     } else {
@@ -518,7 +507,7 @@ ui.licence_activate.click(() => {
         thread_licence_activate = threads.start(function () {
             //var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);  
 
-            Gdevicecode = builddevicecode();
+            Gdevicecode = thiscommon.builddevicecode();
             var r = http.postJson(Gchecklicense_api_new, {
                 "fsn": fsn,
                 "fsession": Gdevicecode
@@ -557,14 +546,7 @@ ui.licence_activate.click(() => {
 
 
 });
-//ui.allrun.setText("123");
 
-//alert(ui.toolbar.getText());
-// //创建选项菜单(右上角)
-// ui.emitter.on("create_options_menu", menu=>{
-//     menu.add("设置");
-//     menu.add("关于");
-// });
 ui.autoconfig.on("click", function () {
     // engines.execScript("auto configuration", "thisautoconfig.autoconfiguration();\n" + thisautoconfig.autoconfiguration.toString());
     engines.execScriptFile("./autoconfig.js");
@@ -574,15 +556,9 @@ ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐�
         //  toast('position: ' + position + "\npositionOffsetPixels: " + positionOffsetPixels );
         if (position == 1) {
             toast("aaa")
-            //  showanalylog();
-            // thread_addrow=threads.start(function(){
-
-            // })
-            // toast("b d 0")
-            // ui.refresh.setVisibility(View.INVISIBLE);
+           
         } else {
-            // toast("other")
-            //  ui.refresh.setVisibility(View.VISIBLE);
+            
         }
     }
 });
@@ -600,16 +576,17 @@ ui.viewpager.setOnPageChangeListener({ //设置非第一页时,刷新按钮隐�
 // });
 /************************************* UI结束**********************************************************************/
 var result = shell("svc wifi enable ", true);
+applist=[];
 //GdeviceMac="";
 GdeviceImei = "";
 //机器码
 Gdevicecode = "";
 //getdevicemac();
-getdeviceimei();
+thiscommon.getdeviceimei();
 
 
 
-opennobarrier();
+thiscommon.opennobarrier();
 //是否开启本地日志和日志上报
 Ginsert_log = false;
 var logresult = files.exists("/sdcard/脚本/locallog");
@@ -733,12 +710,13 @@ thread_upfsn = threads.start(
         Guser_cancel = true;
         Glicence = false;
         var fsn = initlicence('');
+     
         if (fsn == null || fsn == '') {
             toast("请输入激活码");
             //取消倒计时
 
         } else {
-            // alert("有激活码："+fsn);
+            
             //到云端验证，更新Glicence状态
             //  Glicence=true;
 
@@ -748,7 +726,6 @@ thread_upfsn = threads.start(
                 ui.fsn.setText(fsn);
                 ui.licence_activate.setVisibility(7);
             });
-
             //  var session=Gdevicecode;//device.getAndroidId();
             //   alert("fsn is:"+fsn+" aid is:"+session);
             // var r=http.get(Gchecklicence_api+"&fsn="+fsn+"&fsession="+session);
@@ -756,8 +733,10 @@ thread_upfsn = threads.start(
 
 
             //生成机器码
-            Gdevicecode = builddevicecode();
+            Gdevicecode = thiscommon.builddevicecode();
+           // alert("有激活码："+fsn);
 
+           // toast("thread fsn is:"+fsn);
             var r = http.postJson(Gchecklicense_api_new, {
                 "fsn": fsn,
                 "fsession": Gdevicecode
@@ -800,12 +779,9 @@ Guploadlog_url = "http://192.168.3.254:8888/import/import_log";
 
 //1 app json特征码远程下载根路径
 Gapplistpath_remote = "https://haiqu-app.oss-cn-qingdao.aliyuncs.com/海趣助手/applist";//公有云
-//Gapplistpath_remote="http://download.dqu360.com:81/haiqu/applist/";//公有云
-//Gapplistpath_remote="http://192.168.3.201/haiqu/applist/";       //私有云
+
 
 //2 Gapps,哪些app要刷的开关量json云端文件路径
-// Gappspath_remote="http://download.dqu360.com:81/haiqu/api.aspx?&appid=FWEFASDFSFA&action=getgapps&devicetype="+Gdevicetype; //公有云
-//Gappspath_remote = "http://115.29.141.214:9999/app/list";
 Gappspath_remote = "http://manager.dianqu666.online:9999/app/list";
 //Gappspath_remote="http://192.168.3.201/haiqu/gapps.json";                                         //私有云
 
@@ -813,12 +789,11 @@ Gappspath_remote = "http://manager.dianqu666.online:9999/app/list";
 Gappdownloadpath = "https://haiqu-app.oss-cn-qingdao.aliyuncs.com/apk/";
 
 //3 api 接口文件路径
-//Gapi_json_url = "http://115.29.141.214:8888/repo/haiqu_helper/version/version.json"; //公有云
-Gapi_json_url = "http://manager.dianqu666.online:8888/repo/haiqu_helper/version/version.json"; //公有云
-//Gapi_json_url="http://192.168.3.201/haiqu/api.json";        //私有云
 
-//Gchecklicence_api="http://download.dqu360.com:81/haiqu/api.aspx?&action=checklicence"  //请勿修改
-//Gchecklicense_api_new = "http://115.29.141.214:9999/license/check"  //请勿修改
+Gapi_json_url = "http://manager.dianqu666.online:8888/repo/haiqu_helper/version/version.json"; //公有云
+
+
+
 Gchecklicense_api_new = "http://manager.dianqu666.online:9999/license/check"  //请勿修改
 
 /**************************研发常用开关量结束 ******************************************************/
@@ -837,29 +812,6 @@ v4feature = "android.support.v4.view.ViewPager";
 v7feature = "android.support.v7.widget.RecyclerView";
 androidx = "androidx.recyclerview.widget.RecyclerView";
 
-//脚本通讯监听，接收其它脚本指令是autoread的
-// events.on("autoread", function(appwords){
-//    play("global","执行");
-//    play("global","群控指令");
-//    if(appwords==""){
-//     run();
-//    }else{
-//     Gapps=a=eval('(' + '[{"appname":"'+appwords+'","enable":"true"}]' + ')');
-//     run();
-//    }
-//   });
-
-// voice_runstate();
-// voice_devicetype();
-// run();
-
-
-Gwechatnumber = "duyuanbowy";
-Gwechatpass = "dyb";
-wechatfriends = [
-    { "username": "未来不是梦998" },
-    { "username": "未来不是梦99" },
-];
 
 
 if (Gcode_state == "ui") {
@@ -870,7 +822,7 @@ if (Gcode_state == "ui") {
             if (Grunstate != "" && Galready == false) {
 
                 Galready = true;
-                loadGapps();
+                thiscommon.loadGapps();
                 init();
                 run();
 
@@ -879,7 +831,7 @@ if (Gcode_state == "ui") {
             if (Galready_loadjson == false) {
                 //这里在app弹出界面后自动执行
                 Galready_loadjson = true;
-                var result = sysupdate_check();
+                var result = thiscommon.sysupdate_check();
 
 
                 if (result) {
@@ -888,12 +840,12 @@ if (Gcode_state == "ui") {
                     //  alert("123")
                     //   ui.downloadapp.setVisibility(3);
                     //  ui.progress.setVisibility(3);
-                    play("global", "发现新版本");
+                    thiscommon.play("global", "发现新版本");
                 }
                 // alert("882266");
-                loadGapps();
+                thiscommon.loadGapps();
                 // alert("882288")
-                loadappjson();
+                applist=thiscommon.loadappjson();
                 //   alert("hahah");
 
             }
@@ -905,7 +857,7 @@ if (Gcode_state == "ui") {
                 if (Guser_start == false && Galready == false && Guser_cancel == false) {
                     Galready = true;
                     Grunstate = "autoread"
-                    loadGapps();
+                    thiscommon.loadGapps();
                     init();
 
                     run();
@@ -919,42 +871,8 @@ if (Gcode_state == "ui") {
 }
 
 
-
-function addTextView(parent) {
-    // var child = view
-    var child = new TextView(context);
-    child.setTextSize(20);
-    child.setTextColor(colors.parseColor("#ff00f0"))
-    child.setText("左护法");
-    child.setGravity(0); //左护法
-    parent.addView(child);
-    log(child)
-    var child = new TextView(context);
-    child.setTextSize(20);
-    child.setTextColor(colors.parseColor("#ff00f0"))
-    child.setText("大长老"); //中间的是大长老
-    child.setGravity(1);
-    parent.addView(child);
-    log(child)
-    var child = new TextView(context);
-    child.setTextSize(20);
-    child.setTextColor(colors.parseColor("#ff00f0"))
-    child.setText("右护法");
-    child.setGravity(5); //右护法
-    parent.addView(child);
-    log(child)
-}
-//appinfo
-// update_thread=threads.start(
-//     function(){
-//         loadGapps();       
-//         sysupdate_check();
-//     //    try{update_thread.interrupt()}catch(e){}
-
-//     }
-// );
 if (Gcode_state == "noui") {
-    loadGapps();
+    thiscommon.loadGapps();
     run();
 }
 function init() {
@@ -1013,15 +931,7 @@ function run() {
             //处理按键事件
             toast("连续按5次音量下退出海趣助手!!!");
             try {
-                //shell("am force-stop org.autojs.autojs", true);
-                // alert("123");
-                //try{thread_appinfo.interrupt()}catch(e){ };
-                //alert("关闭提示条"+e);    
-
-                // alert("关闭脚本");
-                //threads.shutDownAll();
-                //ui.finish();
-                // exit();   
+              
             } catch (e) {
                 alert("关闭脚本：" + e);
             }
@@ -1034,18 +944,18 @@ function run() {
 
 
 
-    voice_runstate();
-    voice_devicetype();
+    thiscommon.voice_runstate();
+    thiscommon.voice_devicetype();
     //voice_env();
 
     //读取配置文件
 
-    loadappjson();
+    applist=thiscommon.loadappjson();
     if (Greadflag) {//如果开关量打开，才根据本地app标志位确定下一个app
-        resort_applist();
+        thiscommon.resort_applist();
     }
     //根据场景设置gps
-    setgps_status();
+    thiscommon.setgps_status();
     //如果是微信养号需要的操作
     if (Grunstate == "trainwechat") {
 
@@ -1055,11 +965,12 @@ function run() {
         // whchat();
 
     } else {
+        alert("applist length is"+applist.length);
         while (true) {
             for (var i = 0; i < applist.length; i++) {
 
                 //每轮运行前杀死之前的线程，防止缓存
-                clear_normal_thread();
+                thiscommon.clear_normal_thread();
                 try { thread_control.interrupt(); } catch (e) { };
                 try { thread_abnormal.interrupt(); } catch (e) { };
                 try { thread_abnormal_overtime.interrupt(); } catch (e) { };
@@ -1296,7 +1207,7 @@ function run() {
 
                 //阻塞运行打开app 
                 insert_log('', 'main', appname, '012', '')
-                var openstate = openAPP(appname, packagename, activityname, open_obj);
+                var openstate = thiscommon.openAPP(appname, packagename, activityname, open_obj);
 
 
 
@@ -1352,7 +1263,7 @@ function run() {
                             var jsonstr = eval('(' + tmpstr + ')');
                             Gincome_flag = jsonstr[0]['fincome_flag'];
                             //如果是统计收益，走blockanalay阻塞函数
-                            block_analay(incomeanaly_obj);
+                            thiscommon.block_analay(incomeanaly_obj);
                         }
 
                     } else {
@@ -1370,7 +1281,7 @@ function run() {
                                 sleep(1000)
                             } else {
                                 toast("接到线程指令，提前切换下一个")
-                                clear_normal_thread();
+                                thiscommon.clear_normal_thread();
                                 Gsecond = 0;
                                 Callback_finditem_swipecount = 0;
                                 //反之，接到了某一个线程或函数的通知，要求切换app，立刻跳出主线程阻塞，并且重载Grunbreak为false，否则会一直多米诺方式切换下一个的
@@ -1437,182 +1348,8 @@ function checklicence(fsn) {
 
 
 }
-//加载开关量
-function loadGapps() {
-
-    //判断本地有无特殊开关量，如果有则视为开发测试状态，以本地开关量为准
-    var result = files.exists("/sdcard/脚本/localgapps.json")
-    if (result) {
-        toast("当前以本地开关量为准");
-        var str = files.read("/sdcard/脚本/localgapps.json");
-        //   alert(str);
-        Gapps = eval(str)
-
-        //    ui.menu.setDataSource(Gapps);
-    } else {
-        //正常用户状态
-        if (Gjsonloadstate == "remote") {
-
-            // alert("1");
-            try {
-                http.__okhttp__.setTimeout(10000);
-                var r = http.get(Gappspath_remote);
-            } catch (e) {
-
-            }
-
-            if ("200" == r.statusCode) {
 
 
-                //  alert(r.body.string());
-                try {
-                    var tmpstr = r.body.string();
-                    Gapps = eval('(' + tmpstr + ')');
-                    Gapps = Gapps.result;
-
-                    //console.log(Gapps);
-                } catch (e) {
-                    toast("加载云端开关量延迟");
-                }
-                //获取所有开关量对应的包名
-
-                try {
-                    packageliststr = "";
-                    datasourcelist = "";
-                    // console.show();
-                    //    for(var i=0;i<Gapps.length;i++){
-                    //       var thisappname=Gapps[i]["appname"]; 
-                    //       log(thisappname);
-                    //       var r=http.get(Gapplistpath_remote+"/"+thisappname+".json")
-                    //     if(r.statusCode=="200"){  
-                    //        var jsonstr=r.body.string();
-                    //        var thistempjson=eval('(' + jsonstr + ')');
-                    //        var thispackagename=thistempjson["packagename"];
-                    //        packageliststr+='{"packagename":"'+thispackagename+'"},';
-                    //    //    datasourcelist+='{"title":"'+appname+'",icon:"@drawable/ic_android_black_48dp"}';
-
-                    //     }
-
-                    //    }//for end;
-                    //alert("["+packageliststr+"]");
-                    //  Gpackagename_lists=eval("(["+packageliststr+"])")
-                    Gpackagename_lists = eval("([])")
-                    // console.log(Gpackagename_lists);
-
-                    //   datasourcelist=eval("(["+datasourcelist+"])");
-
-                    //   alert("+++++++++++++");
-                } catch (e) { toast("加载开关量包名错误") }
-                // alert(Gapps);
-                //   ref_ui_list();
-
-
-            } else {
-                toast("加载云端gapps列表出错");
-            }
-
-        } else if (Gjsonloadstate == "local") {
-
-        }
-
-    }
-
-
-
-}
-//根据开关量加载特征码
-function loadappjson() {
-    // alert("1111")
-    var start = '[]'
-    applist = eval('(' + start + ')');
-    var tempstr = "";
-    var appname = "";
-    var voiceplaynum = 0;
-    //console.show();
-    for (var i = 0; i < Gapps.length; i++) {
-
-        appname = Gapps[i]["appname"];
-
-        //    if("true"==Gapps[i]['enable']){
-        if (Gapps[i]['enable']) {
-
-            //如果是云端特征码机制
-            //  if(Gjsonloadstate=="remote"){
-            //    if(voiceplaynum==0){
-            //      play("global","加载");
-            //      play("global","云端");
-            //      play("global","特征码");
-            //      voiceplaynum+=1;
-            //    }
-            //  try{
-
-            //   //  http.__okhttp__.setTimeout(10000);
-            //   log(Gapplistpath_remote+"/"+appname+".json")
-            //    var r=http.get(Gapplistpath_remote+"/"+appname+".json")
-            //  }catch(e){
-            //      toast("e "+e);
-            //  };
-
-            //  toast('code=',r.statusCode)
-            //    if(r.statusCode=="200"){  
-
-            //     //   log(jsonstr);
-            //        try{ 
-            //            var jsonstr=r.body.string();
-            //            tempjson=eval('(' + jsonstr + ')');
-            //                    //将json添加到applist中
-            //             applist.push(tempjson); 
-            //        }catch(e){
-            //            alert(appname+" 远程数据结构错误");
-            //        }
-
-            //    }else{
-            //        alert("没有找到远程-1"+appname+".json");
-            //    }
-
-
-            //如果是本地特征码机制
-            //   }else if(Gjsonloadstate=="local"){
-            if (Gjsonloadstate == "remote") {
-                if (voiceplaynum == 0) {
-                    play("global", "加载");
-                    // play("global","本地");
-                    play("global", "特征码");
-                    voiceplaynum += 1;
-                }
-
-                //判断文件是否存在
-                var result = files.exists(Gapplistpath + "/" + appname + ".json");
-                //如果手机上没有这个json文件
-                if (!result) {
-                    //    alert("没有找到本地"+appname+".json");
-                    //    exit();
-                    alert("请您升级到最新版本！");
-                    break;
-                }
-                try {
-                    //读取手机上的json
-                    tempstr = files.read(Gapplistpath + "/" + appname + ".json");
-                    // console.log(tempstr);
-                    //将字符串转换成json
-                    tempjson = eval('(' + tempstr + ')');
-                    //将json添加到applist中
-                    applist.push(tempjson);
-                } catch (e) {
-                    //alert(appname+" 本地数据结构错误");
-                    toast(appname + " 本地数据结构错误");
-                }
-            }
-
-
-
-
-        } else {
-
-        }
-
-    }
-}
 //加载finditem js脚本
 function loadappjs() {
     // thisfinditem=require(Gapplistpath+"/"+appname+".js");
@@ -1643,352 +1380,1022 @@ function loadappjs() {
     // files.remove(Gapplistpath+"/tmp/finditem.js");
     // //files.close();
 }
-//将app名称加载的UI界面上
-function ref_ui_list() {
-    // alert(Gapps.length);
-    try {
-        //  loadappjson();
-        var adata = [];
-        for (var i = 0; i < Gapps.length; i++) {
-
-            let thisappname = Gapps[i]["appname"];
-            let thisappnum = Gapps[i]['appnum'];
-            // console.log(thisappname);
-            let thisver = files.read(Gapplistpath + "/" + thisappname + ".json");
-            let jsonver = thisver;
-            temjson = eval('(' + jsonver + ')');
-            let thisappversion = temjson['appver'];
-            let thispackagename = temjson['packagename'];
-            let thisactivityname = temjson["activityname"];
-            // console.log(thisappversion);
-            var row = {};
-            row.appname = thisappname;
-            row.appnum = thisappnum;
-            row.appver = thisappversion;
-            row.packageName = thispackagename;
-            row.activityname = thisactivityname;
-            adata.push(row);
-
-        }
-        // console.log(adata);
-        for (var i = 0; i < adata.length; i++) {
-            let thisappname = adata[i]['appname'];
-            // 根据包名判断是否安装
-            //alert(applist[0]["packagename"]);
-            //console.log(applist.length);
-            let thisappnum = adata[i]['appnum'];
-            let thispackagename = adata[i]['packageName'];
-            let thisactivityname = adata[i]['activityname'];
-            let thisappversion = adata[i]['appver'];
-            var appinstallstate = "";
-            var thislocalappversion = "";
-
-            //根据app名称获得包名
-            //  for(var j=0;j<applist.length;j++){
-            //  if(thisappname==Gapps[i]["appname"]){
-            // thisappnum=Gapps[i]["appnum"];
-            // thispackagename=adata[i]["packagename"];
-            // thisactivityname=adata[i]["activityname"];
-            // thisappversion=adata[i]["appver"];
-            //     break;
-            //     }  
-            //   }
-            //如果包名不为空，验证app是否安装
-            if (thispackagename != "") {
-                var result = app.getAppName(thispackagename);
-                if (result == null) {
-                    appinstallstate = "升级安装";
-                } else {
-                    var thislocalappversion = thiscommon.getPackageVersion(thispackagename);
-                    // console.log("llllllll:"+thisappname+thislocalappversion);
-
-                    if (thislocalappversion != thisappversion) {
-
-                        appinstallstate = "升级安装";
-
-
-                    } else {
-                        appinstallstate = "打开";
-                    }
-
-                }
-            }
-            //   alert(result)
-
-            // 未安装字体变红色
-
-            appliststr = '<linear id="aa" layout_weight="1" >';
-            appliststr += '<vertical>';
-            appliststr += '    <button id="btn_' + i + '" desc="' + thispackagename + '" text="' + appinstallstate + " " + thisappname + '"  style="Widget.AppCompat.Button.Colored" w="160" h="40" marginTop="10" className=""/>';
-            appliststr += '<progressbar id="progress_' + i + '" w="*" h="3" style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal" marginTop="5"/>';
-            appliststr += '</vertical>';
-            //   appliststr+='<checkbox id="'+thisappname+'" text="'+thisappname+'" color="{{textColor}}" checked="true"/>'
-            //   appliststr+='<text text="次数:"';
-            //   appliststr+='   marginLeft="10"';
-            //   appliststr+='   marginRight="1"';
-            //   appliststr+='   color="{{textColor}}"';
-            //   appliststr+='   size="16sp"';
-            //   appliststr+='   />';
-            //   appliststr+=' <input id="test" layout_weight="1" textColor="black" textSize="16sp" marginLeft="16"></input>';
-            appliststr += '<linear layout_weight="1" gravity="right" >';
-            appliststr += '</linear>';
-            appliststr += '</linear>';
-
-            ui.inflate(appliststr, ui.applist, true);
-
-            let thisbtn = ui.findView('btn_' + i);
-            let thisprogress = ui.findView('progress_' + i);
-            // console.log("progress:"+thisprogress.id);
-
-
-            //  cor=colors.rgb(random(0, 255), random(0, 255), random(0, 255));
-
-
-            if (appinstallstate == "升级安装") {
-                //  thisbtn.attr({'bg':'#EE0000'});
-                thisbtn.attr('bg', '#EE0000');
-                // console.log("btn:"+thisbtn.attr("bg"));
-
-                
-                // console.log("oooooo"+thisbtn.text.appinstallstate());
-                
-
-
-                thisbtn.click(() => {
-
-                    try {
-                        // alert("请执行app检测进行安装");
-                        //ra = new RootAutomator();
-                        //   let urlStr="'http://download.dqu360.com:81/haiqu/"+thisappnum+thisappname+".apk"
-                        // let urlStr="http://www.baidu.com"
-                        //  thread_openurl=threads.start(function(){
-                        //  var result=shell("am start -a android.intent.action.VIEW -d https://www.baidu.com", true);
-                        //   adb shell 
-                        //    alert(result);
-
-                        //});
-                        if(thisbtn.attr("bg")=="#EE0000"){
-                        function apkdownload_installapp() {
-                            importClass("java.io.FileOutputStream")
-                            importClass("java.io.IOException")
-                            importClass("java.io.InputStream")
-                            importClass("java.net.MalformedURLException")
-                            importClass("java.net.URL")
-                            importClass("java.net.URLConnection")
-                            importClass("java.util.ArrayList")
-                            downloadthread = threads.start(
-                                function () {
-                                    try {
-                                        var script_download_path = "/sdcard/脚本/";
-                                        files.createWithDirs(script_download_path);
-                                        files.remove(script_download_path + thisappnum + thisappname + ".apk");
-                                        //console.log(thisappname);
-                                    } catch (e) { }
-
-                                    var myPath = "/storage/emulated/0/脚本/" + thisappnum + thisappname + ".apk";
-                                    var appurl = Gappdownloadpath + thisappnum + thisappname + ".apk";
-                                    //var myUrl = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk";
-                                    var url = new URL(appurl);
-                                    var conn = url.openConnection(); //URLConnection
-                                    var inStream = conn.getInputStream(); //InputStream
-                                    var fs = new FileOutputStream(myPath); //FileOutputStream
-                                    var connLength = conn.getContentLength(); //int
-                                    var startTime = java.lang.System.currentTimeMillis();
-                                    var buffer = util.java.array('byte', 1024); //byte[]
-                                    // buffer = new byte[1204]; //byte[]
-                                    var prevTime = java.lang.System.currentTimeMillis();
-                                    var bytePrev = 0; //前一次记录的文件大小
-                                    var byteSum = 0; //总共读取的文件大小
-                                    var byteRead; //每次读取的byte数
-                                    //log('要下载的文件大小=')
-                                    //log(connLength)
-                                    threads.start(
-                                        function () {
-                                            while (1) {
-                                                var 当前写入的文件大小 = byteSum
-                                                var 百分比 = 当前写入的文件大小 / connLength * 100
-                                                //log(百分比);
-                                                var arr = 百分比.toString().split(".");
-                                                //   var thisprogress=ui.findView('progress_'+i);
-                                                //   console.log(thisprogress);
-
-                                                thisprogress.setProgress(arr[0]);
-                                                // ui.progress_value.setText(p.toString());
-
-                                                var 要显示的内容 = util.format('下载了%s%', 百分比)
-                                                log(要显示的内容)
-                                                if (当前写入的文件大小 >= connLength) {
-                                                    break;
-                                                }
-                                                sleep(1000)
-                                            }
-                                        }
-                                    )
-                                    
-                                    while ((byteRead = inStream.read(buffer)) != -1) {
-                                        byteSum += byteRead;
-                                        //当前时间
-                                        var currentTime = java.lang.System.currentTimeMillis();
-                                        fs.write(buffer, 0, byteRead); //读取
-                                    }
-                                    //开始安装
-                                    toast("下载完成，正在安装")
-                                    result = installapp('/sdcard/脚本/' + thisappnum + thisappname + '.apk');
-                                    if (result) {
-                                        toast("安装成功");
-                                        files.remove(script_download_path + thisappnum + thisappname + ".apk");//移除apk包
-                                        ui.post(changebtn);//在ui线程里执行P
-                                    }
-                                }
-                            );
-                            
-                        }
-                        apkdownload_installapp();
-                        // downloadthread.join();
-                        function changebtn (){
-                            thisbtn.attr('bg', '#01A9F2');
-                            thisbtn.text("打开 "+thisappname);
-    
-                            // thisbtn.id()
-                            // thisbtn.attr('text','打开');
-                           
-                        }
-                    }else{
-                        // thisbtn.click(() => {
-                            // alert(thisappnum+thisappname);
-        
-                            thiscommon.openpackage(thispackagename + "/" + thisactivityname);
-                        // });
-
-                    }
-
-                    } catch (e) {
-
-                        toast("e " + e);
-                    }
-
-                });
-
-            }
-            if (appinstallstate == "打开") {
-                // thisbtn.attr('bg',colors.toString(rndColor()))
-                thisbtn.attr('bg', '#01A9F2');
-
-                thisbtn.click(() => {
-                    // alert(thisappnum+thisappname);
-
-                    thiscommon.openpackage(thispackagename + "/" + thisactivityname);
-                });
-
-
-            }
-            //thisbtn.attr('bg',colors.toString(rndColor()))
 
 
 
 
-        }
-        return true;
 
-    } catch (e) {
-        //console.log(e);
-        toast("加载列表" + e);
-        return false;
-    }
-
-
-
-
-}
-
-
-
-//语音广播手机型号
-function voice_devicetype() {
-
-    if ("xiaomi2s" == Gdevicetype) {
-        play("global", "小米");
-        play("global", "2");
-        play("global", "s");
-    } else if ("xiaomi4s" == Gdevicetype) {
-        play("global", "小米");
-        play("global", "4");
-        play("global", "s");
-    } else if ("xiaomi4" == Gdevicetype) {
-        play("global", "小米");
-        play("global", "4");
-    } else if ("lnnl" == Gdevicetype) {
-        play("global", "lnnl");
-    } else if ("xiaominote2" == Gdevicetype) {
-        play("global", "小米");
-        play("global", "note");
-        play("global", "2");
-
-    } else if ("le" == Gdevicetype) {
-        play("global", "乐视");
-    } else if ("vmos" == Gdevicetype) {
-        play("global", "虚拟机");
-    }
-
-
-}
 //语音广播场景
 function voice_env() {
-    play('global', "场景")
+    thiscommon.play('global', "场景")
     if (ui.indoor.checked == true) {
-        play('global', "室内")
+        thiscommon.play('global', "室内")
     } else if (ui.outdoor.checked == true) {
-        play('global', "户外")
+        thiscommon.play('global', "户外")
 
     }
 }
-//自定义打印函数
-function mytoast(mystr) {
-    if (Gdebug) {
-        toast(mystr);
+
+
+
+
+
+
+
+
+
+//用悬浮窗里控制运行代码的方法。
+//每一行都有注释
+
+//定义悬浮窗控制模块，命名为(悬块)。
+var 悬块 = function(window, view) {
+    //判断是否缺少构造参数。
+    if (!window || !view) {
+        //缺少构造参数，抛出错误。
+        throw "缺参数";
+    };
+    //记录按键被按下时的触摸坐标
+    this.x = 0, this.y = 0;
+    //记录按键被按下时的悬浮窗位置
+    this.windowX, this.windowY;
+    //按下时长超过此值则执行长按等动作
+    this.downTime = 500;
+    //记录定时执行器的返回id
+    this.Timeout = 0;
+    //创建点击长按事件
+    this.Click = function() {};
+    this.LongClick = function() {};
+    //可修改点击长按事件
+    this.setClick = function(fun) {
+        //判断参数类型是否为函数？
+        if (typeof fun == "function") {
+            this.Click = fun;
+        };
+    };
+    this.setLongClick = function(fun, ji) {
+        //判断参数类型是否为函数？
+        if (typeof fun == "function") {
+            this.LongClick = fun;
+            //判断参数是否可为设置数字？
+            if (parseInt(ji) <= 1000) {
+                this.downTime = parseInt(ji);
+            };
+        };
+    };
+
+    view.setOnTouchListener(new android.view.View.OnTouchListener((view, event) => {
+        //判断当前触控事件，以便执行操作。
+        switch (event.getAction()) {
+            //按下事件。
+            case event.ACTION_DOWN:
+                //按下记录各种坐标数据。
+                this.x = event.getRawX();
+                this.y = event.getRawY();
+                this.windowX = window.getX();
+                this.windowY = window.getY();
+                //创建一个定时器用来定时执行长按操作。
+                this.Timeout = setTimeout(() => {
+                    this.LongClick();
+                    this.Timeout = 0;
+                }, this.downTime);
+                return true;
+                //移动事件。
+            // case event.ACTION_MOVE:
+            //     //移动距离过大则判断为移动状态
+            //     if (Math.abs(event.getRawY() - this.y) > 5 && Math.abs(event.getRawX() - this.x) > 5) {
+            //         //移动状态清除定时器
+            //         if (this.Timeout) {
+            //             //定时器存在则清除定时器。
+            //             clearTimeout(this.Timeout);
+            //             this.Timeout = 0;
+            //         };
+            //         //移动手指时调整悬浮窗位置
+            //         window.setPosition(this.windowX + (event.getRawX() - this.x), this.windowY + (event.getRawY() - this.y));
+            //     };
+            //     return true;
+                //抬起事件。
+            case event.ACTION_UP:
+                if (this.Timeout) {
+                    //手指抬起时，定时器存在，说明没有移动和按下时间小于长按时间。
+                    //清除定时器。
+                    clearTimeout(this.Timeout);
+                    this.Timeout = 0;
+                    //执行点击事件。
+                    this.Click();
+                };
+                return true;
+        };
+        //控件的触控事件函数必须要返回true。否则报错。
+        return true;
+    }));
+};
+
+
+//主模块自主判断滑动机制
+function main_swipe() {
+    if ("lnnl" == Gdevicetype || "xiaomi4" == Gdevicetype || "le" == Gdevicetype || "vmos" == Gdevicetype) {
+        try { thisswipe.swiperealup_custom_lnnl(Gppinterval); } catch (e) { toast("e2:" + e) };
+    } else {
+        thisswipe.swiperealup_custom();
     }
 }
-//语音广播初始化模式
-function voice_runstate() {
-    var runstate_voicename = '';
-    if ("autoread" == Grunstate) {
-        runstate_voicename = "自动阅读";
-    } else if ("bindwechat" == Grunstate) {
-        runstate_voicename = "微信绑定";
-    } else if ("trainwechat" == Grunstate) {
-        runstate_voicename = "微信养号";
-    } else if ("finditem" == Grunstate) {
-        runstate_voicename = "广告不点击";
-    } else if ("popupdebug" == Grunstate) {
-        runstate_voicename = "弹窗跟踪调试";
-    } else if ("analy" == Grunstate) {
-        runstate_voicename = "统计收益"
-    }
-    play("global", "当前工作模式");
-    play("global", runstate_voicename);
+
+
+
+
+function addTextView(parent) {
+    // var child = view
+    var child = new TextView(context);
+    child.setTextSize(20);
+    child.setTextColor(colors.parseColor("#ff00f0"))
+    child.setText("左护法");
+    child.setGravity(0); //左护法
+    parent.addView(child);
+    log(child)
+    var child = new TextView(context);
+    child.setTextSize(20);
+    child.setTextColor(colors.parseColor("#ff00f0"))
+    child.setText("大长老"); //中间的是大长老
+    child.setGravity(1);
+    parent.addView(child);
+    log(child)
+    var child = new TextView(context);
+    child.setTextSize(20);
+    child.setTextColor(colors.parseColor("#ff00f0"))
+    child.setText("右护法");
+    child.setGravity(5); //右护法
+    parent.addView(child);
+    log(child)
 }
-function setgps_status() {
-    if (Genv == "indoor") {
-        // alert("关闭gps");
-        thiscommon.setgps("close");
-    } else if (Genv == "outdoor") {
-        // alert("打开gps");
+function whthumbup() {
 
-        thiscommon.setgps("open");
+    click("发现");
+    thiscommon.play("global", "点击");
+    thiscommon.play("global", "发现");
+
+
+
+    ele = className("android.widget.TextView").text("朋友圈");
+    thiscommon.clickxy_for_ele_once(ele.findOne(1000));
+    thiscommon.play("global", "点击");
+    thiscommon.play("global", "朋友圈");
+    sleep(2000);
+    //上滑
+    //thiscommon.swiperealup_custom();
+    //sleep(1000);
+    //点击评论三个小点
+    thiscommon.play("global", "点击");
+    thiscommon.play("global", "赞");
+    ele = className("android.widget.ImageView").desc("评论");
+    thiscommon.clickxy_for_ele_once(ele.findOne(1000));
+    sleep(1000);
+
+    // //点赞代码
+    // ele=className("android.widget.ImageView").desc("评论");
+    // clickxy_for_ele_once(ele.findOne(1000));
+    // sleep(1000);
+    // ele=className("android.widget.TextView").text("赞");
+    // clickxy_for_ele_once(ele.findOne());
+    // 评论代码
+
+    // 点击评论弹窗
+    // ele=className("android.widget.TextView").text("评论");
+    // clickxy_for_ele_once(ele.findOne());
+    // 录入文字
+    // setText("找到好的告诉我，我也在找哦");
+    // sleep(1000);
+    // ele=className("android.widget.Button").text("发送");
+    // clickxy_for_ele_once(ele.findOne(1000));
+
+    // alert(ele.findOne(1000));
+    // sleep(1000);
+    // ele=className("android.widget.TextView").text("取消");
+    // clickxy_for_ele_once(ele.findOne());
+
+}
+// while_abnormal的守护线程，有时候click事件会阻塞，所以每隔5秒杀掉abnormal线程再启动
+function demon_abnormal(abnormal_obj) {
+    thiscommon.mytoast("this is demon_abnormal...");
+    thread_demon_abnormal = threads.start(
+        function () {
+            setInterval(function () {
+                while_abnormal(abnormal_obj);
+                sleep(5000);
+                thread_abnormal.interrupt();
+            }, 1000);
+        }
+    );
+
+}
+//波波视频的一个特殊阅读处理
+function callback_boboshipin(fucname, ele) {
+    var thisnum = 0;
+    //alert(ele.child(1).child(0).text());
+    var thistop = ele.child(1).child(0).bounds().top + 20;
+    var thisleft = ele.child(1).child(0).bounds().left + 130;
+
+    //     while(1){
+    //         if(thisnum>30){
+    //             break;
+    //         }
+    //         //toast("top is"+thistop+" left is"+thisleft);
+    //         thiscommon.touchreal(thistop,thisleft);     
+    //        // toast("fuck ............."+thisnum);
+    //         thisnum+=1;
+    //     sleep(3000);
+    // }
+    var thisnum = 0;
+    while (1) {
+        // thiscommon.touchreal(300,1273);
+        //toast("top is"+thistop+" left is"+thisleft);
+        //点击有收益的地方
+        sleep(1000);
+        thiscommon.touchreal(thisleft, thistop);
+        sleep(800);
+
+        //如果是点击领取
+        var elelq = className("android.view.View").desc("点击领取");//.findOnce(0);
+        if (elelq.exists()) {
+            //点击
+            elelq.findOnce(0).click();
+            sleep(1000);
+            //  elelq.findOnce(0).click();  
+
+            //关闭
+            sleep(1000);
+            var eleclose = id("e8").exists();
+            if (eleclose) {
+                id("e8").click();
+            }
+
+        }
+        //如果是分享给朋友
+        var elefx = className("android.view.View").desc("分享给朋友");
+        if (elefx.exists()) {
+            sleep(1000);
+            //关闭
+            var eleclose = id("e8").exists();
+            if (eleclose) {
+                id("e8").click();
+            }
+        }
+
+
+        if (thisnum > 20) {
+            break;
+        }
+        thisnum += 1;
+        sleep(5000)
+    }
+    exit();
+
+}
+
+//读取本地标志位
+function readlastapp() {
+    importClass('android.database.sqlite.SQLiteDatabase');
+    //importClass("android.content.ContentValues");
+    //importClass("android.content.Context");
+    importClass("android.database.Cursor");
+    //context.deleteDatabase("haiqu.db");  
+    //打开或创建haiqu.db数据库        
+    db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
+    //创建t_tag表
+    db.execSQL("create table if not exists " + "t_tag" + "(_id integer primary key,appnum,appname)");
+    var c = db.query("t_tag", null, "", null, null, null, null, null);
+    lastappname = "";
+    while (c.moveToNext()) {
+        var appname = c.getString(c.getColumnIndex("appname"));
+        return appname;
 
     }
+}
+
+
+
+//检测本地手机app是否符合要求
+//加载特征码
+function checklocalapp() {
+
+    var start = '[]'
+    var tempstr = "";
+    var appname = "";
+    var voiceplaynum = 0;
+    var thisjsonstr = "";
+    var diffcount = 0;
+    var alertstr = "";
+    for (var i = 0; i < Gapps.length; i++) {
+
+        appname = Gapps[i]["appname"];
+        appnum = Gapps[i]["appnum"];
+        //console.log(appnum);
+        //if("true"==Gapps[i]['enable']){
+        if (Gapps[i]['enable']) {
+            //alert("1");
+            //如果是云端特征码机制
+            if (Gjsonloadstate == "remote") {
+                if (voiceplaynum == 0) {
+                    thiscommon.play("global", "加载");
+                    //    play("global","云端");
+                    thiscommon.play("global", "特征码");
+                    voiceplaynum += 1;
+                }
+
+                // http.__okhttp__.setTimeout(10000);
+                // var r=http.get(Gapplistpath_remote+"/"+appname+".json")
+                var r = files.read(Gapplistpath + "/" + appname + ".json")
+
+                //if(r.statusCode=="200"){ 
+                //console.log(r); 
+                var jsonstr = r;
+                // console.log(jsonstr);
+
+                try {
+                    tempjson = eval('(' + jsonstr + ')');
+                    var pname = tempjson['packagename'];
+                    // alert(pname);
+                    var appname = tempjson['appname'];
+                    var appver = tempjson['appver'];
+                    var result = app.getAppName(pname);
+                    //alert(result);
+                    if (result == null) {
+                        diffcount += 1;
+                        thisjsonstr += '{"appnum":"' + appnum + '","appname":"' + appname + '","state":"您未安装该APP，请安装"},';
+                        alertstr += appname + "-未安装\n";
+                    } else {
+
+                        var localappver = thiscommon.getPackageVersion(pname);
+
+                        if (localappver != appver) {
+                            diffcount += 1;
+                            thisjsonstr += '{"appnum":"' + appnum + '","appname":"' + appname + '","state":"您的版本' + localappver + ' 与云端版本' + appver + '不匹配"},';
+                            alertstr += appname + "-版本不匹配\n";
+                        }
+
+
+
+                    }
+
+                } catch (e) {
+                    alert(appname + " 远程数据结构错误");
+                }
+
+                // }else{
+                //     alert("没有找到远程-2"+appname+".json");
+                // }
+
+
+                //如果是本地特征码机制
+            }
+
+
+
+
+        } else {
+            //alert("1");
+        }
+
+    }
+
+    if ("" != thisjsonstr) {
+        //     thisjsonstr='['+thisjsonstr+']';
+        //    // log(thisjsonstr);
+        //    if(diffcount>10){
+        //     urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showapplist';
+
+        //    }else{
+        //     urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showdiffapplist&jsonstr='+thisjsonstr;
+        //    }
+
+        //      var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
+        alert(alertstr + "\n请允许打开浏览器，根据本提示下载对应app");
+        //urlStr = 'http://115.29.141.214:8888/repo/haiqu_helper/html/index.html';
+        urlStr = 'http://manager.dianqu666.online:8888/repo/haiqu_helper/html/index.html';
+        var result = shell("am start -a android.intent.action.VIEW -d '" + urlStr + "'", true);
+
+    } else {
+        alert("您手机上的APP与云端一致，请定期检测");
+    }
+
+}
+function installapp(path) {
+    var result = shell(" pm install -r -d " + path, true);
+    return result;
+
+}
+//穿入文件名 和本地要保存的路径
+function getScriptFromServer() { //从服务器获取脚本
+    // var i, download_res, script_file_url = "https://script.iqqclub.com/Script/" + FILE;
+    var i, download_res
+    //  console.show();
+    for (i = 0; 10 > i; i++) try {
+        if (download_res = http.get(Gdownloadpath), 200 == download_res.statusCode) break;
+        log("res:" + download_res.statusCode);
+        if (i > 8) return !1;
+    } catch (e) {
+        //log("error res:"+download_res);
+        if (sleep(500), 9 == i) return !1;
+    }
+    //alert("1")
+    return files.writeBytes("/sdcard/脚本/haiqu.apk", download_res.body.bytes()), !0;
+}
+function once_check(checktype, f1, f2, f3) {
+    thiscommon.mytoast("once_check checktype is" + checktype + " f1 is" + f1);
+    if ("classname_text" == checktype) {
+        var ele = className(f1).text(f2).exists();
+        if (ele) {
+            return true;
+        }
+
+    } else if ("classname_desc" == checktype) {
+        var ele = className(f1).desc(f2).exists();
+        if (ele) {
+            return true;
+        }
+    } else if ("id" == checktype) {
+        thiscommon.mytoast("once_check checktype is id执行");
+        var ele = id(f1).exists();
+        thiscommon.mytoast("once_check ele is:" + ele);
+        if (ele) {
+            return true;
+        }
+    } else {
+        return false;
+    }
+}
+//初始化licence 当传入空值时执行本地查询并返回本地fsn，传入fsn激活码时，只写入本地
+function initlicence(fsn) {
+   // alert("initlicence fsn is:"+fsn)
+    importClass('android.database.sqlite.SQLiteDatabase');
+    importClass("android.content.ContentValues");
+    //importClass("android.content.Context");
+    importClass("android.database.Cursor");
+
+    //context.deleteDatabase("haiqu.db");  
+    //打开或创建haiqu.db数据库        
+    db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
+    //创建t_tag表
+    db.execSQL("create table if not exists " + "t_licence" + "(fsn,fsession,fvar1,fvar2,fvar3)");
+    //      db.execSQL("DELETE FROM  t_licence");
+    if (fsn != "") {
+        var t_tag = new Object;
+        t_tag.fsn = fsn;
+        //ContentValues以键值对的形式存放数据       
+        var cv = new ContentValues();
+        cv.put("fsn", t_tag.fsn);
+        //插入ContentValues中的数据        
+        db.insert("t_licence", null, cv);
+    }
+
+
+    var c = db.query("t_licence", null, "", null, null, null, null, null);
+    while (c.moveToNext()) {
+        var fsn = c.getString(c.getColumnIndex("fsn"));
+       
+        return fsn;
+
+    }
+    db.close();
+}
+
+
+
+
+function page_check() {
+    // toast("this is pagecheck")
+    try {
+        var thisispageone = false;
+        var thisispagetwo = false;
+
+        //一级页面验证方式取值
+        var pageone_featuremode = open_obj["featuremode"];
+        //   alert("1")
+        if ("classname_text" == pageone_featuremode) {
+            //   alert("2")
+            var thisclassname = open_obj["classname"];
+            var thistext = open_obj["text"];
+            // alert("3")
+            try {
+                var thisdepth = open_obj["depth"];
+                var thisindexinparent = open_obj["indexinparent"];
+                var result = className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                // alert("4")
+            } catch (e) {
+                toast("open_obj classname_text depth indexinparent error");
+                var result = false;
+            }
+
+            if (result) { thisispageone = true }
+        } else if ("classname" == pageone_featuremode) {
+            var thisclassname = open_obj["classname"];
+            try {
+                var thisdepth = open_obj["depth"];
+                var thisindexinparent = open_obj["indexinparent"];
+                var result = className(thisclassname).depth(thisdepth).indexInParent(thisindexinparent).exists();
+            } catch (e) {
+                toast("open_obj classname depth indexinparent error");
+                var result = false;
+            }
+
+            if (result) { thisispageone = true; toast('当前识别为1级页面') }
+        }
+        //二级页面验证方式取值
+        var pagetwo_featuremode = autoread_obj["ar1"]["featuremode"];
+        //  alert()
+        obja = "ar1";
+        if ("classname_desc" == pagetwo_featuremode) {
+            var thisclassname = autoread_obj[obja]["classname"];
+            var thisdesc = autoread_obj[obja]["desc"];
+            var result = className(thisclassname).desc(thisdesc).exists();
+            if (result) { thisispagetwo = true }
+        } else if ("classname_text" == pagetwo_featuremode) {
+            var thisclassname = autoread_obj[obja]["classname"];
+            var thistext = autoread_obj[obja]["text"];
+            var result = className(thisclassname).text(thistext).exists();
+            if (result) { thisispagetwo = true }
+        } else if ("classname" == pagetwo_featuremode) {
+            var thisclassname = autoread_obj[obja]["classname"];
+            var result = className(thisclassname).exists();
+            if (result) { thisispagetwo = true }
+        } else if ("id" == pagetwo_featuremode) {
+            //    alert("5 id")
+            var thisid = autoread_obj[obja]["id"];
+            //  alert("thisis is:"+thisid)
+            var result = id(thisid).exists();
+            //  alert("thisid:"+thisid)
+            if (result) { thisispagetwo = true }
+        } else if ("ids" == pagetwo_featuremode) {
+
+            var thisid = autoread_obj[obja]["ids"];
+            ids_arr = thisid.split("||");
+            var num = 0;
+            try {
+                for (var i = 0; i < ids_arr.length; i++) {
+                    if (id(ids_arr[i]).exists()) {
+                        thisispagetwo = true
+                        //  toast('当前识别为2级页面')
+                        break;
+                    }
+                }
+            } catch (e) {
+                //  break;
+            }
+        }//else if end
+
+        //开始判断
+        //     如果当前是一级线程在工作，又是一级页面 pass
+        // 如果当前是一级线程在工作，却是二级页面，则切换成readnews 工作
+        // 如果当前是一级线程在工作，既是一级页面又是二级页面则弹窗
+
+        // 如果当前是二级线程在工作 又是二级页面 pass
+        // 如果当前是二级线程在工作，却又是一级页面，则切换成findnews工作
+        // 如果当前是二级线程在工作，既是一级又是二级页面则弹窗
+
+        if ("findnews_start" == Gworkthread) {
+            //  alert("panduan 1")
+            if (thisispageone == true && thisispagetwo == true) {
+                //     alert("panduan 1-1")
+                toast("当前页面识别：既是1级又是2级");
+            } else if (thisispagetwo == true) {
+                // alert("panduan 1-2")
+                toast("发现一级切换到了二级")
+                while_readnews(autoread_obj);
+                sleep(1000)
+                try { thread_findnews.interrupt() } catch (e) { }
+
+                //   toast();
+            } else if (thisispageone == true) {
+                //   toast("1级线程与1级页面匹配")
+            }
+        }
+        else if ("readnews_start" == Gworkthread) {
+            //  alert("Gworkthread is"+Gworkthread);
+            if (thisispageone == true && thisispagetwo == true) {
+                //alert("panduan 2-1")
+                toast("当前页面识别：既是1级又是2级");
+            } else if (thisispageone == true) {
+                toast("发现2级切换到了1级")
+                //   alert("panduan 2-2")
+                while_findnews(autoread_obj);
+                sleep(1000)
+                try { thread_readnews.interrupt() } catch (e) { }
+
+            } else if (thisispagetwo == true) {
+                //  toast("2级线程与2级页面匹配")
+
+            }
+        }
+        if (thisispageone == false && thisispagetwo == false) {
+            toast("没有识别当前页面1or2级");
+        }
+    } catch (e) { toast("page_check 异常") }
+    //初始化页面状态
+
+}
+
+
+
+//目标页面检测
+function while_pagecheck_bak() {
+
+    //  return true;
+    try { thread_pachagecheck.interrupt(); } catch (e) { }
+    var nowpage = "";
+    var while_count = 0;
+    //while(true){
+    //alert("目标页面识别准备启动")
+    thread_pachagecheck = threads.start(
+        function () {
+            try { } catch (e) { };
+
+            var thisfeaturemode = open_obj["featuremode"];
+            if ("classname_text" == thisfeaturemode) {
+
+                var thisclassname = open_obj["classname"];
+                var thistext = open_obj["text"];
+                var thisdepth = open_obj["depth"];
+                var thisindexinparent = open_obj["indexinparent"];
+                var result = className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
+                //  var result=className(thisclassname).text(thistext).exists();
+                //     alert("result is:"+result)
+                if (result) {  //说明当前是在一级页     
+                    nowpage = "1";
+                }
+            }
+            //目标页面判断 结束
+
+            //执行目标识别后的操作
+
+            if ("findnews_start" == Gworkthread) {
+                //如果是 findnews_start则验证是不是一级页面
+                if ("1" == nowpage) {
+                    while_count = 0;
+                } else {
+                    while_count += 1;
+                }
+
+                if (while_count > 10) {
+                    toast("findnews_start检测：未识别页面特征码")
+                    workthread_errorcount = 999;
+                    while_count = 0;
+
+                    // break;
+                }
+
+
+
+
+            }//function end;
+
+
+            //目标页面判断
+
+
+
+
+
+            //执行目标识别后的操作 结束
+
+
+        })
+}
+//统计收益函数
+function callback_updatecoinincome(coin, income) {
+    importClass('android.database.sqlite.SQLiteDatabase');
+    //importClass("android.content.ContentValues");
+    //    importClass("android.content.Context");
+    importClass("android.database.Cursor");
+    var analystate = 'unknow';
+    alert("Ganalyflag is:" + Ganalyflag);
+    if ("first" == Ganalyflag) {
+        analystate = '1';
+
+    } else if ("finish" == Ganalyflag) {
+        analystate = '2';
+
+    }
+
+    toast("回调函数接收到了金币" + coin + " 收益" + income);
+    try {
+        var db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
+        db.execSQL("create table if not exists " + "app_income_mass" + "(deviceid,appnum,appname,coin,income,createtime,analystate)");
+        var cv = new ContentValues();
+        //cv.put("deviceid",GdeviceMac);
+        cv.put("deviceid", GdeviceImei);
+        cv.put("appnum", '');
+        cv.put("appname", appname);
+        cv.put("coin", coin);
+        cv.put("income", income);
+        cv.put("createtime", thiscommon.load_time());
+        cv.put("analystate", analystate);
+        db.insert("app_income_mass", null, cv);
+        db.close();
+    } catch (e) {
+        toast("upcoinincome:" + e);
+    }
+
+}
+
+// 数据库：haiqu 表：t_log表结构
+// 手机mac app名称 动作 动作所在线程 执行时间  执行结果
+// fsession,fappname,faction,fthread,factime,fresult
+
+
+// 获取手机系统时间函数
+// 动作faction 编号解释
+// 001 返回一级 二级页面滑栋超过50次
+// 002 返回一级 无收益圈 -
+// 003 返回一级 获得获益 -
+// 004 返回一级 打开失败 -
+// 005 返回一级 超过线程计数器90次 -
+// 006 拉回站内-
+// 007 拉回主线-
+// 008 找新闻 -
+// 009 读新闻 -
+// 010 签到
+// 011 优化进程
+// 012 打开APP -
+// 013 搬砖计数器超过次数重启 -
+// 014 找到新闻并打开 -
+// 015 一直没有找到新闻返回 -
+// 016 超过相同页面停留计数器50次，重启APP
+// 017 返回一级 滑动数量到达随机最大数
+// 018 刮刮卡页面识别
+// 019 检查
+
+//获取系统时间
+
+function update_log() {
+
+}
+// function getdevicemac(){
+//     setTimeout(function(){
+// //如果mac地址为空
+//    var mac=device.getMacAddress();
+//    if(mac==null){
+//     GdeviceMac="";
+//     //alert("mac is kong");
+//     toast("助手需要无线网络，请确认wifi开关处于开启状态");
+//    }else{
+//     GdeviceMac=mac;
+//    // alert("this is fun "+device.getMacAddress());
+//    }
+//    var midhead="dqprop01h2";
+//    webView = ui.findById("webview");
+
+//    //var aa=device.getMacAddress();;
+//    var mid=GdeviceMac.replace(/:/g,"");
+//    mid=mid.toLocaleLowerCase()
+//   // alert(GdeviceMac);
+//    tmpstr="";
+//    for(var i in mid){
+//        tmpstr+=mid[i]+mid[i].charCodeAt(0);
+//     //    if(tmpstr.length==18){
+//     //        break;
+//     //    }
+//    }
+//    tmpstr=tmpstr.substring(0,18);
+
+//    //生成机器码
+//   // Gdevicecode=midhead+mid+tmpstr;
+//    //return Gdevicecode;
+
+//    html = files.path("./qrcode.html");
+//    webView.loadUrl("file://" + html);
+//    setTimeout(() => {
+//        webView.post(new Runnable({
+//            run: function() {
+//                // 调用javascript的callJS()方法
+//                webView.loadUrl("javascript:callJS('"+midhead+mid+tmpstr+"')");//传入的值为123
+//            }
+//        }));
+//    }, 2000);
+
+// },2000)
+// }
+
+
+function showanalylog() {
+    var xmlstr = "";
+    xmlstr += ' <TableLayout '
+    xmlstr += '        layout_width="match_parent"'
+    xmlstr += '        layout_height="match_parent"'
+    xmlstr += '        background="#ffffff"'
+    xmlstr += '        stretchColumns="1"'
+    xmlstr += '        >'
+    xmlstr += ''
+    xmlstr += ''
+    xmlstr += '        <TableRow>'
+    xmlstr += '        <TextView'
+    xmlstr += '            layout_width="wrap_content"'
+    xmlstr += '            layout_height="wrap_content"'
+    xmlstr += '            background="#7E787F"   '
+    xmlstr += '            layout_margin="1dip" '
+    xmlstr += '            style="Widget.AppCompat.Button.Colored"'
+    xmlstr += '            text="app名称"/>'
+    xmlstr += '        <TextView'
+    xmlstr += '            layout_width="wrap_content"'
+    xmlstr += '            layout_height="wrap_content"'
+    xmlstr += '            background="#7E787F"    '
+    xmlstr += '            layout_margin="1dip" '
+    xmlstr += '            style="Widget.AppCompat.Button.Colored"'
+    xmlstr += '            text="金币数量"/>'
+    xmlstr += '        <TextView'
+    xmlstr += '            layout_width="wrap_content"'
+    xmlstr += '            layout_height="wrap_content"'
+    xmlstr += '            background="#7E787F"   '
+    xmlstr += '            layout_margin="1dip" '
+    xmlstr += '            style="Widget.AppCompat.Button.Colored"'
+    xmlstr += '            text="收益"/>'
+    xmlstr += '        <TextView'
+    xmlstr += '            w="auto"'
+    xmlstr += '            layout_height="wrap_content"'
+    xmlstr += '            background="#7E787F"   '
+    xmlstr += '            layout_margin="1dip" '
+    xmlstr += '            style="Widget.AppCompat.Button.Colored"'
+    xmlstr += '            text="统计时间"/>'
+    xmlstr += '        </TableRow>'
+
+
+
+
+
+    // xmlstr="";
+
+
+    for (var i = 0; i < 10; i++) {
+        xmlstr += ' <TableRow>';
+        xmlstr += '            <TextView'
+        xmlstr += '                layout_width="wrap_content"'
+        xmlstr += '                layout_height="wrap_content"'
+        xmlstr += '                background="#7E787F"   '
+        xmlstr += '                layout_margin="0dip" '
+        xmlstr += '                style="Widget.AppCompat.Button.Colored"'
+        xmlstr += '                text="北京知天下"/>'
+        xmlstr += '            <TextView'
+        xmlstr += '                layout_width="wrap_content"'
+        xmlstr += '                layout_height="wrap_content"'
+        xmlstr += '                background="#7E787F"    '
+        xmlstr += '                layout_margin="0dip" '
+        xmlstr += '                style="Widget.AppCompat.Button.Colored"'
+        xmlstr += '                text="2000"/>'
+        xmlstr += '            <TextView'
+        xmlstr += '                layout_width="wrap_content"'
+        xmlstr += '                layout_height="wrap_content"'
+        xmlstr += '                background="#7E787F"   '
+        xmlstr += '                layout_margin="0dip" '
+        xmlstr += '                style="Widget.AppCompat.Button.Colored"'
+        xmlstr += '                text="1.1"/>'
+        xmlstr += '            <TextView'
+        xmlstr += '                w="auto"'
+        xmlstr += '                layout_height="wrap_content"'
+        xmlstr += '                background="#7E787F"   '
+        xmlstr += '                layout_margin="0dip" '
+        xmlstr += '                style="Widget.AppCompat.Button.Colored"'
+        xmlstr += '                text="2019-08-09 11:22:33"/>'
+        xmlstr += '            </TableRow>'
+    }
+
+    xmlstr += '    '
+    xmlstr += '       '
+    xmlstr += '        </TableLayout>'
+
+    ui.inflate(xmlstr, ui.logframe, true);
+
+}
+
+//写日志函数
+function insert_log(psessionid, pthread, pappname, paction, presult) {
+    importClass('android.database.sqlite.SQLiteDatabase');
+    //importClass("android.content.ContentValues");
+    //    importClass("android.content.Context");
+    importClass("android.database.Cursor");
+    if (Ginsert_log) {
+        try {
+            var db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
+            db.execSQL("create table if not exists " + "t_log" + "(fsession,fthread,fappname,faction,factime,fresult)");
+            //var c = db.query("t_log", null, "", null, null, null, null, null);
+            var t_tag = new Object;
+            t_tag.sessionid = psessionid;
+            t_tag.thread = pthread;
+            t_tag.appname = pappname;
+            t_tag.action = paction;
+            t_tag.actime = thiscommon.load_time();
+            t_tag.result = presult;
+            //ContentValues以键值对的形式存放数据???????
+            var cv = new ContentValues();
+            cv.put("fsession", t_tag.sessionid);
+            cv.put("fthread", t_tag.thread);
+            cv.put("fappname", t_tag.appname);
+            cv.put("faction", t_tag.action);
+            cv.put("factime", t_tag.actime);
+            cv.put("fresult", t_tag.result);
+
+            //插入ContentValues中的数据????????
+            db.insert("t_log", null, cv);
+            db.close();
+            // alert("this is insert log")
+
+        } catch (e) {
+
+        }
+        try {
+
+
+            var timestamp = new Date().getTime();
+            //var url = Guploadlog_url;
+            var factime = timestamp;
+            var faction = paction;
+            var fappname = pappname;
+            var fresult = presult;
+            //var fsession=GdeviceMac; //这里使用全局变量
+            var fsession = GdeviceImei;
+            var fthread = pthread;
+            // var factime = timestamp;
+            //var faction = "017";
+            //var fappname="北京知天下1";
+            //var fresult= "";
+            //var fsession="005056c0000f";
+            //var fthread="control";
+
+            //alert("this is uploadlog1"+Guploadlog_url)
+            try { thread_uploadlog.interrupt(); } catch (e) { }
+            thread_uploadlog = threads.start(function () {
+                var res = http.postJson(Guploadlog_url, {
+                    "factime": factime,
+                    "faction": faction,
+                    "fappname": fappname,
+                    "fresult": fresult,
+                    "fsession": fsession,
+                    "fthread": fthread
+                });
+                //alert("this is uploadlog2")
+
+                //  var html = res.body.string();
+                //  alert(html);
+            });
+
+
+
+        } catch (e) {
+            //  alert(e);
+        }
+    }
+
+
+}
+//写入标志位函数
+function setlastapp(appnum, appname) {
+
+    //context.deleteDatabase("haiqu.db");  
+    //打开或创建haiqu.db数据库        
+    db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
+    //创建t_tag表
+    db.execSQL("create table if not exists " + "t_tag" + "(_id integer primary key,appnum,appname)");
+    //取出数据库内容
+    //  查询  c 是 Cursor类
+    //alert("abc");
+    var c = db.query("t_tag", null, "", null, null, null, null, null);
+    // lastappname="";
+
+    // if(appname==null){
+    //    alert("没有记录上次阅读的app");
+    // }else{
+    //     alert("上次阅读到了："+lastappname);
+    // }
+    //ok. 删除表内容
+    db.execSQL("DELETE FROM  t_tag");
+    //alert("set 数据库 appnum="  +  appnum  +  " appname="  +  appname );
+    var t_tag = new Object;
+    t_tag.appnum = appnum;
+    t_tag.appname = appname;
+    //ContentValues以键值对的形式存放数据       
+    var cv = new ContentValues();
+    cv.put("appnum", t_tag.appnum);
+    //cv.put("appname",  java.lang.Integer(35));
+    cv.put("appname", t_tag.appname);
+
+    //插入ContentValues中的数据        
+    db.insert("t_tag", null, cv);
+    //db.insert("t_tag",  null,  cv);  
+    //删除表数据  ok
+    //db.delete("person", null,null);  
+    //ok. 删除表内容
+    // db.execSQL("DELETE FROM  person  WHERE age>32");
+    //关闭当前数据库      
+    db.close();
 }
 //签到
 function while_signin(signin_obj) {
     //  alert("signin_obj is:"+signin_obj)
     Gworkthread = "signin_start";
     insert_log('', 'signin', appname, '010', '')
-    play("global", "执行");
-    play("global", "每日签到");
+    thiscommon.play("global", "执行");
+    thiscommon.play("global", "每日签到");
     sleep(1000);
     //针对数据结构错误的处理
     if ("undefined" == typeof (signin_obj)) {
-        play("global", "执行完成");
+        thiscommon.play("global", "执行完成");
         // play("global","9")
         Gworkthread = "signin_stop";
         try { thread_signin.interrupt(); } catch (e) { }
@@ -2006,8 +2413,8 @@ function while_signin(signin_obj) {
                         var featuremode = signin_obj["sg" + i]["featuremode"];
                         if ("undefined" == typeof (featuremode)) { toast(appname + "signin_obj[\"sg\"" + i + "][\"featuremode\"]数据结构错误"); }
 
-                        play("global", "执行步骤");
-                        play("global", i);
+                        thiscommon.play("global", "执行步骤");
+                        thiscommon.play("global", i);
                         if ("click_text" == action) {
                             thiscommon.click_text(signin_obj["sg" + i]["click_text"]);
                         } else if ("click_id" == action) {
@@ -2020,9 +2427,9 @@ function while_signin(signin_obj) {
 
                         } else if ("check_signin" == action) {
                             //判断是否签过到
-                            result = block_mode("while_signin", featuremode, signin_obj, i)
+                            result = thiscommon.block_mode("while_signin", featuremode, signin_obj, i)
                             if (result) {
-                                play("global", "已签到过");
+                                thiscommon.play("global", "已签到过");
                                 Gworkthread = "signin_stop";
                                 break;
                             }
@@ -2053,20 +2460,20 @@ function while_signin(signin_obj) {
 
                         var result = false;
 
-                        result = block_mode("while_signin", featuremode, signin_obj, i)
+                        result = thiscommon.block_mode("while_signin", featuremode, signin_obj, i)
                         //最后判断result
                         if (result) {
                             if (i == thiscommon.JSONLength(signin_obj)) {
                                 //最后一步的执行成功
-                                play("global", "签到成功");
+                                thiscommon.play("global", "签到成功");
                                 insert_log('', 'signin', appname, '010', '1')
                             } else {
-                                play("global", "执行完成");
+                                thiscommon.play("global", "执行完成");
                             }
 
                         } else {
                             insert_log('', 'signin', appname, '019', '')
-                            play("global", "检查");
+                            thiscommon.play("global", "检查");
                         }
 
 
@@ -2099,7 +2506,7 @@ function while_findnews(autoread_obj) {
     //正在找新闻状态
     findnews_state = false;
     insert_log('', 'findnews', appname, '008', '')
-    toast("找新闻线程启动..."); play("global", "正在检索");
+    toast("找新闻线程启动..."); thiscommon.play("global", "正在检索");
 
     //取出action的值
     try {
@@ -2180,7 +2587,7 @@ function while_findnews(autoread_obj) {
                         var ele = finditem();
                     } catch (e) {
                         ele = false;
-                        toastAt("finditem e \n:" + e + "findnews_state:" + findnews_state);
+                        thiscommon.toastAt("finditem e \n:" + e + "findnews_state:" + findnews_state);
                     }
 
                     if (ele) {
@@ -2236,7 +2643,7 @@ function while_findnews(autoread_obj) {
 
 
                         //如果存在，点击新闻
-                        play("global", "打开新闻");
+                        thiscommon.play("global", "打开新闻");
                         insert_log('', 'findnews', appname, '014', '')
                         try {
                             thiscommon.clickxy_for_ele(ele);
@@ -2245,19 +2652,19 @@ function while_findnews(autoread_obj) {
                         sleep(2000);
                         var result = false;
                         //最后判断二级页面特定控件是否存在，来确定是否打开成功
-                        try { result = block_mode("while_findnews", thisfeaturemode, autoread_obj, ''); } catch (e) { result = false; toast("findnews e5:" + e) };
-                        mytoast("判断二级页面打开结果为:" + result);
+                        try { result = thiscommon.block_mode("while_findnews", thisfeaturemode, autoread_obj, ''); } catch (e) { result = false; toast("findnews e5:" + e) };
+                        thiscommon.mytoast("判断二级页面打开结果为:" + result);
                         if (result) {
-                            play("global", "打开成功");
+                            thiscommon.play("global", "打开成功");
                             insert_log('', 'findnews', appname, '014', '1')
                             Gworkthread = "findnews_stop";
                             findnews_state = true;
                             // sleep(1000);
                             try { thread_findnews.interrupt(); } catch (e) { }
                         } else {
-                            play("global", "打开失败");
+                            thiscommon.play("global", "打开失败");
                             insert_log('', 'findnews', appname, '004', '')
-                            funmulityback();
+                            thiscommon.funmulityback();
                             findnews_state = false;//告诉findimte 可以动了
                         }
 
@@ -2298,7 +2705,7 @@ function while_readnews(autoread_obj) {
     //toast("readnews启动。。。。");
     Gworkthread = "readnews_start";
     //线程执行前初始化一下没有找到新闻的次数为0； 
-    play("global", "开始阅读");
+    thiscommon.play("global", "开始阅读");
     insert_log('', 'readnews', appname, '009', '')
 
     var upcount = 0;
@@ -2342,7 +2749,7 @@ function while_readnews(autoread_obj) {
         function () {
             //两次上滑之间的间隔
             var x = Math.round(Math.random() * (Gmax - Gmin)) + Gmin;
-            try { toastAt("readnews 滑动间隔" + x + "毫秒 两点间隔" + Gppinterval + "毫秒"); } catch (e) { }
+            try { thiscommon.toastAt("readnews 滑动间隔" + x + "毫秒 两点间隔" + Gppinterval + "毫秒"); } catch (e) { }
             //判断返回机制
             var thisbacktrigger = "normal"
             try {
@@ -2369,7 +2776,7 @@ function while_readnews(autoread_obj) {
                             var eley = id(thisid).findOnce().bounds().top;
                         } catch (e) {
 
-                            funmulityback();
+                            thiscommon.funmulityback();
 
                             Gworkthread = "readnews_stop";
                             sleep(1000);
@@ -2424,25 +2831,25 @@ function while_readnews(autoread_obj) {
                             if (deploy_top < 0) {
                                 deployfind = true;
                                 deploypass = true;
-                                backswipe();
-                                toastAt("错过了展开更多\n,反向滑动一次")
+                                thiscommon.backswipe();
+                                thiscommon.toastAt("错过了展开更多\n,反向滑动一次")
                             }
                             //如果在屏幕可视区
                             else if (Number(deploy_top) < Number(device.height) && Number(deploy_top) > 280) {
                                 //  toastAt("gg deploy_top："+deploy_top);
                                 //设置找到展开更多标记为true
                                 deployfind = true;
-                                toastAt("发现展开更多desc方式")
-                                play("global", "展开更多");
+                                thiscommon.toastAt("发现展开更多desc方式")
+                                thiscommon.play("global", "展开更多");
 
 
                                 try {
                                     //再次验证
                                     if (ele.findOnce().bounds().centerY() < 0) {
                                         deploypass = true;
-                                        backswipe();
+                                        thiscommon.backswipe();
                                     } else {
-                                        toastAt("点击展开更多x:" + ele.findOnce().bounds().centerX() + " y:" + ele.findOnce().bounds().centerY())
+                                        thiscommon.toastAt("点击展开更多x:" + ele.findOnce().bounds().centerX() + " y:" + ele.findOnce().bounds().centerY())
                                         thiscommon.clickxy_for_ele(ele.findOnce());
                                         deployfind = false;
                                         deploypass = false;
@@ -2472,25 +2879,25 @@ function while_readnews(autoread_obj) {
                             if (deploy_top < 0) {
                                 deployfind = true;
                                 deploypass = true;
-                                backswipe();
-                                toastAt("错过了展开更多\n,反向滑动一次")
+                                thiscommon.backswipe();
+                                thiscommon.toastAt("错过了展开更多\n,反向滑动一次")
                             }
                             //如果在屏幕可视区
                             else if (Number(deploy_top) < Number(device.height) && Number(deploy_top) > 280) {
                                 //  toastAt("gg deploy_top："+deploy_top);
                                 //设置找到展开更多标记为true
                                 deployfind = true;
-                                toastAt("发现展开更多text方式")
-                                play("global", "展开更多");
+                                thiscommon.toastAt("发现展开更多text方式")
+                                thiscommon.play("global", "展开更多");
 
 
                                 try {
                                     //再次验证
                                     if (ele.findOnce().bounds().centerY() < 0) {
                                         deploypass = true;
-                                        backswipe();
+                                        thiscommon.backswipe();
                                     } else {
-                                        toastAt("点击展开更多x:" + ele.findOnce().bounds().centerX() + " y:" + ele.findOnce().bounds().centerY())
+                                        thiscommon.toastAt("点击展开更多x:" + ele.findOnce().bounds().centerX() + " y:" + ele.findOnce().bounds().centerY())
                                         thiscommon.clickxy_for_ele(ele.findOnce());
                                         deployfind = false;
                                         deploypass = false;
@@ -2534,8 +2941,8 @@ function while_readnews(autoread_obj) {
                         if (upcount > maxupcount) {
                             toast("返回首页...");
                             //  insert_log('','readnews',appname,'017','')
-                            funmulityback();
-                            var openstate = openAPP(appname, packagename, activityname, open_obj);
+                            thiscommon.funmulityback();
+                            var openstate = thiscommon.openAPP(appname, packagename, activityname, open_obj);
                             if (openstate) {
                                 insert_log('', 'readnews', appname, '017', '1')
                                 //while_findnews(autoread_obj);  
@@ -2544,7 +2951,7 @@ function while_readnews(autoread_obj) {
                                 thread_readnews.interrupt();
                             } else {
                                 insert_log('', 'readnews', appname, '017', '0')
-                                funmulityback();
+                                thiscommon.funmulityback();
                             }
 
                         }
@@ -2578,8 +2985,8 @@ function while_readnews(autoread_obj) {
                                     //  toast("没有匹配到收益圈坐标:"+thisxy+" 的颜色值:"+thiscolor);
                                     toast("非收益页面，返回首页...");
                                     insert_log('', 'readnews', appname, '002', '')
-                                    funmulityback();
-                                    var openstate = openAPP(appname, packagename, activityname, open_obj);
+                                    thiscommon.funmulityback();
+                                    var openstate = thiscommon.openAPP(appname, packagename, activityname, open_obj);
                                     if (openstate) {
                                         insert_log('', 'readnews', appname, '002', '1')
                                         //while_findnews(autoread_obj);  
@@ -2588,7 +2995,7 @@ function while_readnews(autoread_obj) {
                                         thread_readnews.interrupt();
                                     } else {
                                         insert_log('', 'readnews', appname, '002', '0')
-                                        funmulityback();
+                                        thiscommon.funmulityback();
                                     }
 
                                     // alert("4");
@@ -2599,11 +3006,11 @@ function while_readnews(autoread_obj) {
                                     //  toast("有收益了，坐标:"+thisxy+" 符合条件：颜色值不等于"+thiscolor);
                                     //  toast("返回首页...");
                                     insert_log('', 'readnews', appname, '003', '')
-                                    backswipe();
+                                    thiscommon.backswipe();
                                     sleep(500);
-                                    funmulityback();
+                                    thiscommon.funmulityback();
 
-                                    var openstate = openAPP(appname, packagename, activityname, open_obj);
+                                    var openstate = thiscommon.openAPP(appname, packagename, activityname, open_obj);
                                     if (openstate) {
                                         insert_log('', 'readnews', appname, '003', '1')
                                         //while_findnews(autoread_obj);  
@@ -2612,14 +3019,14 @@ function while_readnews(autoread_obj) {
                                         thread_readnews.interrupt();
                                     } else {
                                         insert_log('', 'readnews', appname, '003', '0')
-                                        funmulityback();
+                                        thiscommon.funmulityback();
                                     }
                                 }
                                 //更新backtrigger子计数器+1，如果3次计数后，圆圈还没有闭合，有可能没有阅读完，也有可能是二级页面已经到底，需要触发一次下滑
                                 backtrigger_subcount += 1;
                                 if (backtrigger_subcount > 3) {
                                     if (thisreswipe == "true") {
-                                        backswipe();
+                                        thiscommon.backswipe();
                                         //     toast("反向滑动一次")
                                     }
                                     backtrigger_subcount = 0;
@@ -2627,11 +3034,11 @@ function while_readnews(autoread_obj) {
                                 //当然也要更新backtrigger总计数器，总集数器超过50次则返回一级页面
                                 backtrigger_maincount += 1;
                                 if (backtrigger_maincount > 50) {
-                                    toastAt("滑动次数太多了，一直未获取到收益，返回一级页面")
+                                    thiscommon.toastAt("滑动次数太多了，一直未获取到收益，返回一级页面")
                                     insert_log('', 'readnews', appname, '001', '')
-                                    funmulityback();
+                                    thiscommon.funmulityback();
 
-                                    var openstate = openAPP(appname, packagename, activityname, open_obj);
+                                    var openstate = thiscommon.openAPP(appname, packagename, activityname, open_obj);
                                     if (openstate) {
                                         insert_log('', 'readnews', appname, '001', '1')
                                         //while_findnews(autoread_obj);  
@@ -2640,7 +3047,7 @@ function while_readnews(autoread_obj) {
                                         thread_readnews.interrupt();
                                     } else {
                                         insert_log('', 'readnews', appname, '001', '0')
-                                        funmulityback();
+                                        thiscommon.funmulityback();
                                     }
                                 }
                             }
@@ -2654,7 +3061,7 @@ function while_readnews(autoread_obj) {
                     //执行返回机制验证结束
 
                 } catch (e) {
-                    toastAt("readnews 检测到 " + appname + " 出现异常\n 如果异常持续超过1分钟将重新启动APP")
+                    thiscommon.toastAt("readnews 检测到 " + appname + " 出现异常\n 如果异常持续超过1分钟将重新启动APP")
                 }
 
 
@@ -2674,15 +3081,15 @@ function while_bindwechat(bindwechat_obj) {
         //取验证模式
         var featuremode = bindwechat_obj["bw" + i]["featuremode"];
         if ("undefined" == typeof (featuremode)) { alert(appname + "bindwechat_obj[\"bw\"" + i + "][\"featuremode\"]数据结构错误"); }
-        play("global", "执行步骤");
-        play("global", i);
+        thiscommon.play("global", "执行步骤");
+        thiscommon.play("global", i);
         //如果是点击文本
         var result = false;
         if ("click_text" == action) {
             //点击文本
             thiscommon.click_text(bindwechat_obj["bw" + i]["click_text"]);
             //执行阻塞验证
-            result = block_mode("while_bindwechat", featuremode, bindwechat_obj, i);
+            result = thiscommon.block_mode("while_bindwechat", featuremode, bindwechat_obj, i);
         }
         //if end
         //如果是点击ID
@@ -2693,249 +3100,138 @@ function while_bindwechat(bindwechat_obj) {
             //  id(thisid).findOne(1000).click();
             var result = false;
             //执行阻塞验证
-            result = block_mode("while_bindwechat", featuremode, bindwechat_obj, i);
+            result = thiscommon.block_mode("while_bindwechat", featuremode, bindwechat_obj, i);
         }
         //最后判断result
         if (result) {
             if (i == thiscommon.JSONLength(bindwechat_obj)) {
                 //最后一步的执行成功
-                play("global", "绑定成功");
+                thiscommon.play("global", "绑定成功");
             } else {
-                play("global", "执行完成");
+                thiscommon.play("global", "执行完成");
             }
 
         } else {
-            play("global", "执行失败");
+            thiscommon.play("global", "执行失败");
         }
 
     }
 }
-
-//打开制定app线程
-function openAPP(appname, packagename, activityname, open_obj) {
-    Gworkthread = "openapp_start";
-    openstate = false;
-    play("global", "打开");
-    play("appname", appname);
-    var featuremode = open_obj["featuremode"];
-    if ("undefined" == typeof (featuremode)) { alert(appname + "open_obj[\"featuremode\"]数据结构错误"); }
-
-    var result = thiscommon.openpackage(packagename + "/" + activityname);
-    if (result['error'].indexOf('does not exist') > -1) {
-        toast("手机还没有安装：" + appname);
-    }
-    var thisnum = 0;
-    while (1) {
-        try {
-            if (Number(thisnum) > 6) {
-                play("global", "打开失败");
-                Gworkthread = "openapp_fail";
-                break;
-            }
-            if (featuremode == "classname") {
-                if (className(open_obj["classname"]).packageName(packagename).exists()) {
-                    play("global", "打开成功");
-                    Gworkthread = "openapp_stop";
-                    openstate = true;
-                    //  openstate=false;
-                    break;
-                }
-            } else if (featuremode == "classname_text") {
-                var classname = open_obj["classname"];
-                var text = open_obj["text"];
-                try {
-                    if (className(classname).text(text).exists()) {
-                        play("global", "打开成功");
-                        Gworkthread = "openapp_stop";
-                        openstate = true;
-                        //    openstate=false;
-                        break;
-                    }
-                } catch (e) {
-                    openstate = false;
-                };
-
-            }
-
-            sleep(5000);//10000
-            thisnum += 1;
-
-        } catch (e) {
-
-        }
-
-    }
-    return openstate;
-
-}
-//异常处理线程
-function while_abnormal(abnormal_obj) {
-    // Gworkthread="abnormal_start"; 不要这个，会干扰逻辑
-
-    thread_abnormal = threads.start(function () {
+//layers机制
+function while_pagecheck() {
+    Gworkthread = "pagecheck_start";
+    //for 循环阻塞
+    var thisforstart = false;
+    //是否识别了该页面
+    var thisfindpage = false;
+    //提示计数器
+    var thistoastcount = 0;
+    //上一个pc编号
+    var lastpcx = "";
+    //相同页面计数器
+    var samepcx_count = 0;
+    thread_pagecheck = threads.start(function () {
+        //检测页面 并且根据页面acton
+        //for循环pagecheck_obj 
+        toast("页面识别启动")
         setInterval(function () {
-            //       toast("this is while_abnormal... allcount is:"+thiscommon.JSONLength(abnormal_obj));             
-            for (var i = 1; i <= thiscommon.JSONLength(abnormal_obj); i++) {
-
-                var featuremode = abnormal_obj["ab" + i]["featuremode"];
-
-                if ("id" == featuremode) {
-
-                    var thisid = abnormal_obj["ab" + i]["id"];
-                    mytoast("while_abnormal，featuremode is id， for x is :" + i + " thisid is:" + thisid);
-                    try {
-                        // var result=once_check("id",thisid,'','');
-                        mytoast("while_abnormal result is:" + result);
-                        //  if(result){ 
-                        // var result=id(thisid).click();
-                        // alert("result is:"+result);
-                        //if(result){
-                        try {
-                            thiscommon.clickxy_for_ele(id(thisid).findOnce());
-                            play("global", "关闭弹窗");
-                        } catch (e) {
-
-                        }
-
-                        //}
-
-
-                        //    }
-                    } catch (e) {
-                        back();
-
-                    }
-
-
-                } else if ("id_depth" == featuremode) {
-                    try {
-                        var thisid = abnormal_obj["ab" + i]["id"];
-                        var thisdepth = abnormal_obj["ab" + i]["depth"];
-
-                        var elestr = id(thisid);
-                        var result = elestr.exists();
-                        if (result) {
-                            var eledepth = elestr.findOnce().depth();
-                            if (eledepth == thisdepth) {
-                                thiscommon.clickxy_for_ele(id(thisid).findOnce());
-                            }
-                        }
-                    } catch (e) {
-                        //  toast("id_depth:"+e);
-                    }
-
-                } else if ("classname_text" == featuremode) {
-
-                    try {
-                        var thisclass = abnormal_obj["ab" + i]["classname"];
-                        var thistext = abnormal_obj["ab" + i]["text"];
-                        var result = block_check(featuremode, thisclass, thistext, '');
-                        //   alert(thisclass+":"+thistext);
-                        if (result) {
-                            thiscommon.click_classname_text(thisclass, thistext);
-                            //play("global","关闭弹窗");
-
-                        }
-                    } catch (e) {
-
-                    }
-
-                } else if ("classname_desc" == featuremode) {
-                    try {
-                        var thisclass = abnormal_obj["ab" + i]["classname"];
-                        var thisdesc = abnormal_obj["ab" + i]["desc"];
-                        var result = block_check(featuremode, thisclass, thisdesc, '');
-                        //   alert(thisclass+":"+thistext);
-                        if (result) {
-                            thiscommon.click_classname_desc(thisclass, thisdesc);
-                            //play("global","关闭弹窗");
-
-                        }
-                    } catch (e) {
-
-                    }
-                } else if ("click_boundary_path" == featuremode) {
-                    try {
-                        var boundary = abnormal_obj["ab" + i]["boundary"];
-                        var path = abnormal_obj["ab" + i]["path"];
-                        thiscommon.click_boundary_path(boundary, path);
-                    } catch (e) {
-
-                    }
-
-                }
-
+            thistoastcount += 1;
+            if (thistoastcount > 5) {
+                thiscommon.toastAt("pagecheck相同页面计数器" + samepcx_count)
+                // toast("thisforstart is:"+thisforstart);
+                thistoastcount = 0;
             }
-            //for end
-        }, Gabinterval);
-    });
-}
-//弹窗与跳出app监测
-function while_abnormal_overtime(activitys_obj) {
-    thread_abnormal_overtime = threads.start(
-        function () {
-            setInterval(function () {
+
+            //这是线程内测循环执行，执行前要判断for循环是否结束
+            if (thisforstart == false) {
                 try {
-                    var thispackagename = currentPackage();
-                    var thisactivity = currentActivity();
-                    var itemcount = thiscommon.JSONLength(activitys_obj);
-                    // alert("itemcount is :"+itemcount);
-                    Gwindowstate = false;
-                    for (var i = 1; i <= itemcount; i++) {
-                        // alert(activitys_obj["at"+i]);
-                        if (thisactivity == activitys_obj["at" + i]) {
-                            play("global", "状态正常")
-                            play("global", i);
-                            Gwindowstate = true;
+                    thisforstart = true;
+                    thisfindpage = false;
+                    for (var i = 1; i <= thiscommon.JSONLength(pagecheck_obj); i++) {
+                        var thisfeaturemode = pagecheck_obj["pc" + i]["featuremode"];
+                        insert_log('', 'pagecheck', appname, '018', '')
+                        var thisresult = eval(thisfeaturemode);
+                        var thisinfo = pagecheck_obj["pc" + i]["info"]
+
+                        if (thisresult) {
+                            insert_log('', 'pagecheck', appname, '018', '1')
+                            var thispcx = "pc" + i;
+                            //判断当前pc与上一个pc是否是一样的
+                            //如果是一样的线程计数器增加一
+                            if (thispcx == lastpcx) {
+                                samepcx_count += 1;
+                            } else {
+                                lastpcx = thispcx;
+                                //如果不一样，线程计数器清零
+                                samepcx_count = 0;
+                            }
+
+                            //如果线程计数器>90那么restartapp
+
+
+                            thisfindpage = true;
+                            toast(thisinfo);
+                            var thisactiontype = pagecheck_obj["pc" + i]["actiontype"];
+                            var thisaction = pagecheck_obj["pc" + i]["action"];
+                            //如果是执行一段私有函数
+                            if (thisactiontype == "func") {
+
+                                try {
+                                    eval(Gfinditemstr);
+                                    if ("" != thisaction) {
+                                        eval(thisaction)
+                                    }
+                                } catch (e) { toast("pagecheck eval func e:" + e); thisforstart == false }
+                            }//if end;
+                            else if (thisactiontype == "code") {
+
+                                try {
+                                    if ("" != thisaction) {
+                                        eval(thisaction)
+                                    }
+                                } catch (e) {
+                                    thisforstart = false;
+                                    toast("pagecheck eval code e:" + e)
+                                };
+                            }
+
+                            break;
+
+                        }//if end;
+
+                    }//for end
+                    //线程计数器超过数量
+                    try {
+                        if (samepcx_count > 50) {
+                            toast("本页面停留太长，重新拉起")
+                            insert_log('', 'pagecheck', appname, '016', '')
+                            samepcx_count = 0;
+                            workthread_errorcount = 999
                         }
+                    } catch (e) {
+                        toast("> e:" + e);
                     }
-                    if (Gwindowstate == false) {
-                        //    alert(thisactivity);
-                        play("global", "发现未关闭弹窗");
+
+                    Gbrick_count += 1;
+                    thisforstart = false;
+                    if (thisfindpage == false) {
+                        samepcx_count += 1;
+                        insert_log('', 'pagecheck', appname, '018', '0')
+                        toast("没有识别当前页面");
                     }
                 } catch (e) {
-                    toast(e);
+                    //  toast("pagecheck main e:"+e);
+                    thisforstart = false;
                 }
 
-            }, 1000);
-        }
-    );
-}
-// while_abnormal的守护线程，有时候click事件会阻塞，所以每隔5秒杀掉abnormal线程再启动
-function demon_abnormal(abnormal_obj) {
-    mytoast("this is demon_abnormal...");
-    thread_demon_abnormal = threads.start(
-        function () {
-            setInterval(function () {
-                while_abnormal(abnormal_obj);
-                sleep(5000);
-                thread_abnormal.interrupt();
-            }, 1000);
-        }
-    );
-
-}
-//重启app继续  只有whilecontorl可以调用该函数，其他函数调用会把自己杀死，导致后续所有代码无法执行，只有让第三方执行
-function restartapp() {
-    clear_normal_thread();
-    try {
-        thiscommon.clean(Gdevicetype, Gpackagename_lists);
-        //这里延迟一秒防止clean延迟导致刚打开的app被clean
-        sleep(1000);
-        var openstate = openAPP(appname, packagename, activityname, open_obj);
-        if (openstate) {
-            if ("layers" == apptype) {
-
-                while_pagecheck();
-            } else {
-                while_findnews(autoread_obj);
             }
-        }
-    } catch (e) {
-        //  alert("restartapp appname"+appname+"packagename "+packageName+" actiname "+activityname+" e:"+e);
-    }
+
+        }, 3000);
+
+    });
 
 }
+
 //统计收益函数
 function while_analycoinincome(flag) {
     alert("给Ganalyflag赋值为" + flag);
@@ -2984,7 +3280,7 @@ function while_analycoinincome(flag) {
                     thiscommon.clean(Gdevicetype, Gpackagename_lists);
                     //这里延迟一秒防止clean延迟导致刚打开的app被clean
                     sleep(1000);
-                    var openstate = openAPP(appname, packagename, activityname, open_obj);
+                    var openstate = thiscommon.openAPP(appname, packagename, activityname, open_obj);
                     if (openstate) {
                         //如果打开成功，更新标志位 Gworkthread=openapp_stop，交由while_control处理
                         Gworkthread = "openapp_stop";
@@ -3005,7 +3301,7 @@ function while_analycoinincome(flag) {
                     //如果没有统计完，则继续进行页面识别和统计
                     thistoastcount += 1;
                     if (thistoastcount > 5) {
-                        toastAt("pagecheck相同页面计数器" + samepcx_count)
+                        thiscommon.toastAt("pagecheck相同页面计数器" + samepcx_count)
                         // toast("thisforstart is:"+thisforstart);
                         thistoastcount = 0;
                     }
@@ -3162,7 +3458,7 @@ function while_control(appname, packagename, activityname, open_obj, bindwechat_
                 //2如果是签到完成后要执行的工作   //3如果阅读完成后要做的工作
                 else if ("signin_stop" == Gworkthread) {
                     //  alert("findnews start");
-                    restartapp();
+                    thiscommon.restartapp();
                     // try{    thread_findnews.interrupt();}catch(e){};
                     // try{    thread_readnews.interrupt();}catch(e){};
                     // try{    thread_signin.interrupt();}catch(e){};
@@ -3194,10 +3490,10 @@ function while_control(appname, packagename, activityname, open_obj, bindwechat_
 
                         //            toastAt("当前app:"+appname+"\n包名："+nowcurrentPackage+"\n"+"当前窗体名："+nowcurrentActivity);
                         try {
-                            toastAt("当前app:" + appname + "运行了" + thisruntime + "分钟" + "\nf线程:" + thread_findnews.isAlive() + " r线程:" + thread_readnews.isAlive() + "\nGworkthread is:" + Gworkthread + "\n" + "workthread_error is：" + workthread_errorcount + "\nbe:" + brick_error + " bc:" + Gbrick_count + "\n当前窗体名：" + nowcurrentActivity);
+                            thiscommon.toastAt("当前app:" + appname + "运行了" + thisruntime + "分钟" + "\nf线程:" + thread_findnews.isAlive() + " r线程:" + thread_readnews.isAlive() + "\nGworkthread is:" + Gworkthread + "\n" + "workthread_error is：" + workthread_errorcount + "\nbe:" + brick_error + " bc:" + Gbrick_count + "\n当前窗体名：" + nowcurrentActivity);
                         } catch (e) {
                             try {
-                                toastAt("当前app:" + appname + "运行了" + thisruntime + "分钟" + "\np线程：" + thread_pagecheck.isAlive() + "\nGworkthread is:" + Gworkthread + "\n" + "workthread_error is：" + workthread_errorcount + "\nbe:" + brick_error + " bc:" + Gbrick_count + "\n当前窗体名：" + nowcurrentActivity);
+                                thiscommon.toastAt("当前app:" + appname + "运行了" + thisruntime + "分钟" + "\np线程：" + thread_pagecheck.isAlive() + "\nGworkthread is:" + Gworkthread + "\n" + "workthread_error is：" + workthread_errorcount + "\nbe:" + brick_error + " bc:" + Gbrick_count + "\n当前窗体名：" + nowcurrentActivity);
                                 //  toastAt("页面识别线程:"+thread_pagecheck.isAlive());
                             } catch (e) { toast("p5 e") }
                         }
@@ -3220,7 +3516,7 @@ function while_control(appname, packagename, activityname, open_obj, bindwechat_
                             toast("拉回站内......");
                             insert_log('', 'control', appname, '006', '')
                             // thiscommon.openpackage(packagename+"/"+activityname);
-                            restartapp();
+                            thiscommon.restartapp();
                             outsidecount = 0;
                         }
                     } else {
@@ -3237,7 +3533,7 @@ function while_control(appname, packagename, activityname, open_obj, bindwechat_
                                 try { thread_readnews.interrupt(); } catch (e) { };
                                 try { thread_signin.interrupt(); } catch (e) { };
 
-                                funmulityback();
+                                thiscommon.funmulityback();
                                 thiscommon.openpackage(packagename + "/" + activityname);
                                 while_findnews(autoread_obj);
 
@@ -3348,14 +3644,14 @@ function while_control(appname, packagename, activityname, open_obj, bindwechat_
                 if (workthread_errorcount > 10) {
                     workthread_errorcount = 0;
                     toast("重新激活线程......");
-                    restartapp();
+                    thiscommon.restartapp();
 
                 }
                 if (brick_error > 10) {
                     brick_error = 0;
                     insert_log('', 'control', appname, '013', '')
                     toast("搬砖计数器重新激活线程......");
-                    restartapp();
+                    thiscommon.restartapp();
                 }
                 //其它线程检测结束
 
@@ -3411,1682 +3707,136 @@ function while_closewindow(devicetype) {
         );
     }
 }
-function once_check(checktype, f1, f2, f3) {
-    mytoast("once_check checktype is" + checktype + " f1 is" + f1);
-    if ("classname_text" == checktype) {
-        var ele = className(f1).text(f2).exists();
-        if (ele) {
-            return true;
-        }
-
-    } else if ("classname_desc" == checktype) {
-        var ele = className(f1).desc(f2).exists();
-        if (ele) {
-            return true;
-        }
-    } else if ("id" == checktype) {
-        mytoast("once_check checktype is id执行");
-        var ele = id(f1).exists();
-        mytoast("once_check ele is:" + ele);
-        if (ele) {
-            return true;
-        }
-    } else {
-        return false;
-    }
-}
-//阻塞模式判断函数
-function block_mode(threadfun, featuremode, obj, fori) {
-    if ("openAPP" == threadfun) {
-        if ("classname_desc" == featuremode) {
-
-            var thisclassname = obj["classname"];
-            var thisdesc = obj["desc"];
-            //  alert("thisclassname is:"+thisclassname+" this desc is:"+thisdesc);
-            result = block_check(featuremode, thisclassname, thisdesc, '');
-            return result;
-        } else if ("classname_text" == featuremode) {
-            //    alert(obja);
-            var thisclassname = obj["classname"];
-            var thistext = obj["text"];
-            //  alert("thisclassname is:"+thisclassname+" thistext is:"+thistext);
-            result = block_check(featuremode, thisclassname, thistext, '');
-            return result;
-        } else if ("classname" == featuremode) {
-            var thisclassname = obj["classname"];
-            result = block_check(featuremode, thisclassname, '', '');
-            return result;
-        } else if ("id" == featuremode) {
-            var thisid = obj["id"];
-            result = block_check(featuremode, thisid, '', '');
-            return result;
-        }
-    } else if ("while_findnews" == threadfun) {
-        var obja = "ar1";
-    } else if ("while_readnews" == threadfun) {
-
-    } else if ("while_bindwechat" == threadfun) {
-        var obja = "bw" + fori;
-    } else if ("while_signin" == threadfun) {
-        var obja = "sg" + fori;
-    }
-
-    if ("classname_desc" == featuremode) {
-        // alert(obja);
-        var thisclassname = obj[obja]["classname"];
-        var thisdesc = obj[obja]["desc"];
-        //  alert("thisclassname is:"+thisclassname+" this desc is:"+thisdesc);
-        result = block_check(featuremode, thisclassname, thisdesc, '');
-        return result;
-    } else if ("classname_text" == featuremode) {
-        var thisclassname = obj[obja]["classname"];
-        var thistext = obj[obja]["text"];
-        // alert("thisclassname is:"+thisclassname+" thistext is:"+thistext);
-        result = block_check(featuremode, thisclassname, thistext, '');
-        return result;
-    } else if ("classname" == featuremode) {
-        var thisclassname = obj[obja]["classname"];
-        result = block_check(featuremode, thisclassname, '', '');
-        return result;
-    } else if ("id" == featuremode) {
-        var thisid = obj[obja]["id"];
-        mytoast("block_mode and id mode 执行");
-        result = block_check(featuremode, thisid, '', '');
-        return result;
-    } else if ("ids" == featuremode) {
-        var thisid = obj[obja]["ids"];
-        //var ids="iv_back||iv_playback";
-        ids_arr = thisid.split("||");
-        var num = 0;
-        while (true) {
-            if (num > Gblock_mode_interval) {
-                return false;
-            }
-            try {
-                for (var i = 0; i < ids_arr.length; i++) {
-                    if (id(ids_arr[i]).exists()) {
-                        return true;
-                    }
-                }
-            } catch (e) {
-
-                toast("this is block_mode ids for:" + e);
-                return false;
-            }
-
-
-            num += 1;
-            sleep(1000);
-        }
-
-
-    }
-
-}
-//阻塞验证函数
-function block_check(checktype, f1, f2, f3) {
-    var num = 0;
-    while (1) {
-        num += 1;
-        if (num > Gblock_mode_interval) {
-            return false;
-        }
-        sleep(1000);
-        if ("classname_text" == checktype) {
-            try {
-                var ele = className(f1).text(f2).exists();
-                //  alert("f1 is"+f1+" f2 is:"+f2+"  "+ ele);
-                if (ele) {
-                    return true;
-                }
-            } catch (e) {
-                return false;
-
-            }
-
-
-        } else if ("classname_desc" == checktype) {
-            try {
-                var ele = className(f1).desc(f2).exists();
-                if (ele) {
-                    return true;
-                }
-            } catch (e) {
-                return false;
-
-            }
-
-        } else if ("classname" == checktype) {
-            try {
-                var ele = className(f1).exists();
-                //   alert("this is blockcheck ele is:"+ele);
-                if (ele) {
-                    return true;
-                }
-            } catch (e) {
-                return false;
-
-            }
-
-        } else if ("id" == checktype) {
-            try {
-                mytoast("block_check checktype 执行 id is:" + f1);
-                var ele = id(f1).exists();
-                mytoast("block_check id checktype 执行 ele is：" + ele);
-                if (ele) {
-
-                    return true;
-                }
-            } catch (e) {
-                return false;
-            }
-
-
-        }
-
-    }
-
-
-}
-//阻塞统计收益
-function block_analay(incomeanaly_obj) {
-    //console.show();
-    var Ganalymoney = "";
-    var Ganaycoin = "";
-    //是否从app中取出过money
-    //是否从app中取出过coin
-    var findmoney = false;
-    var findcoin = false;
-
-    for (var i = 1; i <= thiscommon.JSONLength(incomeanaly_obj); i++) {
-        //log("this is in"+i);
-        var thisaction = incomeanaly_obj['in' + i]["action"];
-        //log("acton is:"+thisaction);
-        if ("click_xy" == thisaction) {
-            var thisclick_xy = incomeanaly_obj['in' + i]["click_xy"];
-            var thisclick_xyarr = thisclick_xy.split("||");
-            var thisclick_x = thisclick_xyarr[0];
-            var thisclick_y = thisclick_xyarr[1];
-            log("x is:" + thisclick_x + " y is:" + thisclick_y);
-            thiscommon.touchreal(thisclick_x, thisclick_y);
-            sleep(1500);
-        } else if ("getdesc_id_index" == thisaction) {
-            var thisid = incomeanaly_obj['in' + i]["id"];
-            var thisindex = incomeanaly_obj['in' + i]["index"];
-            var thistype = incomeanaly_obj['in' + i]["type"];
-            var appdesc = id(thisid).findOnce(thisindex).desc();
-            if (thistype == "money") {
-                Ganalymoney = appdesc;
-            } else if (thistype == "coin") {
-                Ganaycoin = appdesc;
-            } else {
-                //alert();
-            };
-
-
-        } else if ("gettext_id_index" == thisaction) {
-            var thisid = incomeanaly_obj['in' + i]["id"];
-            var thisindex = incomeanaly_obj['in' + i]["index"];
-            var thistype = incomeanaly_obj['in' + i]["type"];
-            var apptext = id(thisid).findOnce(thisindex).text();
-            if (thistype == "money") {
-                Ganalymoney = apptext;
-            } else if (thistype == "coin") {
-                Ganaycoin = apptext;
-            } else {
-                //alert();
-            };
-        }
-
-        //log("action is:"+thisaction);
-
-
-    }// for end;
-
-    //上报数据
-    var tmpurl = "http://download.dqu360.com:81/haiqu/api.aspx?&action=income_upload&income_flag=" + Gincome_flag + "&session=" + Gsession + "&appname=" + appname + "&money=" + Ganalymoney + "&coin=" + Ganaycoin
-    var r = http.get(tmpurl);
-    if ("200" == r.statusCode) {
-        alert("统计完成");
-        // var tmpstr=r.body.string();
-        // tmpjson=eval('(' + tmpstr + ')'); 
-    }
-    //http://download.dqu360.com:81/haiqu/api.aspx?&action=income_upload&income_flag=15074909&session=123123123&appname=今日头条&money=1.11&coin=40056 
-
-    log("money is:" + Ganalymoney + " coin is" + Ganaycoin);
-}
-//播放声音
-function play(subpath, appname) {
-    if (Gsoftvoice == true && "fast" != Grunspeed && "normal" != Grunspeed && "normal+" != Grunspeed) {
-        var voicefile = Gvoicepath + "/" + subpath + "/" + appname + ".mp3";
-        var result = files.exists(voicefile);
-        if (!result) {
-            toast("没有找到语音包" + voicefile);
-        } else {
-            try {
-                media.playMusic(Gvoicepath + "/" + subpath + "/" + appname + ".mp3");
-                sleep(media.getMusicDuration());
-            } catch (e) {
-
-            }
-
-        }
-    } else {
-        // toast(appname);
-    }
-}
-//用悬浮窗里控制运行代码的方法。
-//每一行都有注释
-
-//定义悬浮窗控制模块，命名为(悬块)。
-var 悬块 = function(window, view) {
-    //判断是否缺少构造参数。
-    if (!window || !view) {
-        //缺少构造参数，抛出错误。
-        throw "缺参数";
-    };
-    //记录按键被按下时的触摸坐标
-    this.x = 0, this.y = 0;
-    //记录按键被按下时的悬浮窗位置
-    this.windowX, this.windowY;
-    //按下时长超过此值则执行长按等动作
-    this.downTime = 500;
-    //记录定时执行器的返回id
-    this.Timeout = 0;
-    //创建点击长按事件
-    this.Click = function() {};
-    this.LongClick = function() {};
-    //可修改点击长按事件
-    this.setClick = function(fun) {
-        //判断参数类型是否为函数？
-        if (typeof fun == "function") {
-            this.Click = fun;
-        };
-    };
-    this.setLongClick = function(fun, ji) {
-        //判断参数类型是否为函数？
-        if (typeof fun == "function") {
-            this.LongClick = fun;
-            //判断参数是否可为设置数字？
-            if (parseInt(ji) <= 1000) {
-                this.downTime = parseInt(ji);
-            };
-        };
-    };
-
-    view.setOnTouchListener(new android.view.View.OnTouchListener((view, event) => {
-        //判断当前触控事件，以便执行操作。
-        switch (event.getAction()) {
-            //按下事件。
-            case event.ACTION_DOWN:
-                //按下记录各种坐标数据。
-                this.x = event.getRawX();
-                this.y = event.getRawY();
-                this.windowX = window.getX();
-                this.windowY = window.getY();
-                //创建一个定时器用来定时执行长按操作。
-                this.Timeout = setTimeout(() => {
-                    this.LongClick();
-                    this.Timeout = 0;
-                }, this.downTime);
-                return true;
-                //移动事件。
-            // case event.ACTION_MOVE:
-            //     //移动距离过大则判断为移动状态
-            //     if (Math.abs(event.getRawY() - this.y) > 5 && Math.abs(event.getRawX() - this.x) > 5) {
-            //         //移动状态清除定时器
-            //         if (this.Timeout) {
-            //             //定时器存在则清除定时器。
-            //             clearTimeout(this.Timeout);
-            //             this.Timeout = 0;
-            //         };
-            //         //移动手指时调整悬浮窗位置
-            //         window.setPosition(this.windowX + (event.getRawX() - this.x), this.windowY + (event.getRawY() - this.y));
-            //     };
-            //     return true;
-                //抬起事件。
-            case event.ACTION_UP:
-                if (this.Timeout) {
-                    //手指抬起时，定时器存在，说明没有移动和按下时间小于长按时间。
-                    //清除定时器。
-                    clearTimeout(this.Timeout);
-                    this.Timeout = 0;
-                    //执行点击事件。
-                    this.Click();
-                };
-                return true;
-        };
-        //控件的触控事件函数必须要返回true。否则报错。
-        return true;
-    }));
-};
-
-function whthumbup() {
-
-    click("发现");
-    play("global", "点击");
-    play("global", "发现");
-
-
-
-    ele = className("android.widget.TextView").text("朋友圈");
-    thiscommon.clickxy_for_ele_once(ele.findOne(1000));
-    play("global", "点击");
-    play("global", "朋友圈");
-    sleep(2000);
-    //上滑
-    //thiscommon.swiperealup_custom();
-    //sleep(1000);
-    //点击评论三个小点
-    play("global", "点击");
-    play("global", "赞");
-    ele = className("android.widget.ImageView").desc("评论");
-    thiscommon.clickxy_for_ele_once(ele.findOne(1000));
-    sleep(1000);
-
-    // //点赞代码
-    // ele=className("android.widget.ImageView").desc("评论");
-    // clickxy_for_ele_once(ele.findOne(1000));
-    // sleep(1000);
-    // ele=className("android.widget.TextView").text("赞");
-    // clickxy_for_ele_once(ele.findOne());
-    // 评论代码
-
-    // 点击评论弹窗
-    // ele=className("android.widget.TextView").text("评论");
-    // clickxy_for_ele_once(ele.findOne());
-    // 录入文字
-    // setText("找到好的告诉我，我也在找哦");
-    // sleep(1000);
-    // ele=className("android.widget.Button").text("发送");
-    // clickxy_for_ele_once(ele.findOne(1000));
-
-    // alert(ele.findOne(1000));
-    // sleep(1000);
-    // ele=className("android.widget.TextView").text("取消");
-    // clickxy_for_ele_once(ele.findOne());
-
-}
-//主模块自主判断滑动机制
-function main_swipe() {
-    if ("lnnl" == Gdevicetype || "xiaomi4" == Gdevicetype || "le" == Gdevicetype || "vmos" == Gdevicetype) {
-        try { thisswipe.swiperealup_custom_lnnl(Gppinterval); } catch (e) { toast("e2:" + e) };
-    } else {
-        thisswipe.swiperealup_custom();
-    }
-}
-//反向滑动
-function backswipe() {
-    Swipe(300, 900, 300, 1600, 500);
-}
-//下载并安装最新海趣助手
-function download_installapp() {
-    importClass("java.io.FileOutputStream")
-    importClass("java.io.IOException")
-    importClass("java.io.InputStream")
-    importClass("java.net.MalformedURLException")
-    importClass("java.net.URL")
-    importClass("java.net.URLConnection")
-    importClass("java.util.ArrayList")
-    downloadthread = threads.start(
-        function () {
-            try {
-                var script_download_path = "/sdcard/脚本/";
-                files.createWithDirs(script_download_path);
-                files.remove(script_download_path + "haiqu.apk");
-
-            } catch (e) { }
-
-            var myPath = "/storage/emulated/0/脚本/haiqu.apk";
-            //console.show();
-            //log('im alive')
-            //var myUrl = "http://115.29.141.214:8888/repo/haiqu_helper/update/haiqu.apk";
-            //var myUrl = "http://manager.dianqu666.online:8888/repo/haiqu_helper/update/haiqu.apk";
-            var myUrl = "https://haiqu-app.oss-cn-qingdao.aliyuncs.com/%E6%B5%B7%E8%B6%A3%E5%8A%A9%E6%89%8B/update/haiqu.apk";
-            var url = new URL(myUrl);
-            var conn = url.openConnection(); //URLConnection
-            var inStream = conn.getInputStream(); //InputStream
-            var fs = new FileOutputStream(myPath); //FileOutputStream
-            var connLength = conn.getContentLength(); //int
-            var startTime = java.lang.System.currentTimeMillis();
-            var buffer = util.java.array('byte', 1024); //byte[]
-            // buffer = new byte[1204]; //byte[]
-            var prevTime = java.lang.System.currentTimeMillis();
-            var bytePrev = 0; //前一次记录的文件大小
-            var byteSum = 0; //总共读取的文件大小
-            var byteRead; //每次读取的byte数
-            //log('要下载的文件大小=')
-            //log(connLength)
-            threads.start(
-                function () {
-                    while (1) {
-                        var 当前写入的文件大小 = byteSum
-                        var 百分比 = 当前写入的文件大小 / connLength * 100
-                        log(百分比);
-                        var arr = 百分比.toString().split(".");
-
-                        ui.progress.setProgress(arr[0]);
-                        // ui.progress_value.setText(p.toString());
-
-                        var 要显示的内容 = util.format('下载了%s%', 百分比)
-                        log(要显示的内容)
-                        if (当前写入的文件大小 >= connLength) {
-                            break;
-                        }
-                        sleep(1000)
-                    }
-                }
-            )
-            while ((byteRead = inStream.read(buffer)) != -1) {
-                byteSum += byteRead;
-                //当前时间
-                var currentTime = java.lang.System.currentTimeMillis();
-                fs.write(buffer, 0, byteRead); //读取
-            }
-            //开始安装
-            toast("下载完成，正在安装")
-            result = installapp('/sdcard/脚本/haiqu.apk');
-            if (result) {
-                toast("安装成功");
-            }
-        }
-    );
-
-}
-//安装海趣助手app
-// function installapp(path){
-// path = '/storage/emulated/0/脚本/applist/update.apk'
-// app.startActivity({
-//  data: "file://" + path,
-//  type: "application/vnd.android.package-archive",
-//  action: "VIEW",
-//  flags: ["grant_read_uri_permission", "grant_write_uri_permission"]
-// });
-// try{
-//    update_thread.interrupt();
-// }catch(e){
-
-// }
-// }
-//软件升级检测
-function sysupdate_check() {
-    // var Gapi_json_url="http://download.dqu360.com:81/haiqu/api.json";
-    //http.__okhttp__.setTimeout(10000);
-    var r = http.get(Gapi_json_url);
-
-
-    if ("200" == r.statusCode) {
-        var tmpstr = r.body.string();
-        tmpjson = eval('(' + tmpstr + ')');
-
-        var server_version = tmpjson["server_version"]
-
-        var now_version = app.versionName;
-        var downloadurl = tmpjson["downloadurl"];
-        //  alert(downloadurl);
-        //如果下载json正常开始判断版本号和服务器版本号是否一致
-        if (server_version != now_version) {
-            return false;
-            //显示下载最新版按钮
-
-            //   ui.downloadapp.setVisibility(3);
-            //    //如果版本不一致，则弹出升级弹窗
-            //            var view=ui.inflate(
-            //                <vertical padding="16 0">
-            //                    {/* <text>用户名</text>
-            //                    <input id="username" />
-            //                    <text>密码</text>
-            //                    <input id="password"/> */}
-            //                </vertical>
-            //            );
-            //            dialogs.build({
-            //                customView: view,
-            //                title: "检测到新版本"+server_version+"，是否升级",
-            //                positive: "确定升级",
-            //                negative: "下次再说",
-            //                wrapInScrollView: false,
-            //                autoDismiss: false
-            //            }).on("positive", (dialog) => {
-
-            //                dialog.dismiss();
-            //                //用户确认升级，开始下载
-            //               // alert(downloadurl);
-            //                download_installapp(downloadurl);
-            //               // downloadapp(downloadurl);
-            //            }).on("negative", (dialog) => {
-            //                dialog.dismiss();
-            //            }).show();
-        } else {
-            return true;
-        }
-
-    }
-
-    else {
-        toast("服务器信息获取异常");///
-    }
-
-
-
-
-}
-
-
-
-//波波视频的一个特殊阅读处理
-function callback_boboshipin(fucname, ele) {
-    var thisnum = 0;
-    //alert(ele.child(1).child(0).text());
-    var thistop = ele.child(1).child(0).bounds().top + 20;
-    var thisleft = ele.child(1).child(0).bounds().left + 130;
-
-    //     while(1){
-    //         if(thisnum>30){
-    //             break;
-    //         }
-    //         //toast("top is"+thistop+" left is"+thisleft);
-    //         thiscommon.touchreal(thistop,thisleft);     
-    //        // toast("fuck ............."+thisnum);
-    //         thisnum+=1;
-    //     sleep(3000);
-    // }
-    var thisnum = 0;
-    while (1) {
-        // thiscommon.touchreal(300,1273);
-        //toast("top is"+thistop+" left is"+thisleft);
-        //点击有收益的地方
-        sleep(1000);
-        thiscommon.touchreal(thisleft, thistop);
-        sleep(800);
-
-        //如果是点击领取
-        var elelq = className("android.view.View").desc("点击领取");//.findOnce(0);
-        if (elelq.exists()) {
-            //点击
-            elelq.findOnce(0).click();
-            sleep(1000);
-            //  elelq.findOnce(0).click();  
-
-            //关闭
-            sleep(1000);
-            var eleclose = id("e8").exists();
-            if (eleclose) {
-                id("e8").click();
-            }
-
-        }
-        //如果是分享给朋友
-        var elefx = className("android.view.View").desc("分享给朋友");
-        if (elefx.exists()) {
-            sleep(1000);
-            //关闭
-            var eleclose = id("e8").exists();
-            if (eleclose) {
-                id("e8").click();
-            }
-        }
-
-
-        if (thisnum > 20) {
-            break;
-        }
-        thisnum += 1;
-        sleep(5000)
-    }
-    exit();
-
-}
-//写入标志位函数
-function setlastapp(appnum, appname) {
-
-    //context.deleteDatabase("haiqu.db");  
-    //打开或创建haiqu.db数据库        
-    db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
-    //创建t_tag表
-    db.execSQL("create table if not exists " + "t_tag" + "(_id integer primary key,appnum,appname)");
-    //取出数据库内容
-    //  查询  c 是 Cursor类
-    //alert("abc");
-    var c = db.query("t_tag", null, "", null, null, null, null, null);
-    // lastappname="";
-
-    // if(appname==null){
-    //    alert("没有记录上次阅读的app");
-    // }else{
-    //     alert("上次阅读到了："+lastappname);
-    // }
-    //ok. 删除表内容
-    db.execSQL("DELETE FROM  t_tag");
-    //alert("set 数据库 appnum="  +  appnum  +  " appname="  +  appname );
-    var t_tag = new Object;
-    t_tag.appnum = appnum;
-    t_tag.appname = appname;
-    //ContentValues以键值对的形式存放数据       
-    var cv = new ContentValues();
-    cv.put("appnum", t_tag.appnum);
-    //cv.put("appname",  java.lang.Integer(35));
-    cv.put("appname", t_tag.appname);
-
-    //插入ContentValues中的数据        
-    db.insert("t_tag", null, cv);
-    //db.insert("t_tag",  null,  cv);  
-    //删除表数据  ok
-    //db.delete("person", null,null);  
-    //ok. 删除表内容
-    // db.execSQL("DELETE FROM  person  WHERE age>32");
-    //关闭当前数据库      
-    db.close();
-}
-//读取本地标志位
-function readlastapp() {
-    importClass('android.database.sqlite.SQLiteDatabase');
-    //importClass("android.content.ContentValues");
-    //importClass("android.content.Context");
-    importClass("android.database.Cursor");
-    //context.deleteDatabase("haiqu.db");  
-    //打开或创建haiqu.db数据库        
-    db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
-    //创建t_tag表
-    db.execSQL("create table if not exists " + "t_tag" + "(_id integer primary key,appnum,appname)");
-    var c = db.query("t_tag", null, "", null, null, null, null, null);
-    lastappname = "";
-    while (c.moveToNext()) {
-        var appname = c.getString(c.getColumnIndex("appname"));
-        return appname;
-
-    }
-}
-
-//基于标志位的重新排序
-function resort_applist() {
-
-    localflag = readlastapp();
-    newjson = [];
-    Gindexof_flag = "";
-
-
-    //console.show();
-    //查找本地标志位所述云端序列的位置
-    for (var i = 0; i < applist.length; i++) {
-        // log(applist[i]["appname"]);
-        if (localflag == applist[i]["appname"]) {
-            Gindexof_flag = i;
-            //  break;
-        } else {
-            //如果标志位与云端不匹配
-        }
-    }
-    //如果本地标志位在云端不存在或者还没有标志位
-    if (Gindexof_flag == "") {
-        for (var i = 0; i < applist.length; i++) {
-            newjson.push(applist[i]);
-        }
-    } else {
-        //从标志位后追加到新json
-        for (var i = Gindexof_flag + 1; i < applist.length; i++) {
-            newjson.push(applist[i]);
-        }
-        //把之前的也追加上
-        for (var i = 0; i <= Gindexof_flag; i++) {
-            newjson.push(applist[i]);
-        }
-
-
-    }
-    //log("------newjson-----");
-    //log(newjson[0]["appname"]);
-    //log("Gindexof_flag is:"+Gindexof_flag)
-    //打印新json顺序
-    for (var i = 0; i < newjson.length; i++) {
-        log(newjson[i]["appname"]);
-    }
-    applist = newjson;
-}
-//多次返回
-function funmulityback() {
-    try {
-        if ("false" == mulityback) {
-            back();
-        } else if (mulityback.indexOf("true") > -1) {
-            back();
-            var marr = mulityback.split("||");
-            sleep(marr[1]);
-            back();
-        } else {
-            try {
-                if (appname == "韭菜资讯" || appname == "亿刻看点") {
-                } else {
-                    back();
-                }
-            } catch (e) {
-
-            }
-            //纯坐标返回方法
-            marr = mulityback.split("||");
-            breakid = "";
-            for (var i = 0; i < marr.length; i++) {
-                if (breakid == "") {
-                    thiscommon.touchreal(marr[i], marr[i + 1]);
-                    breakid = i + 1;
-                } else {
-                    if (i != breakid) {
-                        thiscommon.touchreal(marr[i], marr[i + 1]);
-                        breakid = i + 1;
-                    }
-                }
-
-            }//for end
-
-
-        }//else end
-
-    } catch (e) {
-
-    }
-
-
-}
-//检测本地手机app是否符合要求
-//加载特征码
-function checklocalapp() {
-
-    var start = '[]'
-    var tempstr = "";
-    var appname = "";
-    var voiceplaynum = 0;
-    var thisjsonstr = "";
-    var diffcount = 0;
-    var alertstr = "";
-    for (var i = 0; i < Gapps.length; i++) {
-
-        appname = Gapps[i]["appname"];
-        appnum = Gapps[i]["appnum"];
-        //console.log(appnum);
-        //if("true"==Gapps[i]['enable']){
-        if (Gapps[i]['enable']) {
-            //alert("1");
-            //如果是云端特征码机制
-            if (Gjsonloadstate == "remote") {
-                if (voiceplaynum == 0) {
-                    play("global", "加载");
-                    //    play("global","云端");
-                    play("global", "特征码");
-                    voiceplaynum += 1;
-                }
-
-                // http.__okhttp__.setTimeout(10000);
-                // var r=http.get(Gapplistpath_remote+"/"+appname+".json")
-                var r = files.read(Gapplistpath + "/" + appname + ".json")
-
-                //if(r.statusCode=="200"){ 
-                //console.log(r); 
-                var jsonstr = r;
-                // console.log(jsonstr);
-
-                try {
-                    tempjson = eval('(' + jsonstr + ')');
-                    var pname = tempjson['packagename'];
-                    // alert(pname);
-                    var appname = tempjson['appname'];
-                    var appver = tempjson['appver'];
-                    var result = app.getAppName(pname);
-                    //alert(result);
-                    if (result == null) {
-                        diffcount += 1;
-                        thisjsonstr += '{"appnum":"' + appnum + '","appname":"' + appname + '","state":"您未安装该APP，请安装"},';
-                        alertstr += appname + "-未安装\n";
-                    } else {
-
-                        var localappver = thiscommon.getPackageVersion(pname);
-
-                        if (localappver != appver) {
-                            diffcount += 1;
-                            thisjsonstr += '{"appnum":"' + appnum + '","appname":"' + appname + '","state":"您的版本' + localappver + ' 与云端版本' + appver + '不匹配"},';
-                            alertstr += appname + "-版本不匹配\n";
-                        }
-
-
-
-                    }
-
-                } catch (e) {
-                    alert(appname + " 远程数据结构错误");
-                }
-
-                // }else{
-                //     alert("没有找到远程-2"+appname+".json");
-                // }
-
-
-                //如果是本地特征码机制
-            }
-
-
-
-
-        } else {
-            //alert("1");
-        }
-
-    }
-
-    if ("" != thisjsonstr) {
-        //     thisjsonstr='['+thisjsonstr+']';
-        //    // log(thisjsonstr);
-        //    if(diffcount>10){
-        //     urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showapplist';
-
-        //    }else{
-        //     urlStr = 'http://download.dqu360.com:81/haiqu/api.aspx?&action=showdiffapplist&jsonstr='+thisjsonstr;
-        //    }
-
-        //      var result=shell("am start -a android.intent.action.VIEW -d '" + urlStr+"'", true);
-        alert(alertstr + "\n请允许打开浏览器，根据本提示下载对应app");
-        //urlStr = 'http://115.29.141.214:8888/repo/haiqu_helper/html/index.html';
-        urlStr = 'http://manager.dianqu666.online:8888/repo/haiqu_helper/html/index.html';
-        var result = shell("am start -a android.intent.action.VIEW -d '" + urlStr + "'", true);
-
-    } else {
-        alert("您手机上的APP与云端一致，请定期检测");
-    }
-
-}
-//初始化licence 当传入空值时执行本地查询并返回本地fsn，传入fsn激活码时，只写入本地
-function initlicence(fsn) {
-    //alert("123")
-    importClass('android.database.sqlite.SQLiteDatabase');
-    importClass("android.content.ContentValues");
-    //importClass("android.content.Context");
-    importClass("android.database.Cursor");
-
-    //context.deleteDatabase("haiqu.db");  
-    //打开或创建haiqu.db数据库        
-    db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
-    //创建t_tag表
-    db.execSQL("create table if not exists " + "t_licence" + "(fsn,fsession,fvar1,fvar2,fvar3)");
-    //      db.execSQL("DELETE FROM  t_licence");
-    if (fsn != "") {
-        var t_tag = new Object;
-        t_tag.fsn = fsn;
-        //ContentValues以键值对的形式存放数据       
-        var cv = new ContentValues();
-        cv.put("fsn", t_tag.fsn);
-        //插入ContentValues中的数据        
-        db.insert("t_licence", null, cv);
-    }
-
-
-    var c = db.query("t_licence", null, "", null, null, null, null, null);
-    while (c.moveToNext()) {
-        var fsn = c.getString(c.getColumnIndex("fsn"));
-
-        return fsn;
-
-    }
-    db.close();
-}
-
-function toastAt0(msg, x, y) {
-    importClass(android.widget.Toast);
-    importClass(android.view.Gravity);
-    var toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-    toast.setGravity(Gravity.TOP | Gravity.LEFT, x, y);
-    toast.show();
-}
-
-function toastAt(msg) {
-    var x = 500;
-    var y = 300;
-    ui.run(() => toastAt0(msg, x, y));
-}
-
-function installapp(path) {
-    var result = shell(" pm install -r -d " + path, true);
-    return result;
-
-}
-//穿入文件名 和本地要保存的路径
-function getScriptFromServer() { //从服务器获取脚本
-    // var i, download_res, script_file_url = "https://script.iqqclub.com/Script/" + FILE;
-    var i, download_res
-    //  console.show();
-    for (i = 0; 10 > i; i++) try {
-        if (download_res = http.get(Gdownloadpath), 200 == download_res.statusCode) break;
-        log("res:" + download_res.statusCode);
-        if (i > 8) return !1;
-    } catch (e) {
-        //log("error res:"+download_res);
-        if (sleep(500), 9 == i) return !1;
-    }
-    //alert("1")
-    return files.writeBytes("/sdcard/脚本/haiqu.apk", download_res.body.bytes()), !0;
-}
-
-function page_check() {
-    // toast("this is pagecheck")
-    try {
-        var thisispageone = false;
-        var thisispagetwo = false;
-
-        //一级页面验证方式取值
-        var pageone_featuremode = open_obj["featuremode"];
-        //   alert("1")
-        if ("classname_text" == pageone_featuremode) {
-            //   alert("2")
-            var thisclassname = open_obj["classname"];
-            var thistext = open_obj["text"];
-            // alert("3")
-            try {
-                var thisdepth = open_obj["depth"];
-                var thisindexinparent = open_obj["indexinparent"];
-                var result = className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
-                // alert("4")
-            } catch (e) {
-                toast("open_obj classname_text depth indexinparent error");
-                var result = false;
-            }
-
-            if (result) { thisispageone = true }
-        } else if ("classname" == pageone_featuremode) {
-            var thisclassname = open_obj["classname"];
-            try {
-                var thisdepth = open_obj["depth"];
-                var thisindexinparent = open_obj["indexinparent"];
-                var result = className(thisclassname).depth(thisdepth).indexInParent(thisindexinparent).exists();
-            } catch (e) {
-                toast("open_obj classname depth indexinparent error");
-                var result = false;
-            }
-
-            if (result) { thisispageone = true; toast('当前识别为1级页面') }
-        }
-        //二级页面验证方式取值
-        var pagetwo_featuremode = autoread_obj["ar1"]["featuremode"];
-        //  alert()
-        obja = "ar1";
-        if ("classname_desc" == pagetwo_featuremode) {
-            var thisclassname = autoread_obj[obja]["classname"];
-            var thisdesc = autoread_obj[obja]["desc"];
-            var result = className(thisclassname).desc(thisdesc).exists();
-            if (result) { thisispagetwo = true }
-        } else if ("classname_text" == pagetwo_featuremode) {
-            var thisclassname = autoread_obj[obja]["classname"];
-            var thistext = autoread_obj[obja]["text"];
-            var result = className(thisclassname).text(thistext).exists();
-            if (result) { thisispagetwo = true }
-        } else if ("classname" == pagetwo_featuremode) {
-            var thisclassname = autoread_obj[obja]["classname"];
-            var result = className(thisclassname).exists();
-            if (result) { thisispagetwo = true }
-        } else if ("id" == pagetwo_featuremode) {
-            //    alert("5 id")
-            var thisid = autoread_obj[obja]["id"];
-            //  alert("thisis is:"+thisid)
-            var result = id(thisid).exists();
-            //  alert("thisid:"+thisid)
-            if (result) { thisispagetwo = true }
-        } else if ("ids" == pagetwo_featuremode) {
-
-            var thisid = autoread_obj[obja]["ids"];
-            ids_arr = thisid.split("||");
-            var num = 0;
-            try {
-                for (var i = 0; i < ids_arr.length; i++) {
-                    if (id(ids_arr[i]).exists()) {
-                        thisispagetwo = true
-                        //  toast('当前识别为2级页面')
-                        break;
-                    }
-                }
-            } catch (e) {
-                //  break;
-            }
-        }//else if end
-
-        //开始判断
-        //     如果当前是一级线程在工作，又是一级页面 pass
-        // 如果当前是一级线程在工作，却是二级页面，则切换成readnews 工作
-        // 如果当前是一级线程在工作，既是一级页面又是二级页面则弹窗
-
-        // 如果当前是二级线程在工作 又是二级页面 pass
-        // 如果当前是二级线程在工作，却又是一级页面，则切换成findnews工作
-        // 如果当前是二级线程在工作，既是一级又是二级页面则弹窗
-
-        if ("findnews_start" == Gworkthread) {
-            //  alert("panduan 1")
-            if (thisispageone == true && thisispagetwo == true) {
-                //     alert("panduan 1-1")
-                toast("当前页面识别：既是1级又是2级");
-            } else if (thisispagetwo == true) {
-                // alert("panduan 1-2")
-                toast("发现一级切换到了二级")
-                while_readnews(autoread_obj);
-                sleep(1000)
-                try { thread_findnews.interrupt() } catch (e) { }
-
-                //   toast();
-            } else if (thisispageone == true) {
-                //   toast("1级线程与1级页面匹配")
-            }
-        }
-        else if ("readnews_start" == Gworkthread) {
-            //  alert("Gworkthread is"+Gworkthread);
-            if (thisispageone == true && thisispagetwo == true) {
-                //alert("panduan 2-1")
-                toast("当前页面识别：既是1级又是2级");
-            } else if (thisispageone == true) {
-                toast("发现2级切换到了1级")
-                //   alert("panduan 2-2")
-                while_findnews(autoread_obj);
-                sleep(1000)
-                try { thread_readnews.interrupt() } catch (e) { }
-
-            } else if (thisispagetwo == true) {
-                //  toast("2级线程与2级页面匹配")
-
-            }
-        }
-        if (thisispageone == false && thisispagetwo == false) {
-            toast("没有识别当前页面1or2级");
-        }
-    } catch (e) { toast("page_check 异常") }
-    //初始化页面状态
-
-}
-
-//layers机制
-function while_pagecheck() {
-    Gworkthread = "pagecheck_start";
-    //for 循环阻塞
-    var thisforstart = false;
-    //是否识别了该页面
-    var thisfindpage = false;
-    //提示计数器
-    var thistoastcount = 0;
-    //上一个pc编号
-    var lastpcx = "";
-    //相同页面计数器
-    var samepcx_count = 0;
-    thread_pagecheck = threads.start(function () {
-        //检测页面 并且根据页面acton
-        //for循环pagecheck_obj 
-        toast("页面识别启动")
+//异常处理线程
+function while_abnormal(abnormal_obj) {
+    // Gworkthread="abnormal_start"; 不要这个，会干扰逻辑
+
+    thread_abnormal = threads.start(function () {
         setInterval(function () {
-            thistoastcount += 1;
-            if (thistoastcount > 5) {
-                toastAt("pagecheck相同页面计数器" + samepcx_count)
-                // toast("thisforstart is:"+thisforstart);
-                thistoastcount = 0;
-            }
+            //       toast("this is while_abnormal... allcount is:"+thiscommon.JSONLength(abnormal_obj));             
+            for (var i = 1; i <= thiscommon.JSONLength(abnormal_obj); i++) {
 
-            //这是线程内测循环执行，执行前要判断for循环是否结束
-            if (thisforstart == false) {
-                try {
-                    thisforstart = true;
-                    thisfindpage = false;
-                    for (var i = 1; i <= thiscommon.JSONLength(pagecheck_obj); i++) {
-                        var thisfeaturemode = pagecheck_obj["pc" + i]["featuremode"];
-                        insert_log('', 'pagecheck', appname, '018', '')
-                        var thisresult = eval(thisfeaturemode);
-                        var thisinfo = pagecheck_obj["pc" + i]["info"]
+                var featuremode = abnormal_obj["ab" + i]["featuremode"];
 
-                        if (thisresult) {
-                            insert_log('', 'pagecheck', appname, '018', '1')
-                            var thispcx = "pc" + i;
-                            //判断当前pc与上一个pc是否是一样的
-                            //如果是一样的线程计数器增加一
-                            if (thispcx == lastpcx) {
-                                samepcx_count += 1;
-                            } else {
-                                lastpcx = thispcx;
-                                //如果不一样，线程计数器清零
-                                samepcx_count = 0;
-                            }
+                if ("id" == featuremode) {
 
-                            //如果线程计数器>90那么restartapp
-
-
-                            thisfindpage = true;
-                            toast(thisinfo);
-                            var thisactiontype = pagecheck_obj["pc" + i]["actiontype"];
-                            var thisaction = pagecheck_obj["pc" + i]["action"];
-                            //如果是执行一段私有函数
-                            if (thisactiontype == "func") {
-
-                                try {
-                                    eval(Gfinditemstr);
-                                    if ("" != thisaction) {
-                                        eval(thisaction)
-                                    }
-                                } catch (e) { toast("pagecheck eval func e:" + e); thisforstart == false }
-                            }//if end;
-                            else if (thisactiontype == "code") {
-
-                                try {
-                                    if ("" != thisaction) {
-                                        eval(thisaction)
-                                    }
-                                } catch (e) {
-                                    thisforstart = false;
-                                    toast("pagecheck eval code e:" + e)
-                                };
-                            }
-
-                            break;
-
-                        }//if end;
-
-                    }//for end
-                    //线程计数器超过数量
+                    var thisid = abnormal_obj["ab" + i]["id"];
+                    thiscommon.mytoast("while_abnormal，featuremode is id， for x is :" + i + " thisid is:" + thisid);
                     try {
-                        if (samepcx_count > 50) {
-                            toast("本页面停留太长，重新拉起")
-                            insert_log('', 'pagecheck', appname, '016', '')
-                            samepcx_count = 0;
-                            workthread_errorcount = 999
+                        // var result=once_check("id",thisid,'','');
+                        thiscommon.mytoast("while_abnormal result is:" + result);
+                        //  if(result){ 
+                        // var result=id(thisid).click();
+                        // alert("result is:"+result);
+                        //if(result){
+                        try {
+                            thiscommon.clickxy_for_ele(id(thisid).findOnce());
+                            thiscommon.play("global", "关闭弹窗");
+                        } catch (e) {
+
+                        }
+
+                        //}
+
+
+                        //    }
+                    } catch (e) {
+                        back();
+
+                    }
+
+
+                } else if ("id_depth" == featuremode) {
+                    try {
+                        var thisid = abnormal_obj["ab" + i]["id"];
+                        var thisdepth = abnormal_obj["ab" + i]["depth"];
+
+                        var elestr = id(thisid);
+                        var result = elestr.exists();
+                        if (result) {
+                            var eledepth = elestr.findOnce().depth();
+                            if (eledepth == thisdepth) {
+                                thiscommon.clickxy_for_ele(id(thisid).findOnce());
+                            }
                         }
                     } catch (e) {
-                        toast("> e:" + e);
+                        //  toast("id_depth:"+e);
                     }
 
-                    Gbrick_count += 1;
-                    thisforstart = false;
-                    if (thisfindpage == false) {
-                        samepcx_count += 1;
-                        insert_log('', 'pagecheck', appname, '018', '0')
-                        toast("没有识别当前页面");
+                } else if ("classname_text" == featuremode) {
+
+                    try {
+                        var thisclass = abnormal_obj["ab" + i]["classname"];
+                        var thistext = abnormal_obj["ab" + i]["text"];
+                        var result = thiscommon.block_check(featuremode, thisclass, thistext, '');
+                        //   alert(thisclass+":"+thistext);
+                        if (result) {
+                            thiscommon.click_classname_text(thisclass, thistext);
+                            //play("global","关闭弹窗");
+
+                        }
+                    } catch (e) {
+
+                    }
+
+                } else if ("classname_desc" == featuremode) {
+                    try {
+                        var thisclass = abnormal_obj["ab" + i]["classname"];
+                        var thisdesc = abnormal_obj["ab" + i]["desc"];
+                        var result = thiscommon.block_check(featuremode, thisclass, thisdesc, '');
+                        //   alert(thisclass+":"+thistext);
+                        if (result) {
+                            thiscommon.click_classname_desc(thisclass, thisdesc);
+                            //play("global","关闭弹窗");
+
+                        }
+                    } catch (e) {
+
+                    }
+                } else if ("click_boundary_path" == featuremode) {
+                    try {
+                        var boundary = abnormal_obj["ab" + i]["boundary"];
+                        var path = abnormal_obj["ab" + i]["path"];
+                        thiscommon.click_boundary_path(boundary, path);
+                    } catch (e) {
+
+                    }
+
+                }
+
+            }
+            //for end
+        }, Gabinterval);
+    });
+}
+//弹窗与跳出app监测
+function while_abnormal_overtime(activitys_obj) {
+    thread_abnormal_overtime = threads.start(
+        function () {
+            setInterval(function () {
+                try {
+                    var thispackagename = currentPackage();
+                    var thisactivity = currentActivity();
+                    var itemcount = thiscommon.JSONLength(activitys_obj);
+                    // alert("itemcount is :"+itemcount);
+                    Gwindowstate = false;
+                    for (var i = 1; i <= itemcount; i++) {
+                        // alert(activitys_obj["at"+i]);
+                        if (thisactivity == activitys_obj["at" + i]) {
+                            thiscommon.play("global", "状态正常")
+                            thiscommon.play("global", i);
+                            Gwindowstate = true;
+                        }
+                    }
+                    if (Gwindowstate == false) {
+                        //    alert(thisactivity);
+                        thiscommon.play("global", "发现未关闭弹窗");
                     }
                 } catch (e) {
-                    //  toast("pagecheck main e:"+e);
-                    thisforstart = false;
+                    toast(e);
                 }
 
-            }
-
-        }, 3000);
-
-    });
-
-}
-//结束普通线程
-function clear_normal_thread() {
-    try { thread_findnews.interrupt(); } catch (e) { };
-    try { thread_readnews.interrupt(); } catch (e) { };
-    try { thread_signin.interrupt(); } catch (e) { };
-    try { thread_pagecheck.interrupt() } catch (e) { };
-    try { thread_analycoinincome.interrupt() } catch (e) { };
-}
-//目标页面检测
-function while_pagecheck_bak() {
-
-    //  return true;
-    try { thread_pachagecheck.interrupt(); } catch (e) { }
-    var nowpage = "";
-    var while_count = 0;
-    //while(true){
-    //alert("目标页面识别准备启动")
-    thread_pachagecheck = threads.start(
-        function () {
-            try { } catch (e) { };
-
-            var thisfeaturemode = open_obj["featuremode"];
-            if ("classname_text" == thisfeaturemode) {
-
-                var thisclassname = open_obj["classname"];
-                var thistext = open_obj["text"];
-                var thisdepth = open_obj["depth"];
-                var thisindexinparent = open_obj["indexinparent"];
-                var result = className(thisclassname).text(thistext).depth(thisdepth).indexInParent(thisindexinparent).exists();
-                //  var result=className(thisclassname).text(thistext).exists();
-                //     alert("result is:"+result)
-                if (result) {  //说明当前是在一级页     
-                    nowpage = "1";
-                }
-            }
-            //目标页面判断 结束
-
-            //执行目标识别后的操作
-
-            if ("findnews_start" == Gworkthread) {
-                //如果是 findnews_start则验证是不是一级页面
-                if ("1" == nowpage) {
-                    while_count = 0;
-                } else {
-                    while_count += 1;
-                }
-
-                if (while_count > 10) {
-                    toast("findnews_start检测：未识别页面特征码")
-                    workthread_errorcount = 999;
-                    while_count = 0;
-
-                    // break;
-                }
-
-
-
-
-            }//function end;
-
-
-            //目标页面判断
-
-
-
-
-
-            //执行目标识别后的操作 结束
-
-
-        })
-}
-//统计收益函数
-function callback_updatecoinincome(coin, income) {
-    importClass('android.database.sqlite.SQLiteDatabase');
-    //importClass("android.content.ContentValues");
-    //    importClass("android.content.Context");
-    importClass("android.database.Cursor");
-    var analystate = 'unknow';
-    alert("Ganalyflag is:" + Ganalyflag);
-    if ("first" == Ganalyflag) {
-        analystate = '1';
-
-    } else if ("finish" == Ganalyflag) {
-        analystate = '2';
-
-    }
-
-    toast("回调函数接收到了金币" + coin + " 收益" + income);
-    try {
-        var db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
-        db.execSQL("create table if not exists " + "app_income_mass" + "(deviceid,appnum,appname,coin,income,createtime,analystate)");
-        var cv = new ContentValues();
-        //cv.put("deviceid",GdeviceMac);
-        cv.put("deviceid", GdeviceImei);
-        cv.put("appnum", '');
-        cv.put("appname", appname);
-        cv.put("coin", coin);
-        cv.put("income", income);
-        cv.put("createtime", load_time());
-        cv.put("analystate", analystate);
-        db.insert("app_income_mass", null, cv);
-        db.close();
-    } catch (e) {
-        toast("upcoinincome:" + e);
-    }
-
-}
-//写日志函数
-function insert_log(psessionid, pthread, pappname, paction, presult) {
-    importClass('android.database.sqlite.SQLiteDatabase');
-    //importClass("android.content.ContentValues");
-    //    importClass("android.content.Context");
-    importClass("android.database.Cursor");
-    if (Ginsert_log) {
-        try {
-            var db = context.openOrCreateDatabase("haiqu.db", Context.MODE_PRIVATE, null);
-            db.execSQL("create table if not exists " + "t_log" + "(fsession,fthread,fappname,faction,factime,fresult)");
-            //var c = db.query("t_log", null, "", null, null, null, null, null);
-            var t_tag = new Object;
-            t_tag.sessionid = psessionid;
-            t_tag.thread = pthread;
-            t_tag.appname = pappname;
-            t_tag.action = paction;
-            t_tag.actime = load_time();
-            t_tag.result = presult;
-            //ContentValues以键值对的形式存放数据???????
-            var cv = new ContentValues();
-            cv.put("fsession", t_tag.sessionid);
-            cv.put("fthread", t_tag.thread);
-            cv.put("fappname", t_tag.appname);
-            cv.put("faction", t_tag.action);
-            cv.put("factime", t_tag.actime);
-            cv.put("fresult", t_tag.result);
-
-            //插入ContentValues中的数据????????
-            db.insert("t_log", null, cv);
-            db.close();
-            // alert("this is insert log")
-
-        } catch (e) {
-
+            }, 1000);
         }
-        try {
-
-
-            var timestamp = new Date().getTime();
-            //var url = Guploadlog_url;
-            var factime = timestamp;
-            var faction = paction;
-            var fappname = pappname;
-            var fresult = presult;
-            //var fsession=GdeviceMac; //这里使用全局变量
-            var fsession = GdeviceImei;
-            var fthread = pthread;
-            // var factime = timestamp;
-            //var faction = "017";
-            //var fappname="北京知天下1";
-            //var fresult= "";
-            //var fsession="005056c0000f";
-            //var fthread="control";
-
-            //alert("this is uploadlog1"+Guploadlog_url)
-            try { thread_uploadlog.interrupt(); } catch (e) { }
-            thread_uploadlog = threads.start(function () {
-                var res = http.postJson(Guploadlog_url, {
-                    "factime": factime,
-                    "faction": faction,
-                    "fappname": fappname,
-                    "fresult": fresult,
-                    "fsession": fsession,
-                    "fthread": fthread
-                });
-                //alert("this is uploadlog2")
-
-                //  var html = res.body.string();
-                //  alert(html);
-            });
-
-
-
-        } catch (e) {
-            //  alert(e);
-        }
-    }
-
-
-}
-// 数据库：haiqu 表：t_log表结构
-// 手机mac app名称 动作 动作所在线程 执行时间  执行结果
-// fsession,fappname,faction,fthread,factime,fresult
-
-
-// 获取手机系统时间函数
-// 动作faction 编号解释
-// 001 返回一级 二级页面滑栋超过50次
-// 002 返回一级 无收益圈 -
-// 003 返回一级 获得获益 -
-// 004 返回一级 打开失败 -
-// 005 返回一级 超过线程计数器90次 -
-// 006 拉回站内-
-// 007 拉回主线-
-// 008 找新闻 -
-// 009 读新闻 -
-// 010 签到
-// 011 优化进程
-// 012 打开APP -
-// 013 搬砖计数器超过次数重启 -
-// 014 找到新闻并打开 -
-// 015 一直没有找到新闻返回 -
-// 016 超过相同页面停留计数器50次，重启APP
-// 017 返回一级 滑动数量到达随机最大数
-// 018 刮刮卡页面识别
-// 019 检查
-
-//获取系统时间
-function load_time() {
-    return new java.text.SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-}
-function update_log() {
-
-}
-// function getdevicemac(){
-//     setTimeout(function(){
-// //如果mac地址为空
-//    var mac=device.getMacAddress();
-//    if(mac==null){
-//     GdeviceMac="";
-//     //alert("mac is kong");
-//     toast("助手需要无线网络，请确认wifi开关处于开启状态");
-//    }else{
-//     GdeviceMac=mac;
-//    // alert("this is fun "+device.getMacAddress());
-//    }
-//    var midhead="dqprop01h2";
-//    webView = ui.findById("webview");
-
-//    //var aa=device.getMacAddress();;
-//    var mid=GdeviceMac.replace(/:/g,"");
-//    mid=mid.toLocaleLowerCase()
-//   // alert(GdeviceMac);
-//    tmpstr="";
-//    for(var i in mid){
-//        tmpstr+=mid[i]+mid[i].charCodeAt(0);
-//     //    if(tmpstr.length==18){
-//     //        break;
-//     //    }
-//    }
-//    tmpstr=tmpstr.substring(0,18);
-
-//    //生成机器码
-//   // Gdevicecode=midhead+mid+tmpstr;
-//    //return Gdevicecode;
-
-//    html = files.path("./qrcode.html");
-//    webView.loadUrl("file://" + html);
-//    setTimeout(() => {
-//        webView.post(new Runnable({
-//            run: function() {
-//                // 调用javascript的callJS()方法
-//                webView.loadUrl("javascript:callJS('"+midhead+mid+tmpstr+"')");//传入的值为123
-//            }
-//        }));
-//    }, 2000);
-
-// },2000)
-// }
-function getdeviceimei() {
-    setTimeout(function () {
-        //如果mac地址为空
-        var ele = shell("service call iphonesubinfo 1", true);
-        var str = ele.result;
-        var patt1 = /\d\./g;
-        var imei = str.match(patt1).join("").replace(/\./g, "");
-        if (imei == null) {
-            GdeviceImei = "";
-            //alert("mac is kong");
-            toast("助手需要无线网络，请确认wifi开关处于开启状态");
-        } else {
-            GdeviceImei = imei;
-            // alert("this is fun "+device.getMacAddress());
-        }
-        var midhead = "dqprop01h2";
-        webView = ui.findById("webview");
-
-        //var aa=device.getMacAddress();;
-        var mid = GdeviceImei;
-        //mid=mid.toLocaleLowerCase()
-        // alert(GdeviceMac);
-        var imeinum = mid.length;
-        tmpstr = "";
-        for (var i in mid) {
-            tmpstr += mid[i] + mid[i].charCodeAt(0);
-            //    if(tmpstr.length==18){
-            //        break;
-            //    }
-        }
-        tmpstr = tmpstr.substring(0, 30 - imeinum);
-
-        //生成机器码
-        // Gdevicecode=midhead+mid+tmpstr;
-        //return Gdevicecode;
-
-        html = files.path("./qrcode.html");
-        webView.loadUrl("file://" + html);
-        setTimeout(() => {
-            webView.post(new Runnable({
-                run: function () {
-                    // 调用javascript的callJS()方法
-                    webView.loadUrl("javascript:callJS('" + midhead + mid + tmpstr + "')");//传入的值为123
-                }
-            }));
-        }, 2000);
-
-    }, 2000)
-}
-function opennobarrier() {
-    // importClass(android.content.Context);
-    // importClass(android.provider.Settings);
-    //  console.show();
-    try {
-        var enabledServices = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-        log('当前已启用的辅助服务\n', enabledServices);
-        var Services = enabledServices + ":com.haiqu.autoread/com.stardust.autojs.core.accessibility.AccessibilityService";
-        Settings.Secure.putString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, Services);
-        Settings.Secure.putString(context.getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED, '1');
-        toastLog("成功开启海趣助手无障碍");
-    } catch (error) {
-        //授权方法：开启usb调试并使用adb工具连接手机，执行 adb shell pm grant org.autojs.autojspro android.permission.WRITE_SECURE_SETTING
-        //  toastLog("\n请确保已给予 WRITE_SECURE_SETTINGS 权限\n\n授权代码已复制，请使用adb工具连接手机执行(重启不失效)\n\n", error);
-        // setClip("adb shell pm grant org.autojs.autojs android.permission.WRITE_SECURE_SETTINGS");
-    }
-}
-
-function showanalylog() {
-    var xmlstr = "";
-    xmlstr += ' <TableLayout '
-    xmlstr += '        layout_width="match_parent"'
-    xmlstr += '        layout_height="match_parent"'
-    xmlstr += '        background="#ffffff"'
-    xmlstr += '        stretchColumns="1"'
-    xmlstr += '        >'
-    xmlstr += ''
-    xmlstr += ''
-    xmlstr += '        <TableRow>'
-    xmlstr += '        <TextView'
-    xmlstr += '            layout_width="wrap_content"'
-    xmlstr += '            layout_height="wrap_content"'
-    xmlstr += '            background="#7E787F"   '
-    xmlstr += '            layout_margin="1dip" '
-    xmlstr += '            style="Widget.AppCompat.Button.Colored"'
-    xmlstr += '            text="app名称"/>'
-    xmlstr += '        <TextView'
-    xmlstr += '            layout_width="wrap_content"'
-    xmlstr += '            layout_height="wrap_content"'
-    xmlstr += '            background="#7E787F"    '
-    xmlstr += '            layout_margin="1dip" '
-    xmlstr += '            style="Widget.AppCompat.Button.Colored"'
-    xmlstr += '            text="金币数量"/>'
-    xmlstr += '        <TextView'
-    xmlstr += '            layout_width="wrap_content"'
-    xmlstr += '            layout_height="wrap_content"'
-    xmlstr += '            background="#7E787F"   '
-    xmlstr += '            layout_margin="1dip" '
-    xmlstr += '            style="Widget.AppCompat.Button.Colored"'
-    xmlstr += '            text="收益"/>'
-    xmlstr += '        <TextView'
-    xmlstr += '            w="auto"'
-    xmlstr += '            layout_height="wrap_content"'
-    xmlstr += '            background="#7E787F"   '
-    xmlstr += '            layout_margin="1dip" '
-    xmlstr += '            style="Widget.AppCompat.Button.Colored"'
-    xmlstr += '            text="统计时间"/>'
-    xmlstr += '        </TableRow>'
-
-
-
-
-
-    // xmlstr="";
-
-
-    for (var i = 0; i < 10; i++) {
-        xmlstr += ' <TableRow>';
-        xmlstr += '            <TextView'
-        xmlstr += '                layout_width="wrap_content"'
-        xmlstr += '                layout_height="wrap_content"'
-        xmlstr += '                background="#7E787F"   '
-        xmlstr += '                layout_margin="0dip" '
-        xmlstr += '                style="Widget.AppCompat.Button.Colored"'
-        xmlstr += '                text="北京知天下"/>'
-        xmlstr += '            <TextView'
-        xmlstr += '                layout_width="wrap_content"'
-        xmlstr += '                layout_height="wrap_content"'
-        xmlstr += '                background="#7E787F"    '
-        xmlstr += '                layout_margin="0dip" '
-        xmlstr += '                style="Widget.AppCompat.Button.Colored"'
-        xmlstr += '                text="2000"/>'
-        xmlstr += '            <TextView'
-        xmlstr += '                layout_width="wrap_content"'
-        xmlstr += '                layout_height="wrap_content"'
-        xmlstr += '                background="#7E787F"   '
-        xmlstr += '                layout_margin="0dip" '
-        xmlstr += '                style="Widget.AppCompat.Button.Colored"'
-        xmlstr += '                text="1.1"/>'
-        xmlstr += '            <TextView'
-        xmlstr += '                w="auto"'
-        xmlstr += '                layout_height="wrap_content"'
-        xmlstr += '                background="#7E787F"   '
-        xmlstr += '                layout_margin="0dip" '
-        xmlstr += '                style="Widget.AppCompat.Button.Colored"'
-        xmlstr += '                text="2019-08-09 11:22:33"/>'
-        xmlstr += '            </TableRow>'
-    }
-
-    xmlstr += '    '
-    xmlstr += '       '
-    xmlstr += '        </TableLayout>'
-
-    ui.inflate(xmlstr, ui.logframe, true);
-
-}
-//生成机器码
-// function builddevicecode(){
-//     var mac=device.getMacAddress();
-//     if(mac==null){
-//      GdeviceMac="";
-//      //alert("mac is kong");
-//      toast("助手需要无线网络，请确认wifi开关处于开启状态");
-//     }else{
-//      GdeviceMac=mac;
-//     // alert("this is fun "+device.getMacAddress());
-//     }
-//     var midhead="dqprop01h2";
-//    // webView = ui.findById("webview");
-
-//     //var aa=device.getMacAddress();;
-//     var mid=GdeviceMac.replace(/:/g,"");
-//     mid=mid.toLocaleLowerCase()
-//    // alert(GdeviceMac);
-//     tmpstr="";
-//     for(var i in mid){
-//         tmpstr+=mid[i]+mid[i].charCodeAt(0);
-//      //    if(tmpstr.length==18){
-//      //        break;
-//      //    }
-//     }
-//     tmpstr=tmpstr.substring(0,18);
-//    return midhead+mid+tmpstr;
-// }
-//生成机器码
-function builddevicecode() {
-    var ele = shell("service call iphonesubinfo 1", true);
-    var str = ele.result;
-    var patt1 = /\d\./g;
-    var imei = str.match(patt1).join("").replace(/\./g, "");
-    if (imei == null) {
-        GdeviceImei = "";
-        //alert("mac is kong");
-        toast("助手需要无线网络，请确认wifi开关处于开启状态");
-    } else {
-        GdeviceImei = imei;
-        // alert("this is fun "+device.getMacAddress());
-    }
-    var midhead = "dqprop01h2";
-    // webView = ui.findById("webview");
-
-    //var aa=device.getMacAddress();;
-    var mid = GdeviceImei;
-    //mid=mid.toLocaleLowerCase()
-    // alert(GdeviceMac);
-    var imeinum = mid.length;
-    tmpstr = "";
-    for (var i in mid) {
-        tmpstr += mid[i] + mid[i].charCodeAt(0);
-        //    if(tmpstr.length==18){
-        //        break;
-        //    }
-    }
-    tmpstr = tmpstr.substring(0, 30 - imeinum);
-    return midhead + mid + tmpstr;
+    );
 }
