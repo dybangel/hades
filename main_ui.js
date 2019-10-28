@@ -499,7 +499,6 @@ ui.downloadapp.click(() => {
 ui.licence_activate.click(() => {
     //alert("123");
     var fsn = ui.fsn.text();
-    alert("click fsn is "+fsn);
     if (fsn == "") {
         toast("请输入激活码");
     } else {
