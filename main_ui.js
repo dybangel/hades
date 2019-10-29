@@ -1220,6 +1220,7 @@ function run() {
                 // alert(openstate);
                 //如果打开失败跳转到下一个app，如果成功则进行延迟等待，这样节约时间
                 if (openstate) {
+                    Gworkthread="openapp_stop";
                     //alert("打开成功-写日志")
                     insert_log('', 'main', appname, '012', '1');
                     try { setlastapp("1", appname); } catch (e) { }

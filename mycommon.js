@@ -17,7 +17,7 @@ module.exports = {
         thiscommon.clean(Gdevicetype, Gpackagename_lists);
         //这里延迟一秒防止clean延迟导致刚打开的app被clean
         sleep(1000);
-        var openstate = openAPP(appname, packagename, activityname, open_obj);
+        var openstate = thiscommon.openAPP(appname, packagename, activityname, open_obj);
         if (openstate) {
             if ("layers" == apptype) {
 
