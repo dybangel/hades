@@ -2066,7 +2066,7 @@ function callback_updatecoinincome(coin, income) {
     //    importClass("android.content.Context");
     importClass("android.database.Cursor");
     var analystate = 'unknow';
-    alert("Ganalyflag is:" + Ganalyflag);
+    //alert("Ganalyflag is:" + Ganalyflag);
     if ("first" == Ganalyflag) {
         analystate = '1';
 
@@ -3234,7 +3234,7 @@ function while_pagecheck() {
 
 //统计收益函数
 function while_analycoinincome(flag) {
-    alert("给Ganalyflag赋值为" + flag);
+  //  alert("给Ganalyflag赋值为" + flag);
     Gworkthread = "analycoinincome_start";
     Ganalyflag = flag;
     //for 循环阻塞
